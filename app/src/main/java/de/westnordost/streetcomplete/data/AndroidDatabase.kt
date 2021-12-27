@@ -3,9 +3,9 @@ package de.westnordost.streetcomplete.data
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase.*
-import android.database.sqlite.SQLiteOpenHelper
-import android.database.sqlite.SQLiteStatement
+import io.requery.android.database.sqlite.SQLiteDatabase.*
+import io.requery.android.database.sqlite.SQLiteOpenHelper
+import io.requery.android.database.sqlite.SQLiteStatement
 import de.westnordost.streetcomplete.data.ConflictAlgorithm.*
 import de.westnordost.streetcomplete.ktx.*
 import javax.inject.Inject

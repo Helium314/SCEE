@@ -16,7 +16,7 @@ object ElementGeometryTable {
         const val MAX_LONGITUDE = "max_lon"
     }
 
-    const val CREATE = """
+/*    const val CREATE = """
         CREATE TABLE $NAME (
             ${Columns.ELEMENT_TYPE} varchar(255) NOT NULL,
             ${Columns.ELEMENT_ID} int NOT NULL,
@@ -32,6 +32,20 @@ object ElementGeometryTable {
                 ${Columns.ELEMENT_TYPE},
                 ${Columns.ELEMENT_ID}
             )
+        );"""
+*/
+    const val CREATE = """
+        CREATE VIRTUAL TABLE $NAME USING rtree(
+            ${Columns.ELEMENT_ID},
+            ${Columns.MIN_LATITUDE},
+            ${Columns.MAX_LATITUDE},
+            ${Columns.MIN_LONGITUDE},
+            ${Columns.MAX_LONGITUDE},
+            +${Columns.ELEMENT_TYPE} varchar(255) NOT NULL,
+            +${Columns.GEOMETRY_POLYLINES} blob,
+            +${Columns.GEOMETRY_POLYGONS} blob,
+            +${Columns.CENTER_LATITUDE} double NOT NULL,
+            +${Columns.CENTER_LONGITUDE} double NOT NULL
         );"""
 
     const val SPATIAL_INDEX_CREATE = """

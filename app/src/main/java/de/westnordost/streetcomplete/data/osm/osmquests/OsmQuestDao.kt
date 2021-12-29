@@ -10,7 +10,9 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.QU
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.ELEMENT_TYPE
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.ELEMENT_ID
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.LATITUDE
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.LATITUDE_MAX
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.LONGITUDE
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.LONGITUDE_MAX
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.NAME
 import de.westnordost.streetcomplete.data.queryIn
 import de.westnordost.streetcomplete.data.quest.OsmQuestKey
@@ -25,8 +27,10 @@ class OsmQuestDao @Inject constructor(private val db: Database) {
 
     fun get(key: OsmQuestKey): OsmQuestDaoEntry? =
         db.queryOne(NAME,
-            where = "$ELEMENT_TYPE = ? AND $ELEMENT_ID = ? AND $QUEST_TYPE = ?",
-            args = arrayOf(key.elementType.name, key.elementId, key.questTypeName)
+            //where = "$ELEMENT_TYPE = ? AND $ELEMENT_ID = ? AND $QUEST_TYPE = ?",
+            //args = arrayOf(key.elementType.name, key.elementId, key.questTypeName)
+            // why don't the lines above find anything, but the line below does?
+            where = "$ELEMENT_TYPE = '${key.elementType.name}' AND $ELEMENT_ID = ${key.elementId} AND $QUEST_TYPE = '${key.questTypeName}'"
         ) { it.toOsmQuestEntry() }
 
     fun delete(key: OsmQuestKey): Boolean =
@@ -39,13 +43,15 @@ class OsmQuestDao @Inject constructor(private val db: Database) {
         if (quests.isEmpty()) return
         // replace because even if the quest already exists in DB, the center position might have changed
         db.replaceMany(NAME,
-            arrayOf(QUEST_TYPE, ELEMENT_TYPE, ELEMENT_ID, LATITUDE, LONGITUDE),
+            arrayOf(LATITUDE, LATITUDE_MAX, LONGITUDE, LONGITUDE_MAX, QUEST_TYPE, ELEMENT_TYPE, ELEMENT_ID),
             quests.map { arrayOf(
+                it.position.latitude,
+                it.position.latitude,
+                it.position.longitude,
+                it.position.longitude,
                 it.questTypeName,
                 it.elementType.name,
-                it.elementId,
-                it.position.latitude,
-                it.position.longitude
+                it.elementId
             ) }
         )
     }
@@ -82,10 +88,12 @@ class OsmQuestDao @Inject constructor(private val db: Database) {
     }
 }
 
-private fun inBoundsSql(bbox: BoundingBox): String = """
-        ($LATITUDE BETWEEN ${bbox.min.latitude} AND ${bbox.max.latitude}) AND
-        ($LONGITUDE BETWEEN ${bbox.min.longitude} AND ${bbox.max.longitude})
-    """.trimIndent()
+private fun inBoundsSql(bbox: BoundingBox) = """
+    $LATITUDE <= ${bbox.max.latitude} AND
+    $LATITUDE_MAX >= ${bbox.min.latitude} AND
+    $LONGITUDE <= ${bbox.max.longitude} AND
+    $LONGITUDE_MAX >= ${bbox.min.longitude}
+""".trimIndent()
 
 private fun CursorPosition.toOsmQuestEntry(): OsmQuestDaoEntry = BasicOsmQuestDaoEntry(
     ElementType.valueOf(getString(ELEMENT_TYPE)),
@@ -95,11 +103,13 @@ private fun CursorPosition.toOsmQuestEntry(): OsmQuestDaoEntry = BasicOsmQuestDa
 )
 
 private fun OsmQuestDaoEntry.toPairs() = listOf(
+    LATITUDE to position.latitude,
+    LATITUDE_MAX to position.latitude,
+    LONGITUDE to position.longitude,
+    LONGITUDE_MAX to position.longitude,
     QUEST_TYPE to questTypeName,
     ELEMENT_TYPE to elementType.name,
-    ELEMENT_ID to elementId,
-    LATITUDE to position.latitude,
-    LONGITUDE to position.longitude
+    ELEMENT_ID to elementId
 )
 
 data class BasicOsmQuestDaoEntry(

@@ -7,29 +7,23 @@ object OsmQuestTable {
         const val QUEST_TYPE = "quest_type"
         const val ELEMENT_ID = "element_id"
         const val ELEMENT_TYPE = "element_type"
+        const val ID = "id"
         const val LATITUDE = "latitude"
+        const val LATITUDE_MAX = "latitude_max"
         const val LONGITUDE = "longitude"
+        const val LONGITUDE_MAX = "longitude_max"
     }
 
     const val CREATE = """
-        CREATE TABLE $NAME (
-            ${Columns.QUEST_TYPE} varchar(255) NOT NULL,
-            ${Columns.ELEMENT_ID} int NOT NULL,
-            ${Columns.ELEMENT_TYPE} varchar(255) NOT NULL,
-            ${Columns.LATITUDE} double NOT NULL,
-            ${Columns.LONGITUDE} double NOT NULL,
-            PRIMARY KEY (
-                ${Columns.ELEMENT_TYPE},
-                ${Columns.ELEMENT_ID},
-                ${Columns.QUEST_TYPE}
-            )
-        );
-    """
-
-    const val SPATIAL_INDEX_CREATE = """
-        CREATE INDEX osm_quests_spatial_index ON $NAME (
+        CREATE VIRTUAL TABLE $NAME USING rtree(
+            ${Columns.ID},
             ${Columns.LATITUDE},
-            ${Columns.LONGITUDE}
+            ${Columns.LATITUDE_MAX},
+            ${Columns.LONGITUDE},
+            ${Columns.LONGITUDE_MAX},
+            +${Columns.QUEST_TYPE} varchar(255) NOT NULL,
+            +${Columns.ELEMENT_ID} int NOT NULL,
+            +${Columns.ELEMENT_TYPE} varchar(255) NOT NULL
         );
     """
 }

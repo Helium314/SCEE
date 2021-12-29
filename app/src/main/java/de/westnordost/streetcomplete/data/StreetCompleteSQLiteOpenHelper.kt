@@ -34,7 +34,6 @@ import de.westnordost.streetcomplete.quests.oneway_suspects.data.WayTrafficFlowT
     override fun onCreate(db: SQLiteDatabase) {
         // OSM notes
         db.execSQL(NoteTable.CREATE)
-        db.execSQL(NoteTable.SPATIAL_INDEX_CREATE)
 
         // changes made on OSM notes
         db.execSQL(NoteEditsTable.CREATE)

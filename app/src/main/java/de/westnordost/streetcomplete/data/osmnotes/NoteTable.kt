@@ -6,7 +6,9 @@ object NoteTable {
     object Columns {
         const val ID = "note_id"
         const val LATITUDE = "latitude"
+        const val LATITUDE_MAX = "latitude_max"
         const val LONGITUDE = "longitude"
+        const val LONGITUDE_MAX = "longitude_max"
         const val STATUS = "note_status"
         const val CREATED = "note_created"
         const val CLOSED = "note_closed"
@@ -15,21 +17,17 @@ object NoteTable {
     }
 
     const val CREATE = """
-        CREATE TABLE $NAME (
-            ${Columns.ID} int PRIMARY KEY,
-            ${Columns.LATITUDE} double NOT NULL,
-            ${Columns.LONGITUDE} double NOT NULL,
-            ${Columns.CREATED} int NOT NULL,
-            ${Columns.CLOSED} int,
-            ${Columns.STATUS} varchar(255) NOT NULL,
-            ${Columns.COMMENTS} text NOT NULL,
-            ${Columns.LAST_SYNC} int NOT NULL
+        CREATE VIRTUAL TABLE $NAME USING rtree(
+            ${Columns.ID},
+            ${Columns.LATITUDE},
+            ${Columns.LATITUDE_MAX},
+            ${Columns.LONGITUDE},
+            ${Columns.LONGITUDE_MAX},
+            +${Columns.CREATED} int NOT NULL,
+            +${Columns.CLOSED} int,
+            +${Columns.STATUS} varchar(255) NOT NULL,
+            +${Columns.COMMENTS} text NOT NULL,
+            +${Columns.LAST_SYNC} int NOT NULL
         );"""
 
-    const val SPATIAL_INDEX_CREATE = """
-        CREATE INDEX osm_notes_spatial_index ON $NAME (
-            ${Columns.LATITUDE},
-            ${Columns.LONGITUDE}
-        );
-    """
 }

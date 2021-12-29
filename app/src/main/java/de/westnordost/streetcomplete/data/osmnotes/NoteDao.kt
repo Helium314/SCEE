@@ -12,7 +12,9 @@ import de.westnordost.streetcomplete.data.osmnotes.NoteTable.Columns.CREATED
 import de.westnordost.streetcomplete.data.osmnotes.NoteTable.Columns.ID
 import de.westnordost.streetcomplete.data.osmnotes.NoteTable.Columns.LAST_SYNC
 import de.westnordost.streetcomplete.data.osmnotes.NoteTable.Columns.LATITUDE
+import de.westnordost.streetcomplete.data.osmnotes.NoteTable.Columns.LATITUDE_MAX
 import de.westnordost.streetcomplete.data.osmnotes.NoteTable.Columns.LONGITUDE
+import de.westnordost.streetcomplete.data.osmnotes.NoteTable.Columns.LONGITUDE_MAX
 import de.westnordost.streetcomplete.data.osmnotes.NoteTable.Columns.STATUS
 import de.westnordost.streetcomplete.data.osmnotes.NoteTable.NAME
 import kotlinx.serialization.decodeFromString
@@ -36,10 +38,12 @@ class NoteDao @Inject constructor(private val db: Database) {
         if (notes.isEmpty()) return
 
         db.replaceMany(NAME,
-            arrayOf(ID, LATITUDE, LONGITUDE, STATUS, CREATED, CLOSED, COMMENTS, LAST_SYNC),
+            arrayOf(ID, LATITUDE, LATITUDE_MAX, LONGITUDE, LONGITUDE_MAX, STATUS, CREATED, CLOSED, COMMENTS, LAST_SYNC),
             notes.map { arrayOf(
                 it.id,
                 it.position.latitude,
+                it.position.latitude,
+                it.position.longitude,
                 it.position.longitude,
                 it.status.name,
                 it.timestampCreated,
@@ -57,7 +61,7 @@ class NoteDao @Inject constructor(private val db: Database) {
         db.query(NAME,
             columns = arrayOf(LATITUDE, LONGITUDE),
             where = inBoundsSql(bbox),
-        ) { LatLon(it.getDouble(LATITUDE), it.getDouble(LONGITUDE)) }
+        ) { LatLon(it.getFloat(LATITUDE).toDouble(), it.getFloat(LONGITUDE).toDouble()) }
 
     fun getAll(ids: Collection<Long>): List<Note> {
         if (ids.isEmpty()) return emptyList()
@@ -85,7 +89,9 @@ class NoteDao @Inject constructor(private val db: Database) {
     private fun Note.toPairs() = listOf(
         ID to id,
         LATITUDE to position.latitude,
+        LATITUDE_MAX to position.latitude,
         LONGITUDE to position.longitude,
+        LONGITUDE_MAX to position.longitude,
         STATUS to status.name,
         CREATED to timestampCreated,
         CLOSED to timestampClosed,
@@ -102,9 +108,16 @@ class NoteDao @Inject constructor(private val db: Database) {
         Json.decodeFromString(getString(COMMENTS))
     )
 
-    private fun inBoundsSql(bbox: BoundingBox): String = """
-        ($LATITUDE BETWEEN ${bbox.min.latitude} AND ${bbox.max.latitude}) AND
-        ($LONGITUDE BETWEEN ${bbox.min.longitude} AND ${bbox.max.longitude})
-    """.trimIndent()
+    // still works, but version below makes better use of R-tree
+//    private fun inBoundsSql(bbox: BoundingBox): String = """
+//        ($LATITUDE BETWEEN ${bbox.min.latitude} AND ${bbox.max.latitude}) AND
+//        ($LONGITUDE BETWEEN ${bbox.min.longitude} AND ${bbox.max.longitude})
+//    """.trimIndent()
+    private fun inBoundsSql(bbox: BoundingBox) = """
+    $LATITUDE <= ${bbox.max.latitude} AND
+    $LATITUDE_MAX >= ${bbox.min.latitude} AND
+    $LONGITUDE <= ${bbox.max.longitude} AND
+    $LONGITUDE_MAX >= ${bbox.min.longitude}
+""".trimIndent()
 
 }

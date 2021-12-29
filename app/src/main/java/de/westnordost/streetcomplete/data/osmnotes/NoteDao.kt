@@ -61,7 +61,7 @@ class NoteDao @Inject constructor(private val db: Database) {
         db.query(NAME,
             columns = arrayOf(LATITUDE, LONGITUDE),
             where = inBoundsSql(bbox),
-        ) { LatLon(it.getFloat(LATITUDE).toDouble(), it.getFloat(LONGITUDE).toDouble()) }
+        ) { LatLon(it.getDouble(LATITUDE), it.getDouble(LONGITUDE)) }
 
     fun getAll(ids: Collection<Long>): List<Note> {
         if (ids.isEmpty()) return emptyList()

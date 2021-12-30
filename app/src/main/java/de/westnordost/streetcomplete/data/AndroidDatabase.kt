@@ -12,9 +12,6 @@ import javax.inject.Inject
 
 @SuppressLint("Recycle")
 class AndroidDatabase @Inject constructor(private val dbHelper: SQLiteOpenHelper) : Database {
-    init {
-        System.loadLibrary("sqliteX")
-    }
     private val db get() = dbHelper.writableDatabase
 
     override fun exec(sql: String, args: Array<Any>?) {

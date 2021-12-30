@@ -9,6 +9,9 @@ import javax.inject.Singleton
 
 @Module
 object DbModule {
+    init {
+        System.loadLibrary("sqliteX")
+    }
     @Provides @Singleton fun sqLiteOpenHelper(ctx: Context): SQLiteOpenHelper =
         sqLiteOpenHelper(ctx, ApplicationConstants.DATABASE_NAME)
 

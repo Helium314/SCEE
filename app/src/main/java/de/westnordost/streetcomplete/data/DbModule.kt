@@ -1,7 +1,7 @@
 package de.westnordost.streetcomplete.data
 
 import android.content.Context
-import android.database.sqlite.SQLiteOpenHelper
+import org.sqlite.database.sqlite.SQLiteOpenHelper
 import dagger.Module
 import dagger.Provides
 import de.westnordost.streetcomplete.ApplicationConstants

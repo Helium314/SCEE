@@ -33,7 +33,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "de.westnordost.streetcomplete"
+        applicationId = "de.westnordost.streetcomplete.rtree"
         minSdk = 21
         targetSdk = 30
         versionCode = 3900
@@ -183,6 +183,8 @@ dependencies {
 
     // opening hours parser
     implementation("ch.poole:OpeningHoursParser:0.25.0")
+
+    implementation(files("libs/sqlite-android-3370000.aar"))
 }
 
 /** Localizations that should be pulled from POEditor etc. */

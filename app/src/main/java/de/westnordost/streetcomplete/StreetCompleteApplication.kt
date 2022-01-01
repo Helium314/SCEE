@@ -34,6 +34,7 @@ class StreetCompleteApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        System.loadLibrary("sqliteX")
 
         deleteDatabase(ApplicationConstants.OLD_DATABASE_NAME)
 

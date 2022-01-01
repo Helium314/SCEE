@@ -16,6 +16,10 @@
 
 # tangram end --------------------------------------------------------------------------------------
 
+# sqlite library: keep everything
+-keep class org.sqlite.database.** { *; }
+-keep class org.sqlite.database.* { *; }
+
 # Lifecycle
 -keep public class androidx.lifecycle.* {
     public protected *;

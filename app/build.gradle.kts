@@ -185,9 +185,7 @@ dependencies {
     implementation("ch.poole:OpeningHoursParser:0.25.0")
 
     // sqlite with r-tree
-    implementation("com.github.requery:sqlite-android:3.36.0") // maybe replace later, but it's simple to use
-    implementation("androidx.sqlite:sqlite:2.1.0") // is this necessary or not?
-    //implementation("com.github.sevar83:android-spatialite:2.0.1") // test later?
+    implementation(files("libs/sqlite-android-3370000.aar"))
 }
 
 /** Localizations that should be pulled from POEditor etc. */

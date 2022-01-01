@@ -1,8 +1,8 @@
 package de.westnordost.streetcomplete.data
 
 import android.content.Context
-import io.requery.android.database.sqlite.SQLiteDatabase
-import io.requery.android.database.sqlite.SQLiteOpenHelper
+import org.sqlite.database.sqlite.SQLiteDatabase
+import org.sqlite.database.sqlite.SQLiteOpenHelper
 import de.westnordost.streetcomplete.data.user.achievements.UserAchievementsTable
 import de.westnordost.streetcomplete.data.user.achievements.UserLinksTable
 

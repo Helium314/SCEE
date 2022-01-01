@@ -22,10 +22,10 @@
             <data android:scheme="geo"/>
         </intent>
     </queries>
-    <!-- allowBackup: some error with the the requery sqlite thing if it is not set to true, doesn't matter for testing -->
     <application
         android:name=".StreetCompleteApplication"
-        android:allowBackup="true"
+        tools:replace="android:allowBackup"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"

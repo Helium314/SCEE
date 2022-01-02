@@ -1,7 +1,5 @@
 package de.westnordost.streetcomplete.data.osm.osmquests
 
-import android.os.SystemClock
-import android.util.Log
 import de.westnordost.streetcomplete.data.CursorPosition
 import de.westnordost.streetcomplete.data.Database
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox

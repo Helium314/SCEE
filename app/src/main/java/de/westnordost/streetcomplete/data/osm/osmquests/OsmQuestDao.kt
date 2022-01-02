@@ -1,5 +1,7 @@
 package de.westnordost.streetcomplete.data.osm.osmquests
 
+import android.os.SystemClock
+import android.util.Log
 import de.westnordost.streetcomplete.data.CursorPosition
 import de.westnordost.streetcomplete.data.Database
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
@@ -9,6 +11,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.QUEST_TYPE
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.ELEMENT_TYPE
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.ELEMENT_ID
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.ID
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.LATITUDE
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.LATITUDE_MAX
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.LONGITUDE
@@ -30,7 +33,8 @@ class OsmQuestDao @Inject constructor(private val db: Database) {
             //where = "$ELEMENT_TYPE = ? AND $ELEMENT_ID = ? AND $QUEST_TYPE = ?",
             //args = arrayOf(key.elementType.name, key.elementId, key.questTypeName)
             // why don't the lines above find anything, but the line below does?
-            where = "$ELEMENT_TYPE = '${key.elementType.name}' AND $ELEMENT_ID = ${key.elementId} AND $QUEST_TYPE = '${key.questTypeName}'"
+//            where = "$ELEMENT_TYPE = '${key.elementType.name}' AND $ELEMENT_ID = ${key.elementId} AND $QUEST_TYPE = '${key.questTypeName}'"
+            where = "$ID = '${key.questIndex()}'"
         ) { it.toOsmQuestEntry() }
 
     fun delete(key: OsmQuestKey): Boolean =
@@ -43,8 +47,9 @@ class OsmQuestDao @Inject constructor(private val db: Database) {
         if (quests.isEmpty()) return
         // replace because even if the quest already exists in DB, the center position might have changed
         db.replaceMany(NAME,
-            arrayOf(LATITUDE, LATITUDE_MAX, LONGITUDE, LONGITUDE_MAX, QUEST_TYPE, ELEMENT_TYPE, ELEMENT_ID),
+            arrayOf(ID, LATITUDE, LATITUDE_MAX, LONGITUDE, LONGITUDE_MAX, QUEST_TYPE, ELEMENT_TYPE, ELEMENT_ID),
             quests.map { arrayOf(
+                it.questIndex(),
                 it.position.latitude,
                 it.position.latitude,
                 it.position.longitude,
@@ -103,6 +108,7 @@ private fun CursorPosition.toOsmQuestEntry(): OsmQuestDaoEntry = BasicOsmQuestDa
 )
 
 private fun OsmQuestDaoEntry.toPairs() = listOf(
+    ID to questIndex(),
     LATITUDE to position.latitude,
     LATITUDE_MAX to position.latitude,
     LONGITUDE to position.longitude,
@@ -111,6 +117,12 @@ private fun OsmQuestDaoEntry.toPairs() = listOf(
     ELEMENT_TYPE to elementType.name,
     ELEMENT_ID to elementId
 )
+
+private fun OsmQuestKey.questIndex() =
+    (elementId.toString() + questTypeName + elementType.name).hashCode() // should better be long, not int
+
+private fun OsmQuestDaoEntry.questIndex() =
+    (elementId.toString() + questTypeName + elementType.name).hashCode() // should better be long, not int
 
 data class BasicOsmQuestDaoEntry(
     override val elementType: ElementType,

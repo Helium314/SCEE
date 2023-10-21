@@ -24,7 +24,7 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     RAILWAY(listOf()),
     // below is not really for service buildings
 //    CHEMICAL(listOf("utility" to "chemical")),
-//    SEWERAGE(listOf("utility" to "sewerage")),
+    SEWERAGE(listOf("utility" to "sewerage", "substance" to "sewage")), // can be pumping stations or treatment plants
 //    HYDRANT(listOf("utility" to "hydrant")),
 //    STREET_LIGHTING(listOf("utility" to "street_lighting")), // only street cabinet
 
@@ -37,11 +37,13 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     PLANT(listOf("power" to "plant")),
     //GAS
     GAS_PRESSURE_REGULATION(listOf("utility" to "gas", "pipeline" to "substation", "substation" to "distribution", "substance" to "gas")),
+    // WATER
     WATER_WELL(listOf("utility" to "water", "man_made" to "water_well", "substance" to "water")),
     COVERED_RESERVOIR(listOf("utility" to "water", "man_made" to "reservoir_covered", "substance" to "water")),
     WATER_PUMPING_STATION(listOf("utility" to "water", "man_made" to "pumping_station", "substance" to "water")),
+    // OIL
     OIL_PUMPING_STATION(listOf("utility" to "oil", "man_made" to "pumping_station", "substance" to "oil")),
-    OIL_VALVE(listOf("utility" to "oil", "pipeline" to "substation", "substation" to "valve", "substance" to "oil")), // mostly without building
+    OIL_VALVE(listOf("utility" to "oil", "pipeline" to "substation", "substation" to "valve", "substance" to "oil")), // in reality mostly without building
     GAS_PUMPING_STATION(listOf("utility" to "gas", "man_made" to "pumping_station", "substane" to "gas")),
     // RAILWAY
     RAILWAY_VENTILATION_SHAFT(listOf("service" to "ventilation", "railway" to "ventilation_shaft")), // 374x in use

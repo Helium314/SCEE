@@ -296,6 +296,14 @@
     <string name="quest_service_building_type_well">Water well</string>
     <string name="quest_service_building_type_reservoir">Reservoir</string>
     <string name="quest_service_building_type_pump">Pumping station</string>
+    <string name="quest_service_building_power">Electricity</string>
+    <string name="quest_service_building_power_description">Service building for something with electric power</string>
+    <string name="quest_service_building_water">Water</string>
+    <string name="quest_service_building_oil">Oil</string>
+    <string name="quest_service_building_gas">Gas</string>
+    <string name="quest_service_building_telecom">Telecommunication</string>
+    <string name="quest_service_building_railway">Railway</string>
+    <string name="quest_service_building_ventilation">Ventilation</string>
 
     <!-- outdoor seating type -->
     <string name="quest_seating_parklet">Next to the curb, or where parking used to be</string>

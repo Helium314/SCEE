@@ -1,9 +1,9 @@
 package de.westnordost.streetcomplete.quests.service_building
 
+import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.quests.service_building.ServiceBuildingType.*
-import de.westnordost.streetcomplete.view.CharSequenceText
 import de.westnordost.streetcomplete.view.image_select.GroupableDisplayItem
-import de.westnordost.streetcomplete.view.image_select.Item3
+import de.westnordost.streetcomplete.view.image_select.Item
 
 // todo: UtilityType instead? that way the quest could also extend stuff to street_cabinet
 //  just have different Categories then
@@ -72,7 +72,7 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     HEATING(listOf("utility" to "heating", "substance" to "hot_water")),
     // https://commons.wikimedia.org/wiki/File:Cornell_University_Central_Heating_Plant.jpg
 
-    VENTILATION_SHAFT(listOf("man_made" to "ventilation")), // todo: should remove building tag (handle in applyAnswerTo, not here)
+    VENTILATION_SHAFT(listOf("man_made" to "ventilation")), // building tag removed in AddServiceBuildingType.applyAnswerTo
     // https://commons.wikimedia.org/wiki/File:Maryina_Roshcha_ventilation_shaft_in_Moscow.jpg
     // TELECOM
     COMMUNICATION(listOf("utility" to "communication")),
@@ -102,17 +102,33 @@ fun Array<ServiceBuildingTypeCategory>.toItems() = map { it.asItem() }
 
 fun ServiceBuildingType.asItem(): GroupableDisplayItem<ServiceBuildingType> {
     val iconResId = null // looks strange without icons, but icons are work
-//    val titleResId = titleResId -> later
-    val title = CharSequenceText(tags.toString())
-    return Item3(this, iconResId, title, null)
+    return Item(this, iconResId, titleResId, descriptionResId)
 }
 
 fun ServiceBuildingTypeCategory.asItem(): GroupableDisplayItem<ServiceBuildingType> {
     val iconResId = null // always or just for now?
-//    val titleResId = titleResId ?: return null
-    val title = CharSequenceText(type.toString()) // todo: actual name
-    return Item3(type, iconResId, title, null, subTypes.toItems())
+    val descriptionResId = null // could be added similar to ServiceBuildingType.descriptionResId
+    return Item(type, iconResId, titleResId, descriptionResId, subTypes.toItems())
 }
 
 // works as a simple list with missing icons (ugly)
 // categories not working
+
+private val ServiceBuildingType.titleResId: Int get() = when (this) {
+    POWER -> R.string.quest_service_building_power
+}
+
+private val ServiceBuildingType.descriptionResId: Int? get() = when (this) {
+    POWER -> R.string.quest_service_building_power_description
+    else -> null
+}
+
+private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {
+    ServiceBuildingTypeCategory.POWER -> R.string.quest_service_building_power
+    ServiceBuildingTypeCategory.WATER -> R.string.quest_service_building_water
+    ServiceBuildingTypeCategory.OIL -> R.string.quest_service_building_oil
+    ServiceBuildingTypeCategory.GAS -> R.string.quest_service_building_gas
+    ServiceBuildingTypeCategory.TELECOM -> R.string.quest_service_building_telecom
+    ServiceBuildingTypeCategory.RAILWAY -> R.string.quest_service_building_railway
+    ServiceBuildingTypeCategory.VENTILATION_SHAFT -> R.string.quest_service_building_ventilation
+}

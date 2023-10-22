@@ -24,3 +24,14 @@ data class Item2<T>(
     override val title: Text? = null,
     override val description: Text? = null
 ) : DisplayItem<T>
+
+// todo: just for testing, remove and switch to Item once service building types are in resources
+data class Item3<T>(
+    override val value: T?,
+    val drawableId: Int? = null,
+    override val title: Text? = null,
+    override val description: Text? = null,
+    override val items: List<GroupableDisplayItem<T>>? = null
+) : GroupableDisplayItem<T> {
+    override val image: Image? get() = drawableId?.let { ResImage(it) }
+}

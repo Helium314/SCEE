@@ -116,7 +116,7 @@ SCEE asks for two more permissions than StreetComplete: `ACCESS_BACKGROUND_LOCAT
     * Disable 3D buildings
     * Show arrows indicating direction of highlighted way
     * Highlight geometries for nearby quests
-    * Put pin om exact location of a quest
+    * Put pin on exact location of a quest
     * Disable quest solved animation
     * Provide GPX track and have it always shown on the map
   * Quest settings

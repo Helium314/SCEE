@@ -165,7 +165,7 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.POWER -> R.drawable.ic_building_service
     ServiceBuildingType.WATER ->    R.drawable.ic_quest_service_building_water
     ServiceBuildingType.TELECOM ->    R.drawable.ic_building_service
-    ServiceBuildingType.GAS ->    R.drawable.ic_building_service
+    ServiceBuildingType.GAS ->    R.drawable.ic_quest_building_service_gas
     ServiceBuildingType.OIL ->    R.drawable.ic_building_service
     ServiceBuildingType.RAILWAY ->    R.drawable.ic_building_service
     ServiceBuildingType.SEWERAGE ->    R.drawable.ic_building_service

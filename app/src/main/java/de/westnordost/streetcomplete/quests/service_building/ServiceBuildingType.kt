@@ -88,12 +88,12 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
 
 // like BuildingTypeCategory
 enum class ServiceBuildingTypeCategory(val type: ServiceBuildingType?, val subTypes: List<ServiceBuildingType>) {
-    POWER(ServiceBuildingType.POWER, listOf(MINOR_SUBSTATION)),
+    POWER(ServiceBuildingType.POWER, listOf(MINOR_SUBSTATION, SUBSTATION, TRACTION_SUBSTATION)),
     WATER(ServiceBuildingType.WATER, listOf(WATER_WELL, COVERED_RESERVOIR, WATER_PUMPING_STATION)),
     OIL(ServiceBuildingType.OIL, listOf(OIL_PUMPING_STATION)),
     GAS(ServiceBuildingType.GAS, listOf(GAS_PUMPING_STATION, GAS_PRESSURE_REGULATION)),
     TELECOM(ServiceBuildingType.TELECOM, listOf(ServiceBuildingType.TELECOM, ServiceBuildingType.COMMUNICATION, ServiceBuildingType.INTERNET_EXCHANGE, ServiceBuildingType.TELECOM_EXCHANGE)), // this is an unselectable category (here the ok button should disappear, but that's same for building type quest)
-    RAILWAY(ServiceBuildingType.RAILWAY, listOf(RAILWAY_VENTILATION_SHAFT, RAILWAY_SIGNAL_BOX, RAILWAY_ENGINE_SHED, RAILWAY_WORKSHOP, RAILWAY_WASH)),
+    RAILWAY(ServiceBuildingType.RAILWAY, listOf(RAILWAY_VENTILATION_SHAFT, RAILWAY_SIGNAL_BOX, RAILWAY_ENGINE_SHED, RAILWAY_WASH)),
     VENTILATION_SHAFT(ServiceBuildingType.VENTILATION_SHAFT, emptyList()) // here is a category without entries -> this would be better than above, but looks like entries of category above...
 }
 
@@ -116,6 +116,34 @@ fun ServiceBuildingTypeCategory.asItem(): GroupableDisplayItem<ServiceBuildingTy
 
 private val ServiceBuildingType.titleResId: Int get() = when (this) {
     POWER -> R.string.quest_service_building_power
+    MINOR_SUBSTATION -> R.string.quest_service_building_power
+    SUBSTATION -> R.string.quest_service_building_power
+    INDUSTRIAL_SUBSTATION -> R.string.quest_service_building_power
+    TRACTION_SUBSTATION -> R.string.quest_service_building_power
+    SWITCHGEAR -> R.string.quest_service_building_power
+    PLANT -> R.string.quest_service_building_power
+    WATER -> R.string.quest_service_building_water
+    WATER_WELL -> R.string.quest_service_building_water
+    COVERED_RESERVOIR -> R.string.quest_service_building_water
+    WATER_PUMPING_STATION -> R.string.quest_service_building_water
+    SEWERAGE -> R.string.quest_service_building_sewerage
+    OIL -> R.string.quest_service_building_oil
+    OIL_PUMPING_STATION -> R.string.quest_service_building_oil
+    GAS -> R.string.quest_service_building_gas
+    GAS_PRESSURE_REGULATION -> R.string.quest_service_building_gas
+    GAS_PUMPING_STATION -> R.string.quest_service_building_gas
+    TELECOM -> R.string.quest_service_building_telecom
+    COMMUNICATION -> R.string.quest_service_building_telecom
+    INTERNET_EXCHANGE -> R.string.quest_service_building_telecom
+    TELECOM_EXCHANGE -> R.string.quest_service_building_telecom
+    RAILWAY -> R.string.quest_service_building_railway
+    RAILWAY_VENTILATION_SHAFT -> R.string.quest_service_building_railway
+    RAILWAY_SIGNAL_BOX -> R.string.quest_service_building_railway
+    RAILWAY_ENGINE_SHED -> R.string.quest_service_building_railway
+    RAILWAY_WASH -> R.string.quest_service_building_railway
+    VENTILATION_SHAFT -> R.string.quest_service_building_ventilation
+    HEATING -> R.string.quest_service_building_heating
+    MONITORING_STATION -> R.string.quest_service_building_telecom
 }
 
 private val ServiceBuildingType.descriptionResId: Int? get() = when (this) {
@@ -131,4 +159,36 @@ private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {
     ServiceBuildingTypeCategory.TELECOM -> R.string.quest_service_building_telecom
     ServiceBuildingTypeCategory.RAILWAY -> R.string.quest_service_building_railway
     ServiceBuildingTypeCategory.VENTILATION_SHAFT -> R.string.quest_service_building_ventilation
+}
+
+private val ServiceBuildingType.iconResId: Int? get() = when (this) {
+    ServiceBuildingType.POWER -> R.drawable.ic_building_service
+    ServiceBuildingType.WATER ->    R.drawable.ic_quest_service_building_water
+    ServiceBuildingType.TELECOM ->    R.drawable.ic_building_service
+    ServiceBuildingType.GAS ->    R.drawable.ic_building_service
+    ServiceBuildingType.OIL ->    R.drawable.ic_building_service
+    ServiceBuildingType.RAILWAY ->    R.drawable.ic_building_service
+    ServiceBuildingType.SEWERAGE ->    R.drawable.ic_building_service
+    ServiceBuildingType.MINOR_SUBSTATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.SUBSTATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.INDUSTRIAL_SUBSTATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.TRACTION_SUBSTATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.SWITCHGEAR ->    R.drawable.ic_building_service
+    ServiceBuildingType.PLANT ->    R.drawable.ic_building_service
+    ServiceBuildingType.GAS_PRESSURE_REGULATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.GAS_PUMPING_STATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.WATER_WELL ->    R.drawable.ic_building_service
+    ServiceBuildingType.COVERED_RESERVOIR ->    R.drawable.ic_building_service
+    ServiceBuildingType.WATER_PUMPING_STATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.OIL_PUMPING_STATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.RAILWAY_VENTILATION_SHAFT ->    R.drawable.ic_building_service
+    ServiceBuildingType.RAILWAY_SIGNAL_BOX ->    R.drawable.ic_building_service
+    ServiceBuildingType.RAILWAY_ENGINE_SHED ->    R.drawable.ic_building_service
+    ServiceBuildingType.RAILWAY_WASH ->    R.drawable.ic_building_service
+    ServiceBuildingType.HEATING ->    R.drawable.ic_building_service
+    ServiceBuildingType.VENTILATION_SHAFT ->    R.drawable.ic_building_service
+    ServiceBuildingType.COMMUNICATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_building_service
+    ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_building_service
+    ServiceBuildingType.MONITORING_STATION ->    R.drawable.ic_building_service
 }

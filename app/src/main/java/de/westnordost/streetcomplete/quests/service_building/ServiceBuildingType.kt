@@ -15,21 +15,21 @@ import de.westnordost.streetcomplete.view.image_select.Item
 
 // like BuildingType
 enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
-    // todo: check these whether they actually apply to service buildings
     POWER(listOf("utility" to "power")), // also street cabinet
     TELECOM(listOf("utility" to "telecom")), // also street cabinet
     WATER(listOf("utility" to "water")),
     GAS(listOf("utility" to "gas")),
     OIL(listOf("utility" to "oil")),
     RAILWAY(listOf()),
-    // below is not really for service buildings
-//    CHEMICAL(listOf("utility" to "chemical")),
-
+    OTHER_SERVICE(listOf()),
     SEWERAGE(listOf("utility" to "sewerage", "substance" to "sewage")), // can be pumping stations or treatment plants
     // https://commons.wikimedia.org/wiki/Category:Abwasserpumpstation_(Rosenstra%C3%9Fe,_Saarbr%C3%BCcken)
-
-//    HYDRANT(listOf("utility" to "hydrant")),
-//    STREET_LIGHTING(listOf("utility" to "street_lighting")), // only street cabinet
+    HEATING(listOf("utility" to "heating", "substance" to "hot_water")),
+    // https://commons.wikimedia.org/wiki/File:Cornell_University_Central_Heating_Plant.jpg
+    VENTILATION_SHAFT(listOf("man_made" to "ventilation")), // building tag removed in AddServiceBuildingType.applyAnswerTo
+    // https://commons.wikimedia.org/wiki/File:Maryina_Roshcha_ventilation_shaft_in_Moscow.jpg
+    MONITORING_STATION(listOf("man_made" to "monitoring_station")),
+    // https://commons.wikimedia.org/wiki/File:River_monitoring_station,_Coytrahen_-_geograph.org.uk_-_4224388.jpg
 
     // POWER
     MINOR_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "minor_distribution")),
@@ -39,9 +39,9 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     INDUSTRIAL_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "industrial")),
     TRACTION_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "traction")), // kinda related with railway
     // https://commons.wikimedia.org/wiki/File:Woburn_rail_traction_substation,_Lower_Hutt,_New_Zealand.JPG
-    SWITCHGEAR(listOf("power" to "switchgear")),
+    SWITCHGEAR(listOf("utility" to "power", "power" to "switchgear")),
     // outside: https://commons.wikimedia.org/wiki/File:Painted_switchgear_in_Minsk_near_Janki_Kupaly_museum_2.jpg; inside: https://commons.wikimedia.org/wiki/File:Factory_Salasel_electric_services_switchgear_made_in_oman.jpg
-    PLANT(listOf("power" to "plant")),
+    PLANT(listOf("utility" to "power", "power" to "plant")),
     // https://commons.wikimedia.org/wiki/File:Dunamenti_Power_Plant,_gate_building,_2020_Sz%C3%A1zhalombatta.jpg
     //GAS
     GAS_PRESSURE_REGULATION(listOf("utility" to "gas", "pipeline" to "substation", "substation" to "distribution", "substance" to "gas")),
@@ -67,34 +67,21 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     // https://commons.wikimedia.org/wiki/File:Former_engine_shed_sited_on_a_shipyard_at_Whitby.jpg
     RAILWAY_WASH(listOf("railway" to "wash")), // there is no service-tag; DE: Zug-Waschanlage; 5x in use
     // https://commons.wikimedia.org/wiki/File:Train_wash,_Perth_Station_-_geograph.org.uk_-_4724498.jpg
-
-    // HEATING
-    HEATING(listOf("utility" to "heating", "substance" to "hot_water")),
-    // https://commons.wikimedia.org/wiki/File:Cornell_University_Central_Heating_Plant.jpg
-
-    VENTILATION_SHAFT(listOf("man_made" to "ventilation")), // building tag removed in AddServiceBuildingType.applyAnswerTo
-    // https://commons.wikimedia.org/wiki/File:Maryina_Roshcha_ventilation_shaft_in_Moscow.jpg
     // TELECOM
-    COMMUNICATION(listOf("utility" to "communication")),
-    INTERNET_EXCHANGE(listOf("telecom" to "internet_exchange")),
-    TELECOM_EXCHANGE(listOf("telecom" to "exchange")),
+    INTERNET_EXCHANGE(listOf("utility" to "communication", "telecom" to "internet_exchange")),
+    TELECOM_EXCHANGE(listOf("utility" to "communication", "telecom" to "exchange")),
     // https://commons.wikimedia.org/wiki/File:Telecom_Exchange_-_geograph.org.uk_-_5360464.jpg
-
-    // MONITORING
-    MONITORING_STATION(listOf("man_made" to "monitoring_station")),
-    // https://commons.wikimedia.org/wiki/File:River_monitoring_station,_Coytrahen_-_geograph.org.uk_-_4224388.jpg
-
 }
 
 // like BuildingTypeCategory
 enum class ServiceBuildingTypeCategory(val type: ServiceBuildingType?, val subTypes: List<ServiceBuildingType>) {
-    POWER(ServiceBuildingType.POWER, listOf(MINOR_SUBSTATION, SUBSTATION, TRACTION_SUBSTATION)),
+    POWER(ServiceBuildingType.POWER, listOf(MINOR_SUBSTATION, SUBSTATION, INDUSTRIAL_SUBSTATION, TRACTION_SUBSTATION, SWITCHGEAR, PLANT)),
     WATER(ServiceBuildingType.WATER, listOf(WATER_WELL, COVERED_RESERVOIR, WATER_PUMPING_STATION)),
     OIL(ServiceBuildingType.OIL, listOf(OIL_PUMPING_STATION)),
     GAS(ServiceBuildingType.GAS, listOf(GAS_PUMPING_STATION, GAS_PRESSURE_REGULATION)),
-    TELECOM(ServiceBuildingType.TELECOM, listOf(ServiceBuildingType.TELECOM, ServiceBuildingType.COMMUNICATION, ServiceBuildingType.INTERNET_EXCHANGE, ServiceBuildingType.TELECOM_EXCHANGE)), // this is an unselectable category (here the ok button should disappear, but that's same for building type quest)
-    RAILWAY(ServiceBuildingType.RAILWAY, listOf(RAILWAY_VENTILATION_SHAFT, RAILWAY_SIGNAL_BOX, RAILWAY_ENGINE_SHED, RAILWAY_WASH)),
-    VENTILATION_SHAFT(ServiceBuildingType.VENTILATION_SHAFT, emptyList()) // here is a category without entries -> this would be better than above, but looks like entries of category above...
+    TELECOM(ServiceBuildingType.TELECOM, listOf(INTERNET_EXCHANGE, TELECOM_EXCHANGE)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
+    RAILWAY(ServiceBuildingType.RAILWAY, listOf(RAILWAY_VENTILATION_SHAFT, RAILWAY_SIGNAL_BOX, RAILWAY_ENGINE_SHED, RAILWAY_WASH)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
+    OTHER_SERVICE(ServiceBuildingType.OTHER_SERVICE, listOf(SEWERAGE, HEATING, VENTILATION_SHAFT, MONITORING_STATION)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
 }
 
 fun Collection<ServiceBuildingType>.toItems() = map { it.asItem() }
@@ -116,38 +103,42 @@ fun ServiceBuildingTypeCategory.asItem(): GroupableDisplayItem<ServiceBuildingTy
 
 private val ServiceBuildingType.titleResId: Int get() = when (this) {
     POWER -> R.string.quest_service_building_power
-    MINOR_SUBSTATION -> R.string.quest_service_building_power
-    SUBSTATION -> R.string.quest_service_building_power
-    INDUSTRIAL_SUBSTATION -> R.string.quest_service_building_power
-    TRACTION_SUBSTATION -> R.string.quest_service_building_power
-    SWITCHGEAR -> R.string.quest_service_building_power
-    PLANT -> R.string.quest_service_building_power
+    MINOR_SUBSTATION -> R.string.quest_service_building_type_minor_substation
+    SUBSTATION -> R.string.quest_service_building_type_substation
+    INDUSTRIAL_SUBSTATION -> R.string.quest_service_building_type_industrial_substation
+    TRACTION_SUBSTATION -> R.string.quest_service_building_type_traction_substation
+    SWITCHGEAR -> R.string.quest_service_building_type_switchgear
+    PLANT -> R.string.quest_service_building_type_plant
     WATER -> R.string.quest_service_building_water
-    WATER_WELL -> R.string.quest_service_building_water
-    COVERED_RESERVOIR -> R.string.quest_service_building_water
-    WATER_PUMPING_STATION -> R.string.quest_service_building_water
+    WATER_WELL -> R.string.quest_service_building_type_well
+    COVERED_RESERVOIR -> R.string.quest_service_building_type_reservoir
+    WATER_PUMPING_STATION -> R.string.quest_service_building_type_pump
     SEWERAGE -> R.string.quest_service_building_sewerage
     OIL -> R.string.quest_service_building_oil
-    OIL_PUMPING_STATION -> R.string.quest_service_building_oil
+    OIL_PUMPING_STATION -> R.string.quest_service_building_oil_pumping_station
     GAS -> R.string.quest_service_building_gas
-    GAS_PRESSURE_REGULATION -> R.string.quest_service_building_gas
-    GAS_PUMPING_STATION -> R.string.quest_service_building_gas
+    GAS_PRESSURE_REGULATION -> R.string.quest_service_building_type_pressure
+    GAS_PUMPING_STATION -> R.string.quest_service_building_gas_pumping_station
     TELECOM -> R.string.quest_service_building_telecom
-    COMMUNICATION -> R.string.quest_service_building_telecom
-    INTERNET_EXCHANGE -> R.string.quest_service_building_telecom
-    TELECOM_EXCHANGE -> R.string.quest_service_building_telecom
+    INTERNET_EXCHANGE -> R.string.quest_service_building_internet_exchange
+    TELECOM_EXCHANGE -> R.string.quest_service_building_telecom_exchange
     RAILWAY -> R.string.quest_service_building_railway
-    RAILWAY_VENTILATION_SHAFT -> R.string.quest_service_building_railway
-    RAILWAY_SIGNAL_BOX -> R.string.quest_service_building_railway
-    RAILWAY_ENGINE_SHED -> R.string.quest_service_building_railway
-    RAILWAY_WASH -> R.string.quest_service_building_railway
+    RAILWAY_VENTILATION_SHAFT -> R.string.quest_service_building_railway_ventilation_shaft
+    RAILWAY_SIGNAL_BOX -> R.string.quest_service_building_railway_signal_box
+    RAILWAY_ENGINE_SHED -> R.string.quest_service_building_railway_engine_shed
+    RAILWAY_WASH -> R.string.quest_service_building_railway_wash
     VENTILATION_SHAFT -> R.string.quest_service_building_ventilation
     HEATING -> R.string.quest_service_building_heating
-    MONITORING_STATION -> R.string.quest_service_building_telecom
+    MONITORING_STATION -> R.string.quest_service_building_monitoring_station
+    OTHER_SERVICE -> R.string.quest_service_building_other
 }
 
 private val ServiceBuildingType.descriptionResId: Int? get() = when (this) {
     POWER -> R.string.quest_service_building_power_description
+    SUBSTATION -> R.string.quest_service_building_type_substation_description
+    MINOR_SUBSTATION -> R.string.quest_service_building_type_minor_substation_description
+    SWITCHGEAR -> R.string.quest_service_building_switchgear_description
+    HEATING -> R.string.quest_service_building_heating_description
     else -> null
 }
 
@@ -158,10 +149,11 @@ private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {
     ServiceBuildingTypeCategory.GAS -> R.string.quest_service_building_gas
     ServiceBuildingTypeCategory.TELECOM -> R.string.quest_service_building_telecom
     ServiceBuildingTypeCategory.RAILWAY -> R.string.quest_service_building_railway
-    ServiceBuildingTypeCategory.VENTILATION_SHAFT -> R.string.quest_service_building_ventilation
+    ServiceBuildingTypeCategory.OTHER_SERVICE -> R.string.quest_service_building_other
 }
 
 private val ServiceBuildingType.iconResId: Int? get() = when (this) {
+    // todo: The icons are not displayed at all so far
     ServiceBuildingType.POWER -> R.drawable.ic_building_service
     ServiceBuildingType.WATER ->    R.drawable.ic_quest_service_building_water
     ServiceBuildingType.TELECOM ->    R.drawable.ic_building_service
@@ -187,8 +179,8 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.RAILWAY_WASH ->    R.drawable.ic_building_service
     ServiceBuildingType.HEATING ->    R.drawable.ic_building_service
     ServiceBuildingType.VENTILATION_SHAFT ->    R.drawable.ic_building_service
-    ServiceBuildingType.COMMUNICATION ->    R.drawable.ic_building_service
     ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_building_service
     ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_building_service
     ServiceBuildingType.MONITORING_STATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.OTHER_SERVICE ->    R.drawable.ic_building_service
 }

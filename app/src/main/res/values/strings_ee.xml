@@ -291,21 +291,41 @@
 
     <!-- service building type -->
     <string name="quest_service_building_type_title">What kind of service building is this%s?</string>
-    <string name="quest_service_building_type_substation">Electrical substation</string>
-    <string name="quest_service_building_type_pressure">Gas pressure regulation</string>
-    <string name="quest_service_building_type_well">Water well</string>
-    <string name="quest_service_building_type_reservoir">Reservoir</string>
-    <string name="quest_service_building_type_pump">Pumping station</string>
     <string name="quest_service_building_power">Electricity</string>
     <string name="quest_service_building_power_description">Service building for something with electric power</string>
+    <string name="quest_service_building_type_substation">Electrical substation</string>
+    <string name="quest_service_building_type_substation_description">Substations that mainly relates to regional distribution networks</string>
+    <string name="quest_service_building_type_minor_substation">Small electrical substation</string>
+    <string name="quest_service_building_type_minor_substation_description">A small substation at the lowest level of transforming in the distribution grid</string>
+    <string name="quest_service_building_type_industrial_substation">Industrial electrical substation</string>
+    <string name="quest_service_building_type_traction_substation">Traction substation</string>
+    <string name="quest_service_building_type_traction_substation_description">Electrical substation that converts power to supply railways, trams or trolleybuses with traction current</string>
+    <string name="quest_service_building_type_switchgear">Switchgear</string>
+    <string name="quest_service_building_switchgear_description">Control gear of an electric power system</string>
+    <string name="quest_service_building_type_plant">Power plant</string>
+    <string name="quest_service_building_type_pressure">Gas pressure regulation</string>
+    <string name="quest_service_building_type_well">Water well</string>
+    <string name="quest_service_building_type_reservoir">Water Reservoir</string>
+    <string name="quest_service_building_type_pump">Water pumping station</string>
     <string name="quest_service_building_water">Water</string>
     <string name="quest_service_building_sewerage">Sewerage</string>
     <string name="quest_service_building_oil">Oil</string>
+    <string name="quest_service_building_oil_pumping_station">Oil pumping station</string>
     <string name="quest_service_building_gas">Gas</string>
+    <string name="quest_service_building_gas_pumping_station">Gas pumping station</string>
     <string name="quest_service_building_heating">Heating</string>
+    <string name="quest_service_building_heating_description">Building for heating transmission and distribution towards industries and domestic consumers (district heating)</string>
     <string name="quest_service_building_telecom">Telecommunication</string>
+    <string name="quest_service_building_internet_exchange">Internet exchange</string>
+    <string name="quest_service_building_telecom_exchange">Telecom exchange</string>
     <string name="quest_service_building_railway">Railway</string>
-    <string name="quest_service_building_ventilation">Ventilation</string>
+    <string name="quest_service_building_railway_ventilation_shaft">Railway ventilation</string>
+    <string name="quest_service_building_railway_signal_box">Railway signal box</string>
+    <string name="quest_service_building_railway_engine_shed">Railway engine shed</string>
+    <string name="quest_service_building_railway_wash">Railway wash station</string>
+    <string name="quest_service_building_ventilation">Ventilation shaft</string>
+    <string name="quest_service_building_monitoring_station">Monitoring Station</string>
+    <string name="quest_service_building_other">Other service building</string>
 
     <!-- outdoor seating type -->
     <string name="quest_seating_parklet">Next to the curb, or where parking used to be</string>

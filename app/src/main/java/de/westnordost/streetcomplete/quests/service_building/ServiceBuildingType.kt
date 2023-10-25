@@ -20,7 +20,7 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     TELECOM(listOf("utility" to "telecom")), // also street cabinet
     WATER(listOf("utility" to "water")),
     GAS(listOf("utility" to "gas")),
-    OIL(listOf("utility" to "oil")),
+    //OIL(listOf("utility" to "oil")),
     RAILWAY(listOf()),
     OTHER_SERVICE(listOf()),
     SEWERAGE(listOf("utility" to "sewerage", "substance" to "sewage")), // can be pumping stations or treatment plants
@@ -58,11 +58,10 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
 enum class ServiceBuildingTypeCategory(val type: ServiceBuildingType?, val subTypes: List<ServiceBuildingType>) {
     POWER(ServiceBuildingType.POWER, listOf(MINOR_SUBSTATION, SUBSTATION, INDUSTRIAL_SUBSTATION, TRACTION_SUBSTATION, SWITCHGEAR, PLANT)),
     WATER(ServiceBuildingType.WATER, listOf(WATER_WELL, COVERED_RESERVOIR, WATER_PUMPING_STATION)),
-    OIL(ServiceBuildingType.OIL, listOf(OIL_PUMPING_STATION)),
     GAS(ServiceBuildingType.GAS, listOf(GAS_PUMPING_STATION, GAS_PRESSURE_REGULATION)),
     TELECOM(ServiceBuildingType.TELECOM, listOf(TELECOM_EXCHANGE)),
     RAILWAY(ServiceBuildingType.RAILWAY, listOf(RAILWAY_VENTILATION_SHAFT, RAILWAY_SIGNAL_BOX, RAILWAY_ENGINE_SHED, RAILWAY_WASH)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
-    OTHER_SERVICE(ServiceBuildingType.OTHER_SERVICE, listOf(SEWERAGE, HEATING, VENTILATION_SHAFT, MONITORING_STATION)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
+    OTHER_SERVICE(ServiceBuildingType.OTHER_SERVICE, listOf(OIL_PUMPING_STATION, SEWERAGE, HEATING, VENTILATION_SHAFT, MONITORING_STATION)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
 }
 
 fun Collection<ServiceBuildingType>.toItems() = map { it.asItem() }
@@ -90,7 +89,6 @@ private val ServiceBuildingType.titleResId: Int get() = when (this) {
     COVERED_RESERVOIR -> R.string.quest_service_building_type_reservoir
     WATER_PUMPING_STATION -> R.string.quest_service_building_type_pump
     SEWERAGE -> R.string.quest_service_building_sewerage
-    OIL -> R.string.quest_service_building_oil
     OIL_PUMPING_STATION -> R.string.quest_service_building_oil_pumping_station
     GAS -> R.string.quest_service_building_gas
     GAS_PRESSURE_REGULATION -> R.string.quest_service_building_type_pressure
@@ -141,7 +139,6 @@ private val ServiceBuildingType.descriptionResId: Int? get() = when (this) {
 private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {
     ServiceBuildingTypeCategory.POWER -> R.string.quest_service_building_power
     ServiceBuildingTypeCategory.WATER -> R.string.quest_service_building_water
-    ServiceBuildingTypeCategory.OIL -> R.string.quest_service_building_oil
     ServiceBuildingTypeCategory.GAS -> R.string.quest_service_building_gas
     ServiceBuildingTypeCategory.TELECOM -> R.string.quest_service_building_telecom
     ServiceBuildingTypeCategory.RAILWAY -> R.string.quest_service_building_railway
@@ -151,7 +148,6 @@ private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {
 private val ServiceBuildingTypeCategory.iconResId: Int? get() = when (this) {
     ServiceBuildingTypeCategory.POWER -> R.drawable.ic_building_service
     ServiceBuildingTypeCategory.WATER -> R.drawable.ic_quest_service_building_water
-    ServiceBuildingTypeCategory.OIL -> R.drawable.ic_building_service
     ServiceBuildingTypeCategory.GAS -> R.drawable.ic_quest_building_service_gas
     ServiceBuildingTypeCategory.TELECOM -> R.drawable.ic_building_service
     ServiceBuildingTypeCategory.RAILWAY -> R.drawable.ic_building_service
@@ -163,7 +159,6 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.WATER ->    R.drawable.ic_quest_service_building_water
     ServiceBuildingType.TELECOM ->    R.drawable.ic_building_service
     ServiceBuildingType.GAS ->    R.drawable.ic_quest_building_service_gas
-    ServiceBuildingType.OIL ->    R.drawable.ic_building_service
     ServiceBuildingType.RAILWAY ->    R.drawable.ic_building_service
     ServiceBuildingType.SEWERAGE ->    R.drawable.ic_building_service
     ServiceBuildingType.MINOR_SUBSTATION ->    R.drawable.ic_building_service

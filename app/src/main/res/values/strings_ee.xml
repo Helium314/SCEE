@@ -313,7 +313,6 @@
     <string name="quest_service_building_water">Water</string>
     <string name="quest_service_building_sewerage">Sewerage</string>
     <string name="quest_service_building_sewerage_description">Service building related to waste water collection, transmission or processing</string>
-    <string name="quest_service_building_oil">Oil</string>
     <string name="quest_service_building_oil_pumping_station">Oil pumping station</string>
     <string name="quest_service_building_oil_pumping_station_description">Facility including pumps for pumping oil from one place to another</string>
     <string name="quest_service_building_gas">Gas</string>

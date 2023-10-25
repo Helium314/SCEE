@@ -148,15 +148,16 @@ private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {
 }
 
 private val ServiceBuildingTypeCategory.iconResId: Int? get() = when (this) {
-    ServiceBuildingTypeCategory.POWER -> R.drawable.ic_building_service
+    ServiceBuildingTypeCategory.POWER -> R.drawable.ic_quest_service_building_power
     ServiceBuildingTypeCategory.WATER -> R.drawable.ic_quest_service_building_water
     ServiceBuildingTypeCategory.GAS -> R.drawable.ic_quest_building_service_gas
-    ServiceBuildingTypeCategory.TELECOM -> R.drawable.ic_building_service
-    ServiceBuildingTypeCategory.RAILWAY -> R.drawable.ic_building_service
-    ServiceBuildingTypeCategory.OTHER_SERVICE -> R.drawable.ic_building_service
+    ServiceBuildingTypeCategory.TELECOM -> R.drawable.ic_quest_service_building_telecom
+    ServiceBuildingTypeCategory.RAILWAY -> R.drawable.ic_quest_service_building_railway
+    ServiceBuildingTypeCategory.OTHER_SERVICE -> R.drawable.ic_quest_service_building_other
 }
 
 private val ServiceBuildingType.iconResId: Int? get() = when (this) {
+    // todo: when I remove the main categories here I get an error, that they are missing
     ServiceBuildingType.POWER -> R.drawable.ic_quest_service_building_power
     ServiceBuildingType.WATER ->    R.drawable.ic_quest_service_building_water
     ServiceBuildingType.TELECOM ->    R.drawable.ic_quest_service_building_telecom
@@ -179,7 +180,7 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.RAILWAY_SIGNAL_BOX ->    R.drawable.ic_building_service
     ServiceBuildingType.RAILWAY_ENGINE_SHED ->    R.drawable.ic_building_service
     ServiceBuildingType.RAILWAY_WASH ->    R.drawable.ic_building_service
-    ServiceBuildingType.HEATING ->    R.drawable.ic_building_service
+    ServiceBuildingType.HEATING ->    R.drawable.ic_quest_service_building_heating
     ServiceBuildingType.VENTILATION_SHAFT ->    R.drawable.ic_building_service
     ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_quest_service_building_telecom_exchange
     ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_quest_service_building_internet_exchange

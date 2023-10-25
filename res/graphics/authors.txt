@@ -537,6 +537,35 @@ royal cypher/
     Scottish_Crown.svg    CC-BY-SA 3.0      https://commons.wikimedia.org/wiki/File:Royal_Crown_of_Scotland_(Heraldry).svg (adapted)
     VR.svg                Public Domain     https://commons.wikimedia.org/wiki/File:Royal_Cypher_of_Queen_Victoria.svg (adapted)
 
+service_building
+	gas.svg				  		mcliquid, parts from fire.svg
+	gas_pressure.svg			mcliquid, parts from fire.svg and https://www.svgrepo.com/svg/84143/manometer (CC0)
+	gas_pump.svg				mcliquid, parts from fire.svg and https://www.svgrepo.com/svg/82329/valve (CC0)
+	heating.svg			  		mcliquid, parts from fire.svg and https://www.svgrepo.com/svg/475590/temperature (CC BY)
+	industrial_substation.svg	mcliquid, parts from industrial.svg and https://www.svgrepo.com/svg/421771/energy-flash-lighning (CC BY)
+	internet_exchange.svg		mcliquid, parts from https://www.svgrepo.com/svg/78356/modem (CC0)
+	minor_substation.svg		mcliquid, parts from detached.svg and https://www.svgrepo.com/svg/421771/energy-flash-lighning (CC BY)
+	monitoring.svg				https://www.svgrepo.com/svg/504257/data-monitor (Apache)
+	oil_pump.svg				https://www.svgrepo.com/svg/190876/pump-jack-oil (CC0)
+	other.svg					https://www.svgrepo.com/svg/292128/wrench (CC0)
+	power.svg					https://www.svgrepo.com/svg/421771/energy-flash-lighning (CC BY)
+	power_plant.svg				https://www.svgrepo.com/svg/297056/nuclear-plant-power-plant (CC0)
+	railway.svg					https://www.svgrepo.com/svg/375916/train (GPL)
+	railway_engine_shed.svg		mcliquid, parts from roof.svg and https://www.svgrepo.com/svg/375916/train (GPL)
+	railway_signal_box.svg		mcliquid, parts from https://www.svgrepo.com/svg/521844/signal (CC BY) and https://www.svgrepo.com/svg/375916/train (GPL)
+	railway_wash.svg			mcliquid, parts from https://www.svgrepo.com/svg/232163/car-wash (CC 00) and https://www.svgrepo.com/svg/375916/train (GPL)
+	reservoir_covered.svg		mcliquid, parts from roof.svg and water.svg
+	sewerage.svg				https://www.svgrepo.com/svg/244724/waste-sewer (CC0)
+	substation.svg				mcliquid, parts from detached.svg, house.svg, office.svg and https://www.svgrepo.com/svg/421771/energy-flash-lighning (CC BY)
+	switchgear.svg				mcliquid, parts from https://www.svgrepo.com/svg/528583/server-minimalistic (CC BY) and https://www.svgrepo.com/svg/421771/energy-flash-lighning (CC BY)
+	telecom.svg					phone.svg
+	telecom_exchange.svg		https://www.svgrepo.com/svg/282004/antenna (CC0)
+	traction_substation.svg		mcliquid, parts from power.svg (CC BY) and https://www.svgrepo.com/svg/375916/train (GPL)
+	ventilation.svg				https://www.svgrepo.com/svg/242669/ventilator-cool (CC0)
+	water.svg					drinking_water.svg
+	water_pump.svg				mcliquid, parts from water.svg and https://www.svgrepo.com/svg/82329/valve (CC0)
+	water_well.svg				https://www.svgrepo.com/svg/197054/well (CC0)
+
 sidewalk/
     no.svg
     yes.svg

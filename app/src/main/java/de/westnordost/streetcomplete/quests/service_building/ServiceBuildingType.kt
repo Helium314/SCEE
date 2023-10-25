@@ -50,7 +50,7 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     RAILWAY_ENGINE_SHED(listOf("railway" to "engine_shed")),
     RAILWAY_WASH(listOf("railway" to "wash")),
     // TELECOM
-    //INTERNET_EXCHANGE(listOf("utility" to "communication", "telecom" to "internet_exchange")), --> only 6x; but documented: https://wiki.openstreetmap.org/wiki/Telecoms#Internet_Exchanges
+    INTERNET_EXCHANGE(listOf("utility" to "communication", "telecom" to "internet_exchange")),
     TELECOM_EXCHANGE(listOf("utility" to "communication", "telecom" to "exchange")),
 }
 
@@ -59,7 +59,7 @@ enum class ServiceBuildingTypeCategory(val type: ServiceBuildingType?, val subTy
     POWER(ServiceBuildingType.POWER, listOf(MINOR_SUBSTATION, SUBSTATION, INDUSTRIAL_SUBSTATION, TRACTION_SUBSTATION, SWITCHGEAR, PLANT)),
     WATER(ServiceBuildingType.WATER, listOf(WATER_WELL, COVERED_RESERVOIR, WATER_PUMPING_STATION)),
     GAS(ServiceBuildingType.GAS, listOf(GAS_PUMPING_STATION, GAS_PRESSURE_REGULATION)),
-    TELECOM(ServiceBuildingType.TELECOM, listOf(TELECOM_EXCHANGE)),
+    TELECOM(ServiceBuildingType.TELECOM, listOf(TELECOM_EXCHANGE, INTERNET_EXCHANGE)),
     RAILWAY(ServiceBuildingType.RAILWAY, listOf(RAILWAY_VENTILATION_SHAFT, RAILWAY_SIGNAL_BOX, RAILWAY_ENGINE_SHED, RAILWAY_WASH)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
     OTHER_SERVICE(ServiceBuildingType.OTHER_SERVICE, listOf(OIL_PUMPING_STATION, SEWERAGE, HEATING, VENTILATION_SHAFT, MONITORING_STATION)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
 }
@@ -95,6 +95,7 @@ private val ServiceBuildingType.titleResId: Int get() = when (this) {
     GAS_PUMPING_STATION -> R.string.quest_service_building_gas_pumping_station
     TELECOM -> R.string.quest_service_building_telecom
     TELECOM_EXCHANGE -> R.string.quest_service_building_telecom_exchange
+    INTERNET_EXCHANGE -> R.string.quest_service_building_internet_exchange
     RAILWAY -> R.string.quest_service_building_railway
     RAILWAY_VENTILATION_SHAFT -> R.string.quest_service_building_railway_ventilation_shaft
     RAILWAY_SIGNAL_BOX -> R.string.quest_service_building_railway_signal_box
@@ -124,6 +125,7 @@ private val ServiceBuildingType.descriptionResId: Int? get() = when (this) {
     GAS_PUMPING_STATION -> R.string.quest_service_building_gas_pumping_station_description
     //TELECOM -> R.string.quest_service_building_telecom_description
     TELECOM_EXCHANGE -> R.string.quest_service_building_telecom_exchange_description
+    INTERNET_EXCHANGE -> R.string.quest_service_building_internet_exchange_description
     //RAILWAY -> R.string.quest_service_building_railway_description
     RAILWAY_VENTILATION_SHAFT -> R.string.quest_service_building_railway_ventilation_shaft_description
     RAILWAY_SIGNAL_BOX -> R.string.quest_service_building_railway_signal_box_description
@@ -180,6 +182,7 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.HEATING ->    R.drawable.ic_building_service
     ServiceBuildingType.VENTILATION_SHAFT ->    R.drawable.ic_building_service
     ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_building_service
+    ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_building_service
     ServiceBuildingType.MONITORING_STATION ->    R.drawable.ic_building_service
     ServiceBuildingType.OTHER_SERVICE ->    R.drawable.ic_building_service
 }

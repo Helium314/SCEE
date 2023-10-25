@@ -325,6 +325,8 @@
     <string name="quest_service_building_telecom">Telecommunication</string>
     <string name="quest_service_building_telecom_exchange">Telecom exchange</string>
     <string name="quest_service_building_telecom_exchange_description">Place to connect landlines subscribers to telecommunication service equipments</string>
+    <string name="quest_service_building_internet_exchange">Internet exchange</string>
+    <string name="quest_service_building_internet_exchange_description">Place to connect internet subscribers to internet service equipments</string>
     <string name="quest_service_building_railway">Railway</string>
     <string name="quest_service_building_railway_ventilation_shaft">Railway ventilation</string>
     <string name="quest_service_building_railway_ventilation_shaft_description">Ventilation shafts that are part of railway infrastructure</string>

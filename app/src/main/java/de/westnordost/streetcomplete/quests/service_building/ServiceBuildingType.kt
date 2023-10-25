@@ -24,54 +24,34 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     RAILWAY(listOf()),
     OTHER_SERVICE(listOf()),
     SEWERAGE(listOf("utility" to "sewerage", "substance" to "sewage")), // can be pumping stations or treatment plants
-    // https://commons.wikimedia.org/wiki/Category:Abwasserpumpstation_(Rosenstra%C3%9Fe,_Saarbr%C3%BCcken)
     HEATING(listOf("utility" to "heating", "substance" to "hot_water")),
-    // https://commons.wikimedia.org/wiki/File:Cornell_University_Central_Heating_Plant.jpg
     VENTILATION_SHAFT(listOf("man_made" to "ventilation")), // building tag removed in AddServiceBuildingType.applyAnswerTo
-    // https://commons.wikimedia.org/wiki/File:Maryina_Roshcha_ventilation_shaft_in_Moscow.jpg
     MONITORING_STATION(listOf("man_made" to "monitoring_station")),
-    // https://commons.wikimedia.org/wiki/File:River_monitoring_station,_Coytrahen_-_geograph.org.uk_-_4224388.jpg
 
     // POWER
     MINOR_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "minor_distribution")),
-    // https://commons.wikimedia.org/wiki/File:Trafostation_%22Station_hinter_dem_Weinbergweg%22.jpg
     SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "distribution")),
-    // https://commons.wikimedia.org/wiki/Category:Umspannwerk_Stangenm%C3%BChle
     INDUSTRIAL_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "industrial")),
     TRACTION_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "traction")), // kinda related with railway
-    // https://commons.wikimedia.org/wiki/File:Woburn_rail_traction_substation,_Lower_Hutt,_New_Zealand.JPG
     SWITCHGEAR(listOf("utility" to "power", "power" to "switchgear")),
-    // outside: https://commons.wikimedia.org/wiki/File:Painted_switchgear_in_Minsk_near_Janki_Kupaly_museum_2.jpg; inside: https://commons.wikimedia.org/wiki/File:Factory_Salasel_electric_services_switchgear_made_in_oman.jpg
     PLANT(listOf("utility" to "power", "power" to "plant")),
-    // https://commons.wikimedia.org/wiki/File:Dunamenti_Power_Plant,_gate_building,_2020_Sz%C3%A1zhalombatta.jpg
     //GAS
     GAS_PRESSURE_REGULATION(listOf("utility" to "gas", "pipeline" to "substation", "substation" to "distribution", "substance" to "gas")),
-    // https://commons.wikimedia.org/wiki/File:Bellah%C3%B8j_gas_pressure_regulator_building-3.jpg
     GAS_PUMPING_STATION(listOf("utility" to "gas", "man_made" to "pumping_station", "substance" to "gas")),
-    // https://commons.wikimedia.org/wiki/File:Gas_pipeline_pumping_station_-_geograph.org.uk_-_4991046.jpg
     // WATER
     WATER_WELL(listOf("utility" to "water", "man_made" to "water_well", "substance" to "water")),
-    // https://commons.wikimedia.org/wiki/File:Well_house_Ringsaker.jpg
     COVERED_RESERVOIR(listOf("utility" to "water", "man_made" to "reservoir_covered", "substance" to "water")),
-    // https://commons.wikimedia.org/wiki/File:Pai_Tau_Hang_Fresh_Water_Service_Reservoir_03.jpg
     WATER_PUMPING_STATION(listOf("utility" to "water", "man_made" to "pumping_station", "substance" to "water")),
-    // https://commons.wikimedia.org/wiki/File:Hoxton_Park_Water_Pumping_Station_05.jpg
     // OIL
     OIL_PUMPING_STATION(listOf("utility" to "oil", "man_made" to "pumping_station", "substance" to "oil")),
-    // https://commons.wikimedia.org/wiki/File:Oil_Pump_North_Dakota.jpg
     // RAILWAY
-    RAILWAY_VENTILATION_SHAFT(listOf("service" to "ventilation", "railway" to "ventilation_shaft")), // 374x in use
-    // https://commons.wikimedia.org/wiki/File:Ventilation_shaft_of_Sovetskaya_metro_station_(%D0%92%D0%B5%D0%BD%D1%82%D0%BA%D0%B8%D0%BE%D1%81%D0%BA_%D1%81%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D0%B8_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F)_(6937492132).jpg
-    RAILWAY_SIGNAL_BOX(listOf("railway" to "signal_box")), // there is no service-tag; DE: Elektronisches Stellwerk; 562x in use
-    // https://commons.wikimedia.org/wiki/File:Kwinana_Signal_Box,_March_2020_05.jpg
-    RAILWAY_ENGINE_SHED(listOf("railway" to "engine_shed")), // there is no service-tag; 13x in use
-    // https://commons.wikimedia.org/wiki/File:Former_engine_shed_sited_on_a_shipyard_at_Whitby.jpg
-    RAILWAY_WASH(listOf("railway" to "wash")), // there is no service-tag; DE: Zug-Waschanlage; 5x in use
-    // https://commons.wikimedia.org/wiki/File:Train_wash,_Perth_Station_-_geograph.org.uk_-_4724498.jpg
+    RAILWAY_VENTILATION_SHAFT(listOf("service" to "ventilation", "railway" to "ventilation_shaft")),
+    RAILWAY_SIGNAL_BOX(listOf("railway" to "signal_box")),
+    RAILWAY_ENGINE_SHED(listOf("railway" to "engine_shed")),
+    RAILWAY_WASH(listOf("railway" to "wash")),
     // TELECOM
     //INTERNET_EXCHANGE(listOf("utility" to "communication", "telecom" to "internet_exchange")), --> only 6x; but documented: https://wiki.openstreetmap.org/wiki/Telecoms#Internet_Exchanges
     TELECOM_EXCHANGE(listOf("utility" to "communication", "telecom" to "exchange")),
-    // https://commons.wikimedia.org/wiki/File:Telecom_Exchange_-_geograph.org.uk_-_5360464.jpg
 }
 
 // like BuildingTypeCategory

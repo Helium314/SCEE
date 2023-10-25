@@ -337,7 +337,7 @@
     <string name="quest_service_building_railway_wash">Railway wash station</string>
     <string name="quest_service_building_railway_wash_description">A car wash for trains / railroad cars</string>
     <string name="quest_service_building_ventilation">Ventilation shaft</string>
-    <string name="quest_service_building_ventilation_description">Vertical space allowing air exchange for non-railway infrastructure</string>
+    <string name="quest_service_building_ventilation_description">Vertical building allowing air exchange for non-railway infrastructure</string>
     <string name="quest_service_building_monitoring_station">Monitoring Station</string>
     <string name="quest_service_building_monitoring_station_description">A station located in a own building that monitors something</string>
     <string name="quest_service_building_other">Other service building</string>

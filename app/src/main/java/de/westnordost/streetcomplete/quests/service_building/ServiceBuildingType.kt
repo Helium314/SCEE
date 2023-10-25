@@ -157,7 +157,7 @@ private val ServiceBuildingTypeCategory.iconResId: Int? get() = when (this) {
 }
 
 private val ServiceBuildingType.iconResId: Int? get() = when (this) {
-    ServiceBuildingType.POWER -> R.drawable.ic_building_service
+    ServiceBuildingType.POWER -> R.drawable.ic_quest_service_building_power
     ServiceBuildingType.WATER ->    R.drawable.ic_quest_service_building_water
     ServiceBuildingType.TELECOM ->    R.drawable.ic_quest_service_building_telecom
     ServiceBuildingType.GAS ->    R.drawable.ic_quest_building_service_gas
@@ -181,8 +181,8 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.RAILWAY_WASH ->    R.drawable.ic_building_service
     ServiceBuildingType.HEATING ->    R.drawable.ic_building_service
     ServiceBuildingType.VENTILATION_SHAFT ->    R.drawable.ic_building_service
-    ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_building_service
-    ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_building_service
+    ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_quest_service_building_telecom_exchange
+    ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_quest_service_building_internet_exchange
     ServiceBuildingType.MONITORING_STATION ->    R.drawable.ic_building_service
     ServiceBuildingType.OTHER_SERVICE ->    R.drawable.ic_building_service
 }

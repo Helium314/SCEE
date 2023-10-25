@@ -163,27 +163,27 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.TELECOM ->    R.drawable.ic_quest_service_building_telecom
     ServiceBuildingType.GAS ->    R.drawable.ic_quest_building_service_gas
     ServiceBuildingType.RAILWAY ->    R.drawable.ic_quest_service_building_railway
-    ServiceBuildingType.SEWERAGE ->    R.drawable.ic_building_service
-    ServiceBuildingType.MINOR_SUBSTATION ->    R.drawable.ic_building_service
-    ServiceBuildingType.SUBSTATION ->    R.drawable.ic_building_service
-    ServiceBuildingType.INDUSTRIAL_SUBSTATION ->    R.drawable.ic_building_service
-    ServiceBuildingType.TRACTION_SUBSTATION ->    R.drawable.ic_building_service
-    ServiceBuildingType.SWITCHGEAR ->    R.drawable.ic_building_service
-    ServiceBuildingType.PLANT ->    R.drawable.ic_building_service
-    ServiceBuildingType.GAS_PRESSURE_REGULATION ->    R.drawable.ic_building_service
-    ServiceBuildingType.GAS_PUMPING_STATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.SEWERAGE ->    R.drawable.ic_quest_service_building_sewerage
+    ServiceBuildingType.MINOR_SUBSTATION ->    R.drawable.ic_quest_service_building_power
+    ServiceBuildingType.SUBSTATION ->    R.drawable.ic_quest_service_building_power
+    ServiceBuildingType.INDUSTRIAL_SUBSTATION ->    R.drawable.ic_quest_service_building_power
+    ServiceBuildingType.TRACTION_SUBSTATION ->    R.drawable.ic_quest_service_building_power
+    ServiceBuildingType.SWITCHGEAR ->    R.drawable.ic_quest_service_building_power
+    ServiceBuildingType.PLANT ->    R.drawable.ic_quest_service_building_power
+    ServiceBuildingType.GAS_PRESSURE_REGULATION ->    R.drawable.ic_quest_building_service_gas
+    ServiceBuildingType.GAS_PUMPING_STATION ->    R.drawable.ic_quest_building_service_gas
     ServiceBuildingType.WATER_WELL ->    R.drawable.ic_quest_service_building_water_well
     ServiceBuildingType.COVERED_RESERVOIR ->    R.drawable.ic_quest_service_building_water
     ServiceBuildingType.WATER_PUMPING_STATION ->    R.drawable.ic_quest_service_building_water
-    ServiceBuildingType.OIL_PUMPING_STATION ->    R.drawable.ic_building_service
-    ServiceBuildingType.RAILWAY_VENTILATION_SHAFT ->    R.drawable.ic_building_service
-    ServiceBuildingType.RAILWAY_SIGNAL_BOX ->    R.drawable.ic_building_service
-    ServiceBuildingType.RAILWAY_ENGINE_SHED ->    R.drawable.ic_building_service
-    ServiceBuildingType.RAILWAY_WASH ->    R.drawable.ic_building_service
+    ServiceBuildingType.OIL_PUMPING_STATION ->    R.drawable.ic_quest_service_building_oil_pump
+    ServiceBuildingType.RAILWAY_VENTILATION_SHAFT ->    R.drawable.ic_quest_service_building_railway
+    ServiceBuildingType.RAILWAY_SIGNAL_BOX ->    R.drawable.ic_quest_service_building_railway
+    ServiceBuildingType.RAILWAY_ENGINE_SHED ->    R.drawable.ic_quest_service_building_railway
+    ServiceBuildingType.RAILWAY_WASH ->    R.drawable.ic_quest_service_building_railway_wash
     ServiceBuildingType.HEATING ->    R.drawable.ic_quest_service_building_heating
     ServiceBuildingType.VENTILATION_SHAFT ->    R.drawable.ic_quest_service_building_ventilation
     ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_quest_service_building_telecom_exchange
     ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_quest_service_building_internet_exchange
-    ServiceBuildingType.MONITORING_STATION ->    R.drawable.ic_building_service
+    ServiceBuildingType.MONITORING_STATION ->    R.drawable.ic_quest_service_building_monitoring
     ServiceBuildingType.OTHER_SERVICE ->    R.drawable.ic_quest_service_building_other
 }

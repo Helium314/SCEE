@@ -184,5 +184,5 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_quest_service_building_telecom_exchange
     ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_quest_service_building_internet_exchange
     ServiceBuildingType.MONITORING_STATION ->    R.drawable.ic_building_service
-    ServiceBuildingType.OTHER_SERVICE ->    R.drawable.ic_building_service
+    ServiceBuildingType.OTHER_SERVICE ->    R.drawable.ic_quest_service_building_other
 }

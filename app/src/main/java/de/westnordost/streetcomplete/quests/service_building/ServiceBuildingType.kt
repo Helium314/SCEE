@@ -6,23 +6,12 @@ import de.westnordost.streetcomplete.quests.service_building.ServiceBuildingType
 import de.westnordost.streetcomplete.view.image_select.GroupableDisplayItem
 import de.westnordost.streetcomplete.view.image_select.Item
 
-// todo: UtilityType instead? that way the quest could also extend stuff to street_cabinet
-//  just have different Categories then
-//  possibly extend to marker? utility_pole? man_hole?
-// CAREFUL: utility is what it's for, water pumping station can be sewage or power
-// https://wiki.openstreetmap.org/wiki/Key:utility
-// https://wiki.openstreetmap.org/wiki/Tag:building%3Dservice
-// https://wiki.openstreetmap.org/wiki/Tag:man_made%3Dpumping_station
-
-// like BuildingType
 enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     POWER(listOf("utility" to "power")), // also street cabinet
     TELECOM(listOf("utility" to "telecom")), // also street cabinet
     WATER(listOf("utility" to "water")),
     GAS(listOf("utility" to "gas")),
     //OIL(listOf("utility" to "oil")),
-    RAILWAY(listOf()),
-    OTHER_SERVICE(listOf()),
     SEWERAGE(listOf("utility" to "sewerage", "substance" to "sewage")), // can be pumping stations or treatment plants
     HEATING(listOf("utility" to "heating", "substance" to "hot_water")),
     VENTILATION_SHAFT(listOf("man_made" to "ventilation")), // building tag removed in AddServiceBuildingType.applyAnswerTo
@@ -54,14 +43,13 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     TELECOM_EXCHANGE(listOf("utility" to "communication", "telecom" to "exchange")),
 }
 
-// like BuildingTypeCategory
 enum class ServiceBuildingTypeCategory(val type: ServiceBuildingType?, val subTypes: List<ServiceBuildingType>) {
     POWER(ServiceBuildingType.POWER, listOf(MINOR_SUBSTATION, SUBSTATION, INDUSTRIAL_SUBSTATION, TRACTION_SUBSTATION, SWITCHGEAR, PLANT)),
     WATER(ServiceBuildingType.WATER, listOf(WATER_WELL, COVERED_RESERVOIR, WATER_PUMPING_STATION)),
     GAS(ServiceBuildingType.GAS, listOf(GAS_PUMPING_STATION, GAS_PRESSURE_REGULATION)),
     TELECOM(ServiceBuildingType.TELECOM, listOf(TELECOM_EXCHANGE, INTERNET_EXCHANGE)),
-    RAILWAY(ServiceBuildingType.RAILWAY, listOf(RAILWAY_VENTILATION_SHAFT, RAILWAY_SIGNAL_BOX, RAILWAY_ENGINE_SHED, RAILWAY_WASH)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
-    OTHER_SERVICE(ServiceBuildingType.OTHER_SERVICE, listOf(OIL_PUMPING_STATION, SEWERAGE, HEATING, VENTILATION_SHAFT, MONITORING_STATION)), // todo: this should be an unselectable category (here the ok button should disappear, but that's same for building type quest)
+    RAILWAY(null, listOf(RAILWAY_VENTILATION_SHAFT, RAILWAY_SIGNAL_BOX, RAILWAY_ENGINE_SHED, RAILWAY_WASH)),
+    OTHER_SERVICE(null, listOf(OIL_PUMPING_STATION, SEWERAGE, HEATING, VENTILATION_SHAFT, MONITORING_STATION)),
 }
 
 fun Collection<ServiceBuildingType>.toItems() = map { it.asItem() }
@@ -96,7 +84,6 @@ private val ServiceBuildingType.titleResId: Int get() = when (this) {
     TELECOM -> R.string.quest_service_building_telecom
     TELECOM_EXCHANGE -> R.string.quest_service_building_telecom_exchange
     INTERNET_EXCHANGE -> R.string.quest_service_building_internet_exchange
-    RAILWAY -> R.string.quest_service_building_railway
     RAILWAY_VENTILATION_SHAFT -> R.string.quest_service_building_railway_ventilation_shaft
     RAILWAY_SIGNAL_BOX -> R.string.quest_service_building_railway_signal_box
     RAILWAY_ENGINE_SHED -> R.string.quest_service_building_railway_engine_shed
@@ -104,7 +91,6 @@ private val ServiceBuildingType.titleResId: Int get() = when (this) {
     VENTILATION_SHAFT -> R.string.quest_service_building_ventilation
     HEATING -> R.string.quest_service_building_heating
     MONITORING_STATION -> R.string.quest_service_building_monitoring_station
-    OTHER_SERVICE -> R.string.quest_service_building_other
 }
 
 private val ServiceBuildingType.descriptionResId: Int? get() = when (this) {
@@ -147,7 +133,7 @@ private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {
     ServiceBuildingTypeCategory.OTHER_SERVICE -> R.string.quest_service_building_other
 }
 
-private val ServiceBuildingTypeCategory.iconResId: Int? get() = when (this) {
+private val ServiceBuildingTypeCategory.iconResId: Int get() = when (this) {
     ServiceBuildingTypeCategory.POWER -> R.drawable.ic_quest_service_building_power
     ServiceBuildingTypeCategory.WATER -> R.drawable.ic_quest_service_building_water
     ServiceBuildingTypeCategory.GAS -> R.drawable.ic_quest_building_service_gas
@@ -156,12 +142,11 @@ private val ServiceBuildingTypeCategory.iconResId: Int? get() = when (this) {
     ServiceBuildingTypeCategory.OTHER_SERVICE -> R.drawable.ic_quest_service_building_other
 }
 
-private val ServiceBuildingType.iconResId: Int? get() = when (this) {
+private val ServiceBuildingType.iconResId: Int get() = when (this) {
     ServiceBuildingType.POWER -> R.drawable.ic_quest_service_building_power
     ServiceBuildingType.WATER ->    R.drawable.ic_quest_service_building_water
     ServiceBuildingType.TELECOM ->    R.drawable.ic_quest_service_building_telecom
     ServiceBuildingType.GAS ->    R.drawable.ic_quest_building_service_gas
-    ServiceBuildingType.RAILWAY ->    R.drawable.ic_quest_service_building_railway
     ServiceBuildingType.SEWERAGE ->    R.drawable.ic_quest_service_building_sewerage
     ServiceBuildingType.MINOR_SUBSTATION ->    R.drawable.ic_quest_service_building_minor_substation
     ServiceBuildingType.SUBSTATION ->    R.drawable.ic_quest_service_building_substation
@@ -184,5 +169,4 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.TELECOM_EXCHANGE ->    R.drawable.ic_quest_service_building_telecom_exchange
     ServiceBuildingType.INTERNET_EXCHANGE ->    R.drawable.ic_quest_service_building_internet_exchange
     ServiceBuildingType.MONITORING_STATION ->    R.drawable.ic_quest_service_building_monitoring
-    ServiceBuildingType.OTHER_SERVICE ->    R.drawable.ic_quest_service_building_other
 }

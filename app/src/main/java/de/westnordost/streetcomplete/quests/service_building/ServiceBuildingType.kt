@@ -13,7 +13,7 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     GAS(listOf("utility" to "gas")),
     //OIL(listOf("utility" to "oil")),
     SEWERAGE(listOf("utility" to "sewerage", "substance" to "sewage")), // can be pumping stations or treatment plants
-    HEATING(listOf("utility" to "heating", "substance" to "hot_water")),
+    HEATING(listOf("utility" to "heating")),
     VENTILATION_SHAFT(listOf("man_made" to "ventilation")), // building tag removed in AddServiceBuildingType.applyAnswerTo
     MONITORING_STATION(listOf("man_made" to "monitoring_station")),
 

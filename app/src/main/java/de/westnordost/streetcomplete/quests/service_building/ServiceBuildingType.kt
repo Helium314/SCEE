@@ -175,7 +175,7 @@ private val ServiceBuildingType.iconResId: Int? get() = when (this) {
     ServiceBuildingType.COVERED_RESERVOIR ->    R.drawable.ic_quest_service_reservoir_covered
     ServiceBuildingType.WATER_PUMPING_STATION ->    R.drawable.ic_quest_service_building_water_pump
     ServiceBuildingType.OIL_PUMPING_STATION ->    R.drawable.ic_quest_service_building_oil_pump
-    ServiceBuildingType.RAILWAY_VENTILATION_SHAFT ->    R.drawable.ic_quest_service_building_railway
+    ServiceBuildingType.RAILWAY_VENTILATION_SHAFT ->    R.drawable.ic_quest_service_building_railway_ventilation
     ServiceBuildingType.RAILWAY_SIGNAL_BOX ->    R.drawable.ic_quest_service_building_railway_signal_box
     ServiceBuildingType.RAILWAY_ENGINE_SHED ->    R.drawable.ic_quest_service_building_railway_engine_shed
     ServiceBuildingType.RAILWAY_WASH ->    R.drawable.ic_quest_service_building_railway_wash

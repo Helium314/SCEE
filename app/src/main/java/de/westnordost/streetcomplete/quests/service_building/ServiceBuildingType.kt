@@ -35,9 +35,9 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     OIL_PUMPING_STATION(listOf("utility" to "oil", "man_made" to "pumping_station", "substance" to "oil")),
     // RAILWAY
     RAILWAY_VENTILATION_SHAFT(listOf("service" to "ventilation", "railway" to "ventilation_shaft")),
-    RAILWAY_SIGNAL_BOX(listOf("railway" to "signal_box")),
-    RAILWAY_ENGINE_SHED(listOf("railway" to "engine_shed")),
-    RAILWAY_WASH(listOf("railway" to "wash")),
+    RAILWAY_SIGNAL_BOX(listOf("building" to "industrial", "railway" to "signal_box")),
+    RAILWAY_ENGINE_SHED(listOf("building" to "industrial", "railway" to "engine_shed")),
+    RAILWAY_WASH(listOf("building" to "industrial", "railway" to "wash")),
     // TELECOM
     INTERNET_EXCHANGE(listOf("utility" to "communication", "telecom" to "internet_exchange")),
     TELECOM_EXCHANGE(listOf("utility" to "communication", "telecom" to "exchange")),

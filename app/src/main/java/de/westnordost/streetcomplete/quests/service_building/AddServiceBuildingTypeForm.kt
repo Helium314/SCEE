@@ -6,7 +6,13 @@ import de.westnordost.streetcomplete.quests.AGroupedImageListQuestForm
 
 class AddServiceBuildingTypeForm : AGroupedImageListQuestForm<ServiceBuildingType, ServiceBuildingType>() {
 
-    override val topItems = listOf(ServiceBuildingType.MINOR_SUBSTATION, ServiceBuildingType.GAS_PRESSURE_REGULATION).toItems()
+    override val topItems = listOf(
+        ServiceBuildingType.MINOR_SUBSTATION,
+        ServiceBuildingType.GAS_PRESSURE_REGULATION,
+        ServiceBuildingType.VENTILATION_SHAFT,
+        ServiceBuildingType.WATER_WELL,
+        ServiceBuildingType.HEATING,
+    ).toItems()
 
     override val allItems = ServiceBuildingTypeCategory.values().toItems()
 

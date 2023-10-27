@@ -10,17 +10,15 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     TELECOM(listOf("utility" to "telecom")),
     WATER(listOf("utility" to "water")),
     GAS(listOf("utility" to "gas")),
-    //OIL(listOf("utility" to "oil")),
     SEWERAGE(listOf("utility" to "sewerage", "substance" to "sewage")), // can be pumping stations or treatment plants
     HEATING(listOf("utility" to "heating")),
     VENTILATION_SHAFT(listOf("man_made" to "ventilation")), // building tag removed in AddServiceBuildingType.applyAnswerTo
     MONITORING_STATION(listOf("man_made" to "monitoring_station")),
-
     // POWER
     MINOR_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "minor_distribution")),
     SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "distribution")),
     INDUSTRIAL_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "industrial")),
-    TRACTION_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "traction")), // kinda related with railway
+    TRACTION_SUBSTATION(listOf("utility" to "power", "power" to "substation", "substation" to "traction")),
     SWITCHGEAR(listOf("utility" to "power", "power" to "switchgear")),
     PLANT(listOf("utility" to "power", "power" to "plant")),
     //GAS
@@ -59,7 +57,6 @@ fun ServiceBuildingType.asItem(): GroupableDisplayItem<ServiceBuildingType> {
 }
 
 fun ServiceBuildingTypeCategory.asItem(): GroupableDisplayItem<ServiceBuildingType> {
-    //val descriptionResId = null // could be added similar to ServiceBuildingType.descriptionResId
     return Item(type, iconResId, titleResId, null, subTypes.toItems())
 }
 
@@ -147,10 +144,10 @@ private val ServiceBuildingType.iconResId: Int get() = when (this) {
 }
 
 private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {
-    ServiceBuildingTypeCategory.POWER -> R.string.quest_service_building_power
-    ServiceBuildingTypeCategory.WATER -> R.string.quest_service_building_water
-    ServiceBuildingTypeCategory.GAS -> R.string.quest_service_building_gas
-    ServiceBuildingTypeCategory.TELECOM -> R.string.quest_service_building_telecom
+    ServiceBuildingTypeCategory.POWER -> R.string.quest_utility_power
+    ServiceBuildingTypeCategory.WATER -> R.string.quest_utility_water
+    ServiceBuildingTypeCategory.GAS -> R.string.quest_utility_gas
+    ServiceBuildingTypeCategory.TELECOM -> R.string.quest_utility_telecom
     ServiceBuildingTypeCategory.RAILWAY -> R.string.quest_service_building_railway
     ServiceBuildingTypeCategory.OTHER_SERVICE -> R.string.quest_service_building_other
 }

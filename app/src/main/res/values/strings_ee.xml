@@ -292,7 +292,6 @@
     <!-- service building type -->
     <string name="quest_service_building_type_title">What kind of service building is this%s?</string>
     <string name="quest_service_building_power">Electricity</string>
-    <string name="quest_service_building_power_description">Service building for something with electric power</string>
     <string name="quest_service_building_type_substation">Electrical substation</string>
     <string name="quest_service_building_type_substation_description">Substations that mainly relates to regional distribution networks</string>
     <string name="quest_service_building_type_minor_substation">Small electrical substation</string>

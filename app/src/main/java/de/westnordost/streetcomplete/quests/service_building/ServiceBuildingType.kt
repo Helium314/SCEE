@@ -64,23 +64,23 @@ fun ServiceBuildingTypeCategory.asItem(): GroupableDisplayItem<ServiceBuildingTy
 }
 
 private val ServiceBuildingType.titleResId: Int get() = when (this) {
-    POWER -> R.string.quest_service_building_power
+    POWER -> R.string.quest_utility_power
     MINOR_SUBSTATION -> R.string.quest_service_building_type_minor_substation
     SUBSTATION -> R.string.quest_service_building_type_substation
     INDUSTRIAL_SUBSTATION -> R.string.quest_service_building_type_industrial_substation
     TRACTION_SUBSTATION -> R.string.quest_service_building_type_traction_substation
     SWITCHGEAR -> R.string.quest_service_building_type_switchgear
     PLANT -> R.string.quest_service_building_type_plant
-    WATER -> R.string.quest_service_building_water
+    WATER -> R.string.quest_utility_water
     WATER_WELL -> R.string.quest_service_building_type_well
     COVERED_RESERVOIR -> R.string.quest_service_building_type_reservoir
     WATER_PUMPING_STATION -> R.string.quest_service_building_type_pump
-    SEWERAGE -> R.string.quest_service_building_sewerage
+    SEWERAGE -> R.string.quest_utility_sewerage
     OIL_PUMPING_STATION -> R.string.quest_service_building_oil_pumping_station
-    GAS -> R.string.quest_service_building_gas
+    GAS -> R.string.quest_utility_gas
     GAS_PRESSURE_REGULATION -> R.string.quest_service_building_type_pressure
     GAS_PUMPING_STATION -> R.string.quest_service_building_gas_pumping_station
-    TELECOM -> R.string.quest_service_building_telecom
+    TELECOM -> R.string.quest_utility_telecom
     TELECOM_EXCHANGE -> R.string.quest_service_building_telecom_exchange
     INTERNET_EXCHANGE -> R.string.quest_service_building_internet_exchange
     RAILWAY_VENTILATION_SHAFT -> R.string.quest_service_building_railway_ventilation_shaft
@@ -93,7 +93,6 @@ private val ServiceBuildingType.titleResId: Int get() = when (this) {
 }
 
 private val ServiceBuildingType.descriptionResId: Int? get() = when (this) {
-    POWER -> R.string.quest_service_building_power_description
     MINOR_SUBSTATION -> R.string.quest_service_building_type_minor_substation_description
     SUBSTATION -> R.string.quest_service_building_type_substation_description
     INDUSTRIAL_SUBSTATION -> R.string.quest_service_building_type_industrial_substation_description

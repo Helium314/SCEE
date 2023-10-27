@@ -289,9 +289,15 @@
     <string name="quest_traffic_stuff_raised">It’s a raised crossing</string>
     <string name="quest_recycling_excrement_bag_dispenser">It has an excrement bag dispenser</string>
 
+    <!-- shared "utility" types for service building type and street cabinet type -->
+    <string name="quest_utility_power">Electricity</string>
+    <string name="quest_utility_water">Water</string>
+    <string name="quest_utility_gas">Gas</string>
+    <string name="quest_utility_sewerage">Sewerage</string>
+    <string name="quest_utility_telecom">Telecommunication</string>
+
     <!-- service building type -->
     <string name="quest_service_building_type_title">What kind of service building is this%s?</string>
-    <string name="quest_utility_power">Electricity</string>
     <string name="quest_service_building_type_substation">Electrical substation</string>
     <string name="quest_service_building_type_substation_description">Substations that mainly relates to regional distribution networks</string>
     <string name="quest_service_building_type_minor_substation">Small electrical substation</string>
@@ -309,19 +315,15 @@
     <string name="quest_service_building_type_reservoir_description">Large man-made tank for holding fresh water</string>
     <string name="quest_service_building_type_pump">Water pumping station</string>
     <string name="quest_service_building_type_pump_description">Facility including pumps for pumping water from one place to another</string>
-    <string name="quest_utility_water">Water</string>
-    <string name="quest_utility_sewerage">Sewerage</string>
     <string name="quest_service_building_sewerage_description">Service building related to waste water collection, transmission or processing</string>
     <string name="quest_service_building_oil_pumping_station">Oil pumping station</string>
     <string name="quest_service_building_oil_pumping_station_description">Facility including pumps for pumping oil from one place to another</string>
-    <string name="quest_utility_gas">Gas</string>
     <string name="quest_service_building_gas_pumping_station">Gas pumping station</string>
     <string name="quest_service_building_gas_pumping_station_description">Facility including pumps for pumping gas from one place to another</string>
     <string name="quest_service_building_type_pressure">Gas pressure regulation</string>
     <string name="quest_service_building_type_pressure_description">Gas distribution substation in a building in charge of dropping pressure towards consumers in surroundings</string>
     <string name="quest_service_building_heating">Heating</string>
     <string name="quest_service_building_heating_description">Building for heating transmission and distribution towards industries and domestic consumers (district heating)</string>
-    <string name="quest_utility_telecom">Telecommunication</string>
     <string name="quest_service_building_telecom_exchange">Telecom exchange</string>
     <string name="quest_service_building_telecom_exchange_description">Place to connect landlines subscribers to telecommunication service equipments</string>
     <string name="quest_service_building_internet_exchange">Internet exchange</string>

@@ -330,7 +330,7 @@
     <string name="quest_service_building_internet_exchange_description">Place to connect internet subscribers to internet service equipments</string>
     <string name="quest_service_building_railway">Railway</string>
     <string name="quest_service_building_railway_ventilation_shaft">Railway ventilation</string>
-    <string name="quest_service_building_railway_ventilation_shaft_description">Ventilation shafts that are part of railway infrastructure</string>
+    <string name="quest_service_building_railway_ventilation_shaft_description">A structure that allows ventilation in railway underground tunnels</string>
     <string name="quest_service_building_railway_signal_box">Railway signal box</string>
     <string name="quest_service_building_railway_signal_box_description">Stationary railroad system for control of railway operations</string>
     <string name="quest_service_building_railway_engine_shed">Railway engine shed</string>

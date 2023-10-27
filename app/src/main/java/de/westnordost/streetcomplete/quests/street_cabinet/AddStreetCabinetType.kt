@@ -2,13 +2,16 @@ package de.westnordost.streetcomplete.quests.street_cabinet
 
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.Element
+import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType>() {
+class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType> {
 
     override val elementFilter = """
-        ways, relations with
+        nodes, ways with
           man_made = street_cabinet
           and !street_cabinet
           and !utility
@@ -25,6 +28,15 @@ class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType>() {
         return arrayOf(operator)
     }
 
+    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
+        getMapData().filter("""
+            nodes, ways with
+             (
+                 man_made = street_cabinet
+                 or building = service
+             )
+        """)
+
     override fun createForm() = AddStreetCabinetTypeForm()
 
     override fun applyAnswerTo(
@@ -33,11 +45,5 @@ class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType>() {
         geometry: ElementGeometry,
         timestampEdited: Long
     ) {
-        answer.tags.forEach { tags[it.first] = it.second }
-        /*
-        if (answer == StreetCabinetType.VENTILATION_SHAFT)
-            tags.remove("building") // see https://wiki.openstreetmap.org/wiki/Tag:man_made%3Dventilation_shaft
-    }
-    */
-    }
+        tags[answer.osmKey] = answer.osmValue }    }
 }

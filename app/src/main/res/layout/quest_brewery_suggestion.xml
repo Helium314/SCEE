@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/currentBreweries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingBottom="@dimen/quest_form_vertical_margin"
+        tools:text=""/>
+
+    <AutoCompleteTextView
+        android:id="@+id/breweryInput"
+        android:textSize="32sp"
+        android:completionThreshold="0"
+        android:dropDownAnchor="@id/currentBreweries"
+        tools:text="Beer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/addBreweryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BottomSheetButtonBarItem"
+        android:text="@string/quest_brewery_add_more" />
+</LinearLayout>

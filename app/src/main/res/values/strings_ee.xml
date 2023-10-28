@@ -354,12 +354,7 @@
     <string name="quest_street_cabinet_transport_management">Transport Management</string>
     <string name="quest_street_cabinet_waste">Waste</string>
     <string name="quest_street_cabinet_television">Television</string>
-    <string name="quest_street_cabinet_gas">Gas</string>
-    <string name="quest_street_cabinet_power">Power</string>
     <string name="quest_street_cabinet_street_lighting">Street Lighting</string>
-    <string name="quest_street_cabinet_water">Water</string>
-    <string name="quest_street_cabinet_telecom">Telecom</string>
-    <string name="quest_street_cabinet_sewerage">Sewerage</string>
 
     <!-- outdoor seating type -->
     <string name="quest_seating_parklet">Next to the curb, or where parking used to be</string>

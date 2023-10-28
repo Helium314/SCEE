@@ -368,6 +368,7 @@
     <string name="quest_shelterType_basic_hut">Basic hut</string>
     <string name="quest_shelterType_sun_shelter">Sun shelter</string>
     <string name="quest_shelterType_field_shelter">Field shelter</string>
+    <string name="quest_shelterType_rock_shelter">Rock shelter</string>
 
     <!-- artwork type -->
     <string name="quest_artwork_title">What kind of artwork is this?</string>

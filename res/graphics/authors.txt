@@ -4,7 +4,7 @@ URLs to other sources used:
  - Twemoji 2 (MIT license)      https://github.com/twitter/twemoji/
  - EmojiOne 2 (CC-BY 4 license) https://github.com/emojione/emojione/tree/2.2.7
  - Google Noto Color Emoji      https://github.com/googlefonts/noto-emoji/tree/main
-   (Apache license, version 2.0) 
+   (Apache license, version 2.0)
 
 File                            Author if not Tobias Zwick / Source
 ===============================================================================
@@ -409,6 +409,7 @@ quest/
     steps_ramp.svg
     steps_handrail.svg
     street.svg
+    street_cabinet.svg               mcliquid (GPL 3) based on https://github.com/JOSM/josm/blob/master/resources/images/presets/misc/street_cabinet.svg)
     street_lanes.svg
     street_name.svg
     street_surface.svg

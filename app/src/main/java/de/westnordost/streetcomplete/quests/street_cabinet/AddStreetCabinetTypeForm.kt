@@ -15,7 +15,7 @@ import de.westnordost.streetcomplete.quests.street_cabinet.StreetCabinetType.GAS
 import de.westnordost.streetcomplete.quests.street_cabinet.StreetCabinetType.STREET_LIGHTING
 import de.westnordost.streetcomplete.quests.street_cabinet.StreetCabinetType.WATER
 import de.westnordost.streetcomplete.quests.street_cabinet.StreetCabinetType.SEWERAGE
-class AddStreetCabinetType : AListQuestForm<StreetCabinetType>() {
+class AddStreetCabinetTypeForm : AListQuestForm<StreetCabinetType>() {
     override val items = listOf(
         TextItem(POWER, R.string.quest_street_cabinet_power),
         TextItem(TELECOM, R.string.quest_street_cabinet_telecom),

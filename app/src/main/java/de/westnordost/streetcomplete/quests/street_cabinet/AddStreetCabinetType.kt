@@ -8,7 +8,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType> {
+class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType>() {
 
     override val elementFilter = """
         nodes, ways with
@@ -18,7 +18,7 @@ class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType> {
     """
     override val changesetComment = "Add street cabinet type"
     override val wikiLink = "Tag:man_made=street_cabinet"
-    override val icon = R.drawable.ic_quest_service_building
+    override val icon = R.drawable.ic_quest_street_cabinet
     override val defaultDisabledMessage: Int = R.string.default_disabled_msg_ee
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_street_cabinet_type_title
@@ -45,5 +45,5 @@ class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType> {
         geometry: ElementGeometry,
         timestampEdited: Long
     ) {
-        tags[answer.osmKey] = answer.osmValue }    }
+        tags[answer.osmKey] = answer.osmValue }
 }

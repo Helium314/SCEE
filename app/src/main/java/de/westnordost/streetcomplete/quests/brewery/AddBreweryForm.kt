@@ -2,11 +2,9 @@ package de.westnordost.streetcomplete.quests.brewery
 
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
-import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.quests.AMultiValueQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
-import de.westnordost.streetcomplete.quests.surface.IsIndoorsAnswer
 import de.westnordost.streetcomplete.util.math.enlargedBy
 import org.koin.android.ext.android.inject
 
@@ -30,14 +28,10 @@ class AddBreweryForm : AMultiValueQuestForm() {
         return suggestions
     }
 
-    override val otherAnswers get() = listOfNotNull(
-        createVariousAnswer()
-    )
-    private fun createVariousAnswer(): AnswerItem? {
-        if (element.tags["brewery"] == "various") return null
-
-        return AnswerItem(R.string.quest_brewery_is_various) {
-            applyAnswer(IsVariousAnswer, true)
+    override val otherAnswers = listOf(
+        AnswerItem(R.string.quest_brewery_is_various) {
+            applyAnswer("various")
+            true
         }
-    }
+    )
 }

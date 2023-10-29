@@ -8,7 +8,6 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.IS_SHOP_OR_DISUSED_SHOP_EXPRESSION
 import de.westnordost.streetcomplete.osm.Tags
-import de.westnordost.streetcomplete.quests.surface.IsIndoorsAnswer
 
 class AddBrewery : OsmFilterQuestType<String>() {
 
@@ -33,13 +32,6 @@ class AddBrewery : OsmFilterQuestType<String>() {
     override fun createForm() = AddBreweryForm()
 
     override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        when (answer) {
-            is IsVariousAnswer -> {
-                tags["brewery"] = "various"
-            } else -> {
-            tags["brewery"] = answer
-            }
-        }
-
+        tags["brewery"] = answer
     }
 }

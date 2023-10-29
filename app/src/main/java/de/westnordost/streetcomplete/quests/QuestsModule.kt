@@ -97,6 +97,9 @@ import de.westnordost.streetcomplete.quests.foot.AddProhibitedForPedestrians
 import de.westnordost.streetcomplete.quests.fuel_service.AddFuelSelfService
 import de.westnordost.streetcomplete.quests.general_fee.AddGeneralFee
 import de.westnordost.streetcomplete.quests.grit_bin_seasonal.AddGritBinSeasonal
+import de.westnordost.streetcomplete.quests.guidepost.AddGuidepostEle
+import de.westnordost.streetcomplete.quests.guidepost.AddGuidepostName
+import de.westnordost.streetcomplete.quests.guidepost.AddGuidepostRef
 import de.westnordost.streetcomplete.quests.hairdresser.AddHairdresserCustomers
 import de.westnordost.streetcomplete.quests.handrail.AddHandrail
 import de.westnordost.streetcomplete.quests.healthcare_speciality.AddHealthcareSpeciality
@@ -588,6 +591,9 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 23 to AddRailwayPlatformRef(),
     EE_QUEST_OFFSET + 9 to AddTreeGenus(),
     EE_QUEST_OFFSET + 26 to AddIsPharmacyDispensing(),
+    EE_QUEST_OFFSET + 30 to AddGuidepostRef(),
+    EE_QUEST_OFFSET + 31 to AddGuidepostName(),
+    EE_QUEST_OFFSET + 32 to AddGuidepostEle(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),

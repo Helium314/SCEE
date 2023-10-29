@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class AddBreweryForm : AbstractOsmQuestForm<String>() {
 
-    override val contentLayoutResId = R.layout.quest_cuisine_suggestion
+    override val contentLayoutResId = R.layout.quest_brewery_suggestion
     private val binding by contentViewBinding(QuestBrewerySuggestionBinding::bind)
 
     private val breweries = mutableSetOf<String>()

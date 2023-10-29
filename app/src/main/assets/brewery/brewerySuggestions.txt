@@ -1,97 +1,127 @@
-Guinness
+AB InBev
+Aktienbrauerei Kaufbeuren
+Alhambra
+Allgäuer Brauhaus
+Alpirsbacher Klosterbräu
+Amstel
+Asahi
+Astra
 Augustiner Bräu München
 Ayinger
-Krombacher
-Allgäuer Brauhaus
-Paulaner
-Gösser
-Heineken
-Bitburger
-Asahi
-Shepherd Neame
-Radegast
-Kühbacher
-Fuller's
-Greene King
-Veltins
-Hoepfner
-Löwenbräu
-Hofbräu München
-Warsteiner
-Stiegl
-Hacker-Pschorr
-Charles Wells
-Radeberger
-Robinsons
-Unterbaarer
-Pilsner Urquell
-Karlsberg
-Suwa
-Bellheimer
-Kirin
-Spalter Bier
-Aktienbrauerei Kaufbeuren
-Wildbräu
-Alhambra
-Spaten
-Schloss Eggenberg
-Zötler
-Meckatzer
-Suntory
-Erzquell
-Tucher
-Ur-Krostitzer
-Сыктывкарпиво
-Tegernseer
-Schützengarten
-Engelbräu
-Köstrizer
-Amstel
-Beerlao
-Svijany
+Badger
 Beck's
-Eichbaum
-Staropramen
-leffe
-Stella Artois
-Kaiser
-Forst
-Bosch
-Castle Rock
-Marton's
-Puntigamer
-Jever
-König Ludwig
-Fürstenberg
-AB InBev
-Bernard
-Rothaus
-Jupiler
-Alpirsbacher Klosterbräu
-Molson Coors
+Beerlao
+Bellheimer
 Berg
-Licher
-Thurn und Taxis
-Pelforth
-Herrnbräu
-Gambrinus
-Hatz
-Schlossbrauerei Haimhausen
-König Pilsner
-Sapporo
-Klosterbrauerei Reutberg
-Haacht
-Krušovice
-Schlösser
-Ninkasi
-Samuel Smith
+Berliner Kindl
+Bernard
+Birra Moretti
+Bitburger
+Bosch
+Brauhaus Faust
 BrewDog
-Thwaites
+Budweiser
+Calanda Bräu
+Carlsberg
+Castel
+Castle Rock
+Chang
+Charles Wells
+Corona
+Dinkelacker-Schwaben Bräu
+Eichbaum
+Engelbräu
+Erdinger
+Erzquell
+Farny
+Feldschlösschen
+Finsterwalder
+Forst
+Fuller's
+Fürstenberg
+Fürstenberg
+Gambrinus
+Ganter
+Gold Ochsen
+Greene King
+Guinness
+Gösser
+Haacht
+Hacker-Pschorr
+Harvey's
+Hatz
+Heineken
+Herrnbräu
+Hirsch
+Hoegaarden
+Hoepfner
+Hofbräu München
+Häffner-Bräu
+Härle
+Jever
+Jupiler
+Kaiser
+Karlsberg
+Kirin
+Klosterbrauerei Reutberg
+Krombacher
+Krušovice
+Kulmbacher
+König Ludwig
+König Pilsner
+Köstrizer
+Kühbacher
+Leibinger
+Licher
+Löwenbräu
+Marton's
+Meckatzer
+Miller
+Molson Coors
+Ninkasi
+Oettinger
+Paulaner
+Pelforth
+Pilsner Urquell
+Puntigamer
+Radeberger
+Radegast
 Riegele
-Astra
+Robinsons
+Rothaus
+Ruppaner
+Samuel Smith
+San Miguel
+Sapporo
+Schloss Eggenberg
+Schlossbrauerei Haimhausen
+Schlösser
+Schützengarten
+Shepherd Neame
+Spalter Bier
+Spandauer
+Spaten
 St Austell Brewery
 Starobrno
-Badger
-Kulmbacher
-Brauhaus Faust
-Harvey's
+Staropramen
+Stella Artois
+Stiegl
+Stuttgarter Hofbräu
+Suntory
+Suwa
+Svijany
+Tegernseer
+Thurn und Taxis
+Thwaites
+Tucher
+Unterbaarer
+Ur-Krostitzer
+Veltins
+Waldhaus
+Warsteiner
+Weldebräu
+Wildbräu
+Zwiefalter
+Zötler
+leffe
+Сыктывкарпиво

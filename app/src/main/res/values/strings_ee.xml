@@ -382,7 +382,7 @@
     <string name="default_disabled_msg_roofColour">This quest type is disabled by default because roof colors are often not easily visible from the street. This quest type is also quite time-consuming; in most cases it is easier and more efficient to map this from aerial imagery at home.</string>
 
     <!-- via ferrata scale -->
-    <string name="quest_viaFerrataScale_title">What is the Via Ferrata Scale of this way?</string>
+    <string name="quest_viaFerrataScale_title">What is the Via Ferrata Scale of this ferrata?</string>
     <string name="default_disabled_msg_viaFerrataScale">"This quest type is disabled by default because the rating of via_ferrata's is highly subjective and needs expert knowledge in the used grading system."</string>
     <string name="quest_viaFerrataScale_hint">As there is no "world wide scale" for via_ferrata difficulty, the "German" Huesler scale is used here:</string>
     <string name="quest_viaFerrataScale_zero">"Grade 0 -  none"</string>

@@ -1,13 +1,7 @@
 package de.westnordost.streetcomplete.quests.via_ferrata_scale
 
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.view.View
-import androidx.core.view.isGone
-import de.westnordost.streetcomplete.util.ktx.asImageSpan
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.quests.AImageListQuestForm
 import de.westnordost.streetcomplete.view.image_select.DisplayItem
 

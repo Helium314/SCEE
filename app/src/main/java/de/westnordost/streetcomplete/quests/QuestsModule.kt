@@ -194,6 +194,7 @@ import de.westnordost.streetcomplete.quests.traffic_signals_button.AddTrafficSig
 import de.westnordost.streetcomplete.quests.traffic_signals_sound.AddTrafficSignalsSound
 import de.westnordost.streetcomplete.quests.traffic_signals_vibrate.AddTrafficSignalsVibration
 import de.westnordost.streetcomplete.quests.tree.AddTreeGenus
+import de.westnordost.streetcomplete.quests.via_ferrata_scale.AddViaFerrataScale
 import de.westnordost.streetcomplete.quests.way_lit.AddWayLit
 import de.westnordost.streetcomplete.quests.wheelchair_access.AddWheelchairAccessBusiness
 import de.westnordost.streetcomplete.quests.wheelchair_access.AddWheelchairAccessOutside
@@ -589,6 +590,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 9 to AddTreeGenus(),
     EE_QUEST_OFFSET + 26 to AddIsPharmacyDispensing(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
+    EE_QUEST_OFFSET + 31 to AddViaFerrataScale(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

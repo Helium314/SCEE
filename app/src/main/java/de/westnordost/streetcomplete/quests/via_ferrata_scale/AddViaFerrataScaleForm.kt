@@ -23,7 +23,7 @@ class AddViaFerrataScaleForm : AImageListQuestForm<ViaFerrataScale, ViaFerrataSc
         ViaFerrataScale.SIX
     ).toItems()
 
-    // todo: quest_viaFerrataScale_hint text is missing!
+    // optional: add quest_viaFerrataScale_hint text, but quest is already very long
 
     override val itemsPerRow = 1
     override val moveFavoritesToFront = false

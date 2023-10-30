@@ -17,7 +17,7 @@ class AddViaFerrataScale : OsmFilterQuestType<ViaFerrataScale>() {
     """
     override val changesetComment = "Specify Via Ferrata Grade Scale"
     override val wikiLink = "Key:via_ferrata_scale"
-    override val icon = R.drawable.ic_quest_way_surface_detail
+    override val icon = R.drawable.ic_quest_via_ferrata_scale
     override val defaultDisabledMessage = R.string.default_disabled_msg_viaFerrataScale
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_viaFerrataScale_title

@@ -4,7 +4,7 @@ URLs to other sources used:
  - Twemoji 2 (MIT license)      https://github.com/twitter/twemoji/
  - EmojiOne 2 (CC-BY 4 license) https://github.com/emojione/emojione/tree/2.2.7
  - Google Noto Color Emoji      https://github.com/googlefonts/noto-emoji/tree/main
-   (Apache license, version 2.0) 
+   (Apache license, version 2.0)
 
 File                            Author if not Tobias Zwick / Source
 ===============================================================================
@@ -424,6 +424,7 @@ quest/
     toilets_wheelchair.svg
     tractor.svg
     traffic_lights.svg
+    via_ferrata_scale.svg           https://www.svgrepo.com/svg/137349/climbing (CC0) and based on way_surface.svg
     way_surface.svg
     way_surface_detail.svg          Tobias Zwick (CC-BY-SA 4.0) (based on street_surface_detail.svg), recoloured background by Flo Edelmann
     way_width.svg

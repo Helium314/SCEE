@@ -386,9 +386,9 @@
     <string name="default_disabled_msg_viaFerrataScale">"This quest type is disabled by default because the rating of via_ferrata's is highly subjective and needs expert knowledge in the used grading system."</string>
     <string name="quest_viaFerrataScale_hint">As there is no "world wide scale" for via_ferrata difficulty, the "German" Huesler scale is used here:</string>
     <string name="quest_viaFerrataScale_zero">"Grade 0 -  none"</string>
-    <string name="quest_viaFerrataScale_zero_description">"Grade 0 -  none"</string>
+    <string name="quest_viaFerrataScale_zero_description">"Difficulty low; terrain varies from flat to steep; some exposed sections. Secured with cables, chains or brief ladders. Requires surefootedness; fine for the unsporty. Ferrata set optional for most."</string>
     <string name="quest_viaFerrataScale_one">"Grade 1/K1/A - very easy"</string>
-    <string name="quest_viaFerrataScale_one_description">"Good natural steps; where these are missing, hewn stairs, short ladders and iron steps. Any exposed passages are fitted with cables or chains / rope for handrails rails). Experienced mountaineers may choose not to clip in"</string>
+    <string name="quest_viaFerrataScale_one_description">"Good natural steps or hewn stairs, short ladders / iron steps. Exposed passages are fitted with cables, chains or rope for handrails rails. Experienced mountaineers may choose not to clip in."</string>
     <string name="quest_viaFerrataScale_two">"Grade 2/K2/B - easy"</string>
     <string name="quest_viaFerrataScale_two_description">"Steep or vertical passages are fitted with ladders and/or iron steps. Steel cables and chains secure the climber, even in less difficult terrain. Ferrata set strongly advised."</string>
     <string name="quest_viaFerrataScale_three">"Grade 3/K3/C - moderate"</string>
@@ -396,8 +396,8 @@
     <string name="quest_viaFerrataScale_four">"Grade 4/K4/D - difficult"</string>
     <string name="quest_viaFerrataScale_four_description">"Steep terrain with continuous steel cables to attach to. Arm strength required. Artificial aids (iron steps, handholds) on hardest sections."</string>
     <string name="quest_viaFerrataScale_five">"Grade 5/K5/E - very difficult"</string>
-    <string name="quest_viaFerrataScale_five_description">"Long, persistently demanding and therefore very strenuous. Vertical or exposed terrain may only have cables for safety, but little in the way of artificial steps, these are reserved only for places that would other wise be impossible to cross. For experienced climbers who are in good shape."</string>
-    <string name="quest_viaFerrataScale_six">"Grade 6/K6/F - extremely"</string>
+    <string name="quest_viaFerrataScale_five_description">"Long, persistently demanding and very strenuous. Exposed terrain may only have cables for safety, these are reserved only for places that would other wise be impossible to cross. For experienced climbers."</string>
+    <string name="quest_viaFerrataScale_six">"Grade 6/K6/F - extremely difficult"</string>
     <string name="quest_viaFerrataScale_six_description">"Long sparsely secured gymnastic circuits that require real stamina. Climbing/approach shoes may be useful. Additional security to be provided by rope/ belaying (recommended)"</string>
 
     <!-- other -->

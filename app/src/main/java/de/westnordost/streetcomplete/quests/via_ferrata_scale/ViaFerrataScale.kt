@@ -21,13 +21,13 @@ fun ViaFerrataScale.asItem(): GroupableDisplayItem<ViaFerrataScale> {
 }
 
 private val ViaFerrataScale.imageResId: Int get() = when (this) {
-    ZERO -> R.drawable.surface_asphalt_excellent
-    ONE -> R.drawable.surface_asphalt_good
-    TWO -> R.drawable.surface_asphalt_intermediate
-    THREE -> R.drawable.surface_asphalt_bad
-    FOUR -> R.drawable.surface_asphalt_very_bad
-    FIVE -> R.drawable.surface_asphalt_excellent
-    SIX -> R.drawable.surface_asphalt_good
+    ZERO -> R.drawable.via_ferrata_scale_0
+    ONE -> R.drawable.via_ferrata_scale_1
+    TWO -> R.drawable.via_ferrata_scale_2
+    THREE -> R.drawable.via_ferrata_scale_3
+    FOUR -> R.drawable.via_ferrata_scale_4
+    FIVE -> R.drawable.via_ferrata_scale_5
+    SIX -> R.drawable.via_ferrata_scale_6
 }
 
 private val ViaFerrataScale.titleResId: Int get() = when (this) {

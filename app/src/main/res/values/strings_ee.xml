@@ -383,8 +383,8 @@
 
     <!-- via ferrata scale -->
     <string name="quest_viaFerrataScale_title">What is the Via Ferrata Scale of this way?</string>
-    <string name="default_disabled_msg_viaFerrataScale">This quest type is disabled by default because</string>
-    <string name="quest_viaFerrataScale_hint">Quest Description here</string>
+    <string name="default_disabled_msg_viaFerrataScale">"This quest type is disabled by default because the rating of via_ferrata's is highly subjective and needs expert knowledge in the used grading system."</string>
+    <string name="quest_viaFerrataScale_hint">As there is no "world wide scale" for via_ferrata difficulty, the "German" Huesler scale is used here:</string>
     <string name="quest_viaFerrataScale_zero">"Grade 0 -  none"</string>
     <string name="quest_viaFerrataScale_zero_description">"Grade 0 -  none"</string>
     <string name="quest_viaFerrataScale_one">"Grade 1/K1 - very easy"</string>

@@ -1,0 +1,49 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp"
+    android:height="128dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+  <path
+      android:pathData="m128,64c0,35.35 -28.65,64 -64,64s-64,-28.65 -64,-64 28.65,-64 64,-64 64,28.65 64,64"
+      android:strokeWidth=".2"
+      android:fillColor="#fd5"/>
+  <path
+      android:pathData="m25.69,107.25l76.66,0"
+      android:strokeWidth="7.67"
+      android:fillColor="#00000000"
+      android:strokeColor="#c87137"/>
+  <path
+      android:strokeWidth="1"
+      android:pathData="M37.15,20.72l53.67,0l0,84.33l-53.67,0z"
+      android:fillColor="#aaa"
+      android:strokeColor="#333"/>
+  <path
+      android:strokeWidth="1"
+      android:pathData="m25.65,105.06l76.66,0"
+      android:fillColor="#00000000"
+      android:strokeColor="#c87137"/>
+  <path
+      android:pathData="M48.09,55.73l7.67,0l0,16.75l-7.67,0z"
+      android:fillColor="#ccc"/>
+  <path
+      android:pathData="m81.16,49.89c0,5.9 -4.78,10.68 -10.68,10.68 -5.9,0 -10.68,-4.78 -10.68,-10.68 0,-5.59 10.61,-18.5 10.61,-21.32 0,2.72 10.74,15.45 10.74,21.32z"
+      android:strokeWidth="0.78"
+      android:fillColor="#3581c8"/>
+  <path
+      android:pathData="m70.79,32.7c2.62,5.57 12.83,14.93 5.45,16.54 -7.37,1.61 -5.1,-11.97 -5.45,-16.54z"
+      android:strokeWidth="0.78"
+      android:fillColor="#529add"/>
+  <path
+      android:pathData="m70.42,28.57c1.48,13.04 -5.29,31.76 1.23,31.9 5.07,-0.29 9.51,-4.83 9.51,-10.58 -0.3,-6.31 -7.48,-13.56 -10.74,-21.32z"
+      android:strokeWidth="0.99"
+      android:fillColor="#529add"
+      android:fillAlpha="0.6129"/>
+  <path
+      android:pathData="m71.22,33.58c2.62,5.57 8.75,11.68 4.34,12.22s-3.99,-7.65 -4.34,-12.22z"
+      android:strokeWidth="0.78"
+      android:fillColor="#87bce1"/>
+  <path
+      android:pathData="m64.19,43.71c-7.3,8.21 -0.26,14.97 4.87,15.48 -2.18,-1.71 -7.55,-5.69 -4.87,-15.48z"
+      android:strokeWidth="0.78"
+      android:fillColor="#2b68a3"/>
+</vector>

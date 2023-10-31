@@ -8,6 +8,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
+import de.westnordost.streetcomplete.quests.smoothness.applyTo
 
 class AddShelterType : OsmFilterQuestType<ShelterType>() {
 
@@ -30,7 +31,10 @@ class AddShelterType : OsmFilterQuestType<ShelterType>() {
 
     override fun createForm() = AddShelterTypeForm()
 
-    override fun applyAnswerTo(answer: ShelterType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        tags["shelter_type"] = answer.osmValue
+    override fun applyAnswerTo(answer: ShelterTypeAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        when (answer) {
+                is WeatherShelterAnswer ->  tags["shelter_type"] = "weather_shelter"
+                is ShelterTypeAnswer ->     tags["shelter_type"] = answer.osmValue
+            }
     }
 }

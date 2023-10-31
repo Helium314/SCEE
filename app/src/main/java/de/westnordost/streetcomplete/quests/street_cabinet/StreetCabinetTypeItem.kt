@@ -22,7 +22,7 @@ private val StreetCabinetTypeAnswer.titleResId: Int get() = when (this) {
 
 private val StreetCabinetTypeAnswer.iconResId: Int get() = when (this) {
     POWER ->                R.drawable.quest_street_cabinet_power,
-    TELECOM ->              R.drawable.quest_utility_telecom,
+    TELECOM ->              R.drawable.quest_street_cabinet_telecom,
     POSTAL_SERVICE ->       R.drawable.quest_street_cabinet_postal_service,
     TRAFFIC_CONTROL ->      R.drawable.quest_street_cabinet_traffic_control,
     TRAFFIC_MONITORING ->   R.drawable.quest_street_cabinet_traffic_monitoring,
@@ -32,5 +32,5 @@ private val StreetCabinetTypeAnswer.iconResId: Int get() = when (this) {
     GAS ->                  R.drawable.quest_street_cabinet_gas,
     STREET_LIGHTING ->      R.drawable.quest_street_cabinet_street_lighting,
     WATER ->                R.drawable.quest_street_cabinet_water,
-    SEWERAGE ->             R.drawable.quest_utility_sewerage
+    SEWERAGE ->             R.drawable.quest_street_cabinet_sewerage
 }

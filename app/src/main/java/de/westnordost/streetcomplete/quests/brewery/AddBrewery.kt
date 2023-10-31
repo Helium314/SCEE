@@ -13,12 +13,11 @@ class AddBrewery : OsmFilterQuestType<BreweryAnswer>() {
 
     override val elementFilter = """
         nodes, ways with
-        (
           amenity ~ bar|biergarten|pub|restaurant|nightclub
-        )
-        and
-        ( !drink:beer and brewery ~ yes|no )
-        or !brewery
+          and (
+            (!drink:beer and brewery ~ yes|no)
+            or !brewery
+          )
     """
     override val changesetComment = "Add brewery"
     override val wikiLink = "Key:brewery"

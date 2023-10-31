@@ -21,9 +21,9 @@ class AddShelterType : OsmFilterQuestType<ShelterType>() {
     override val icon = R.drawable.ic_quest_shelter_type
     override val isDeleteElementEnabled = true
     override val achievements = listOf(EditTypeAchievement.OUTDOORS)
-    override val defaultDisabledMessage: Int = R.string.default_disabled_msg_ee
+    override val defaultDisabledMessage: Int = R.string.quest_shelter_type_disabled_msg
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_shelterType_title
+    override fun getTitle(tags: Map<String, String>) = R.string.quest_shelter_type_title
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
         getMapData().filter("nodes, ways with amenity = shelter")

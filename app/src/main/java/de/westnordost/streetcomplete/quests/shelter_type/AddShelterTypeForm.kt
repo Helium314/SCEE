@@ -17,16 +17,16 @@ import de.westnordost.streetcomplete.view.image_select.Item
 class AddShelterTypeForm : AImageListQuestForm<ShelterType, ShelterType>() {
 
     override val items = listOf(
-        Item(PUBLIC_TRANSPORT, R.drawable.shelter_type_public_transport, R.string.quest_shelterType_public_transport),
-        Item(PICNIC_SHELTER, R.drawable.shelter_type_picnic_shelter, R.string.quest_shelterType_picnic_shelter),
-        Item(GAZEBO, R.drawable.shelter_type_gazebo, R.string.quest_shelterType_gazebo),
-        Item(WEATHER_SHELTER, R.drawable.shelter_type_weather_shelter, R.string.quest_shelterType_weather_shelter),
-        Item(LEAN_TO, R.drawable.shelter_type_lean_to, R.string.quest_shelterType_lean_to),
-        Item(PAVILION, R.drawable.shelter_type_pavilion, R.string.quest_shelterType_pavilion) ,
-        Item(BASIC_HUT, R.drawable.shelter_type_basic_hut, R.string.quest_shelterType_basic_hut),
-        Item(SUN_SHELTER, R.drawable.shelter_type_sun_shelter, R.string.quest_shelterType_sun_shelter),
-        Item(FIELD_SHELTER, R.drawable.shelter_type_field_shelter, R.string.quest_shelterType_field_shelter),
-        Item(ROCK_SHELTER, R.drawable.shelter_type_rock_shelter, R.string.quest_shelterType_rock_shelter)
+        Item(PUBLIC_TRANSPORT, R.drawable.shelter_type_public_transport, R.string.quest_shelter_type_public_transport),
+        Item(PICNIC_SHELTER, R.drawable.shelter_type_picnic_shelter, R.string.quest_shelter_type_picnic_shelter),
+        Item(GAZEBO, R.drawable.shelter_type_gazebo, R.string.quest_shelter_type_gazebo),
+        Item(WEATHER_SHELTER, R.drawable.shelter_type_weather_shelter, R.string.quest_shelter_type_weather_shelter),
+        Item(LEAN_TO, R.drawable.shelter_type_lean_to, R.string.quest_shelter_type_lean_to),
+        Item(PAVILION, R.drawable.shelter_type_pavilion, R.string.quest_shelter_type_pavilion) ,
+        Item(BASIC_HUT, R.drawable.shelter_type_basic_hut, R.string.quest_shelter_type_basic_hut),
+        Item(SUN_SHELTER, R.drawable.shelter_type_sun_shelter, R.string.quest_shelter_type_sun_shelter),
+        Item(FIELD_SHELTER, R.drawable.shelter_type_field_shelter, R.string.quest_shelter_type_field_shelter),
+        Item(ROCK_SHELTER, R.drawable.shelter_type_rock_shelter, R.string.quest_shelter_type_rock_shelter)
     )
 
     override val itemsPerRow = 3

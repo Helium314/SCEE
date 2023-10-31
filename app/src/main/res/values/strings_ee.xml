@@ -382,9 +382,9 @@
     <string name="default_disabled_msg_roofColour">This quest type is disabled by default because roof colors are often not easily visible from the street. This quest type is also quite time-consuming; in most cases it is easier and more efficient to map this from aerial imagery at home.</string>
 
     <!-- via ferrata scale -->
-    <string name="quest_viaFerrataScale_title">What is the Via Ferrata Scale of this ferrata?</string>
+    <string name="quest_viaFerrataScale_title">"What is the Via Ferrata Scale of this ferrata?"</string>
     <string name="default_disabled_msg_viaFerrataScale">"This quest type is disabled by default because the rating of via_ferrata's is highly subjective and needs expert knowledge in the used grading system and when climbing via ferrata, as this requires advanced mountaineering skills."</string>
-    <string name="quest_viaFerrataScale_hint">As there is no "world wide scale" for via_ferrata difficulty, the "German" Huesler scale is used here:</string>
+    <string name="quest_viaFerrataScale_hint">"As there is no "world wide scale" for via_ferrata difficulty, the "German" Huesler scale is used here:"</string>
     <string name="quest_viaFerrataScale_zero">"Grade 0 -  none"</string>
     <string name="quest_viaFerrataScale_zero_description">"Difficulty low; terrain varies from flat to steep; some exposed sections. Secured with cables, chains or brief ladders. Requires surefootedness; fine for the unsporty. Ferrata set optional for most."</string>
     <string name="quest_viaFerrataScale_one">"Grade 1/K1/A - very easy"</string>
@@ -398,7 +398,7 @@
     <string name="quest_viaFerrataScale_five">"Grade 5/K5/E - very difficult"</string>
     <string name="quest_viaFerrataScale_five_description">"Long, persistently demanding and very strenuous. Exposed terrain may only have cables for safety, these are reserved only for places that would other wise be impossible to cross. For experienced climbers."</string>
     <string name="quest_viaFerrataScale_six">"Grade 6/K6/F - extremely difficult"</string>
-    <string name="quest_viaFerrataScale_six_description">"Long sparsely secured gymnastic circuits that require real stamina. Climbing/approach shoes may be useful. Additional security to be provided by rope/ belaying (recommended)"</string>
+    <string name="quest_viaFerrataScale_six_description">"Long sparsely secured gymnastic circuits that require real stamina. Climbing/approach shoes may be useful. Additional security to be provided by rope/belaying (recommended)"</string>
 
     <!-- other -->
     <string name="quest_contact_phone">What is the phone number of this place?</string>

@@ -1,7 +1,6 @@
 package de.westnordost.streetcomplete.quests.street_cabinet
 
-sealed interface StreetCabinetTypeAnswer
-enum class StreetCabinetType(val osmKey: String, val osmValue: String) : StreetCabinetTypeAnswer {
+enum class StreetCabinetType(val osmKey: String, val osmValue: String) {
     POSTAL_SERVICE("street_cabinet", "postal_service"),
     TRAFFIC_CONTROL("street_cabinet", "traffic_control"),
     TRAFFIC_MONITORING("street_cabinet", "traffic_monitoring"),

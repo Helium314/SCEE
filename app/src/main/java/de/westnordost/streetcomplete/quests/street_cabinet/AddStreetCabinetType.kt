@@ -39,11 +39,7 @@ class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType>() {
 
     override fun createForm() = AddStreetCabinetTypeForm()
 
-    override fun applyAnswerTo(
-        answer: StreetCabinetType,
-        tags: Tags,
-        geometry: ElementGeometry,
-        timestampEdited: Long
-    ) {
-        tags[answer.osmKey] = answer.osmValue }
+    override fun applyAnswerTo(answer: StreetCabinetType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        tags[answer.osmKey] = answer.osmValue
+    }
 }

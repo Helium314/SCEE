@@ -8,7 +8,6 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
-import de.westnordost.streetcomplete.quests.smoothness.applyTo
 
 class AddShelterType : OsmFilterQuestType<ShelterType>() {
 

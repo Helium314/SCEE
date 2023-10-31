@@ -21,7 +21,9 @@ import de.westnordost.streetcomplete.util.mostCommonWithin
 import de.westnordost.streetcomplete.view.controller.FeatureViewController
 import de.westnordost.streetcomplete.view.dialogs.SearchFeaturesDialog
 
-class AddHealthcareSpecialityForm : AMultiValueQuestForm() {
+class AddHealthcareSpecialityForm : AMultiValueQuestForm<String>() {
+
+    override fun stringToAnswer(answerString: String) = answerString
 
     // the hacky UI switch breaks when using tag editor...
     override val otherAnswers get() = if (TagEditor.showingTagEditor) emptyList() else listOf(AnswerItem(R.string.quest_healthcare_speciality_switch_ui) {

@@ -35,9 +35,9 @@ class AddBrewery : OsmFilterQuestType<BreweryAnswer>() {
 
     override fun applyAnswerTo(answer: BreweryAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         when (answer) {
-            is isNoBeerAnswer ->   tags["drink:beer"] = "no"
-            is isManyBeerAnswer -> tags["brewery"] = "various"
-            is BreweryAnswer ->    tags["brewery"] = answer.brewery
+            is NoBeerAnswer ->   tags["drink:beer"] = "no"
+            is ManyBeerAnswer -> tags["brewery"] = "various"
+            is BreweryStringAnswer -> tags["brewery"] = answer.brewery
         }
     }
 }

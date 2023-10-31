@@ -20,10 +20,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /** form for adding multiple values to a single key */
-abstract class AMultiValueQuestForm : AbstractOsmQuestForm<String>() {
+abstract class AMultiValueQuestForm<T> : AbstractOsmQuestForm<T>() {
 
     override val contentLayoutResId = R.layout.quest_multi_value
     private val binding by contentViewBinding(QuestMultiValueBinding::bind)
+
+    /** convert the multi-value string answer to type T */
+    abstract fun stringToAnswer(answerString: String): T
 
     /**
      *  provide suggestions, loaded once and stored in companion object
@@ -85,9 +88,9 @@ abstract class AMultiValueQuestForm : AbstractOsmQuestForm<String>() {
         if (values.isNotEmpty()) favs.add(values)
         if (value.isNotBlank()) favs.add(value)
         if (value.isBlank())
-            applyAnswer(values.joinToString(";"))
+            applyAnswer(stringToAnswer(values.joinToString(";")))
         else
-            applyAnswer((values + listOf(value)).joinToString(";"))
+            applyAnswer(stringToAnswer((values + listOf(value)).joinToString(";")))
     }
 
     override fun isFormComplete() = (value.isNotBlank() || values.isNotEmpty()) && !value.contains(";")

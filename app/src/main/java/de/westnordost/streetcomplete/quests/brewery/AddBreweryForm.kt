@@ -1,19 +1,18 @@
 package de.westnordost.streetcomplete.quests.brewery
 
-import androidx.appcompat.app.AlertDialog
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.quests.AMultiValueQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
-import de.westnordost.streetcomplete.quests.bench_backrest.BenchBackrestAnswer
-import de.westnordost.streetcomplete.quests.opening_hours.NoOpeningHoursSign
 import de.westnordost.streetcomplete.util.math.enlargedBy
 import org.koin.android.ext.android.inject
 
-class AddBreweryForm : AMultiValueQuestForm() {
+class AddBreweryForm : AMultiValueQuestForm<BreweryAnswer>() {
 
     private val mapDataSource: MapDataWithEditsSource by inject()
+
+    override fun stringToAnswer(answerString: String) = BreweryStringAnswer(answerString)
 
     override fun getConstantSuggestions() =
         requireContext().assets.open("brewery/brewerySuggestions.txt").bufferedReader().readLines()
@@ -33,7 +32,7 @@ class AddBreweryForm : AMultiValueQuestForm() {
     }
 
     override val otherAnswers = listOf(
-        AnswerItem(R.string.quest_brewery_is_not_available) { isNoBeerAnswer() },
-        AnswerItem(R.string.quest_brewery_is_various) { isManyBeerAnswer() }
+        AnswerItem(R.string.quest_brewery_is_not_available) { applyAnswer(NoBeerAnswer) },
+        AnswerItem(R.string.quest_brewery_is_various) { applyAnswer(ManyBeerAnswer) }
     )
 }

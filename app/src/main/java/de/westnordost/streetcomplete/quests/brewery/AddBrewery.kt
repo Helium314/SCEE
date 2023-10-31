@@ -9,14 +9,16 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.IS_SHOP_OR_DISUSED_SHOP_EXPRESSION
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddBrewery : OsmFilterQuestType<String>() {
+class AddBrewery : OsmFilterQuestType<BreweryAnswer>() {
 
     override val elementFilter = """
         nodes, ways with
         (
           amenity ~ bar|biergarten|pub|restaurant|nightclub
         )
-        and !brewery or brewery ~ yes|no|various
+        and
+        ( !drink:beer and brewery ~ yes|no )
+        or !brewery
     """
     override val changesetComment = "Add brewery"
     override val wikiLink = "Key:brewery"
@@ -31,7 +33,11 @@ class AddBrewery : OsmFilterQuestType<String>() {
 
     override fun createForm() = AddBreweryForm()
 
-    override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        tags["brewery"] = answer
+    override fun applyAnswerTo(answer: BreweryAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        when (answer) {
+            is isNoBeerAnswer ->   tags["drink:beer"] = "no"
+            is isManyBeerAnswer -> tags["brewery"] = "various"
+            is BreweryAnswer ->    tags["brewery"] = answer.brewery
+        }
     }
 }

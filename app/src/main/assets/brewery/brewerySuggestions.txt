@@ -1,4 +1,3 @@
-AB InBev
 Aktienbrauerei Kaufbeuren
 Alhambra
 Allgäuer Brauhaus
@@ -70,6 +69,7 @@ König Ludwig
 König Pilsner
 Köstrizer
 Kühbacher
+Leffe
 Leibinger
 Licher
 Löwenbräu
@@ -122,5 +122,4 @@ Weldebräu
 Wildbräu
 Zwiefalter
 Zötler
-leffe
 Сыктывкарпиво

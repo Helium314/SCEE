@@ -24,7 +24,7 @@ class AddViaFerrataScaleForm : AImageListQuestForm<ViaFerrataScale, ViaFerrataSc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        imageSelector.cellLayoutId = R.layout.cell_labeled_icon_select_smoothness
+        imageSelector.cellLayoutId = R.layout.cell_labeled_icon_select_via_ferrata_scale
     }
 
     override fun onClickOk(selectedItems: List<ViaFerrataScale>) {

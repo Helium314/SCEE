@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.50"
-        app:layout_constraintDimensionRatio="15:10"
+        app:layout_constraintDimensionRatio="1:1"
         android:adjustViewBounds="true"
         tools:src="@drawable/via_ferrata_scale_1"
         />

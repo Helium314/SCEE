@@ -33,6 +33,6 @@ class AddBreweryForm : AMultiValueQuestForm<BreweryAnswer>() {
 
     override val otherAnswers = listOf(
         AnswerItem(R.string.quest_brewery_is_not_available) { applyAnswer(NoBeerAnswer) },
-        AnswerItem(R.string.quest_brewery_is_various) { applyAnswer(ManyBeerAnswer) }
+        AnswerItem(R.string.quest_brewery_is_various) { applyAnswer(ManyBeersAnswer) }
     )
 }

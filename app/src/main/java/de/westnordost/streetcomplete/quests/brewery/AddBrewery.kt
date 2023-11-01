@@ -14,10 +14,11 @@ class AddBrewery : OsmFilterQuestType<BreweryAnswer>() {
     override val elementFilter = """
         nodes, ways with
           amenity ~ bar|biergarten|pub|restaurant|nightclub
-          and (drink:beer != no)
+          and drink:beer != no
           and (
-            (brewery ~ yes|no)
+            brewery ~ yes|no
             or !brewery
+            or brewery older today -6 years
           )
     """
     override val changesetComment = "Add brewery"
@@ -35,8 +36,12 @@ class AddBrewery : OsmFilterQuestType<BreweryAnswer>() {
 
     override fun applyAnswerTo(answer: BreweryAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         when (answer) {
-            is NoBeerAnswer ->   tags["drink:beer"] = "no"
-            is ManyBeerAnswer -> tags["brewery"] = "various"
+            is NoBeerAnswer -> {
+                tags["drink:beer"] = "no"
+                if (tags["brewery"] != "no") // don't remove brewery=no
+                    tags.remove("brewery")
+            }
+            is ManyBeersAnswer -> tags["brewery"] = "various"
             is BreweryStringAnswer -> tags["brewery"] = answer.brewery
         }
     }

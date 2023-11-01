@@ -8,5 +8,6 @@ enum class ShelterType(val osmValue: String) {
     BASIC_HUT("basic_hut"),
     SUN_SHELTER("sun_shelter"),
     FIELD_SHELTER("field_shelter"),
-    ROCK_SHELTER("rock_shelter")
+    ROCK_SHELTER("rock_shelter"),
+    WEATHER_SHELTER("weather_shelter")
 }

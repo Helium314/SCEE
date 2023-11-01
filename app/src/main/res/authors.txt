@@ -237,7 +237,6 @@ shelter_type_picnic_shelter.…  CC-BY-SA 3.0      B.navez https://wiki.openstre
 shelter_type_gazebo.jpg        CC-BY 4.0         ermell https://wiki.openstreetmap.org/wiki/File:Bamberg-Hain-Pavillion-P1180860.jpg
 shelter_type_weather_shelter…                    Fröstel https://wiki.openstreetmap.org/wiki/File:German-shelter-harz.jpg
 shelter_type_lean_to.jpg       CC-BY-SA 3.0      Mwanner https://wiki.openstreetmap.org/wiki/File:Adirondack_Lean-to.jpg
-shelter_type_pavilion.jpg      CC-BY-SA 4.0      Bwag https://wiki.openstreetmap.org/wiki/File:Obersiebenbrunn_-_Schloss,_Gartenpavillon.JPG
 shelter_type_basic_hut.jpg     CC-BY-SA 3.0      Luca Bergamasco https://wiki.openstreetmap.org/wiki/File:BivaccoBertoglioNebbia.jpg
 shelter_type_sun_shelter.jpg   CC-BY-SA 2.0      S2374 https://wiki.openstreetmap.org/wiki/File:Shelter_Providing_Shade_from_the_Sun.jpg
 shelter_type_field_shelter…    PB                Imagic https://wiki.openstreetmap.org/wiki/File:Field_shelter.jpg

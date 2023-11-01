@@ -31,11 +31,8 @@ class AddIsAmenityIndoor(private val getFeature: (tags: Map<String, String>) -> 
     """.toElementFilterExpression() }
 
     /* We only want survey nodes within building outlines. */
-    // exclude building=roof, see https://github.com/streetcomplete/StreetComplete/issues/5333
     private val buildingFilter by lazy { """
-        ways, relations with 
-            building
-            and building != roof 
+        ways, relations with building
     """.toElementFilterExpression() }
 
     override val changesetComment = "Determine whether amenities are inside buildings"

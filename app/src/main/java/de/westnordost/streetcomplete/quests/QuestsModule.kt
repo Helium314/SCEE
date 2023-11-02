@@ -45,6 +45,7 @@ import de.westnordost.streetcomplete.quests.bike_shop.AddSecondHandBicycleAvaila
 import de.westnordost.streetcomplete.quests.board_type.AddBoardType
 import de.westnordost.streetcomplete.quests.bollard_type.AddBollardType
 import de.westnordost.streetcomplete.quests.bridge_structure.AddBridgeStructure
+import de.westnordost.streetcomplete.quests.brewery.AddBrewery
 import de.westnordost.streetcomplete.quests.building_colour.AddBuildingColour
 import de.westnordost.streetcomplete.quests.building_entrance.AddEntrance
 import de.westnordost.streetcomplete.quests.building_entrance_reference.AddEntranceReference
@@ -76,6 +77,7 @@ import de.westnordost.streetcomplete.quests.crossing_kerb_height.AddCrossingKerb
 import de.westnordost.streetcomplete.quests.crossing_type.AddCrossingType
 import de.westnordost.streetcomplete.quests.cuisine.AddCuisine
 import de.westnordost.streetcomplete.quests.cycleway.AddCycleway
+import de.westnordost.streetcomplete.quests.defibrillator.AddDefibrillatorLocation
 import de.westnordost.streetcomplete.quests.diet_type.AddHalal
 import de.westnordost.streetcomplete.quests.diet_type.AddKosher
 import de.westnordost.streetcomplete.quests.diet_type.AddVegan
@@ -153,6 +155,7 @@ import de.westnordost.streetcomplete.quests.segregated.AddCyclewaySegregation
 import de.westnordost.streetcomplete.quests.self_service.AddSelfServiceLaundry
 import de.westnordost.streetcomplete.quests.service_building.AddServiceBuildingOperator
 import de.westnordost.streetcomplete.quests.service_building.AddServiceBuildingType
+import de.westnordost.streetcomplete.quests.shelter_type.AddShelterType
 import de.westnordost.streetcomplete.quests.shop_type.CheckShopExistence
 import de.westnordost.streetcomplete.quests.shop_type.CheckShopType
 import de.westnordost.streetcomplete.quests.shop_type.SpecifyShopType
@@ -174,6 +177,7 @@ import de.westnordost.streetcomplete.quests.sport.AddSport
 import de.westnordost.streetcomplete.quests.step_count.AddStepCount
 import de.westnordost.streetcomplete.quests.step_count.AddStepCountStile
 import de.westnordost.streetcomplete.quests.steps_ramp.AddStepsRamp
+import de.westnordost.streetcomplete.quests.street_cabinet.AddStreetCabinetType
 import de.westnordost.streetcomplete.quests.summit.AddSummitCross
 import de.westnordost.streetcomplete.quests.summit.AddSummitRegister
 import de.westnordost.streetcomplete.quests.surface.AddCyclewayPartSurface
@@ -195,6 +199,7 @@ import de.westnordost.streetcomplete.quests.traffic_signals_button.AddTrafficSig
 import de.westnordost.streetcomplete.quests.traffic_signals_sound.AddTrafficSignalsSound
 import de.westnordost.streetcomplete.quests.traffic_signals_vibrate.AddTrafficSignalsVibration
 import de.westnordost.streetcomplete.quests.tree.AddTreeGenus
+import de.westnordost.streetcomplete.quests.via_ferrata_scale.AddViaFerrataScale
 import de.westnordost.streetcomplete.quests.way_lit.AddWayLit
 import de.westnordost.streetcomplete.quests.wheelchair_access.AddWheelchairAccessBusiness
 import de.westnordost.streetcomplete.quests.wheelchair_access.AddWheelchairAccessOutside
@@ -504,6 +509,7 @@ fun getQuestTypeList(
     112 to AddWheelchairAccessPublicTransport(), // need to look out for lifts etc, maybe even enter the station
 
     113 to AddIsAmenityIndoor(getFeature), // need to go inside in case it is inside (or gone)
+    161 to AddDefibrillatorLocation(), // need to go inside in case it is inside (or gone)
 
     // inside camping sites
     114 to AddCampType(),
@@ -579,18 +585,22 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 1 to AddContactPhone(),
     EE_QUEST_OFFSET + 2 to AddContactWebsite(),
     EE_QUEST_OFFSET + 4 to AddCuisine(),
+    EE_QUEST_OFFSET + 32 to AddBrewery(),
     EE_QUEST_OFFSET + 5 to AddHealthcareSpeciality(),
     EE_QUEST_OFFSET + 6 to AddServiceBuildingType(),
     EE_QUEST_OFFSET + 7 to AddServiceBuildingOperator(),
+    EE_QUEST_OFFSET + 29 to AddStreetCabinetType(),
     EE_QUEST_OFFSET + 8 to AddOutdoorSeatingType(),
     EE_QUEST_OFFSET + 25 to AddDestination(),
     EE_QUEST_OFFSET + 22 to AddArtworkType(),
     EE_QUEST_OFFSET + 23 to AddRailwayPlatformRef(),
     EE_QUEST_OFFSET + 9 to AddTreeGenus(),
     EE_QUEST_OFFSET + 26 to AddIsPharmacyDispensing(),
+    EE_QUEST_OFFSET + 30 to AddShelterType(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
-    EE_QUEST_OFFSET + 29 to AddMapType(),
-    EE_QUEST_OFFSET + 30 to AddMapSize(),
+    EE_QUEST_OFFSET + 31 to AddViaFerrataScale(),
+    EE_QUEST_OFFSET + 32 to AddMapType(),
+    EE_QUEST_OFFSET + 33 to AddMapSize(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

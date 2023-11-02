@@ -34,8 +34,8 @@ android {
         applicationId = "de.westnordost.streetcomplete.expert"
         minSdk = 21
         targetSdk = 33
-        versionCode = 5403
-        versionName = "54.11"
+        versionCode = 5500
+        versionName = "55.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -175,17 +175,17 @@ dependencies {
     implementation("org.jbox2d:jbox2d-library:2.2.1.1")
 
     // sharing presets/settings via QR Code
-    implementation("com.google.zxing:core:3.5.0")
+    implementation("com.google.zxing:core:3.5.2")
 
     // serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-    implementation("com.charleskorn.kaml:kaml:0.48.0")
+    implementation("com.charleskorn.kaml:kaml:0.55.0")
 
     // map and location
     implementation("com.mapzen.tangram:tangram:0.17.1")
 
     // opening hours parser
-    implementation("ch.poole:OpeningHoursParser:0.27.0")
+    implementation("ch.poole:OpeningHoursParser:0.27.1")
 
     // image view that allows zoom and pan
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
@@ -277,6 +277,8 @@ tasks.register<UpdateAppTranslationsTask>("updateTranslations") {
 
 tasks.register<UpdateAppTranslationCompletenessTask>("updateTranslationCompleteness") {
     group = "streetcomplete"
+    languageCodes = bcp47ExportLanguages
+    mustIncludeLanguagePercentage = 90
     apiToken = properties["POEditorAPIToken"] as String
     projectId = poEditorProjectId
     targetFiles = { "$projectDir/src/main/res/values-$it/translation_info.xml" }

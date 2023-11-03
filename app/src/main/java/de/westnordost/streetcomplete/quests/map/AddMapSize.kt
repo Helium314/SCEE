@@ -17,7 +17,7 @@ class AddMapSize : OsmFilterQuestType<String>() {
     override val changesetComment = "Add what area a map covers"
     override val defaultDisabledMessage = R.string.default_disabled_msg_ee
     override val wikiLink = "Key:map_size"
-    override val icon = R.drawable.ic_quest_board_type
+    override val icon = R.drawable.ic_quest_map_size
     override val achievements = listOf(EditTypeAchievement.OUTDOORS)
     override fun getTitle(tags: Map<String, String>) = R.string.quest_mapSize_title
 

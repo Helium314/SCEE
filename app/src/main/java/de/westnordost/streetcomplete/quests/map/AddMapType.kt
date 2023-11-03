@@ -17,7 +17,7 @@ class AddMapType : OsmFilterQuestType<String>() {
     override val changesetComment = "Add map type"
     override val defaultDisabledMessage = R.string.default_disabled_msg_ee
     override val wikiLink = "Key:map_type"
-    override val icon = R.drawable.ic_quest_board_type
+    override val icon = R.drawable.ic_quest_map_type
     override val achievements = listOf(EditTypeAchievement.OUTDOORS)
     override fun getTitle(tags: Map<String, String>) = R.string.quest_mapType_title
 

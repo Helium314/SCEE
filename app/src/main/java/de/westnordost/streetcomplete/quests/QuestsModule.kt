@@ -599,8 +599,8 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 30 to AddShelterType(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
     EE_QUEST_OFFSET + 31 to AddViaFerrataScale(),
-    EE_QUEST_OFFSET + 32 to AddMapType(),
-    EE_QUEST_OFFSET + 33 to AddMapSize(),
+    EE_QUEST_OFFSET + 33 to AddMapType(),
+    EE_QUEST_OFFSET + 34 to AddMapSize(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

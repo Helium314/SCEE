@@ -405,20 +405,6 @@
     <string name="quest_roofColour_title">"What overall color does this building’s roof have?"</string>
     <string name="default_disabled_msg_roofColour">This quest type is disabled by default because roof colors are often not easily visible from the street. This quest type is also quite time-consuming; in most cases it is easier and more efficient to map this from aerial imagery at home.</string>
 
-    <!-- map type -->
-    <string name="quest_mapType_title">What kind of map is this?</string>
-    <string name="quest_mapType_topo">Topographic map. Contour lines are visible.</string>
-    <string name="quest_mapType_street">Street map that shows all streets in the area</string>
-    <string name="quest_mapType_scheme">Schematic map that only shows streets and POIs relevant for a certain purpose.</string>
-    <string name="quest_mapType_toposcope">Toposcope. It shows what you can see in every direction from a high point.</string>
-
-    <!-- map size -->
-    <string name="quest_mapSize_title">What area is covered by this map?</string>
-    <string name="quest_mapSize_site">A site, e.g. a park or a zoo</string>
-    <string name="quest_mapSize_city">A whole city</string>
-    <string name="quest_mapSize_region">A larger area with e.g. multiple villages</string>
-    <string name="quest_mapSize_landscape">A whole landscape, mostly used on toposcopes</string>
-
     <!-- via ferrata scale -->
     <string name="quest_viaFerrataScale_title">"What is the Via Ferrata Scale of this ferrata?"</string>
     <string name="default_disabled_msg_viaFerrataScale">"This quest type is disabled by default because the rating of via ferrata routes is highly subjective and needs expert knowledge in the used grading system and when climbing via ferrata, as this requires advanced mountaineering skills. As there is no "world wide scale" for via ferrata difficulty, the German Huesler scale is used here."</string>

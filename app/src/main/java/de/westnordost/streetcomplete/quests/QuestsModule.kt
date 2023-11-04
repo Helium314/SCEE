@@ -109,8 +109,6 @@ import de.westnordost.streetcomplete.quests.kerb_height.AddKerbHeight
 import de.westnordost.streetcomplete.quests.lanes.AddLanes
 import de.westnordost.streetcomplete.quests.leaf_detail.AddForestLeafType
 import de.westnordost.streetcomplete.quests.level.AddLevel
-import de.westnordost.streetcomplete.quests.map.AddMapSize
-import de.westnordost.streetcomplete.quests.map.AddMapType
 import de.westnordost.streetcomplete.quests.max_height.AddMaxHeight
 import de.westnordost.streetcomplete.quests.max_height.AddMaxPhysicalHeight
 import de.westnordost.streetcomplete.quests.max_speed.AddMaxSpeed
@@ -600,8 +598,6 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 30 to AddShelterType(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
     EE_QUEST_OFFSET + 31 to AddViaFerrataScale(),
-    EE_QUEST_OFFSET + 33 to AddMapType(),
-    EE_QUEST_OFFSET + 34 to AddMapSize(),
     EE_QUEST_OFFSET + 35 to AddBarrierHeight(arSupportChecker),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),

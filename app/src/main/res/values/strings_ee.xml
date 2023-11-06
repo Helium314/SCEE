@@ -381,6 +381,22 @@
     <string name="quest_roofColour_title">"What overall color does this building’s roof have?"</string>
     <string name="default_disabled_msg_roofColour">This quest type is disabled by default because roof colors are often not easily visible from the street. This quest type is also quite time-consuming; in most cases it is easier and more efficient to map this from aerial imagery at home.</string>
 
+    <!-- trail visibility -->
+    <string name="quest_trail_visibility_title">"What is the Trail Visibility of this way?"</string>
+    <string name="default_disabled_msg_trail_visibility">"This quest type is disabled by default because the rating of the trail visibility is highly subjective and needs expert knowledge in the used grading system."</string>
+    <string name="quest_trail_visibility_excellent">"Excellent"</string>
+    <string name="quest_trail_visibility_excellent_description">"Unambiguous path or markers everywhere. Orientation unproblematic, no map required."</string>
+    <string name="quest_trail_visibility_good">"Good"</string>
+    <string name="quest_trail_visibility_good_description">"Path or next marker always visible, but sometimes has to be searched for. Basic sense of direction needed, map recommended."</string>
+    <string name="quest_trail_visibility_intermediate">"Intermediate"</string>
+    <string name="quest_trail_visibility_intermediate_description">"Path mostly visible. Good sense of direction needed, map required."</string>
+    <string name="quest_trail_visibility_bad">"Bad"</string>
+    <string name="quest_trail_visibility_bad_description">"Path sometimes invisible, route partly pathless. Basic skills in orientation required."</string>
+    <string name="quest_trail_visibility_horrible">"Horrible"</string>
+    <string name="quest_trail_visibility_horrible_description">"Often pathless. Advanced orientational skills required."</string>
+    <string name="quest_trail_visibility_no">"No Visibility"</string>
+    <string name="quest_trail_visibility_no_description">"Mostly pathless. Excellent orientational skills required."</string>
+
     <!-- other -->
     <string name="quest_contact_phone">What is the phone number of this place?</string>
     <string name="quest_contact_website">What is the website of this place?</string>

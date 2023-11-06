@@ -193,6 +193,7 @@ import de.westnordost.streetcomplete.quests.traffic_calming_type.AddTrafficCalmi
 import de.westnordost.streetcomplete.quests.traffic_signals_button.AddTrafficSignalsButton
 import de.westnordost.streetcomplete.quests.traffic_signals_sound.AddTrafficSignalsSound
 import de.westnordost.streetcomplete.quests.traffic_signals_vibrate.AddTrafficSignalsVibration
+import de.westnordost.streetcomplete.quests.trail_visibility.AddTrailVisibility
 import de.westnordost.streetcomplete.quests.tree.AddTreeGenus
 import de.westnordost.streetcomplete.quests.way_lit.AddWayLit
 import de.westnordost.streetcomplete.quests.wheelchair_access.AddWheelchairAccessBusiness
@@ -586,6 +587,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 25 to AddDestination(),
     EE_QUEST_OFFSET + 22 to AddArtworkType(),
     EE_QUEST_OFFSET + 23 to AddRailwayPlatformRef(),
+    EE_QUEST_OFFSET + 33 to AddTrailVisibility(),
     EE_QUEST_OFFSET + 9 to AddTreeGenus(),
     EE_QUEST_OFFSET + 26 to AddIsPharmacyDispensing(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),

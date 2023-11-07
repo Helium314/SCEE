@@ -25,7 +25,7 @@ class AddBarrierHeight(
     override val icon = R.drawable.ic_quest_barrier_height
     override val achievements = listOf(EditTypeAchievement.PEDESTRIAN)
     override val defaultDisabledMessage: Int
-        get() = if (!checkArSupport()) R.string.default_disabled_msg_no_ar else 0
+        get() = if (!checkArSupport()) R.string.default_disabled_msg_no_ar else R.string.default_disabled_msg_ee
 
     override fun getTitle(tags: Map<String, String>): Int {
         return R.string.quest_barrier_height_title

@@ -15,6 +15,7 @@ class AddTrailVisibility : OsmFilterQuestType<TrailVisibility>() {
           highway ~ path|footway|cycleway|bridleway
           and !trail_visibility
           and (sac_scale and sac_scale != hiking)
+          and (!lit or lit = no)
           and surface ~ "ground|earth|dirt|soil|grass|sand|mud|ice|salt|snow|rock|stone"
     """
     override val changesetComment = "Specify Trail Visibility"

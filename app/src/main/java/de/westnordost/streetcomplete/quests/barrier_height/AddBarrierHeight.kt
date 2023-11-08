@@ -13,7 +13,7 @@ class AddBarrierHeight(
 
     override val elementFilter = """
         ways with
-        barrier ~ fence|guard_rail|handrail|hedge|wall|cable_barrier|retaining_wall
+        barrier ~ fence|guard_rail|handrail|hedge|wall|cable_barrier
         and !height
     """
 

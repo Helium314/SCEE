@@ -1,24 +1,21 @@
 package de.westnordost.streetcomplete.quests.barrier_height
 
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
-import de.westnordost.streetcomplete.data.osm.mapdata.Element
-import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
-import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.screens.measure.ArSupportChecker
 
 class AddBarrierHeight(
     private val checkArSupport: ArSupportChecker
-) : OsmElementQuestType<BarrierHeightAnswer> {
+) : OsmFilterQuestType<BarrierHeightAnswer>() {
 
-    private val wayFilter by lazy { """
+    override val elementFilter = """
         ways with
         barrier ~ fence|guard_rail|handrail|hedge|wall|cable_barrier|retaining_wall
         and !height
-    """.toElementFilterExpression() }
+    """
 
     override val changesetComment = "Specify barrier heights"
     override val wikiLink = "Key:height"
@@ -30,12 +27,6 @@ class AddBarrierHeight(
     override fun getTitle(tags: Map<String, String>): Int {
         return R.string.quest_barrier_height_title
     }
-
-    override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
-        mapData.ways.filter { wayFilter.matches(it) }
-
-    override fun isApplicableTo(element: Element): Boolean =
-        wayFilter.matches(element)
 
     override fun createForm() = AddBarrierHeightForm()
 

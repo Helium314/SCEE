@@ -9,7 +9,7 @@ class AddPisteRef : OsmFilterQuestType<PisteRefAnswer>() {
 
     override val changesetComment = "Survey piste ref"
     override val wikiLink = "Key:piste:ref"
-    override val icon = R.drawable.ic_quest_housenumber
+    override val icon = R.drawable.ic_quest_piste_ref
     override val elementFilter = """
         ways, relations with
           piste:type = downhill

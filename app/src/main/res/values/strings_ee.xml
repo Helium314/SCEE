@@ -407,10 +407,14 @@
 
     <!-- map type -->
     <string name="quest_mapType_title">What kind of map is this?</string>
-    <string name="quest_mapType_topo">Topographic map. Contour lines are visible.</string>
-    <string name="quest_mapType_street">Street map that shows all streets in the area</string>
-    <string name="quest_mapType_scheme">Schematic map that only shows streets and POIs relevant for a certain purpose.</string>
-    <string name="quest_mapType_toposcope">Toposcope. It shows what you can see in every direction from a high point.</string>
+    <string name="quest_mapType_topo_title">Topographic</string>
+    <string name="quest_mapType_street_title">Street</string>
+    <string name="quest_mapType_scheme_title">Schematic</string>
+    <string name="quest_mapType_toposcope_title">Toposcope</string>
+    <string name="quest_mapType_topo_description">A map with topographical background for e.g. a historical or hiking map. The map contains contour lines.</string>
+    <string name="quest_mapType_street_description">A map with all streets or ways of an area. The streets are mostly named. The angles, distances etc. are accurate. Used e.g. at tourist offices for the accommodation overview.</string>
+    <string name="quest_mapType_scheme_description">A sketched map with only important ways and POIs. The angles, distances etc. are merely illustrative, not accurate. Used e.g. by travel agencies to explain their tours.</string>
+    <string name="quest_mapType_toposcope_description">A marker erected on high places which indicates the direction to notable landscape features which can be seen from that point. Often used with viewpoints.</string>
 
     <!-- map size -->
     <string name="quest_mapSize_title">What area is covered by this map?</string>

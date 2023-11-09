@@ -6,7 +6,7 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddMapType : OsmFilterQuestType<String>() {
+class AddMapType : OsmFilterQuestType<MapType>() {
 
     override val elementFilter = """
         nodes, ways with
@@ -20,10 +20,10 @@ class AddMapType : OsmFilterQuestType<String>() {
     override val icon = R.drawable.ic_quest_map_type
     override val achievements = listOf(EditTypeAchievement.OUTDOORS)
     override fun getTitle(tags: Map<String, String>) = R.string.quest_mapType_title
+    override fun applyAnswerTo(answer: MapType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        tags["map_type"] = answer.osmValue
+    }
 
     override fun createForm() = AddMapTypeForm()
-
-    override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        tags["map_type"] = answer
-    }
 }
+

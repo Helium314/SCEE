@@ -389,13 +389,13 @@
     <string name="quest_trail_visibility_good">"Good"</string>
     <string name="quest_trail_visibility_good_description">"Path or next marker always visible, but sometimes has to be searched for. Basic sense of direction needed, map recommended."</string>
     <string name="quest_trail_visibility_intermediate">"Intermediate"</string>
-    <string name="quest_trail_visibility_intermediate_description">"Path mostly visible. Good sense of direction needed, map required."</string>
+    <string name="quest_trail_visibility_intermediate_description">"Path mostly visible, no markers. Good sense of direction needed, map required."</string>
     <string name="quest_trail_visibility_bad">"Bad"</string>
-    <string name="quest_trail_visibility_bad_description">"Path sometimes invisible, route partly pathless. Basic skills in orientation required."</string>
+    <string name="quest_trail_visibility_bad_description">"Path sometimes invisible, route partly pathless, no markers. Basic skills in orientation required."</string>
     <string name="quest_trail_visibility_horrible">"Horrible"</string>
-    <string name="quest_trail_visibility_horrible_description">"Often pathless. Advanced orientational skills required."</string>
+    <string name="quest_trail_visibility_horrible_description">"Often pathless, no markers. Advanced orientational skills required."</string>
     <string name="quest_trail_visibility_no">"No Visibility"</string>
-    <string name="quest_trail_visibility_no_description">"Mostly pathless. Excellent orientational skills required."</string>
+    <string name="quest_trail_visibility_no_description">"Mostly pathless, no markers. Excellent orientational skills required."</string>
 
     <!-- other -->
     <string name="quest_contact_phone">What is the phone number of this place?</string>

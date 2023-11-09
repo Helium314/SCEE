@@ -377,6 +377,12 @@
     <string name="quest_buildingColour_title">"What overall color does this building have?"</string>
     <string name="quest_buildingPartColour_title">"What overall color does this building part have?"</string>
 
+
+    <!-- piste ref -->
+    <string name="quest_piste_ref_title">"What is the number of this piste?"</string>
+    <string name="quest_piste_ref_connection">"It's a piste connection"</string>
+
+
     <!-- roof colour -->
     <string name="quest_roofColour_title">"What overall color does this building’s roof have?"</string>
     <string name="default_disabled_msg_roofColour">This quest type is disabled by default because roof colors are often not easily visible from the street. This quest type is also quite time-consuming; in most cases it is easier and more efficient to map this from aerial imagery at home.</string>

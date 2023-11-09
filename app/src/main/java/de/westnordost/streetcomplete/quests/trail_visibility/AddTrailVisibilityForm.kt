@@ -16,7 +16,7 @@ class AddTrailVisibilityForm : AImageListQuestForm<TrailVisibility, TrailVisibil
         TrailVisibility.NO
     ).toItems()
 
-    override val itemsPerRow = 1
+    override val itemsPerRow = 2
     override val moveFavoritesToFront = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

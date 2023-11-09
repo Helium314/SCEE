@@ -373,15 +373,13 @@
     <string name="quest_artwork_fountain">Fountain</string>
     <string name="quest_artwork_land_art">Land art</string>
 
-    <!-- building colour -->
-    <string name="quest_buildingColour_title">"What overall color does this building have?"</string>
-    <string name="quest_buildingPartColour_title">"What overall color does this building part have?"</string>
-
-
     <!-- piste ref -->
     <string name="quest_piste_ref_title">"What is the number of this piste?"</string>
     <string name="quest_piste_ref_connection">"It's a piste connection"</string>
 
+    <!-- building colour -->
+    <string name="quest_buildingColour_title">"What overall color does this building have?"</string>
+    <string name="quest_buildingPartColour_title">"What overall color does this building part have?"</string>
 
     <!-- roof colour -->
     <string name="quest_roofColour_title">"What overall color does this building’s roof have?"</string>

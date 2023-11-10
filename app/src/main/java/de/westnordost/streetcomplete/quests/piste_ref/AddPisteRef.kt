@@ -24,7 +24,6 @@ class AddPisteRef : OsmFilterQuestType<PisteRefAnswer>() {
     override fun applyAnswerTo(answer: PisteRefAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         when (answer) {
             is PisteRef ->          tags["piste:ref"] = answer.ref
-            // todo: should we add both, piste:ref and ref?
             is PisteConnection ->   tags["piste:type"] = "connection"
         }
     }

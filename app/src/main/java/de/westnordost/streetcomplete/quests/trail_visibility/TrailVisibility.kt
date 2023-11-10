@@ -16,7 +16,7 @@ enum class TrailVisibility(val osmValue: String) {
 fun Collection<TrailVisibility>.toItems() = map { it.asItem() }
 
 fun TrailVisibility.asItem(): GroupableDisplayItem<TrailVisibility> {
-    return Item(this, titleResId, descriptionResId)
+    return Item(this, titleId = titleResId, descriptionId = descriptionResId)
 }
 
 private val TrailVisibility.titleResId: Int get() = when (this) {

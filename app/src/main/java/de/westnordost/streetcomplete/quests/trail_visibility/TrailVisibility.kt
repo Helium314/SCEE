@@ -16,16 +16,7 @@ enum class TrailVisibility(val osmValue: String) {
 fun Collection<TrailVisibility>.toItems() = map { it.asItem() }
 
 fun TrailVisibility.asItem(): GroupableDisplayItem<TrailVisibility> {
-    return Item(this, imageResId, titleResId, descriptionResId)
-}
-
-private val TrailVisibility.imageResId: Int get() = when (this) {
-    EXCELLENT -> R.drawable.trail_visibility_excellent
-    GOOD -> R.drawable.trail_visibility_good
-    INTERMEDIATE -> R.drawable.trail_visibility_intermediate
-    BAD -> R.drawable.trail_visibility_bad
-    HORRIBLE -> R.drawable.trail_visibility_horrible
-    NO -> R.drawable.trail_visibility_no
+    return Item(this, titleResId, descriptionResId)
 }
 
 private val TrailVisibility.titleResId: Int get() = when (this) {

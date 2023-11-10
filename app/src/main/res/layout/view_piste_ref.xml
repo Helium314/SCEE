@@ -16,25 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:imeOptions="actionDone"
-            android:digits="0123456789.,- /"
-            tools:text="1"
             android:textColorHint="#6fff"
             android:ellipsize="start"
-            style="@style/PisteRefEditText" />
+            style="@style/PisteRefEditText"
+            android:inputType="text"
+            android:singleLine="true" />
 
     </me.grantland.widget.AutofitLayout>
-
-    <FrameLayout
-        android:layout_width="48dp"
-        android:layout_height="0dp"
-        android:layout_toRightOf="@id/pisteRefInputContainer"
-        android:layout_alignBottom="@id/pisteRefInputContainer"
-        android:layout_alignTop="@id/pisteRefInputContainer"
-        android:layout_marginLeft="8dp"
-        tools:ignore="RtlHardcoded">
-
-        <include layout="@layout/view_plus_minus_control" />
-
-    </FrameLayout>
 
 </RelativeLayout>

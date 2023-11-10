@@ -1,6 +1,9 @@
 package de.westnordost.streetcomplete.quests.piste_ref
 
+import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.doAfterTextChanged
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.databinding.ViewPisteRefBinding
 import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
@@ -31,6 +34,11 @@ class AddPisteRefForm : AbstractOsmQuestForm<PisteRefAnswer>() {
             ) }
             .setNegativeButton(R.string.quest_generic_confirmation_no, null)
             .show()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.pisteRefInput.doAfterTextChanged { checkIsFormComplete() }
     }
 
     override fun isFormComplete() = ref != null

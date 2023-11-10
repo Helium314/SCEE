@@ -8,6 +8,7 @@ class AddPisteDifficultyForm : AImageListQuestForm<PisteDifficulty, List<PisteDi
 
     override val items = PisteDifficulty.values().map { it.asItem() }
     override val itemsPerRow = 2
+    override val moveFavoritesToFront = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

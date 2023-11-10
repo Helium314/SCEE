@@ -31,7 +31,6 @@ class AddBarrierHeight(
     override fun createForm() = AddBarrierHeightForm()
 
     override fun applyAnswerTo(answer: BarrierHeightAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        // overwrite maxheight value but retain the info that there is no sign onto another tag
         tags["height"] = answer.height.toOsmValue()
         if (answer.isARMeasurement) {
             tags["source:height"] = "ARCore"

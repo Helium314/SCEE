@@ -357,6 +357,10 @@
     <string name="quest_seating_beach">At a beach</string>
     <string name="quest_outdoor_seating_name_title">What kind of outdoor seating does this place have?</string>
 
+    <!-- piste ref -->
+    <string name="quest_piste_ref_title">"What is the number of this piste?"</string>
+    <string name="quest_piste_ref_connection">"It's a piste connection"</string>
+
     <!-- artwork type -->
     <string name="quest_artwork_title">What kind of artwork is this?</string>
     <string name="quest_artwork_sculpture">Sculpture</string>
@@ -372,10 +376,6 @@
     <string name="quest_artwork_relief">Relief</string>
     <string name="quest_artwork_fountain">Fountain</string>
     <string name="quest_artwork_land_art">Land art</string>
-
-    <!-- piste ref -->
-    <string name="quest_piste_ref_title">"What is the number of this piste?"</string>
-    <string name="quest_piste_ref_connection">"It's a piste connection"</string>
 
     <!-- building colour -->
     <string name="quest_buildingColour_title">"What overall color does this building have?"</string>

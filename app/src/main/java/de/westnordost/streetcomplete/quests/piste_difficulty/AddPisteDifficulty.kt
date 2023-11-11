@@ -13,7 +13,7 @@ class AddPisteDifficulty : OsmFilterQuestType<List<PisteDifficulty>>() {
 
     override val elementFilter = """
         ways, relations with
-          piste:type ~ downhill|nordic|skitour
+          piste:type ~ downhill|nordic
           and !piste:difficulty
     """
     override val changesetComment = "Add piste difficulty"

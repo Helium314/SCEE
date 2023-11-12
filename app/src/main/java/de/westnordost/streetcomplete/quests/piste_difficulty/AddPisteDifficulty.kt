@@ -20,7 +20,7 @@ class AddPisteDifficulty : OsmFilterQuestType<PisteDifficulty>() {
     override val wikiLink = "Key:piste:difficulty"
     override val icon = R.drawable.ic_quest_piste_difficulty
     override val defaultDisabledMessage: Int = R.string.default_disabled_msg_ee
-    override val enabledInCountries = NoCountriesExcept("AT", "CZ", "FI", "FR", "DE", "IT", "LI", "NO", "SE", "SI")
+    //override val enabledInCountries = NoCountriesExcept("AT", "CZ", "FI", "FR", "DE", "IT", "LI", "NO", "SE", "SI")
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_piste_difficulty_title
 

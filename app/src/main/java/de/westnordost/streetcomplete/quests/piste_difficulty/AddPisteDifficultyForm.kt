@@ -21,7 +21,7 @@ class AddPisteDifficultyForm : AImageListQuestForm<PisteDifficulty, PisteDifficu
     }
 }
 
-fun PisteDifficulty.asItem(countryCode: String) = if (this == PisteDifficulty.NOVICE && countryCode == "JP, US, CA, NZ, AU") null
+fun PisteDifficulty.asItem(countryCode: String) = if (this == PisteDifficulty.NOVICE && countryCode in listOf("JP", "US", "CA", "NZ", "AU")) null
 else if (this == PisteDifficulty.EXPERT && countryCode == "JP") null
 else if (this == PisteDifficulty.FREERIDE && countryCode == "JP") null
 else if (this == PisteDifficulty.EXTREME && countryCode == "JP") null
@@ -39,10 +39,10 @@ private val PisteDifficulty.titleResId: Int get() = when (this) {
 
 private fun PisteDifficulty.getIconResId(countryCode: String): Int = when (this) {
     PisteDifficulty.NOVICE -> R.drawable.ic_quest_piste_difficulty_novice
-    PisteDifficulty.EASY ->    if (countryCode == "JP, US, CA, NZ, AU") R.drawable.ic_quest_piste_difficulty_novice else R.drawable.ic_quest_piste_difficulty_easy
-    PisteDifficulty.INTERMEDIATE ->    if (countryCode == "US, CA, NZ, AU") R.drawable.ic_quest_piste_difficulty_blue_square else R.drawable.ic_quest_piste_difficulty_intermediate
-    PisteDifficulty.ADVANCED ->    if (countryCode == "US, CA, NZ, AU, FI, SE, NO") R.drawable.ic_quest_piste_difficulty_black_diamond else R.drawable.ic_quest_piste_difficulty_advanced
-    PisteDifficulty.EXPERT ->    if (countryCode == "US, CA, NZ, AU, FI, SE, NO") R.drawable.ic_quest_piste_difficulty_double_black_diamond else R.drawable.ic_quest_piste_difficulty_expert
-    PisteDifficulty.FREERIDE ->    if (countryCode == "US, CA, NZ, AU") R.drawable.ic_quest_piste_difficulty_orange_oval else R.drawable.ic_quest_piste_difficulty_freeride
+    PisteDifficulty.EASY ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_novice else R.drawable.ic_quest_piste_difficulty_easy
+    PisteDifficulty.INTERMEDIATE ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_blue_square else R.drawable.ic_quest_piste_difficulty_intermediate
+    PisteDifficulty.ADVANCED ->    if (countryCode in listOf("US", "CA", "NZ", "AU", "FI", "SE", "NO")) R.drawable.ic_quest_piste_difficulty_black_diamond else R.drawable.ic_quest_piste_difficulty_advanced
+    PisteDifficulty.EXPERT ->    if (countryCode in listOf("US", "CA", "NZ", "AU", "FI", "SE", "NO")) R.drawable.ic_quest_piste_difficulty_double_black_diamond else R.drawable.ic_quest_piste_difficulty_expert
+    PisteDifficulty.FREERIDE ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_orange_oval else R.drawable.ic_quest_piste_difficulty_freeride
     PisteDifficulty.EXTREME ->    R.drawable.ic_quest_piste_difficulty_extreme
 }

@@ -9,7 +9,7 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddPisteDifficulty : OsmFilterQuestType<List<PisteDifficulty>>() {
+class AddPisteDifficulty : OsmFilterQuestType<PisteDifficulty>() {
 
     override val elementFilter = """
         ways, relations with
@@ -37,7 +37,7 @@ class AddPisteDifficulty : OsmFilterQuestType<List<PisteDifficulty>>() {
 
     override fun createForm() = AddPisteDifficultyForm()
 
-    override fun applyAnswerTo(answer: List<PisteDifficulty>, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        tags["piste:difficulty"] = answer.joinToString(";") { it.osmValue }
+    override fun applyAnswerTo(answer: PisteDifficulty, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        tags["piste:difficulty"] = answer.osmValue
     }
 }

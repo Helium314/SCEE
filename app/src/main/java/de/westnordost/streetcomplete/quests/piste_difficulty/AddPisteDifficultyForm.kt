@@ -7,7 +7,7 @@ import de.westnordost.streetcomplete.view.image_select.Item
 
 class AddPisteDifficultyForm : AImageListQuestForm<PisteDifficulty, PisteDifficulty>() {
 
-    override val items = PisteDifficulty.values().map { it.asItem() }
+    override val items = PisteDifficulty.values().mapNotNull { it.asItem(countryInfo.countryCode) }
     override val itemsPerRow = 2
     override val moveFavoritesToFront = false
 

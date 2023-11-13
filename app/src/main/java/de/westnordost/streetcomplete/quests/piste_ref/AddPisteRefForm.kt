@@ -12,7 +12,8 @@ import de.westnordost.streetcomplete.util.ktx.nonBlankTextOrNull
 
 class AddPisteRefForm : AbstractOsmQuestForm<PisteRefAnswer>() {
 
-    override val contentLayoutResId get() = when (tags["piste:difficulty"]) {
+    override val contentLayoutResId get() = when (element.tags["piste:difficulty"]) {
+        "novice" -> R.layout.view_piste_ref_novice
         "easy" -> R.layout.view_piste_ref_easy
         "intermediate" -> R.layout.view_piste_ref_intermediate
         "advanced" -> R.layout.view_piste_ref_advanced

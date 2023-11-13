@@ -23,7 +23,7 @@ class AddPisteRef : OsmFilterQuestType<PisteRefAnswer>() {
     override fun getTitle(tags: Map<String, String>) = R.string.quest_piste_ref_title
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("ways, relations with piste:type")
+        getMapData().filter("ways, relations with piste:type = downhill")
 
     override fun createForm() = AddPisteRefForm()
 

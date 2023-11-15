@@ -10,15 +10,17 @@ import de.westnordost.streetcomplete.osm.Tags
 
 class AddPisteRef : OsmFilterQuestType<PisteRefAnswer>() {
 
-    override val changesetComment = "Survey piste ref"
-    override val wikiLink = "Key:piste:ref"
-    override val icon = R.drawable.ic_quest_piste_ref
     override val elementFilter = """
         ways, relations with
           piste:type = downhill
           and !ref
           and !piste:ref
     """
+    override val changesetComment = "Survey piste ref"
+    override val wikiLink = "Key:piste:ref"
+    override val icon = R.drawable.ic_quest_piste_ref
+    override val defaultDisabledMessage = R.string.default_disabled_msg_ee
+
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_piste_ref_title
 

@@ -8,8 +8,7 @@
     <me.grantland.widget.AutofitLayout
         android:id="@+id/pisteRefInputContainer"
         android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:background="@drawable/background_white_corners">
+        android:layout_height="128dp">
 
         <EditText
             android:id="@+id/pisteRefInput"
@@ -18,7 +17,7 @@
             android:imeOptions="actionDone"
             android:textColorHint="#6fff"
             android:ellipsize="start"
-            style="@style/PisteRefEditText"
+            style="@style/HouseNumberEditText"
             android:inputType="text"
             android:singleLine="true"
             android:hint="1" />

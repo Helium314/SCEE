@@ -3,11 +3,12 @@ package de.westnordost.streetcomplete.quests.piste_difficulty
 import android.os.Bundle
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.quests.AImageListQuestForm
+import de.westnordost.streetcomplete.quests.piste_difficulty.PisteDifficulty.*
 import de.westnordost.streetcomplete.view.image_select.Item
 
 class AddPisteDifficultyForm : AImageListQuestForm<PisteDifficulty, PisteDifficulty>() {
 
-    override val items get() = PisteDifficulty.values().mapNotNull { it.asItem(countryInfo.countryCode) }
+    override val items get() = values().mapNotNull { it.asItem(countryInfo.countryCode) }
     override val itemsPerRow = 2
     override val moveFavoritesToFront = false
 
@@ -21,28 +22,28 @@ class AddPisteDifficultyForm : AImageListQuestForm<PisteDifficulty, PisteDifficu
     }
 }
 
-fun PisteDifficulty.asItem(countryCode: String) = if (this == PisteDifficulty.NOVICE && countryCode in listOf("JP", "US", "CA", "NZ", "AU")) null
-else if (this == PisteDifficulty.EXPERT && countryCode == "JP") null
-else if (this == PisteDifficulty.FREERIDE && countryCode == "JP") null
-else if (this == PisteDifficulty.EXTREME && countryCode == "JP") null
+fun PisteDifficulty.asItem(countryCode: String) = if (this == NOVICE && countryCode in listOf("JP", "US", "CA", "NZ", "AU")) null
+else if (this == EXPERT && countryCode == "JP") null
+else if (this == FREERIDE && countryCode == "JP") null
+else if (this == EXTREME && countryCode == "JP") null
 else  Item(this, getIconResId(countryCode), titleResId)
 
 private val PisteDifficulty.titleResId: Int get() = when (this) {
-    PisteDifficulty.NOVICE -> R.string.quest_piste_difficulty_novice
-    PisteDifficulty.EASY -> R.string.quest_piste_difficulty_easy
-    PisteDifficulty.INTERMEDIATE -> R.string.quest_piste_difficulty_intermediate
-    PisteDifficulty.ADVANCED -> R.string.quest_piste_difficulty_advanced
-    PisteDifficulty.EXPERT -> R.string.quest_piste_difficulty_expert
-    PisteDifficulty.FREERIDE -> R.string.quest_piste_difficulty_freeride
-    PisteDifficulty.EXTREME -> R.string.quest_piste_difficulty_extreme
+    NOVICE -> R.string.quest_piste_difficulty_novice
+    EASY -> R.string.quest_piste_difficulty_easy
+    INTERMEDIATE -> R.string.quest_piste_difficulty_intermediate
+    ADVANCED -> R.string.quest_piste_difficulty_advanced
+    EXPERT -> R.string.quest_piste_difficulty_expert
+    FREERIDE -> R.string.quest_piste_difficulty_freeride
+    EXTREME -> R.string.quest_piste_difficulty_extreme
 }
 
 private fun PisteDifficulty.getIconResId(countryCode: String): Int = when (this) {
-    PisteDifficulty.NOVICE -> R.drawable.ic_quest_piste_difficulty_novice
-    PisteDifficulty.EASY ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_novice else R.drawable.ic_quest_piste_difficulty_easy
-    PisteDifficulty.INTERMEDIATE ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_blue_square else R.drawable.ic_quest_piste_difficulty_intermediate
-    PisteDifficulty.ADVANCED ->    if (countryCode in listOf("US", "CA", "NZ", "AU", "FI", "SE", "NO")) R.drawable.ic_quest_piste_difficulty_black_diamond else R.drawable.ic_quest_piste_difficulty_advanced
-    PisteDifficulty.EXPERT ->    if (countryCode in listOf("US", "CA", "NZ", "AU", "FI", "SE", "NO")) R.drawable.ic_quest_piste_difficulty_double_black_diamond else R.drawable.ic_quest_piste_difficulty_expert
-    PisteDifficulty.FREERIDE ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_orange_oval else R.drawable.ic_quest_piste_difficulty_freeride
-    PisteDifficulty.EXTREME ->    R.drawable.ic_quest_piste_difficulty_extreme
+    NOVICE -> R.drawable.ic_quest_piste_difficulty_novice
+    EASY ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_novice else R.drawable.ic_quest_piste_difficulty_easy
+    INTERMEDIATE ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_blue_square else R.drawable.ic_quest_piste_difficulty_intermediate
+    ADVANCED ->    if (countryCode in listOf("US", "CA", "NZ", "AU", "FI", "SE", "NO")) R.drawable.ic_quest_piste_difficulty_black_diamond else R.drawable.ic_quest_piste_difficulty_advanced
+    EXPERT ->    if (countryCode in listOf("US", "CA", "NZ", "AU", "FI", "SE", "NO")) R.drawable.ic_quest_piste_difficulty_double_black_diamond else R.drawable.ic_quest_piste_difficulty_expert
+    FREERIDE ->    if (countryCode in listOf("JP", "US", "CA", "NZ", "AU")) R.drawable.ic_quest_piste_difficulty_orange_oval else R.drawable.ic_quest_piste_difficulty_freeride
+    EXTREME ->    R.drawable.ic_quest_piste_difficulty_extreme
 }

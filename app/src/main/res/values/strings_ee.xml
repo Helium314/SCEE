@@ -397,6 +397,22 @@
     <string name="quest_artwork_fountain">Fountain</string>
     <string name="quest_artwork_land_art">Land art</string>
 
+    <!-- trail visibility -->
+    <string name="quest_trail_visibility_title">"What is the Trail Visibility of this way?"</string>
+    <string name="default_disabled_msg_trail_visibility">"This quest type is disabled by default because the rating of the trail visibility is highly subjective and needs expert knowledge in the used grading system."</string>
+    <string name="quest_trail_visibility_excellent">"Excellent"</string>
+    <string name="quest_trail_visibility_excellent_description">"Unambiguous path or markers everywhere. Orientation unproblematic, no map required."</string>
+    <string name="quest_trail_visibility_good">"Good"</string>
+    <string name="quest_trail_visibility_good_description">"Path or next marker always visible, but sometimes has to be searched for. Basic sense of direction needed, map recommended."</string>
+    <string name="quest_trail_visibility_intermediate">"Intermediate"</string>
+    <string name="quest_trail_visibility_intermediate_description">"Path mostly visible, no markers. Good sense of direction needed, map required."</string>
+    <string name="quest_trail_visibility_bad">"Bad"</string>
+    <string name="quest_trail_visibility_bad_description">"Path sometimes invisible, route partly pathless, no markers. Basic skills in orientation required."</string>
+    <string name="quest_trail_visibility_horrible">"Horrible"</string>
+    <string name="quest_trail_visibility_horrible_description">"Often pathless, no markers. Advanced orientational skills required."</string>
+    <string name="quest_trail_visibility_no">"No Visibility"</string>
+    <string name="quest_trail_visibility_no_description">"Mostly pathless, no markers. Excellent orientational skills required."</string>
+
     <!-- building colour -->
     <string name="quest_buildingColour_title">"What overall color does this building have?"</string>
     <string name="quest_buildingPartColour_title">"What overall color does this building part have?"</string>
@@ -470,6 +486,7 @@
     <!-- use 2 lines for the button so it doesn't get too wide -->
     <string name="quest_destination_all_lanes_button">All\nlanes</string>
     <string name="quest_footway_width_title">"How wide is the foot path here?"</string>
+    <string name="quest_barrier_height_title">"How tall is this barrier?"</string>
 
     <!-- additional strings for quests available in StreetComplete -->
     <string name="quest_surface_value_metal_grid">Metal grid</string>
@@ -505,6 +522,16 @@
     <string name="time_limited_from">From</string>
     <string name="time_limited_to">To</string>
     <string name="quest_name_brand">It has a brand name…</string>
+
+    <!-- piste difficulty -->
+    <string name="quest_piste_difficulty_title">What is the difficulty of this piste?</string>
+    <string name="quest_piste_difficulty_novice">Novice</string>
+    <string name="quest_piste_difficulty_easy">Easy</string>
+    <string name="quest_piste_difficulty_intermediate">Intermediate</string>
+    <string name="quest_piste_difficulty_advanced">Advanced</string>
+    <string name="quest_piste_difficulty_expert">Expert</string>
+    <string name="quest_piste_difficulty_freeride">Freeride</string>
+    <string name="quest_piste_difficulty_extreme">Extreme</string>
 
 
     <!-- new overlays -->

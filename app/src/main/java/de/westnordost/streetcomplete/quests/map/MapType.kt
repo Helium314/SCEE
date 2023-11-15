@@ -18,10 +18,10 @@ fun MapType.asItem(): GroupableDisplayItem<MapType> {
 }
 
 private val MapType.imageResId: Int get() = when (this) {
-    TOPO -> R.drawable.map_type_0
-    STREET -> R.drawable.map_type_1
-    SCHEME -> R.drawable.map_type_2
-    TOPOSCOPE -> R.drawable.map_type_3
+    TOPO -> R.drawable.map_type_topo
+    STREET -> R.drawable.map_type_street
+    SCHEME -> R.drawable.map_type_scheme
+    TOPOSCOPE -> R.drawable.map_type_toposcope
 }
 
 private val MapType.titleResId: Int get() = when (this) {

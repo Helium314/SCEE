@@ -28,8 +28,7 @@ class AddPisteDifficulty : OsmFilterQuestType<PisteDifficulty>() {
     }
 
     override fun getTitleArgs(tags: Map<String, String>): Array<String> {
-        val name = tags["piste:name"]?.let { " ($it)" } ?: ""
-        //todo: Also add ref or piste:ref here?
+        val name = (tags["piste:name"] ?: tags["piste:ref"] ?: tags["ref"])?.let { " ($it)" } ?: ""
         return arrayOf(name)
     }
 

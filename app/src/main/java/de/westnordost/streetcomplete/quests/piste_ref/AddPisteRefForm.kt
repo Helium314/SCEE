@@ -1,5 +1,8 @@
 package de.westnordost.streetcomplete.quests.piste_ref
 
+import android.graphics.Color
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -12,13 +15,7 @@ import de.westnordost.streetcomplete.util.ktx.nonBlankTextOrNull
 
 class AddPisteRefForm : AbstractOsmQuestForm<PisteRefAnswer>() {
 
-    override val contentLayoutResId get() = when (element.tags["piste:difficulty"]) {
-        "novice" -> R.layout.view_piste_ref_novice
-        "easy" -> R.layout.view_piste_ref_easy
-        "intermediate" -> R.layout.view_piste_ref_intermediate
-        "advanced" -> R.layout.view_piste_ref_advanced
-        else -> R.layout.view_piste_ref
-    }
+    override val contentLayoutResId = R.layout.view_piste_ref
     private val binding by contentViewBinding(ViewPisteRefBinding::bind)
 
     override val otherAnswers get() =
@@ -44,7 +41,21 @@ class AddPisteRefForm : AbstractOsmQuestForm<PisteRefAnswer>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val pisteDifficulty = element.tags["piste:difficulty"]
+        val color = getColorForPisteDifficulty(pisteDifficulty)
+        binding.pisteRefInput.background = ShapeDrawable(OvalShape())
+        binding.pisteRefInput.background.setTint(color)
         binding.pisteRefInput.doAfterTextChanged { checkIsFormComplete() }
+    }
+
+    private fun getColorForPisteDifficulty(difficulty: String?): Int {
+        return when (difficulty) {
+            "novice" -> Color.parseColor("#008351")
+            "easy" -> Color.parseColor("#2255BB")
+            "intermediate" -> Color.parseColor("#C1121C")
+            "advanced" -> Color.parseColor("#000000")
+            else -> Color.parseColor("#8e9291")
+        }
     }
 
     override fun isFormComplete() = ref != null

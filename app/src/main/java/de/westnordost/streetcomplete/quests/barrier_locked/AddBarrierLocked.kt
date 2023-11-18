@@ -8,7 +8,7 @@ import de.westnordost.streetcomplete.osm.updateWithCheckDate
 import de.westnordost.streetcomplete.quests.YesNoQuestForm
 import de.westnordost.streetcomplete.util.ktx.toYesNo
 
-class AddBarrierLocked : OsmFilterQuestType<Boolean>() {
+class AddBarrierLocked : OsmFilterQuestType<BarrierLockedAnswer>() {
 
     override val elementFilter = """
         nodes, ways with
@@ -26,9 +26,9 @@ class AddBarrierLocked : OsmFilterQuestType<Boolean>() {
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_barrier_locked_title
 
-    override fun createForm() = YesNoQuestForm()
+    override fun createForm() = AddBarrierLockedForm()
 
-    override fun applyAnswerTo(answer: Boolean, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        tags.updateWithCheckDate("locked", answer.toYesNo())
+    override fun applyAnswerTo(answer: BarrierLockedAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        answer.applyTo(tags)
     }
 }

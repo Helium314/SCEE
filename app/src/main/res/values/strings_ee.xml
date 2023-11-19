@@ -537,6 +537,10 @@
     <string name="quest_piste_difficulty_freeride">Freeride</string>
     <string name="quest_piste_difficulty_extreme">Extreme</string>
 
+    <!-- parking capacity quests -->
+    <string name="quest_parking_capacity_title">How many cars can park here?</string>
+    <string name="quest_parking_capacity_hint">Hide the quest if the parking spaces are not marked and thus not countable</string>
+
 
     <!-- new overlays -->
 

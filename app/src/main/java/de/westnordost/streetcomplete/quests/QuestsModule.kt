@@ -127,6 +127,7 @@ import de.westnordost.streetcomplete.quests.opening_hours_signed.CheckOpeningHou
 import de.westnordost.streetcomplete.quests.orchard_produce.AddOrchardProduce
 import de.westnordost.streetcomplete.quests.parking_access.AddBikeParkingAccess
 import de.westnordost.streetcomplete.quests.parking_access.AddParkingAccess
+import de.westnordost.streetcomplete.quests.parking_capacity.AddParkingCapacity
 import de.westnordost.streetcomplete.quests.parking_fee.AddBikeParkingFee
 import de.westnordost.streetcomplete.quests.parking_fee.AddParkingFee
 import de.westnordost.streetcomplete.quests.parking_type.AddParkingType
@@ -609,6 +610,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 34 to AddBarrierHeight(arSupportChecker),
     EE_QUEST_OFFSET + 35 to AddPisteRef(),
     EE_QUEST_OFFSET + 36 to AddPisteDifficulty(),
+    EE_QUEST_OFFSET + 39 to AddParkingCapacity(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

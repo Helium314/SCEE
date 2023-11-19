@@ -4,7 +4,7 @@ URLs to other sources used:
  - Twemoji 2 (MIT license)      https://github.com/twitter/twemoji/
  - EmojiOne 2 (CC-BY 4 license) https://github.com/emojione/emojione/tree/2.2.7
  - Google Noto Color Emoji      https://github.com/googlefonts/noto-emoji/tree/main
-   (Apache license, version 2.0) 
+   (Apache license, version 2.0)
 
 File                            Author if not Tobias Zwick / Source
 ===============================================================================
@@ -379,6 +379,7 @@ quest/
     pharmacy.svg                     2023 Matija Nalis, modified from CC-BY Howieart https://www.svgrepo.com/svg/475523/pharmacy
     phone.svg
     picnic_table_cover.svg           Flo Edelmann (CC0)
+    piste_ref.svg                    mcliquid (CC0)
     pitch_lantern.svg
     pitch_surface.svg
     playground.svg
@@ -397,6 +398,7 @@ quest/
     road_construction.svg
     roof_shape.svg
     seating.svg
+    shelter_type.svg                 modified from https://wiki.openstreetmap.org/wiki/File:Shelter-14.svg
     shower.svg
     sidewalk.svg
     sidewalk_surface.svg             @krisdoodle45 (based on way_surface.svg)
@@ -409,6 +411,7 @@ quest/
     steps_ramp.svg
     steps_handrail.svg
     street.svg
+    street_cabinet.svg               mcliquid (GPL 3) based on https://github.com/JOSM/josm/blob/master/resources/images/presets/misc/street_cabinet.svg)
     street_lanes.svg
     street_name.svg
     street_surface.svg
@@ -424,6 +427,7 @@ quest/
     toilets_wheelchair.svg
     tractor.svg
     traffic_lights.svg
+    via_ferrata_scale.svg           https://www.svgrepo.com/svg/137349/climbing (CC0) and based on way_surface.svg
     way_surface.svg
     way_surface_detail.svg          Tobias Zwick (CC-BY-SA 4.0) (based on street_surface_detail.svg), recoloured background by Flo Edelmann
     way_width.svg
@@ -635,6 +639,20 @@ steps incline/
     up.svg
     up_reversed.svg
 
+street_cabinet/
+    street_cabinet_gas.svg              modified from street_cabinet.svg and gas.svg
+    street_cabinet_postal.svg           modified from street_cabinet.svg and mail.svg
+    street_cabinet_power.svg            modified from street_cabinet.svg and power.svg
+    street_cabinet_sewerage.svg         modified from street_cabinet.svg and sewerage.svg
+    street_cabinet_street_lighting.svg  modified from street_cabinet.svg and latern.svg
+    street_cabinet_telecom.svg          modified from street_cabinet.svg and phone.svg
+    street_cabinet_television.svg       modified from street_cabinet.svg and https://www.svgrepo.com/svg/407598/television (MIT)
+    street_cabinet_traffic_control.svg  modified from street_cabinet.svg and car.svg and traffic_light.svg
+    street_cabinet_traffic_monit....svg modified from street_cabinet.svg and car.svg and camera.svg
+    street_cabinet_transport_mana...svg modified from street_cabinet.svg and bus.svg
+    street_cabinet_waste.svg            modified from street_cabinet.svg and water.svg
+    street_cabinet_water.svg            modified from street_cabinet.svg and water.svg
+
 street parking/no stopping sign/
     mutcd_text_spanish.svg              modified from https://commons.wikimedia.org/wiki/File:MUTCD-PR_R7-4.svg, License: Public Domain
 
@@ -680,3 +698,9 @@ overlay.svg
 ../../app/src/test/resources/
     hai_phong_street.jpg
     mandalay_market.jpg
+
+../../app/src/main/res/drawable/
+   map_type_topo.jpg                           modified from https://wiki.openstreetmap.org/wiki/File:Tule_Lake_USGS_topo_map.png, License: Public Domain
+   map_type_street.jpg                         Map style: MapOSMatic printable style (c) MapOSMatic developers, Data source: (c) 2023 OpenStreetMap.org and contributors (http://osm.org/copyright)
+   map_type_scheme.jpg                         modified from https://wiki.openstreetmap.org/wiki/File:Tadapani-28-Wanderkarte-2013-gje.jpg, License: CC-BY-SA 4.0
+   map_type_toposcope.jpg                      modified from https://wiki.openstreetmap.org/wiki/File:Melshornet03112006GunnarHeltne.jpg, License: CC-BY-SA 4.0

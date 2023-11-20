@@ -259,6 +259,19 @@
     <string name="quest_benchMaterial_stone">Stone</string>
     <string name="quest_benchMaterial_brick">Bricks</string>
 
+    <!-- guidepost sports -->
+    <string name="quest_guidepost_sports_title">For which sport is this guidepost intended?</string>
+    <string name="quest_guidepost_sports_hiking">Hiking</string>
+    <string name="quest_guidepost_sports_bicycle">Bicycle</string>
+    <string name="quest_guidepost_sports_mtb">MTB</string>
+    <string name="quest_guidepost_sports_climbing">Climbing</string>
+    <string name="quest_guidepost_sports_horse">Horse</string>
+    <string name="quest_guidepost_sports_nordic_walking">Nordic Walking</string>
+    <string name="quest_guidepost_sports_ski">Ski</string>
+    <string name="quest_guidepost_sports_inline_skating">Inline Skating</string>
+    <string name="quest_guidepost_sports_running">Running</string>
+    <string name="quest_guidepost_sports_winter_hiking">Winter Hiking</string>
+
     <!-- pharmacy dispensing -->
     <string name="quest_is_pharmacy_dispensing_title">Is this pharmacy dispensing all prescription drugs?</string>
 

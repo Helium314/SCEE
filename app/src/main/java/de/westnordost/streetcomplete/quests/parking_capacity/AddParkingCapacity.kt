@@ -15,6 +15,7 @@ class AddParkingCapacity : OsmFilterQuestType<Int>() {
     override val elementFilter = """
         nodes, ways with
          amenity = parking
+         and parking = surface
          and access !~ private|no
          and !capacity
     """
@@ -23,6 +24,7 @@ class AddParkingCapacity : OsmFilterQuestType<Int>() {
     override val wikiLink = "Tag:amenity=parking"
     override val icon = R.drawable.ic_quest_parking_capacity
     override val achievements = listOf(CAR)
+    override val defaultDisabledMessage = R.string.default_disabled_msg_ee
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_parking_capacity_title
 

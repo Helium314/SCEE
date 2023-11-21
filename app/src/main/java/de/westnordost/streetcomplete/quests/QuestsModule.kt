@@ -131,6 +131,7 @@ import de.westnordost.streetcomplete.quests.parking_capacity.AddDisabledParkingC
 import de.westnordost.streetcomplete.quests.parking_capacity.AddParkingCapacity
 import de.westnordost.streetcomplete.quests.parking_fee.AddBikeParkingFee
 import de.westnordost.streetcomplete.quests.parking_fee.AddParkingFee
+import de.westnordost.streetcomplete.quests.parking_orientation.AddParkingOrientation
 import de.westnordost.streetcomplete.quests.parking_type.AddParkingType
 import de.westnordost.streetcomplete.quests.pharmacy.AddIsPharmacyDispensing
 import de.westnordost.streetcomplete.quests.piste_difficulty.AddPisteDifficulty
@@ -613,6 +614,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 36 to AddPisteDifficulty(),
     EE_QUEST_OFFSET + 39 to AddParkingCapacity(),
     EE_QUEST_OFFSET + 40 to AddDisabledParkingCapacity(),
+    EE_QUEST_OFFSET + 41 to AddParkingOrientation(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

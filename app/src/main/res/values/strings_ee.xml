@@ -546,6 +546,12 @@
     This quest will not be asked if capacity:disabled=yes is set. If you want to specify them as well, change the element selection from "and !capacity:disabled" to "and (!capacity:disabled or capacity:disabled=yes)"
     </string>
 
+    <!-- parking orientation quest -->
+    <string name="quest_parking_orientation_title">In what orientation do cars park here?</string>
+    <string name="quest_parking_orientation_answer_diagonal">Diagonal</string>
+    <string name="quest_parking_orientation_answer_parallel">Parallel</string>
+    <string name="quest_parking_orientation_answer_perpendicular">Perpendicular</string>
+
     <!-- new overlays -->
 
     <!-- custom overlay -->

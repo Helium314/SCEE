@@ -28,6 +28,8 @@ import de.westnordost.streetcomplete.quests.atm_operator.AddAtmOperator
 import de.westnordost.streetcomplete.quests.baby_changing_table.AddBabyChangingTable
 import de.westnordost.streetcomplete.quests.barrier_bicycle_barrier_installation.AddBicycleBarrierInstallation
 import de.westnordost.streetcomplete.quests.barrier_bicycle_barrier_type.AddBicycleBarrierType
+import de.westnordost.streetcomplete.quests.barrier_locked.AddBarrierLocked
+import de.westnordost.streetcomplete.quests.barrier_height.AddBarrierHeight
 import de.westnordost.streetcomplete.quests.barrier_type.AddBarrierOnPath
 import de.westnordost.streetcomplete.quests.barrier_type.AddBarrierOnRoad
 import de.westnordost.streetcomplete.quests.barrier_type.AddBarrierType
@@ -45,6 +47,7 @@ import de.westnordost.streetcomplete.quests.bike_shop.AddSecondHandBicycleAvaila
 import de.westnordost.streetcomplete.quests.board_type.AddBoardType
 import de.westnordost.streetcomplete.quests.bollard_type.AddBollardType
 import de.westnordost.streetcomplete.quests.bridge_structure.AddBridgeStructure
+import de.westnordost.streetcomplete.quests.brewery.AddBrewery
 import de.westnordost.streetcomplete.quests.building_colour.AddBuildingColour
 import de.westnordost.streetcomplete.quests.building_entrance.AddEntrance
 import de.westnordost.streetcomplete.quests.building_entrance_reference.AddEntranceReference
@@ -107,6 +110,8 @@ import de.westnordost.streetcomplete.quests.kerb_height.AddKerbHeight
 import de.westnordost.streetcomplete.quests.lanes.AddLanes
 import de.westnordost.streetcomplete.quests.leaf_detail.AddForestLeafType
 import de.westnordost.streetcomplete.quests.level.AddLevel
+import de.westnordost.streetcomplete.quests.map.AddMapSize
+import de.westnordost.streetcomplete.quests.map.AddMapType
 import de.westnordost.streetcomplete.quests.max_height.AddMaxHeight
 import de.westnordost.streetcomplete.quests.max_height.AddMaxPhysicalHeight
 import de.westnordost.streetcomplete.quests.max_speed.AddMaxSpeed
@@ -128,6 +133,8 @@ import de.westnordost.streetcomplete.quests.parking_fee.AddParkingFee
 import de.westnordost.streetcomplete.quests.parking_type.AddParkingType
 import de.westnordost.streetcomplete.quests.pharmacy.AddIsPharmacyDispensing
 import de.westnordost.streetcomplete.quests.piste_lit.AddPisteLit
+import de.westnordost.streetcomplete.quests.piste_difficulty.AddPisteDifficulty
+import de.westnordost.streetcomplete.quests.piste_ref.AddPisteRef
 import de.westnordost.streetcomplete.quests.pitch_lit.AddPitchLit
 import de.westnordost.streetcomplete.quests.place_name.AddPlaceName
 import de.westnordost.streetcomplete.quests.playground_access.AddPlaygroundAccess
@@ -153,6 +160,7 @@ import de.westnordost.streetcomplete.quests.segregated.AddCyclewaySegregation
 import de.westnordost.streetcomplete.quests.self_service.AddSelfServiceLaundry
 import de.westnordost.streetcomplete.quests.service_building.AddServiceBuildingOperator
 import de.westnordost.streetcomplete.quests.service_building.AddServiceBuildingType
+import de.westnordost.streetcomplete.quests.shelter_type.AddShelterType
 import de.westnordost.streetcomplete.quests.shop_type.CheckShopExistence
 import de.westnordost.streetcomplete.quests.shop_type.CheckShopType
 import de.westnordost.streetcomplete.quests.shop_type.SpecifyShopType
@@ -174,6 +182,7 @@ import de.westnordost.streetcomplete.quests.sport.AddSport
 import de.westnordost.streetcomplete.quests.step_count.AddStepCount
 import de.westnordost.streetcomplete.quests.step_count.AddStepCountStile
 import de.westnordost.streetcomplete.quests.steps_ramp.AddStepsRamp
+import de.westnordost.streetcomplete.quests.street_cabinet.AddStreetCabinetType
 import de.westnordost.streetcomplete.quests.summit.AddSummitCross
 import de.westnordost.streetcomplete.quests.summit.AddSummitRegister
 import de.westnordost.streetcomplete.quests.surface.AddCyclewayPartSurface
@@ -194,7 +203,9 @@ import de.westnordost.streetcomplete.quests.traffic_calming_type.AddTrafficCalmi
 import de.westnordost.streetcomplete.quests.traffic_signals_button.AddTrafficSignalsButton
 import de.westnordost.streetcomplete.quests.traffic_signals_sound.AddTrafficSignalsSound
 import de.westnordost.streetcomplete.quests.traffic_signals_vibrate.AddTrafficSignalsVibration
+import de.westnordost.streetcomplete.quests.trail_visibility.AddTrailVisibility
 import de.westnordost.streetcomplete.quests.tree.AddTreeGenus
+import de.westnordost.streetcomplete.quests.via_ferrata_scale.AddViaFerrataScale
 import de.westnordost.streetcomplete.quests.way_lit.AddWayLit
 import de.westnordost.streetcomplete.quests.wheelchair_access.AddWheelchairAccessBusiness
 import de.westnordost.streetcomplete.quests.wheelchair_access.AddWheelchairAccessOutside
@@ -580,17 +591,28 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 1 to AddContactPhone(),
     EE_QUEST_OFFSET + 2 to AddContactWebsite(),
     EE_QUEST_OFFSET + 4 to AddCuisine(),
+    EE_QUEST_OFFSET + 32 to AddBrewery(),
     EE_QUEST_OFFSET + 5 to AddHealthcareSpeciality(),
     EE_QUEST_OFFSET + 6 to AddServiceBuildingType(),
     EE_QUEST_OFFSET + 7 to AddServiceBuildingOperator(),
+    EE_QUEST_OFFSET + 29 to AddStreetCabinetType(),
     EE_QUEST_OFFSET + 8 to AddOutdoorSeatingType(),
     EE_QUEST_OFFSET + 25 to AddDestination(),
     EE_QUEST_OFFSET + 22 to AddArtworkType(),
     EE_QUEST_OFFSET + 23 to AddRailwayPlatformRef(),
+    EE_QUEST_OFFSET + 33 to AddTrailVisibility(),
     EE_QUEST_OFFSET + 9 to AddTreeGenus(),
-    EE_QUEST_OFFSET + 40 to AddPisteLit(),
+    EE_QUEST_OFFSET + 39 to AddBarrierLocked(),
     EE_QUEST_OFFSET + 26 to AddIsPharmacyDispensing(),
+    EE_QUEST_OFFSET + 30 to AddShelterType(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
+    EE_QUEST_OFFSET + 31 to AddViaFerrataScale(),
+    EE_QUEST_OFFSET + 37 to AddMapType(),
+    EE_QUEST_OFFSET + 38 to AddMapSize(),
+    EE_QUEST_OFFSET + 34 to AddBarrierHeight(arSupportChecker),
+    EE_QUEST_OFFSET + 40 to AddPisteLit(),
+    EE_QUEST_OFFSET + 35 to AddPisteRef(),
+    EE_QUEST_OFFSET + 36 to AddPisteDifficulty(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

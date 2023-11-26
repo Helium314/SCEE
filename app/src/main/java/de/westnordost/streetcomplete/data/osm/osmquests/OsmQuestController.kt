@@ -28,6 +28,7 @@ import de.westnordost.streetcomplete.quests.oneway_suspects.AddSuspectedOneway
 import de.westnordost.streetcomplete.quests.opening_hours.AddOpeningHours
 import de.westnordost.streetcomplete.quests.place_name.AddPlaceName
 import de.westnordost.streetcomplete.util.Log
+import de.westnordost.streetcomplete.util.Listeners
 import de.westnordost.streetcomplete.util.ktx.format
 import de.westnordost.streetcomplete.util.ktx.intersects
 import de.westnordost.streetcomplete.util.ktx.isInAny
@@ -45,7 +46,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.FutureTask
 
 /** Controller for managing OsmQuests. Takes care of persisting OsmQuest objects and notifying
@@ -68,9 +68,9 @@ class OsmQuestController internal constructor(
         fun onUnhid(edit: OsmQuestHidden)
         fun onUnhidAll()
     }
-    private val hideListeners: MutableList<HideOsmQuestListener> = CopyOnWriteArrayList()
+    private val hideListeners = Listeners<HideOsmQuestListener>()
 
-    private val listeners: MutableList<OsmQuestSource.Listener> = CopyOnWriteArrayList()
+    private val listeners = Listeners<OsmQuestSource.Listener>()
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -86,7 +86,9 @@ class OsmQuestController internal constructor(
     }
 
     // must be valid names!
-    private val questsRequiringElementsWithoutTags = hashSetOf("AddBarrierOnRoad", "AddBarrierOnPath", "AddCrossing", "AddMaxHeight", "AddEntrance", "AddEntranceReference", "AddHousenumber", "AddDestination")
+    // todo: use actual class names, or better re-evaluate whether this is worth it and maybe invert to blacklist
+    private val questsRequiringElementsWithoutTags = hashSetOf("AddBarrierOnRoad", "AddBarrierOnPath", "AddCrossing",
+        "AddMaxHeight", "AddEntrance", "AddEntranceReference", "AddHousenumber", "AddDestination", "AddPisteDifficulty", "AddPisteRef")
 
     private val hiddenCache by lazy { synchronized(this) { hiddenDB.getAllIds().toHashSet() } }
 

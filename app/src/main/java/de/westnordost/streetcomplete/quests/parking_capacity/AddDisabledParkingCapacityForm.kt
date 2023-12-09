@@ -18,15 +18,21 @@ class AddDisabledParkingCapacityForm : AbstractOsmQuestForm<Int>() {
 
     private val capacity get() = binding.capacityInput.intOrNull ?: 0
 
-    override val otherAnswers = listOf(
-        AnswerItem(R.string.quest_parking_capacity_disabled_answer_yes) { applyAnswer(-1) }
-    )
+    override val otherAnswers = mutableListOf<AnswerItem>()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val showClarificationText = arguments?.getBoolean(ARG_SHOW_CLARIFICATION) ?: false
         binding.clarificationText.isGone = !showClarificationText
         binding.capacityInput.doAfterTextChanged { checkIsFormComplete() }
+        if (element.tags["capacity:disabled"] != "yes") {
+            otherAnswers.add(AnswerItem(R.string.quest_parking_capacity_disabled_answer_yes) {
+                applyAnswer(
+                    -1
+                )
+            })
+        }
     }
 
     override fun isFormComplete() = capacity > 0

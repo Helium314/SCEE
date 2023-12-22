@@ -14,7 +14,7 @@ class AddGuidepostRef : OsmFilterQuestType<GuidepostRefAnswer>() {
     override val elementFilter = """
         nodes with
         information ~ guidepost|map
-        and !ref and noref != yes and ref:signed != no and !~"ref:.*" and hiking = yes
+        and !ref and noref != yes and !~"ref:.*" and hiking = yes
     """
     override val changesetComment = "Specify guidepost/map refs"
     override val wikiLink = "Tag:information=guidepost"

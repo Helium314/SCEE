@@ -15,7 +15,7 @@ class AddGuidepostName : OsmFilterQuestType<GuidepostNameAnswer>() {
     override val elementFilter = """
         nodes with
         information ~ guidepost|map
-        and !name and noname != yes and !name:signed and !~"name:.*"
+        and !name and noname != yes and !~"name:.*"
         and hiking = yes
     """
     override val changesetComment = "Specify guidepost/map name"

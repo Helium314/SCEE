@@ -7,7 +7,7 @@ import de.westnordost.streetcomplete.view.image_select.Item
 
 class AddGuidepostSportsForm : AImageListQuestForm<List<GuidepostSport>, GuidepostSportsAnswer>() {
 
-    override val descriptionResId = R.string.quest_recycling_materials_note
+    override val descriptionResId = R.string.quest_guidepost_sports_note
 
     override val items get() = GuidepostSport.selectableValues.map { it.asItem() }
     override val itemsPerRow = 3

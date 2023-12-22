@@ -11,16 +11,16 @@ fun List<GuidepostSport>.asItem(): Item<List<GuidepostSport>> =
     Item(this, iconResId, titleResId)
 
 private val GuidepostSport.iconResId: Int get() = when (this) {
-    HIKING ->          R.drawable.ic_recycling_glass_bottles
-    BICYCLE ->         R.drawable.ic_recycling_glass
-    MTB ->             R.drawable.ic_recycling_paper
-    CLIMBING ->        R.drawable.ic_recycling_plastic
-    HORSE ->           R.drawable.ic_recycling_plastic_packaging
-    NORDIC_WALKING ->  R.drawable.ic_recycling_plastic_bottles
-    SKI ->             R.drawable.ic_recycling_pet
-    INLINE_SKATING ->  R.drawable.ic_recycling_beverage_cartons
-    RUNNING ->         R.drawable.ic_recycling_cans
-    WINTER_HIKING ->   R.drawable.ic_recycling_cans
+    HIKING ->          R.drawable.ic_guidepost_hiking
+    BICYCLE ->         R.drawable.ic_guidepost_cycling
+    MTB ->             R.drawable.ic_guidepost_mtb
+    CLIMBING ->        R.drawable.ic_guidepost_climbing
+    HORSE ->           R.drawable.ic_guidepost_horse_riding
+    NORDIC_WALKING ->  R.drawable.ic_guidepost_nordic_walking
+    SKI ->             R.drawable.ic_guidepost_ski
+    INLINE_SKATING ->  R.drawable.ic_guidepost_inline_skating
+    RUNNING ->         R.drawable.ic_guidepost_running
+    WINTER_HIKING ->   R.drawable.ic_guidepost_snow_shoe_hiking
 }
 
 private val GuidepostSport.titleResId: Int get() = when (this) {

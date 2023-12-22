@@ -6,7 +6,7 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryCreator
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryDao
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryEntry
-import de.westnordost.streetcomplete.util.Log
+import de.westnordost.streetcomplete.util.Listeners
 import de.westnordost.streetcomplete.util.ktx.format
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,8 +14,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
-import java.util.concurrent.CopyOnWriteArrayList
 
 /** Controller to access element data and its geometry and handle updates to it (from OSM API) */
 class MapDataController internal constructor(
@@ -44,7 +44,7 @@ class MapDataController internal constructor(
         /** Called when all elements have been cleared */
         fun onCleared()
     }
-    private val listeners: MutableList<Listener> = CopyOnWriteArrayList()
+    private val listeners = Listeners<Listener>()
 
     private val cache = MapDataCache(
         SPATIAL_CACHE_TILE_ZOOM,
@@ -141,7 +141,9 @@ class MapDataController internal constructor(
         val mapDataWithGeom = MutableMapDataWithGeometry(elements, geometryEntries)
         mapDataWithGeom.boundingBox = mapData.boundingBox
 
-        val bbox = geometryEntries.flatMap { listOf(it.geometry.getBounds().min, it.geometry.getBounds().max) }.enclosingBoundingBox()
+        val bbox = (geometryEntries + getGeometries(mapDataUpdates.deleted))
+            .flatMap { listOf(it.geometry.getBounds().min, it.geometry.getBounds().max) }
+            .enclosingBoundingBox()
         cache.noTrimPlus(bbox) // quest creation can trigger trim, so we need to set noTrim here
         onUpdated(updated = mapDataWithGeom, deleted = deletedKeys)
 

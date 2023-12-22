@@ -6,19 +6,18 @@ import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
-import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.OUTDOORS
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddGuidepostEle : OsmFilterQuestType<GuidepostEleAnswer>() {
+class AddGuidepostEle : OsmFilterQuestType<String>() {
 
     override val elementFilter = """
         nodes with
-        information ~ guidepost|map
-        and !ele and !ele:signed and !~"ele:.*"
+        information = guidepost
+        and !ele and !~"ele:.*"
         and hiking = yes
     """
-    override val changesetComment = "Specify guidepost/map elevation"
+    override val changesetComment = "Specify guidepost elevation"
     override val wikiLink = "Tag:information=guidepost"
     override val icon = R.drawable.ic_quest_guidepost_ele
     override val isDeleteElementEnabled = true
@@ -27,17 +26,15 @@ class AddGuidepostEle : OsmFilterQuestType<GuidepostEleAnswer>() {
     override fun getTitle(tags: Map<String, String>) = R.string.quest_guidepostEle_title
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with information ~ guidepost|map")
+        getMapData().filter("nodes with information = guidepost")
 
     override val highlightedElementsRadius: Double get() = 200.0
     override val defaultDisabledMessage: Int = R.string.quest_guidepost_disabled_msg
 
     override fun createForm() = AddGuidepostEleForm()
 
-    override fun applyAnswerTo(answer: GuidepostEleAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        when (answer) {
-            is NoVisibleGuidepostEle -> tags["ele:signed"] = "no"
-            is GuidepostEle ->          tags["ele"] = answer.ele.toString()
-        }
+    override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        tags["ele"] = answer
+
     }
 }

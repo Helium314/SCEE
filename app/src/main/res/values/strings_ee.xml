@@ -443,7 +443,7 @@
     <string name="quest_name_brand">It has a brand name…</string>
     <string name="quest_guidepostName_title">"What’s the name of this guidepost?"</string>
     <string name="quest_guidepostEle_title">"What’s the elevation of this guidepost?"</string>
-    <string name="quest_ref_answer_noEle">"There is no elevation stated"</string>
+    <string name="quest_guidepostEle_hint">Inscribed height of place above sea level in metres. Please don\'t enter GPS altitude, as it\'s inaccurate and may need conversion.</string>
     <string name="quest_ref_answer_noName">"There is no name"</string>
     <string name="quest_guidepost_disabled_msg">This quest is disabled by default because it strongly varies between regions/operator if there is a reference number, name or elevation signed on guideposts or maps. You may need to refine the element selection for your area (e.g. only select guideposts/maps with hiking=yes or with operator=RandomHikingAssociation)</string>
 

@@ -7,9 +7,6 @@ import de.westnordost.streetcomplete.view.image_select.Item
 fun GuidepostSport.asItem(): Item<List<GuidepostSport>> =
     Item(listOf(this), iconResId, titleResId)
 
-fun List<GuidepostSport>.asItem(): Item<List<GuidepostSport>> =
-    Item(this, iconResId, titleResId)
-
 private val GuidepostSport.iconResId: Int get() = when (this) {
     HIKING ->          R.drawable.ic_guidepost_hiking
     BICYCLE ->         R.drawable.ic_guidepost_cycling
@@ -34,14 +31,4 @@ private val GuidepostSport.titleResId: Int get() = when (this) {
     INLINE_SKATING ->  R.string.quest_guidepost_sports_inline_skating
     RUNNING ->         R.string.quest_guidepost_sports_running
     WINTER_HIKING ->   R.string.quest_guidepost_sports_winter_hiking
-}
-
-private val List<GuidepostSport>.iconResId: Int get() = when (this) {
-    listOf(HIKING, BICYCLE) -> R.drawable.ic_recycling_plastic_bottles_and_cartons
-    else -> first().iconResId
-}
-
-private val List<GuidepostSport>.titleResId: Int get() = when (this) {
-    listOf(HIKING, BICYCLE) -> R.string.quest_recycling_type_plastic_bottles_and_cartons
-    else -> first().titleResId
 }

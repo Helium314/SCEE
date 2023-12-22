@@ -1,6 +1,9 @@
 package de.westnordost.streetcomplete.quests.guidepost_sport
 
-sealed interface RecyclingContainerMaterialsAnswer
+sealed interface GuidepostSportsAnswer {
+    val selectedSports: List<GuidepostSport>
+}
 
-object IsWasteContainer : RecyclingContainerMaterialsAnswer
-data class RecyclingMaterials(val materials: List<GuidepostSport>) : RecyclingContainerMaterialsAnswer
+data class SelectedGuidepostSports(
+    override val selectedSports: List<GuidepostSport>
+) : GuidepostSportsAnswer

@@ -590,7 +590,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 9 to AddTreeGenus(),
     EE_QUEST_OFFSET + 26 to AddIsPharmacyDispensing(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
-    EE_QUEST_OFFSET + 29 to AddGuidepostSports(),
+    EE_QUEST_OFFSET + 41 to AddGuidepostSports(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

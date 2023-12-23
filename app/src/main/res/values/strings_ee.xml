@@ -262,6 +262,8 @@
     <!-- guidepost sports -->
     <string name="quest_guidepost_sports_title">For which sport is this guidepost intended?</string>
     <string name="quest_guidepost_sports_note">If there is anything not covered by the features listed, please leave a note instead.</string>
+    <string name="quest_guidepost_sports_answer_simple">"It´s just a simple guidepost."</string>
+    <string name="quest_guidepost_sports_answer_simple_description">"This is just a simple guidepost with no specific sports."</string>
     <string name="quest_guidepost_sports_hiking">Hiking</string>
     <string name="quest_guidepost_sports_bicycle">Bicycle</string>
     <string name="quest_guidepost_sports_mtb">MTB</string>

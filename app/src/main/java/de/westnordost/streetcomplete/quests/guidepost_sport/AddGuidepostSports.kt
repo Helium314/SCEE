@@ -41,14 +41,16 @@ class AddGuidepostSports : OsmElementQuestType<GuidepostSportsAnswer> {
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
         getMapData().filter("nodes with tourism = information and information ~ guidepost|route_marker")
 
-    override fun applyAnswerTo(
-        answer: GuidepostSportsAnswer,
-        tags: Tags,
-        geometry: ElementGeometry,
-        timestampEdited: Long
-    ) {
-        answer.selectedSports.forEach { sport ->
-            tags[sport.key] = "yes"
+    override fun applyAnswerTo(answer: GuidepostSportsAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        if (answer is IsSimpleGuidepost) {
+            applySimpleGuidepostAnswer(tags)
+        } else {
+            answer.selectedSports.forEach { sport ->
+                tags[sport.key] = "yes"
+            }
         }
+    }
+    private fun applySimpleGuidepostAnswer(tags: Tags) {
+        tags["guidepost"] = "simple"
     }
 }

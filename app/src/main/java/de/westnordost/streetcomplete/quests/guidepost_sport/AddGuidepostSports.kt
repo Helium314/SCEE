@@ -44,11 +44,7 @@ class AddGuidepostSports : OsmElementQuestType<GuidepostSportsAnswer> {
     override fun applyAnswerTo(answer: GuidepostSportsAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         if (answer is IsSimpleGuidepost) {
             applySimpleGuidepostAnswer(tags)
-        } else {
-            answer.selectedSports.forEach { sport ->
-                tags[sport.key] = "yes"
-            }
-        }
+        } else if (answer is SelectedGuidepostSports) {}
     }
     private fun applySimpleGuidepostAnswer(tags: Tags) {
         tags["guidepost"] = "simple"

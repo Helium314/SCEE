@@ -14,11 +14,11 @@ class AddGuidepostName : OsmFilterQuestType<GuidepostNameAnswer>() {
 
     override val elementFilter = """
         nodes with
-        information ~ guidepost|map
+        (information = guidepost or guidepost) and guidepost != simple
         and !name and noname != yes and !~"name:.*"
         and hiking = yes
     """
-    override val changesetComment = "Specify guidepost/map name"
+    override val changesetComment = "Specify guidepost name"
     override val wikiLink = "Tag:information=guidepost"
     override val icon = R.drawable.ic_quest_guidepost_name
     override val isDeleteElementEnabled = true

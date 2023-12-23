@@ -13,7 +13,7 @@ class AddGuidepostEle : OsmFilterQuestType<String>() {
 
     override val elementFilter = """
         nodes with
-        information = guidepost
+        (information = guidepost or guidepost) and guidepost != simple
         and !ele and !~"ele:.*"
         and hiking = yes
     """

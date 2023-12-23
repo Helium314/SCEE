@@ -16,7 +16,7 @@ class AddGuidepostNameForm : AbstractOsmQuestForm<GuidepostNameAnswer>() {
     private val binding by contentViewBinding(QuestGuidepostRefBinding::bind)
 
     override val otherAnswers = listOf(
-        AnswerItem(R.string.quest_ref_answer_noName) { confirmNoRef() }
+        AnswerItem(R.string.quest_placeName_no_name_answer) { confirmNoRef() }
     )
 
     private val name get() = binding.refInput.nonBlankTextOrNull

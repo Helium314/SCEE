@@ -21,7 +21,6 @@ class AddGuidepostSportsForm : AImageListQuestForm<List<GuidepostSport>, Guidepo
 
     override val items get() = GuidepostSport.selectableValues.map { it.asItem() }
     override val itemsPerRow = 3
-
     override val maxSelectableItems = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {

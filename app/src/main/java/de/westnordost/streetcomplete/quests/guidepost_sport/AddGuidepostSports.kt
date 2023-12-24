@@ -7,11 +7,12 @@ import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddGuidepostSports : OsmElementQuestType<GuidepostSportsAnswer> {
+class AddGuidepostSports : OsmFilterQuestType<GuidepostSportsAnswer>() {
 
-    private val filter by lazy {
+    override val elementFilter =
         """
         nodes with
           tourism = information
@@ -19,8 +20,7 @@ class AddGuidepostSports : OsmElementQuestType<GuidepostSportsAnswer> {
           and !hiking and !bicycle and !mtb and !climbing and !horse and !nordic_walking and !ski and !inline_skates and !running
           and !disused
           and !guidepost
-    """.toElementFilterExpression()
-    }
+    """
 
     override val changesetComment = "Specify what kind of guidepost"
     override val wikiLink = "Tag:information=guidepost"
@@ -29,12 +29,6 @@ class AddGuidepostSports : OsmElementQuestType<GuidepostSportsAnswer> {
     override val defaultDisabledMessage = R.string.default_disabled_msg_ee
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_guidepost_sports_title
-
-    override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
-        mapData.filter { isApplicableTo(it) == true }
-
-    override fun isApplicableTo(element: Element): Boolean? =
-        filter.matches(element)
 
     override fun createForm() = AddGuidepostSportsForm()
 

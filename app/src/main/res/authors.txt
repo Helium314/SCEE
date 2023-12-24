@@ -232,6 +232,15 @@ recycling_centre.jpg           Public Domain     https://commons.wikimedia.org/w
 recycling_container.jpg        CC0               https://commons.wikimedia.org/wiki/File:Vitoria_-_Contenedores_de_reciclaje_en_la_Avenida_de_Gasteiz.jpg
 recycling_container_undergr... CC0               https://commons.wikimedia.org/wiki/File:San_Fernando_de_Henares_-_reciclaje_de_residuos_urbanos_04.JPG
 
+shelter_type_public_transpor…  CC-BY 2.0         Janusz Jakubowski https://commons.wikimedia.org/wiki/File:Bus_shelter_in_Warsaw_(25843621920).jpg
+shelter_type_picnic_shelter.…  CC-BY-SA 3.0      B.navez https://wiki.openstreetmap.org/wiki/File:R%C3%A9union_Ma%C3%AFdo_kiosque_pique-nique.JPG
+shelter_type_gazebo.jpg        CC-BY 2.0         Tim Green https://commons.wikimedia.org/wiki/File:Shelter,_Roundhay_Park_(3511090304).jpg
+shelter_type_lean_to.jpg       CC-BY-SA 3.0      j doll https://commons.wikimedia.org/wiki/File:Keauhou_Shelter_(145211875).jpeg
+shelter_type_basic_hut.jpg     CC-BY-SA 4.0      Eginhard https://commons.wikimedia.org/wiki/File:Schutzh%C3%BCtte_Lauchb%C3%BChl_2021-06-19.jpg
+shelter_type_sun_shelter.jpg   CC-BY-SA 2.0      blmoregon https://commons.wikimedia.org/wiki/File:Oregon_Trail_-_Keeney_Historic_Site.jpg
+shelter_type_field_shelter…    CC-BY-SA 4.0      Kolforn https://commons.wikimedia.org/wiki/File:-2018-10-03_Free_range_pigs,_Southrepps_(1).JPG
+shelter_type_rock_shelter.jpg  CC-BY 2.0         Bureau of Land Management Oregon and Washington https://commons.wikimedia.org/wiki/File:Rock_Shelter_(11410676553).jpg
+
 sliding_envelope.wav           CC0               https://freesound.org/people/MTJohnson/sounds/444431/
 snip.wav                       CC0               https://freesound.org/people/Godowan/sounds/240473/
 
@@ -323,6 +332,14 @@ tourism_information_guidepo... CC-BY-SA 4.0      https://commons.wikimedia.org/w
 tourism_information_map.jpg    CC0               https://commons.wikimedia.org/wiki/File:Myrstigen_track_information_board.jpg (W.carter)
 tourism_information_office.jpg CC-BY-SA 4.0      https://commons.wikimedia.org/wiki/File:Tourist_information_shop,_Delft_(2018).jpg (Donald Trung)
 tourism_information_termina... CC-BY 4.0         https://wiki.openstreetmap.org/wiki/File:Uh%C5%99%C3%ADn%C4%9Bves,_Nov%C3%A9_n%C3%A1m%C4%9Bst%C3%AD,_informa%C4%8Dn%C3%AD_stojan.jpg (ŠJů)
+
+via_ferrata_scale_0.jpg        CC-BY-SA-2.0      https://wiki.openstreetmap.org/wiki/File:Super_easy_ferrata.jpg
+via_ferrata_scale_1.jpg        CC-BY-SA-3.0      https://wiki.openstreetmap.org/wiki/File:Alpspitz-ferrata-a.jpg
+via_ferrata_scale_2.jpg        CC-BY-SA-2.0      https://wiki.openstreetmap.org/wiki/File:Alpspitz-ferrata-b.jpg
+via_ferrata_scale_3.jpg        CC-BY-SA-2.0      https://wiki.openstreetmap.org/wiki/File:Absamer_klettersteig.jpg
+via_ferrata_scale_4.jpg        CC-BY-SA-2.0      https://wiki.openstreetmap.org/wiki/File:Mauerlaeufer_ueberhang.jpg
+via_ferrata_scale_5.jpg        CC-BY-SA-2.0      https://wiki.openstreetmap.org/wiki/File:Bergfuehrerquergang.jpg
+via_ferrata_scale_6.jpg        CC-BY-SA-2.5      https://commons.wikimedia.org/wiki/File:Eggst%C3%B6cke_-_H.jpg
 
 vibrating_button_illustrati... CC-BY 4.0         Tobias Zwick
 vibrating_button_i... (MCC234) CC0               CJ Malone

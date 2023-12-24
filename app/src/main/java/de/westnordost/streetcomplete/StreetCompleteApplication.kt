@@ -6,8 +6,8 @@ import android.app.Application
 import android.content.ComponentCallbacks2
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.edit
 import androidx.core.content.getSystemService
+import androidx.preference.PreferenceManager
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
@@ -19,6 +19,7 @@ import de.westnordost.streetcomplete.data.download.downloadModule
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesController
 import de.westnordost.streetcomplete.data.edithistory.EditHistoryController
 import de.westnordost.streetcomplete.data.edithistory.editHistoryModule
+import de.westnordost.streetcomplete.data.logs.logsModule
 import de.westnordost.streetcomplete.data.maptiles.maptilesModule
 import de.westnordost.streetcomplete.data.messages.messagesModule
 import de.westnordost.streetcomplete.data.meta.metadataModule
@@ -52,15 +53,20 @@ import de.westnordost.streetcomplete.screens.main.map.mapModule
 import de.westnordost.streetcomplete.screens.measure.arModule
 import de.westnordost.streetcomplete.screens.settings.ResurveyIntervalsUpdater
 import de.westnordost.streetcomplete.screens.settings.oldQuestNames
-import de.westnordost.streetcomplete.screens.settings.renameUpdateQuests
+import de.westnordost.streetcomplete.screens.settings.renameUpdatedQuests
 import de.westnordost.streetcomplete.screens.settings.settingsModule
 import de.westnordost.streetcomplete.util.CrashReportExceptionHandler
-import de.westnordost.streetcomplete.util.Log
+import de.westnordost.streetcomplete.util.TempLogger
 import de.westnordost.streetcomplete.util.getDefaultTheme
 import de.westnordost.streetcomplete.util.getSelectedLocale
 import de.westnordost.streetcomplete.util.getSystemLocales
 import de.westnordost.streetcomplete.util.ktx.addedToFront
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
+import de.westnordost.streetcomplete.util.logs.AndroidLogger
+import de.westnordost.streetcomplete.util.logs.DatabaseLogger
+import de.westnordost.streetcomplete.util.logs.Log
+import de.westnordost.streetcomplete.util.prefs.Preferences
+import de.westnordost.streetcomplete.util.prefs.preferencesModule
 import de.westnordost.streetcomplete.util.setDefaultLocales
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -76,10 +82,11 @@ import java.util.concurrent.TimeUnit
 class StreetCompleteApplication : Application() {
 
     private val preloader: Preloader by inject()
+    private val databaseLogger: DatabaseLogger by inject()
     private val crashReportExceptionHandler: CrashReportExceptionHandler by inject()
     private val resurveyIntervalsUpdater: ResurveyIntervalsUpdater by inject()
     private val downloadedTilesController: DownloadedTilesController by inject()
-    private val prefs: SharedPreferences by inject()
+    private val prefs: Preferences by inject()
     private val editHistoryController: EditHistoryController by inject()
     private val userLoginStatusController: UserLoginStatusController by inject()
     private val cacheTrimmer: CacheTrimmer by inject()
@@ -88,6 +95,10 @@ class StreetCompleteApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // got a crash report where prefs were not initialized, not sure how this can happen for a
+        // single person and not for everyone, but this should help (means that we keep using android-specific prefs interface)
+        preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
         deleteDatabase(ApplicationConstants.OLD_DATABASE_NAME)
 
@@ -99,6 +110,7 @@ class StreetCompleteApplication : Application() {
                 appModule,
                 createdElementsModule,
                 dbModule,
+                logsModule,
                 downloadModule,
                 editHistoryModule,
                 elementEditsModule,
@@ -114,6 +126,7 @@ class StreetCompleteApplication : Application() {
                 osmApiModule,
                 osmNoteQuestModule,
                 osmQuestModule,
+                preferencesModule,
                 questModule,
                 questPresetsModule,
                 questsModule,
@@ -130,23 +143,19 @@ class StreetCompleteApplication : Application() {
             )
         }
 
+        setLoggerInstances()
+
         applicationScope.launch {
             editHistoryController.deleteSyncedOlderThan(nowAsEpochMilliseconds() - ApplicationConstants.MAX_UNDO_HISTORY_AGE)
             preloader.preload()
         }
 
-        /* Force log out users who use the old OAuth consumer key+secret because it does not exist
-           anymore. Trying to use that does not result in a "not authorized" API response, but some
-           response the app cannot handle */
-        if (!prefs.getBoolean(Prefs.OSM_LOGGED_IN_AFTER_OAUTH_FUCKUP, false)) {
-            if (userLoginStatusController.isLoggedIn) {
-                userLoginStatusController.logOut()
-            }
+        /* Force logout users who are logged in with OAuth 1.0a, they need to re-authenticate with OAuth 2 */
+        if (prefs.getStringOrNull(Prefs.OAUTH1_ACCESS_TOKEN) != null) {
+            userLoginStatusController.logOut()
         }
 
         setDefaultLocales()
-
-        preferences = prefs
 
         crashReportExceptionHandler.install()
 
@@ -156,47 +165,27 @@ class StreetCompleteApplication : Application() {
 
         resurveyIntervalsUpdater.update()
 
-        val lastVersion = prefs.getString(Prefs.LAST_VERSION_DATA, null)
+        val lastVersion = prefs.getStringOrNull(Prefs.LAST_VERSION_DATA)
         if (BuildConfig.VERSION_NAME != lastVersion) {
-            prefs.edit { putString(Prefs.LAST_VERSION_DATA, BuildConfig.VERSION_NAME) }
-            if (lastVersion != null) {
+            prefs.putString(Prefs.LAST_VERSION_DATA, BuildConfig.VERSION_NAME)
+            if (lastVersion != null) { // todo: remove the migration code, that was long ago
                 onNewVersion()
-                if (lastVersion.endsWith("_ee"))
-                    // adjust osmose ignores, this is necessary because they may now contain comma
-                    prefs.all.filterKeys { it.contains(PREF_OSMOSE_ITEMS) }.forEach { (key, value) ->
-                        if (value is String)
-                            prefs.edit { putString(key, value.replace(",", "§§")) }
-                    }
-            }
-            // update custom overlay to the indexed version
-            if (prefs.contains("custom_overlay_filter") || prefs.contains("custom_overlay_color_key")) {
-                val indices = if (prefs.contains(Prefs.CUSTOM_OVERLAY_INDICES)) getCustomOverlayIndices(prefs)  else emptyList()
-                val newIndex = indices.maxOrNull() ?: 0
-                prefs.edit {
-                    if (prefs.contains("custom_overlay_filter"))
-                        putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_FILTER, newIndex), prefs.getString("custom_overlay_filter", "")!!)
-                    if (prefs.contains("custom_overlay_color_key"))
-                        putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, newIndex), prefs.getString("custom_overlay_color_key", "")!!)
-                    remove("custom_overlay_filter")
-                    remove("custom_overlay_color_key")
-                    putString(Prefs.CUSTOM_OVERLAY_INDICES, (indices + newIndex).sorted().joinToString(","))
-                }
             }
             // update prefs referring to renamed quests
-            val prefsToRename = prefs.all.filter { pref ->
+            val prefsToRename = preferences.all.filter { pref ->
                 val v = pref.value
                 oldQuestNames.any { pref.key.contains(it) || (v is String && v.contains(it)) }
             }
-            val e = prefs.edit()
+            val e = preferences.edit()
             prefsToRename.forEach {
                 e.remove(it.key)
                 when (it.value) {
-                    is String -> e.putString(it.key.renameUpdateQuests(), (it.value as String).renameUpdateQuests())
-                    is Boolean -> e.putBoolean(it.key.renameUpdateQuests(), it.value as Boolean)
-                    is Int -> e.putInt(it.key.renameUpdateQuests(), it.value as Int)
-                    is Long -> e.putLong(it.key.renameUpdateQuests(), it.value as Long)
-                    is Float -> e.putFloat(it.key.renameUpdateQuests(), it.value as Float)
-                    is Set<*> -> e.putStringSet(it.key.renameUpdateQuests(), it.value as? Set<String>?)
+                    is String -> e.putString(it.key.renameUpdatedQuests(), (it.value as String).renameUpdatedQuests())
+                    is Boolean -> e.putBoolean(it.key.renameUpdatedQuests(), it.value as Boolean)
+                    is Int -> e.putInt(it.key.renameUpdatedQuests(), it.value as Int)
+                    is Long -> e.putLong(it.key.renameUpdatedQuests(), it.value as Long)
+                    is Float -> e.putFloat(it.key.renameUpdatedQuests(), it.value as Float)
+                    is Set<*> -> e.putStringSet(it.key.renameUpdatedQuests(), it.value as? Set<String>?)
                 }
             }
             e.apply()
@@ -237,15 +226,23 @@ class StreetCompleteApplication : Application() {
     }
 
     private fun setDefaultLocales() {
-        val locale = getSelectedLocale(this)
+        val locale = getSelectedLocale(prefs)
         if (locale != null) {
             setDefaultLocales(getSystemLocales().addedToFront(locale))
         }
     }
 
     private fun setDefaultTheme() {
-        val theme = Prefs.Theme.valueOf(prefs.getString(Prefs.THEME_SELECT, getDefaultTheme())!!)
+        val theme = Prefs.Theme.valueOf(prefs.getStringOrNull(Prefs.THEME_SELECT) ?: getDefaultTheme())
         AppCompatDelegate.setDefaultNightMode(theme.appCompatNightMode)
+    }
+
+    private fun setLoggerInstances() {
+        Log.instances.add(AndroidLogger())
+        if (prefs.getBoolean(Prefs.TEMP_LOGGER, false))
+            Log.instances.add(TempLogger)
+        else
+            Log.instances.add(databaseLogger)
     }
 
     private fun enqueuePeriodicCleanupWork() {

@@ -1,6 +1,7 @@
 package de.westnordost.streetcomplete.quests.guidepost
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
@@ -25,6 +26,7 @@ class AddGuidepostNameForm : AbstractOsmQuestForm<GuidepostNameAnswer>() {
         super.onViewCreated(view, savedInstanceState)
         binding.refInput.doAfterTextChanged { checkIsFormComplete() }
         binding.tvHint.setText(R.string.quest_guidepostName_hint)
+        binding.refInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
     }
 
     override fun onClickOk() {

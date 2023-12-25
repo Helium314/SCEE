@@ -103,6 +103,7 @@ import de.westnordost.streetcomplete.quests.grit_bin_seasonal.AddGritBinSeasonal
 import de.westnordost.streetcomplete.quests.guidepost.AddGuidepostEle
 import de.westnordost.streetcomplete.quests.guidepost.AddGuidepostName
 import de.westnordost.streetcomplete.quests.guidepost.AddGuidepostRef
+import de.westnordost.streetcomplete.quests.guidepost_sport.AddGuidepostSports
 import de.westnordost.streetcomplete.quests.hairdresser.AddHairdresserCustomers
 import de.westnordost.streetcomplete.quests.handrail.AddHandrail
 import de.westnordost.streetcomplete.quests.healthcare_speciality.AddHealthcareSpeciality
@@ -614,6 +615,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 44 to AddGuidepostEle(),
     EE_QUEST_OFFSET + 30 to AddShelterType(),
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
+    EE_QUEST_OFFSET + 41 to AddGuidepostSports(),
     EE_QUEST_OFFSET + 31 to AddViaFerrataScale(),
     EE_QUEST_OFFSET + 37 to AddMapType(),
     EE_QUEST_OFFSET + 38 to AddMapSize(),

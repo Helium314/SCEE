@@ -547,9 +547,9 @@
 
     <!-- parking orientation quest -->
     <string name="quest_parking_orientation_title">In what orientation do cars park here?</string>
-    <string name="quest_parking_orientation_answer_diagonal">Diagonal</string>
-    <string name="quest_parking_orientation_answer_parallel">Parallel</string>
-    <string name="quest_parking_orientation_answer_perpendicular">Perpendicular</string>
+    <string name="quest_parking_orientation_answer_diagonal">Diagonally to the street</string>
+    <string name="quest_parking_orientation_answer_parallel">Parallel to the street</string>
+    <string name="quest_parking_orientation_answer_perpendicular">Perpendicular (in a 90° angle) to the street</string>
 
     <!-- new overlays -->
 

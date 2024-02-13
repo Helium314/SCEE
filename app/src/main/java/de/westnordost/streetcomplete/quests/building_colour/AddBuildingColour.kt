@@ -10,7 +10,7 @@ class AddBuildingColour : OsmFilterQuestType<BuildingColour>() {
     override val elementFilter = """
         ways, relations with
           ((building and building !~ no|construction|roof|carport)
-          or (building:part and building:part !~ no|construction|roof|carport))
+          or (building:part and building:part !~ no|construction|roof|carport|window))
           and !building:colour
           and (!indoor or indoor = no)
           and wall !~ no

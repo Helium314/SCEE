@@ -26,6 +26,8 @@ import de.westnordost.streetcomplete.quests.artwork.AddArtworkType
 import de.westnordost.streetcomplete.quests.amenity_indoor.AddIsAmenityIndoor
 import de.westnordost.streetcomplete.quests.atm_cashin.AddAtmCashIn
 import de.westnordost.streetcomplete.quests.atm_operator.AddAtmOperator
+import de.westnordost.streetcomplete.quests.atpsync.AtpsyncDao
+import de.westnordost.streetcomplete.quests.atpsync.AtpsyncQuest
 import de.westnordost.streetcomplete.quests.baby_changing_table.AddBabyChangingTable
 import de.westnordost.streetcomplete.quests.barrier_bicycle_barrier_installation.AddBicycleBarrierInstallation
 import de.westnordost.streetcomplete.quests.barrier_bicycle_barrier_type.AddBicycleBarrierType
@@ -234,6 +236,7 @@ val questsModule = module {
     factory { WayTrafficFlowDao(get()) }
     single { CustomQuestList(androidContext()) }
     single { OsmoseDao(get(), get()) }
+    single { AtpsyncDao(get()) }
 
     single {
         questTypeRegistry(
@@ -250,6 +253,7 @@ val questsModule = module {
             },
             get(),
             get(),
+            get(),
         )
     }
 }
@@ -261,6 +265,7 @@ fun questTypeRegistry(
     getCountryInfoByLocation: (LatLon) -> CountryInfo,
     getFeature: (Element) -> Feature?,
     osmoseDao: OsmoseDao,
+    atpsyncDao: AtpsyncDao,
     customQuestList: CustomQuestList,
 ) = QuestTypeRegistry(getQuestTypeList(
     trafficFlowSegmentsApi,
@@ -269,6 +274,7 @@ fun questTypeRegistry(
     getCountryInfoByLocation,
     getFeature,
     osmoseDao,
+    atpsyncDao,
     customQuestList,
 ))
 
@@ -279,6 +285,7 @@ fun getQuestTypeList(
     getCountryInfoByLocation: (location: LatLon) -> CountryInfo,
     getFeature: (Element) -> Feature?,
     osmoseDao: OsmoseDao,
+    atpsyncDao: AtpsyncDao,
     customQuestList: CustomQuestList,
 ) = listOf(
 
@@ -596,6 +603,7 @@ fun getQuestTypeList(
     154 to AddWayLit(),
 
     // quests added in SCEE
+    EE_QUEST_OFFSET + 3 to AtpsyncQuest(atpsyncDao),
     EE_QUEST_OFFSET + 0 to AddBenchMaterial(),
     EE_QUEST_OFFSET + 27 to AddBuildingColour(),
     EE_QUEST_OFFSET + 24 to AddRoofColour(),

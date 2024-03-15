@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.data.meta.CountryInfos
 import de.westnordost.streetcomplete.data.meta.getByLocation
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
+import de.westnordost.streetcomplete.quests.atpsync.AtpsyncDao
 import de.westnordost.streetcomplete.quests.custom.CustomQuestList
 import de.westnordost.streetcomplete.quests.getQuestTypeList
 import de.westnordost.streetcomplete.quests.oneway_suspects.data.TrafficFlowSegmentsApi
@@ -40,6 +41,7 @@ class QuestTypeRegistry(initialOrdinalsAndEntries: List<Pair<Int, QuestType>>, p
         countryInfos.getByLocation(countryBoundaries.value, location.longitude, location.latitude)
     }
     private val osmoseDao: OsmoseDao by inject()
+    private val atpsyncDao: AtpsyncDao by inject()
     private val customQuestList: CustomQuestList by inject()
 
     fun reload() {
@@ -51,6 +53,7 @@ class QuestTypeRegistry(initialOrdinalsAndEntries: List<Pair<Int, QuestType>>, p
             getCountryInfoByLocation,
             getFeature,
             osmoseDao,
+            atpsyncDao,
             customQuestList,
         ))
         byName.clear()

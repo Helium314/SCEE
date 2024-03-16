@@ -114,6 +114,10 @@ class CreatePoiFragment : TagEditor() {
             it.arguments = bundleOf(ARG_PREFILLED_TAGS to Json.encodeToString(prefill.toTags()))
             it.requireArguments().putAll(createArguments(Node(0L, pos), ElementPointGeometry(pos), null, null, questKey))
         }
+        fun createWithPrefill(prefill: Map<String, String>, pos: LatLon, questKey: QuestKey? = null) = CreatePoiFragment().also {
+            it.arguments = bundleOf(ARG_PREFILLED_TAGS to Json.encodeToString(prefill))
+            it.requireArguments().putAll(createArguments(Node(0L, pos), ElementPointGeometry(pos), null, null, questKey))
+        }
     }
 }
 

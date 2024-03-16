@@ -33,14 +33,13 @@ class AtpsyncQuest(private val atpsyncDao: AtpsyncDao) : ExternalSourceQuestType
 
     override fun deleteQuest(id: String): Boolean = atpsyncDao.delete(id)
 
-    override fun onAddedEdit(edit: ElementEdit, id: String) {}
-
-    override fun onDeletedEdit(edit: ElementEdit, id: String?) {
-        if (edit.isSynced) return // already reported as done
-        if (id != null) {
-            // TODO
-        }
+    override fun onAddedEdit(edit: ElementEdit, id: String) {
+        Thread {
+            atpsyncDao.reportChange(id)
+        }.start()
     }
+
+    override fun onDeletedEdit(edit: ElementEdit, id: String?) {}
 
     override fun onSyncEditFailed(edit: ElementEdit, id: String?) {
         if (id != null) atpsyncDao.delete(id)
@@ -51,6 +50,7 @@ class AtpsyncQuest(private val atpsyncDao: AtpsyncDao) : ExternalSourceQuestType
     }
 
     override fun onSyncedEdit(edit: ElementEdit, id: String?) {
+        // TODO for some reason never gets called
         if (id != null)
             atpsyncDao.reportChange(id)
     }

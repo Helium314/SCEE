@@ -202,6 +202,7 @@ dependencies {
 
     // fast json (de)serialization used for database read and write
     implementation("com.squareup.moshi:moshi:1.15.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
 
     // sunset-sunrise parser for lit quests
     implementation("com.luckycatlabs:SunriseSunsetCalculator:1.2")

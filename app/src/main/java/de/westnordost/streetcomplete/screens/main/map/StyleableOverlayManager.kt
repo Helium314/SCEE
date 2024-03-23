@@ -13,7 +13,6 @@ import de.westnordost.streetcomplete.data.osm.mapdata.ElementKey
 import de.westnordost.streetcomplete.data.osm.mapdata.ElementType
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Relation
-import de.westnordost.streetcomplete.data.osm.mapdata.key
 import de.westnordost.streetcomplete.data.overlays.SelectedOverlaySource
 import de.westnordost.streetcomplete.data.visiblequests.LevelFilter
 import de.westnordost.streetcomplete.osm.ALL_ROADS
@@ -123,17 +122,17 @@ class StyleableOverlayManager(
     }
 
     private var overlay: Overlay? = null
-    set(value) {
-        // always reload, even if the overlay is the same
-        val wasNull = field == null
-        val isNullNow = value == null
-        field = value
-        when {
-            isNullNow -> hide()
-            wasNull ->   show()
-            else ->      switchOverlay()
+        set(value) {
+            // always reload, even if the overlay is the same
+            val wasNull = field == null
+            val isNullNow = value == null
+            field = value
+            when {
+                isNullNow -> hide()
+                wasNull ->   show()
+                else ->      switchOverlay()
+            }
         }
-    }
 
     private val overlayListener = object : SelectedOverlaySource.Listener {
         override fun onSelectedOverlayChanged() {

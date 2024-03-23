@@ -27,6 +27,7 @@ import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.download.DownloadController
+import de.westnordost.streetcomplete.data.download.Downloader
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesSource
 import de.westnordost.streetcomplete.data.download.tiles.enclosingTilePos
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
@@ -38,6 +39,7 @@ import de.westnordost.streetcomplete.util.buildGeoUri
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.ktx.toLatLon
 import de.westnordost.streetcomplete.util.ktx.toast
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.distanceTo
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import org.koin.android.ext.android.inject
@@ -50,6 +52,7 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
     private val prefs: SharedPreferences by inject()
     private val visibleQuestsSource: VisibleQuestsSource by inject()
     private val downloadController: DownloadController by inject()
+    private val downloader: Downloader by inject()
     private val downloadedTilesSource: DownloadedTilesSource by inject()
     private var lastScanCenter = LatLon(0.0, 0.0)
     private val searchRadius = prefs.getFloat(Prefs.QUEST_MONITOR_RADIUS, 50f).toDouble()
@@ -65,7 +68,7 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .build()
 
-    private fun intent(position: LatLon): PendingIntent {
+    private fun intent(position: LatLon): PendingIntent? {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         intent.action = Intent.ACTION_VIEW
@@ -131,7 +134,7 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
             NotificationManagerCompat.from(this).cancel(FOUND_NOTIFICATION_ID) // no quest, no notification
             if (download) {
                 // check whether surrounding area should be downloaded
-                if (downloadController.isDownloadInProgress) return // download already running
+                if (downloader.isDownloadInProgress) return // download already running
                 val activeNetworkInfo = getSystemService<ConnectivityManager>()?.activeNetworkInfo ?: return
                 if (!activeNetworkInfo.isConnected) return // we are not connected
                 val ignoreOlderThan = nowAsEpochMilliseconds() - dataRetainTime
@@ -148,11 +151,10 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
             latDiff * latDiff + lonDiff * lonDiff
         }
         val notification = getQuestFoundNotification(quests.size, closest)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
-            this.toast("Quests found, but no notification permission") // should not happen, not worth a string resource
-        else
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU || ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
             NotificationManagerCompat.from(this).notify(FOUND_NOTIFICATION_ID, notification)
+        else
+            Log.i("NearbyQuestMonitor", "Quests found, but no notification permission")
     }
 
     // not overriding those causes crashes on Android 10 (only?)

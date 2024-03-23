@@ -35,9 +35,9 @@ class AddSmoothnessForm : AImageListQuestForm<Smoothness, SmoothnessAnswer>() {
     private val surfaceTag get() = element.tags["surface"]
 
     override val items get() = if (surfaceTag in SURFACES_FOR_SMOOTHNESS)
-        Smoothness.values().toItems(requireContext(), surfaceTag!!)
+        Smoothness.entries.toItems(requireContext(), surfaceTag!!)
     else
-        Smoothness.values().toGenericItems(requireContext())
+        Smoothness.entries.toGenericItems(requireContext())
 
     override val itemsPerRow = 1
 
@@ -78,11 +78,15 @@ class AddSmoothnessForm : AImageListQuestForm<Smoothness, SmoothnessAnswer>() {
     }
 
     private fun surfaceWrong() {
-        val surfaceType = Surface.values().find { it.osmValue == surfaceTag }!!
+        val surfaceType = Surface.entries.find { it.osmValue == surfaceTag }!!
         showWrongSurfaceDialog(surfaceType)
     }
 
     private fun showWrongSurfaceDialog(surface: Surface) {
+        if (dontShowAgain) {
+            applyAnswer(WrongSurfaceAnswer, true)
+            return
+        }
         val inflater = LayoutInflater.from(requireContext())
         val inner = inflater.inflate(R.layout.dialog_quest_smoothness_wrong_surface, null, false)
         ItemViewHolder(inner.findViewById(R.id.item_view)).bind(surface.asItem())
@@ -91,15 +95,24 @@ class AddSmoothnessForm : AImageListQuestForm<Smoothness, SmoothnessAnswer>() {
             .setView(inner)
             .setPositiveButton(R.string.quest_generic_hasFeature_yes_leave_note) { _, _ -> composeNote() }
             .setNegativeButton(R.string.quest_generic_hasFeature_no) { _, _ -> applyAnswer(WrongSurfaceAnswer, true) }
+            .setNeutralButton(R.string.dialog_session_dont_show_again) { _, _ ->
+                dontShowAgain = true
+                applyAnswer(WrongSurfaceAnswer, true)
+            }
             .show()
     }
 
-    private fun createConvertToStepsAnswer(): AnswerItem? {
-        return if (element.couldBeSteps()) {
+    private fun createConvertToStepsAnswer(): AnswerItem? =
+        if (element.couldBeSteps()) {
             AnswerItem(R.string.quest_generic_answer_is_actually_steps) {
                 applyAnswer(IsActuallyStepsAnswer, true)
             }
-        } else null
+        } else {
+            null
+        }
+
+    companion object {
+        private var dontShowAgain = false
     }
 }
 

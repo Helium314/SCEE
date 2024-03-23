@@ -1,9 +1,7 @@
 package de.westnordost.streetcomplete.screens.settings
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -23,6 +21,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreference
+import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.ApplicationConstants.DELETE_OLD_DATA_AFTER_DAYS
 import de.westnordost.streetcomplete.ApplicationConstants.REFRESH_DATA_AFTER
 import de.westnordost.streetcomplete.BuildConfig
@@ -30,10 +29,15 @@ import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesController
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataController
-import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestHidden
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestsHiddenController
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestsHiddenSource
 import de.westnordost.streetcomplete.data.osmnotes.NoteController
-import de.westnordost.streetcomplete.data.osmnotes.notequests.OsmNoteQuestController
+import de.westnordost.streetcomplete.data.osmnotes.notequests.OsmNoteQuestHidden
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
+import de.westnordost.streetcomplete.data.osmnotes.notequests.OsmNoteQuestsHiddenController
+import de.westnordost.streetcomplete.data.osmnotes.notequests.OsmNoteQuestsHiddenSource
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.data.visiblequests.QuestPreset
@@ -44,7 +48,8 @@ import de.westnordost.streetcomplete.screens.HasTitle
 import de.westnordost.streetcomplete.screens.TwoPaneListFragment
 import de.westnordost.streetcomplete.screens.settings.debug.ShowLinksActivity
 import de.westnordost.streetcomplete.screens.settings.debug.ShowQuestFormsActivity
-import de.westnordost.streetcomplete.util.Log
+import de.westnordost.streetcomplete.util.TempLogger
+import de.westnordost.streetcomplete.util.dialogs.setDefaultDialogPadding
 import de.westnordost.streetcomplete.util.getDefaultTheme
 import de.westnordost.streetcomplete.util.getSelectedLocales
 import de.westnordost.streetcomplete.util.ktx.format
@@ -54,6 +59,7 @@ import de.westnordost.streetcomplete.util.ktx.purge
 import de.westnordost.streetcomplete.util.ktx.setUpToolbarTitleAndIcon
 import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
+import de.westnordost.streetcomplete.util.prefs.Preferences
 import de.westnordost.streetcomplete.util.setDefaultLocales
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -62,17 +68,14 @@ import org.koin.android.ext.android.inject
 import java.util.Locale
 
 /** Shows the settings lists */
-class SettingsFragment :
-    TwoPaneListFragment(),
-    HasTitle,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+class SettingsFragment : TwoPaneListFragment(), HasTitle {
 
-    private val prefs: SharedPreferences by inject()
+    private val prefs: Preferences by inject()
     private val downloadedTilesController: DownloadedTilesController by inject()
     private val noteController: NoteController by inject()
     private val mapDataController: MapDataController by inject()
-    private val osmQuestController: OsmQuestController by inject()
-    private val osmNoteQuestController: OsmNoteQuestController by inject()
+    private val osmQuestsHiddenController: OsmQuestsHiddenController by inject()
+    private val osmNoteQuestsHiddenController: OsmNoteQuestsHiddenController by inject()
     private val resurveyIntervalsUpdater: ResurveyIntervalsUpdater by inject()
     private val questTypeRegistry: QuestTypeRegistry by inject()
     private val visibleQuestTypeSource: VisibleQuestTypeSource by inject()
@@ -82,30 +85,66 @@ class SettingsFragment :
     override val title: String get() = getString(R.string.action_settings)
 
     private val visibleQuestTypeListener = object : VisibleQuestTypeSource.Listener {
-        override fun onQuestTypeVisibilityChanged(questType: QuestType, visible: Boolean) {
-            setQuestPreferenceSummary()
-        }
-
-        override fun onQuestTypeVisibilitiesChanged() {
-            setQuestPreferenceSummary()
-        }
+        override fun onQuestTypeVisibilityChanged(questType: QuestType, visible: Boolean) { setQuestPreferenceSummary() }
+        override fun onQuestTypeVisibilitiesChanged() { setQuestPreferenceSummary() }
     }
 
     private val questPresetsListener = object : QuestPresetsSource.Listener {
-        override fun onSelectedQuestPresetChanged() {
-            setQuestPresetsPreferenceSummary()
-        }
+        override fun onSelectedQuestPresetChanged() { setQuestPresetsPreferenceSummary() }
+        override fun onAddedQuestPreset(preset: QuestPreset) { setQuestPresetsPreferenceSummary() }
+        override fun onRenamedQuestPreset(preset: QuestPreset) { setQuestPresetsPreferenceSummary() }
+        override fun onDeletedQuestPreset(presetId: Long) { setQuestPresetsPreferenceSummary() }
+    }
 
-        override fun onAddedQuestPreset(preset: QuestPreset) {
-            setQuestPresetsPreferenceSummary()
-        }
+    private val osmQuestsHiddenListener = object : OsmQuestsHiddenSource.Listener {
+        override fun onHid(edit: OsmQuestHidden) { setHiddenQuestsSummary() }
+        override fun onUnhid(edit: OsmQuestHidden) { setHiddenQuestsSummary() }
+        override fun onUnhidAll() { setHiddenQuestsSummary() }
+    }
 
-        override fun onRenamedQuestPreset(preset: QuestPreset) {
-            setQuestPresetsPreferenceSummary()
-        }
+    private val osmNoteQuestsHiddenListener = object : OsmNoteQuestsHiddenSource.Listener {
+        override fun onHid(edit: OsmNoteQuestHidden) { setHiddenQuestsSummary() }
+        override fun onUnhid(edit: OsmNoteQuestHidden) { setHiddenQuestsSummary() }
+        override fun onUnhidAll() { setHiddenQuestsSummary() }
+    }
 
-        override fun onDeletedQuestPreset(presetId: Long) {
-            setQuestPresetsPreferenceSummary()
+    private val onAutosyncChanged = {
+        if (Prefs.Autosync.valueOf(prefs.getStringOrNull(Prefs.AUTOSYNC) ?: "ON") != Prefs.Autosync.ON) {
+            AlertDialog.Builder(requireContext())
+                .setView(layoutInflater.inflate(R.layout.dialog_tutorial_upload, null))
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+        }
+    }
+
+    private val onThemeChanged = {
+        val theme = Prefs.Theme.valueOf(prefs.getStringOrNull(Prefs.THEME_SELECT) ?: getDefaultTheme())
+        AppCompatDelegate.setDefaultNightMode(theme.appCompatNightMode)
+        activity?.let { ActivityCompat.recreate(it) }
+        Unit
+    }
+
+    private val onLanguageChanged = {
+        setDefaultLocales(getSelectedLocales(prefs))
+        activity?.let { ActivityCompat.recreate(it) }
+        Unit
+    }
+
+    private val onResurveyIntervalsChanged = {
+        resurveyIntervalsUpdater.update()
+        if (prefs.getBoolean(Prefs.DYNAMIC_QUEST_CREATION, false))
+            OsmQuestController.reloadQuestTypes()
+    }
+
+    private val onExpertModeChanged = {
+        if (prefs.getBoolean(Prefs.EXPERT_MODE, false)) {
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.general_warning)
+                .setMessage(R.string.pref_expert_mode_message)
+                .setPositiveButton(R.string.dialog_button_understood, null)
+                .setNegativeButton(android.R.string.cancel) { d, _ -> d.cancel() }
+                .setOnCancelListener { findPreference<SwitchPreference>(Prefs.EXPERT_MODE)?.isChecked = false }
+                .show()
         }
     }
 
@@ -139,26 +178,26 @@ class SettingsFragment :
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.restore_dialog_message)
                 .setMessage(R.string.restore_dialog_hint)
-                .setPositiveButton(R.string.restore_confirmation) { _, _ -> lifecycleScope.launch {
-                    val hidden = unhideQuests()
-                    context?.toast(getString(R.string.restore_hidden_success, hidden), Toast.LENGTH_LONG)
-                } }
+                .setPositiveButton(R.string.restore_confirmation) { _, _ ->
+                    onHiddenQuestRestore()
+                }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
 
             true
         }
 
+        // todo: remove pref and related strings
         findPreference<Preference>("read_log")?.setOnPreferenceClickListener {
             var reversed = false
             var filter = "" // todo: separate filter by level or tag?
             var maxLines = 200
             val log = TextView(requireContext())
-            var lines = Log.getLog().take(maxLines)
+            var lines = TempLogger.getLog().take(maxLines)
             log.setTextIsSelectable(true)
             log.text = lines.joinToString("\n")
             fun reloadText() {
-                val l = Log.getLog()
+                val l = TempLogger.getLog()
                 lines = when {
                     filter.isNotBlank() && reversed -> l.asReversed().filter { line -> line.toString().contains(filter, true) }
                     filter.isNotBlank() -> l.filter { line -> line.toString().contains(filter, true) }
@@ -195,7 +234,7 @@ class SettingsFragment :
                     requestFocus() // focus is lost when scrolling it seems
                     setSelection(previousCursorPosition)
                 }
-                setPadding(30, 10, 30, 10)
+                setDefaultDialogPadding() // not a dialog, but still suitable
             }
             val layout = LinearLayout(requireContext()).apply { orientation = LinearLayout.VERTICAL }
             layout.addView(LinearLayout(requireContext()).apply {
@@ -206,11 +245,11 @@ class SettingsFragment :
             val d = AlertDialog.Builder(requireContext())
                 .setTitle(R.string.pref_read_log_title)
                 .setView(layout) // not using default padding to allow longer log lines (looks ugly, but is very convenient)
-                .setPositiveButton(android.R.string.ok, null)
+                .setPositiveButton(R.string.close, null)
                 .setNegativeButton(R.string.pref_read_log_save) { _, _ ->
                     val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                         addCategory(Intent.CATEGORY_OPENABLE)
-                        val fileName = "log_${nowAsEpochMilliseconds()}.txt"
+                        val fileName = "${ApplicationConstants.NAME}_${BuildConfig.VERSION_NAME}_log_${nowAsEpochMilliseconds()}.txt"
                         putExtra(Intent.EXTRA_TITLE, fileName)
                         type = "application/text"
                     }
@@ -223,6 +262,8 @@ class SettingsFragment :
 
             true
         }
+        if (!prefs.getBoolean(Prefs.TEMP_LOGGER, false))
+            findPreference<Preference>("read_log")?.isVisible = false
 
         findPreference<Preference>("debug")?.isVisible = BuildConfig.DEBUG
 
@@ -237,6 +278,16 @@ class SettingsFragment :
         }
 
         buildLanguageSelector()
+    }
+
+    private fun onHiddenQuestRestore() {
+        lifecycleScope.launch {
+            val hidden = unhideQuests()
+            context?.toast(
+                getString(R.string.restore_hidden_success, hidden),
+                Toast.LENGTH_LONG
+            )
+        }
     }
 
     private fun buildLanguageSelector() {
@@ -266,11 +317,14 @@ class SettingsFragment :
     override fun onStart() {
         super.onStart()
 
+        setHiddenQuestsSummary()
         setQuestPreferenceSummary()
         setQuestPresetsPreferenceSummary()
 
         visibleQuestTypeSource.addListener(visibleQuestTypeListener)
         questPresetsSource.addListener(questPresetsListener)
+        osmNoteQuestsHiddenController.addListener(osmNoteQuestsHiddenListener)
+        osmQuestsHiddenController.addListener(osmQuestsHiddenListener)
     }
 
     override fun onStop() {
@@ -278,55 +332,26 @@ class SettingsFragment :
 
         visibleQuestTypeSource.removeListener(visibleQuestTypeListener)
         questPresetsSource.removeListener(questPresetsListener)
+        osmNoteQuestsHiddenController.removeListener(osmNoteQuestsHiddenListener)
+        osmQuestsHiddenController.removeListener(osmQuestsHiddenListener)
     }
 
     override fun onResume() {
         super.onResume()
-        prefs.registerOnSharedPreferenceChangeListener(this)
+        prefs.addListener(Prefs.AUTOSYNC, onAutosyncChanged)
+        prefs.addListener(Prefs.THEME_SELECT, onThemeChanged)
+        prefs.addListener(Prefs.LANGUAGE_SELECT, onLanguageChanged)
+        prefs.addListener(Prefs.RESURVEY_INTERVALS, onResurveyIntervalsChanged)
+        prefs.addListener(Prefs.EXPERT_MODE, onExpertModeChanged)
     }
 
     override fun onPause() {
         super.onPause()
-        prefs.unregisterOnSharedPreferenceChangeListener(this)
-    }
-
-    @SuppressLint("InflateParams")
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        when (key) {
-            Prefs.AUTOSYNC -> {
-                if (Prefs.Autosync.valueOf(prefs.getString(Prefs.AUTOSYNC, "ON")!!) != Prefs.Autosync.ON) {
-                    AlertDialog.Builder(requireContext())
-                        .setView(layoutInflater.inflate(R.layout.dialog_tutorial_upload, null))
-                        .setPositiveButton(android.R.string.ok, null)
-                        .show()
-                }
-            }
-            Prefs.THEME_SELECT -> {
-                val theme = Prefs.Theme.valueOf(prefs.getString(Prefs.THEME_SELECT, getDefaultTheme())!!)
-                AppCompatDelegate.setDefaultNightMode(theme.appCompatNightMode)
-                activity?.let { ActivityCompat.recreate(it) }
-            }
-            Prefs.LANGUAGE_SELECT -> {
-                setDefaultLocales(getSelectedLocales(requireContext()))
-                activity?.let { ActivityCompat.recreate(it) }
-            }
-            Prefs.RESURVEY_INTERVALS -> {
-                resurveyIntervalsUpdater.update()
-                if (prefs.getBoolean(Prefs.DYNAMIC_QUEST_CREATION, false))
-                    OsmQuestController.reloadQuestTypes()
-            }
-            Prefs.EXPERT_MODE -> {
-                if (prefs.getBoolean(Prefs.EXPERT_MODE, false)) {
-                    AlertDialog.Builder(requireContext())
-                        .setTitle(R.string.general_warning)
-                        .setMessage(R.string.pref_expert_mode_message)
-                        .setPositiveButton(R.string.dialog_button_understood, null)
-                        .setNegativeButton(android.R.string.cancel) { d, _ -> d.cancel() }
-                        .setOnCancelListener { findPreference<SwitchPreference>(Prefs.EXPERT_MODE)?.isChecked = false }
-                        .show()
-                }
-            }
-        }
+        prefs.removeListener(Prefs.AUTOSYNC, onAutosyncChanged)
+        prefs.removeListener(Prefs.THEME_SELECT, onThemeChanged)
+        prefs.removeListener(Prefs.LANGUAGE_SELECT, onLanguageChanged)
+        prefs.removeListener(Prefs.RESURVEY_INTERVALS, onResurveyIntervalsChanged)
+        prefs.removeListener(Prefs.EXPERT_MODE, onExpertModeChanged)
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -340,12 +365,13 @@ class SettingsFragment :
         }
     }
 
+    // todo: remove
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_OK || data == null || requestCode != REQUEST_CODE_LOG)
             return
         val uri = data.data ?: return
         activity?.contentResolver?.openOutputStream(uri)?.use { os ->
-            os.bufferedWriter().use { it.write(Log.getLog().joinToString("\n")) }
+            os.bufferedWriter().use { it.write(TempLogger.getLog().joinToString("\n")) }
         }
     }
 
@@ -360,8 +386,11 @@ class SettingsFragment :
         context?.externalCacheDirs?.forEach { it.purge() }
     }
     private suspend fun unhideQuests() = withContext(Dispatchers.IO) {
-        osmQuestController.unhideAll() + osmNoteQuestController.unhideAll() + externalSourceQuestController.unhideAll()
+        osmQuestsHiddenController.unhideAll() + osmNoteQuestsHiddenController.unhideAll() + externalSourceQuestController.unhideAll()
     }
+
+    private fun countHiddenQuests(): Long =
+        osmQuestsHiddenController.countAll() + osmNoteQuestsHiddenController.countAll()
 
     private fun setQuestPreferenceSummary() {
         val enabledCount = questTypeRegistry.count { visibleQuestTypeSource.isVisible(it) }
@@ -377,6 +406,15 @@ class SettingsFragment :
         val summary = getString(R.string.pref_subtitle_quests_preset_name, presetName)
         viewLifecycleScope.launch {
             findPreference<Preference>("quest_presets")?.summary = summary
+        }
+    }
+
+    private fun setHiddenQuestsSummary() {
+        viewLifecycleScope.launch {
+            val amountOfHiddenQuests = withContext(Dispatchers.IO) { countHiddenQuests() }
+            val pref = findPreference<Preference>("quests.restore.hidden")
+            pref?.summary = requireContext().getString(R.string.pref_title_quests_restore_hidden_summary, amountOfHiddenQuests)
+            pref?.isEnabled = amountOfHiddenQuests > 0
         }
     }
 

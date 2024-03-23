@@ -8,6 +8,7 @@ import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import java.util.Locale
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -44,6 +45,7 @@ class NameAndLocationLabelTest {
     }
 
     // https://github.com/streetcomplete/StreetComplete/issues/2640
+    @Ignore("https://github.com/streetcomplete/StreetComplete/issues/4916")
     @Test fun postBox() {
         assertEquals("Deutsche Post (Mail Drop Box)", getQuestLabel(mapOf(
             "amenity" to "post_box",
@@ -77,6 +79,31 @@ class NameAndLocationLabelTest {
             "amenity" to "vending_machine",
             "ref" to "3680",
             "operator" to "Schoko Lädchen",
+        )))
+    }
+
+    @Test fun roadWithName() {
+        assertEquals("Main Street (Residential Road)", getQuestLabel(mapOf(
+            "highway" to "residential",
+            "name" to "Main Street",
+            "operator" to "Road Agency",
+        )))
+    }
+
+    @Test fun roadWitRef() {
+        assertEquals("A1 (Residential Road)", getQuestLabel(mapOf(
+            "highway" to "residential",
+            "ref" to "A1",
+            "operator" to "Road Agency",
+        )))
+    }
+
+    @Test fun roadWithNameAndRef() {
+        assertEquals("Main Street [A1] (Residential Road)", getQuestLabel(mapOf(
+            "highway" to "residential",
+            "name" to "Main Street",
+            "ref" to "A1",
+            "operator" to "Road Agency",
         )))
     }
 

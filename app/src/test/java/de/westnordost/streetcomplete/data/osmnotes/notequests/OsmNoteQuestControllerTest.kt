@@ -31,7 +31,7 @@ class OsmNoteQuestControllerTest {
 
     private lateinit var ctrl: OsmNoteQuestController
     private lateinit var listener: OsmNoteQuestSource.Listener
-    private lateinit var hideListener: OsmNoteQuestController.HideOsmNoteQuestListener
+    private lateinit var hideListener: OsmNoteQuestsHiddenSource.Listener
 
     private lateinit var noteUpdatesListener: NotesWithEditsSource.Listener
     private lateinit var userLoginListener: UserLoginStatusSource.Listener
@@ -58,7 +58,7 @@ class OsmNoteQuestControllerTest {
 
         ctrl = OsmNoteQuestController(noteSource, hiddenDB, userDataSource, userLoginStatusSource, notesPreferences)
         ctrl.addListener(listener)
-        ctrl.addHideQuestsListener(hideListener)
+        ctrl.addListener(hideListener)
     }
 
     @Test fun hide() {
@@ -137,6 +137,11 @@ class OsmNoteQuestControllerTest {
         )
     }
 
+    @Test fun countAll() {
+        on(hiddenDB.countAll()).thenReturn(123L)
+        assertEquals(123L, ctrl.countAll())
+    }
+
     @Test fun `get hidden returns null`() {
         on(noteSource.get(1)).thenReturn(note(1))
         on(hiddenDB.contains(1)).thenReturn(true)
@@ -187,6 +192,25 @@ class OsmNoteQuestControllerTest {
         on(notesPreferences.showOnlyNotesPhrasedAsQuestions).thenReturn(true)
 
         assertEquals(OsmNoteQuest(1, p(1.0, 1.0)), ctrl.getVisible(1))
+    }
+
+    @Test fun `get quest phrased as question in other scripts returns non-null`() {
+        on(noteSource.get(1)).thenReturn(note(1, comments = listOf(comment(text = "Greek question mark: ;"))))
+        on(noteSource.get(2)).thenReturn(note(2, comments = listOf(comment(text = "semicolon: ;"))))
+        on(noteSource.get(3)).thenReturn(note(3, comments = listOf(comment(text = "mirrored question mark: ؟"))))
+        on(noteSource.get(4)).thenReturn(note(4, comments = listOf(comment(text = "Armenian question mark: ՞"))))
+        on(noteSource.get(5)).thenReturn(note(5, comments = listOf(comment(text = "Ethiopian question mark: ፧"))))
+        on(noteSource.get(6)).thenReturn(note(6, comments = listOf(comment(text = "Vai question mark: ꘏"))))
+        on(noteSource.get(7)).thenReturn(note(7, comments = listOf(comment(text = "full width question mark: ？"))))
+        on(notesPreferences.showOnlyNotesPhrasedAsQuestions).thenReturn(true)
+
+        assertEquals(1, ctrl.getVisible(1)?.id)
+        assertEquals(2, ctrl.getVisible(2)?.id)
+        assertEquals(3, ctrl.getVisible(3)?.id)
+        assertEquals(4, ctrl.getVisible(4)?.id)
+        assertEquals(5, ctrl.getVisible(5)?.id)
+        assertEquals(6, ctrl.getVisible(6)?.id)
+        assertEquals(7, ctrl.getVisible(7)?.id)
     }
 
     @Test fun `get quest with comment containing survey required marker returns non-null`() {

@@ -20,14 +20,15 @@ import de.westnordost.streetcomplete.data.osm.mapdata.MapDataController
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataRepository
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataUpdates
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometryUpdates
 import de.westnordost.streetcomplete.data.osm.mapdata.MutableMapData
 import de.westnordost.streetcomplete.data.osm.mapdata.MutableMapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Relation
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.upload.ConflictException
-import de.westnordost.streetcomplete.util.Log
 import de.westnordost.streetcomplete.util.Listeners
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.contains
 import de.westnordost.streetcomplete.util.math.intersect
 
@@ -61,6 +62,15 @@ class MapDataWithEditsSource internal constructor(
     private val deletedElements = HashSet<ElementKey>()
     private val updatedElements = HashMap<ElementKey, Element>()
     private val updatedGeometries = HashMap<ElementKey, ElementGeometry?>()
+
+    // onReplacedForBBox may not be called in parallel
+    private val onReplacedForBBoxLock = Any()
+
+    // access to isReplacingForBBox is atomic (didn't want to pull in kotlinx-atomicfu dependency just for this)
+    private val isReplacingForBBoxLock = Any()
+    private var isReplacingForBBox: Boolean = false
+
+    private val updatesWhileReplacingBBox = MapDataWithGeometryUpdates()
 
     private val mapDataListener = object : MapDataController.Listener {
 
@@ -101,12 +111,11 @@ class MapDataWithEditsSource internal constructor(
 
                 for (element in updated) {
                     val key = element.key
-                    // an element contained in the update that was deleted by an edit shall be deleted
                     if (deletedElements.contains(key)) {
+                        // an element contained in the update that was deleted by an edit shall be deleted
                         modifiedDeleted.add(key)
-                    }
-                    // otherwise, update if it was modified at all
-                    else {
+                    } else {
+                        // otherwise, update if it was modified at all
                         val modifiedElement = updatedElements[key] ?: element
                         val modifiedGeometry = updatedGeometries[key] ?: updated.getGeometry(key.type, key.id)
                         modifiedElements.add(Pair(modifiedElement, modifiedGeometry))
@@ -115,12 +124,11 @@ class MapDataWithEditsSource internal constructor(
 
                 for (key in deleted) {
                     val modifiedElement = updatedElements[key]
-                    // en element that was deleted shall not be deleted but instead added to the updates if it was updated by an edit
                     if (modifiedElement != null) {
+                        // an element that was deleted shall not be deleted but instead added to the updates if it was updated by an edit
                         modifiedElements.add(Pair(modifiedElement, updatedGeometries[key]))
-                    }
-                    // otherwise, pass it through
-                    else {
+                    } else {
+                        // otherwise, pass it through
                         modifiedDeleted.add(key)
                     }
                 }
@@ -137,12 +145,21 @@ class MapDataWithEditsSource internal constructor(
         }
 
         override fun onReplacedForBBox(bbox: BoundingBox, mapDataWithGeometry: MutableMapDataWithGeometry) {
-            synchronized(this) {
-                rebuildLocalChanges()
-                modifyBBoxMapData(bbox, mapDataWithGeometry)
-            }
+            synchronized(onReplacedForBBoxLock) {
+                synchronized(isReplacingForBBoxLock) { isReplacingForBBox = true }
 
-            callOnReplacedForBBox(bbox, mapDataWithGeometry)
+                synchronized(this) {
+                    rebuildLocalChanges()
+                    modifyBBoxMapData(bbox, mapDataWithGeometry)
+                }
+
+                callOnReplacedForBBox(bbox, mapDataWithGeometry)
+
+                synchronized(isReplacingForBBoxLock) { isReplacingForBBox = false }
+
+                callOnUpdated(updatesWhileReplacingBBox.updated, updatesWhileReplacingBBox.deleted)
+                updatesWhileReplacingBBox.clear()
+            }
         }
 
         override fun onCleared() {
@@ -267,7 +284,7 @@ class MapDataWithEditsSource internal constructor(
         val ids = way.nodeIds.toHashSet()
         val nodes = getNodes(ids)
 
-        /* If the way is (now) not complete, this is not acceptable */
+        // If the way is (now) not complete, this is not acceptable
         if (nodes.size < ids.size) {
             Log.w(TAG, "could not find nodes ${ids - nodes.map { it.id }} for way $way")
             return null
@@ -307,7 +324,7 @@ class MapDataWithEditsSource internal constructor(
     private fun getRelationElements(relation: Relation): MutableMapData = synchronized(this) {
         val elements = ArrayList<Element>()
         for (member in relation.members) {
-            /* for way members, also get their nodes */
+            // for way members, also get their nodes
             if (member.type == WAY) {
                 val wayComplete = getWayComplete(member.ref)
                 if (wayComplete != null) {
@@ -333,13 +350,12 @@ class MapDataWithEditsSource internal constructor(
 
         for (element in updatedElements.values) {
             if (element is Way) {
-                // if the updated version of a way contains the node, put/replace the updated way
                 if (element.nodeIds.contains(id)) {
+                    // if the updated version of a way contains the node, put/replace the updated way
                     waysById[element.id] = element
-                }
-                // if the updated version does not contain the node (anymore), we need to remove it
-                // from the output set (=an edit removed that node) - if it was contained at all
-                else {
+                } else {
+                    // if the updated version does not contain the node (anymore), we need to remove it
+                    // from the output set (=an edit removed that node) - if it was contained at all
                     waysById.remove(element.id)
                 }
             }
@@ -370,13 +386,12 @@ class MapDataWithEditsSource internal constructor(
 
         for (element in updatedElements.values) {
             if (element is Relation) {
-                // if the updated version of a relation contains the node, put/replace the updated relation
                 if (element.members.any { it.type == type && it.ref == id }) {
+                    // if the updated version of a relation contains the node, put/replace the updated relation
                     relationsById[element.id] = element
-                }
-                // if the updated version does not contain the node (anymore), we need to remove it
-                // from the output set (=an edit removed that node) - if it was contained at all
-                else {
+                } else {
+                    // if the updated version does not contain the node (anymore), we need to remove it
+                    // from the output set (=an edit removed that node) - if it was contained at all
                     relationsById.remove(element.id)
                 }
             }
@@ -398,16 +413,15 @@ class MapDataWithEditsSource internal constructor(
             // we will deal with nodes at the end
             if (key.type == NODE) continue
 
-            // add the modified data if it is in the bbox
             if (geometry != null && geometry.getBounds().intersect(bbox)) {
+                // add the modified data if it is in the bbox
                 val element = updatedElements[key]
                 if (element != null) {
                     mapData.put(element, geometry)
                     if (element is Way) addWays.add(element)
                 }
-            }
-            // or otherwise remove if it is not (anymore)
-            else {
+            } else {
+                // or otherwise remove if it is not (anymore)
                 mapData.remove(key.type, key.id)
             }
         }
@@ -527,11 +541,17 @@ class MapDataWithEditsSource internal constructor(
         listeners.remove(listener)
     }
 
-    private fun callOnUpdated(updated: MapDataWithGeometry = MutableMapDataWithGeometry(), deleted: Collection<ElementKey> = emptyList()) {
+    private fun callOnUpdated(updated: MapDataWithGeometry, deleted: Collection<ElementKey>) {
         if (updated.size == 0 && deleted.isEmpty()) return
         if (updated.size > 10 || deleted.size > 10) Log.i(TAG, "updated ${updated.size}, deleted ${deleted.size}")
         else Log.i(TAG, "updated: ${updated.map { it.key }}, deleted: $deleted")
         listeners.forEach { it.onUpdated(updated, deleted) }
+
+        synchronized(isReplacingForBBoxLock) {
+            if (isReplacingForBBox) {
+                updatesWhileReplacingBBox.add(updated, deleted)
+            }
+        }
     }
     private fun callOnReplacedForBBox(bbox: BoundingBox, mapDataWithGeometry: MapDataWithGeometry) {
         if (mapDataWithGeometry.size == 0) return

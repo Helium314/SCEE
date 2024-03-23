@@ -22,7 +22,6 @@ import de.westnordost.streetcomplete.testutils.argThat
 import de.westnordost.streetcomplete.testutils.bbox
 import de.westnordost.streetcomplete.testutils.eq
 import de.westnordost.streetcomplete.testutils.mock
-import de.westnordost.streetcomplete.testutils.mockPrefs
 import de.westnordost.streetcomplete.testutils.node
 import de.westnordost.streetcomplete.testutils.note
 import de.westnordost.streetcomplete.testutils.on
@@ -32,7 +31,6 @@ import de.westnordost.streetcomplete.testutils.p
 import de.westnordost.streetcomplete.testutils.pGeom
 import de.westnordost.streetcomplete.util.ktx.containsExactlyInAnyOrder
 import org.mockito.Mockito.verify
-import java.util.concurrent.FutureTask
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -49,7 +47,7 @@ class OsmQuestControllerTest {
 
     private lateinit var ctrl: OsmQuestController
     private lateinit var listener: OsmQuestSource.Listener
-    private lateinit var hideListener: OsmQuestController.HideOsmQuestListener
+    private lateinit var hideListener: OsmQuestsHiddenSource.Listener
 
     private lateinit var mapDataListener: MapDataWithEditsSource.Listener
     private lateinit var notesListener: NotesWithEditsSource.Listener
@@ -80,14 +78,11 @@ class OsmQuestControllerTest {
             Unit
         }
 
-        val futureTask = FutureTask { countryBoundaries }
-        futureTask.run()
-
         listener = mock()
         hideListener = mock()
-        ctrl = OsmQuestController(db, hiddenDB, mapDataSource, notesSource, questTypeRegistry, futureTask, mockPrefs())
+        ctrl = OsmQuestController(db, hiddenDB, mapDataSource, notesSource, questTypeRegistry, lazyOf(countryBoundaries), mock())
         ctrl.addListener(listener)
-        ctrl.addHideQuestsListener(hideListener)
+        ctrl.addListener(hideListener)
     }
 
     @Test fun get() {
@@ -121,9 +116,6 @@ class OsmQuestControllerTest {
         on(hiddenDB.getAllIds()).thenReturn(hiddenQuests)
         on(notesSource.getAllPositions(any())).thenReturn(listOf(notePos))
         on(db.getAllInBBox(bbox, null)).thenReturn(entries)
-        on(db.getAllInBboxIfNotHidden(bbox, null)).thenReturn(entries.filterNot {
-            hiddenQuests.contains(OsmQuestKey(it.elementType, it.elementId, it.questTypeName))
-        })
         on(mapDataSource.getGeometries(argThat {
             it.containsExactlyInAnyOrder(listOf(
                 ElementKey(NODE, 1),
@@ -173,6 +165,11 @@ class OsmQuestControllerTest {
         )
     }
 
+    @Test fun countAll() {
+        on(hiddenDB.countAll()).thenReturn(123L)
+        assertEquals(123L, ctrl.countAll())
+    }
+
     @Test fun hide() {
         val quest = osmQuest(questType = ApplicableQuestType)
 
@@ -220,7 +217,6 @@ class OsmQuestControllerTest {
     }
 
     @Test fun `updates quests on notes listener update`() {
-
         val notes = listOf(note(1))
 
         notesListener.onUpdated(added = notes, updated = emptyList(), deleted = emptyList())
@@ -262,7 +258,6 @@ class OsmQuestControllerTest {
     }
 
     @Test fun `updates quests on map data listener update for updated elements`() {
-
         val geom = pGeom(0.0, 0.0)
 
         val elements = listOf(
@@ -305,7 +300,6 @@ class OsmQuestControllerTest {
     }
 
     @Test fun `updates quests on map data listener replace for bbox`() {
-
         // need tags, because elements without tags get kicked out early except for specific quest types that actually use them
         val elements = listOf(
             node(1, tags = mapOf("a" to "b")),

@@ -16,7 +16,6 @@ import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditsTable.Columns.
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditsTable.Columns.TRACK
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditsTable.Columns.TYPE
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditsTable.NAME
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -72,20 +71,18 @@ class NoteEditsDao(private val db: Database) {
         ) { it.toNoteEdit() }
     }
 
-    fun getAllUnsynced(bbox: BoundingBox): List<NoteEdit> {
-        return db.query(NAME,
+    fun getAllUnsynced(bbox: BoundingBox): List<NoteEdit> =
+        db.query(NAME,
             where = "$IS_SYNCED = 0 AND " + inBoundsSql(bbox),
             orderBy = CREATED_TIMESTAMP
         ) { it.toNoteEdit() }
-    }
 
-    fun getAllUnsyncedPositions(bbox: BoundingBox): List<LatLon> {
-        return db.query(NAME,
+    fun getAllUnsyncedPositions(bbox: BoundingBox): List<LatLon> =
+        db.query(NAME,
             columns = arrayOf(LATITUDE, LONGITUDE),
             where = "$IS_SYNCED = 0 AND " + inBoundsSql(bbox),
             orderBy = CREATED_TIMESTAMP
         ) { LatLon(it.getDouble(LATITUDE), it.getDouble(LONGITUDE)) }
-    }
 
     fun markSynced(id: Long): Boolean =
         db.update(NAME, listOf(IS_SYNCED to 1), "$ID = $id", null) == 1

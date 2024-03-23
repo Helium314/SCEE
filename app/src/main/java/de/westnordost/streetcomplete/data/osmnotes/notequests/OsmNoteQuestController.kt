@@ -16,16 +16,11 @@ class OsmNoteQuestController(
     private val userDataSource: UserDataSource,
     private val userLoginStatusSource: UserLoginStatusSource,
     private val notesPreferences: NotesPreferences,
-) : OsmNoteQuestSource {
+) : OsmNoteQuestSource, OsmNoteQuestsHiddenController, OsmNoteQuestsHiddenSource {
     /* Must be a singleton because there is a listener that should respond to a change in the
      *  database table */
 
-    interface HideOsmNoteQuestListener {
-        fun onHid(edit: OsmNoteQuestHidden)
-        fun onUnhid(edit: OsmNoteQuestHidden)
-        fun onUnhidAll()
-    }
-    private val hideListeners = Listeners<HideOsmNoteQuestListener>()
+    private val hideListeners = Listeners<OsmNoteQuestsHiddenSource.Listener>()
 
     private val listeners = Listeners<OsmNoteQuestSource.Listener>()
 
@@ -44,8 +39,11 @@ class OsmNoteQuestController(
             }
             for (note in updated) {
                 val q = createQuestForNote(note, hiddenNoteIds)
-                if (q != null) quests.add(q)
-                else deletedQuestIds.add(note.id)
+                if (q != null) {
+                    quests.add(q)
+                } else {
+                    deletedQuestIds.add(note.id)
+                }
             }
             onUpdated(quests, deletedQuestIds)
         }
@@ -81,9 +79,8 @@ class OsmNoteQuestController(
         return noteSource.get(questId)?.let { createQuestForNote(it) }
     }
 
-    override fun getAllVisibleInBBox(bbox: BoundingBox, getHidden: Boolean): List<OsmNoteQuest> {
-        return createQuestsForNotes(noteSource.getAll(bbox), getHidden)
-    }
+    override fun getAllVisibleInBBox(bbox: BoundingBox, getHidden: Boolean): List<OsmNoteQuest> =
+        createQuestsForNotes(noteSource.getAll(bbox), getHidden)
 
     private fun createQuestsForNotes(notes: Collection<Note>, getHidden: Boolean): List<OsmNoteQuest> {
         val blockedNoteIds = if (getHidden) emptySet() else getHiddenIds()
@@ -93,12 +90,13 @@ class OsmNoteQuestController(
     private fun createQuestForNote(note: Note, blockedNoteIds: Set<Long> = setOf()): OsmNoteQuest? =
         if (note.shouldShowAsQuest(userDataSource.userId, showOnlyNotesPhrasedAsQuestions, blockedNoteIds, notesPreferences)) {
             OsmNoteQuest(note.id, note.position)
-        } else null
+        } else {
+            null
+        }
 
-    /* ----------------------------------- Hiding / Unhiding  ----------------------------------- */
+    /* ---------------------------- OsmNoteQuestsHiddenController  ------------------------------ */
 
-    /** Mark the quest as hidden by user interaction */
-    fun hide(questId: Long) {
+    override fun hide(questId: Long) {
         val hidden: OsmNoteQuestHidden?
         synchronized(this) {
             hiddenDB.add(questId)
@@ -112,8 +110,7 @@ class OsmNoteQuestController(
         onUpdated(deletedQuestIds = listOf(questId))
     }
 
-    /** Un-hides a specific hidden quest by user interaction */
-    fun unhide(questId: Long): Boolean {
+    override fun unhide(questId: Long): Boolean {
         val hidden = getHidden(questId)
         synchronized(this) {
             if (!hiddenDB.delete(questId)) return false
@@ -124,8 +121,7 @@ class OsmNoteQuestController(
         return true
     }
 
-    /** Un-hides all previously hidden quests by user interaction */
-    fun unhideAll(): Int {
+    override fun unhideAll(): Int {
         val previouslyHiddenNotes = noteSource.getAll(hiddenDB.getAllIds())
         val unhidCount = synchronized(this) { hiddenDB.deleteAll() }
 
@@ -136,13 +132,13 @@ class OsmNoteQuestController(
         return unhidCount
     }
 
-    fun getHidden(questId: Long): OsmNoteQuestHidden? {
+    override fun getHidden(questId: Long): OsmNoteQuestHidden? {
         val timestamp = hiddenDB.getTimestamp(questId) ?: return null
         val note = noteSource.get(questId) ?: return null
         return OsmNoteQuestHidden(note, timestamp)
     }
 
-    fun getAllHiddenNewerThan(timestamp: Long): List<OsmNoteQuestHidden> {
+    override fun getAllHiddenNewerThan(timestamp: Long): List<OsmNoteQuestHidden> {
         val noteIdsWithTimestamp = hiddenDB.getNewerThan(timestamp)
         val notesById = noteSource.getAll(noteIdsWithTimestamp.map { it.noteId }).associateBy { it.id }
 
@@ -150,6 +146,8 @@ class OsmNoteQuestController(
             notesById[noteId]?.let { OsmNoteQuestHidden(it, timestamp) }
         }
     }
+
+    override fun countAll(): Long = hiddenDB.countAll()
 
     private fun isHidden(questId: Long): Boolean = hiddenDB.contains(questId)
 
@@ -178,10 +176,10 @@ class OsmNoteQuestController(
 
     /* ------------------------------------- Hide Listeners ------------------------------------- */
 
-    fun addHideQuestsListener(listener: HideOsmNoteQuestListener) {
+    override fun addListener(listener: OsmNoteQuestsHiddenSource.Listener) {
         hideListeners.add(listener)
     }
-    fun removeHideQuestsListener(listener: HideOsmNoteQuestListener) {
+    override fun removeListener(listener: OsmNoteQuestsHiddenSource.Listener) {
         hideListeners.remove(listener)
     }
 
@@ -212,46 +210,54 @@ private fun Note.shouldShowAsQuest(
         if (notesPreferences.blockedNames.contains(it.user?.displayName?.lowercase())) return false
     }
 
-    /* don't show notes where user replied last unless he wrote a survey required marker */
+    // don't show notes where user replied last unless he wrote a survey required marker
     if (showOnlyNotesPhrasedAsQuestions
         && comments.last().isReplyFromUser(userId)
         && !comments.last().containsSurveyRequiredMarker()
-    ) return false
+    ) {
+        return false
+    }
 
-    /* newly created notes by user should not be shown if it was both created in this app and has no
-       replies yet */
+    // newly created notes by user should not be shown if it was both created in this app and has no replies yet
     if (probablyCreatedByUserInThisApp(userId, !showOnlyNotesPhrasedAsQuestions) && !hasReplies) return false
 
-    /* many notes are created to report problems on the map that cannot be resolved
-     * through an on-site survey.
-     * Likely, if something is posed as a question, the reporter expects someone to
-     * answer/comment on it, possibly an information on-site is missing, so let's only show these */
+    /*
+        many notes are created to report problems on the map that cannot be resolved
+        through an on-site survey.
+        Likely, if something is posed as a question, the reporter expects someone to
+        answer/comment on it, possibly an information on-site is missing, so let's only show these
+     */
     if (showOnlyNotesPhrasedAsQuestions
         && !probablyContainsQuestion()
         && !containsSurveyRequiredMarker()
-    ) return false
+    ) {
+        return false
+    }
 
     return true
 }
 
 private fun Note.probablyContainsQuestion(): Boolean {
-    /* from left to right (if smartass IntelliJ wouldn't mess up left-to-right):
-       - latin question mark
-       - greek question mark (a different character than semikolon, though same appearance)
-       - semikolon (often used instead of proper greek question mark)
-       - mirrored question mark (used in script written from right to left, like Arabic)
-       - armenian question mark
-       - ethopian question mark
-       - full width question mark (often used in modern Chinese / Japanese)
-       (Source: https://en.wikipedia.org/wiki/Question_mark)
-
-        NOTE: some languages, like Thai, do not use any question mark, so this would be more
-        difficult to determine.
-   */
-    val questionMarksAroundTheWorld = "[?;;؟՞፧？]"
+    /**
+     * Source: https://en.wikipedia.org/wiki/Question_mark
+     *
+     * NOTE: some languages, like Thai, do not use any question mark, so this would be more
+     * difficult to determine.
+     */
+    val questionMarksAroundTheWorld = listOf(
+        "?", // Latin question mark
+        ";", // Greek question mark (a different character than semicolon, though same appearance)
+        ";", // semicolon (often used instead of proper greek question mark)
+        "؟", // mirrored question mark (used in script written from right to left, like Arabic)
+        "՞", // Armenian question mark
+        "፧", // Ethiopian question mark
+        "꘏", // Vai question mark
+        "？", // full width question mark (often used in modern Chinese / Japanese)
+    )
+    val questionMarkPattern = ".*[${questionMarksAroundTheWorld.joinToString("")}].*"
 
     val text = comments.firstOrNull()?.text
-    return text?.matches(Regex(".*$questionMarksAroundTheWorld.*", RegexOption.DOT_MATCHES_ALL)) ?: false
+    return text?.matches(questionMarkPattern.toRegex(RegexOption.DOT_MATCHES_ALL)) ?: false
 }
 
 private fun Note.containsSurveyRequiredMarker(): Boolean =

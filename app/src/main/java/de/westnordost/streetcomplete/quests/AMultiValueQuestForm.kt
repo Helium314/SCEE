@@ -8,10 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.core.view.doOnLayout
 import androidx.core.widget.doAfterTextChanged
-import androidx.preference.PreferenceManager
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.databinding.QuestMultiValueBinding
-import de.westnordost.streetcomplete.quests.healthcare_speciality.AddHealthcareSpecialityForm
 import de.westnordost.streetcomplete.util.LastPickedValuesStore
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
@@ -62,17 +60,19 @@ abstract class AMultiValueQuestForm<T> : AbstractOsmQuestForm<T>() {
         )
         binding.valueInput.onItemClickListener = AdapterView.OnItemClickListener { _, t, _, _ ->
             val value = (t as? TextView)?.text?.toString() ?: return@OnItemClickListener
-            if (!values.add(value)) return@OnItemClickListener // we don't want duplicates
-            onAddedValue(value)
+            addValue(value)
         }
 
-        binding.valueInput.doAfterTextChanged { checkIsFormComplete() }
+        binding.valueInput.doAfterTextChanged {
+            if (it.toString().endsWith("\n"))
+                addValue(it.toString())
+            checkIsFormComplete()
+        }
         binding.valueInput.doOnLayout { binding.valueInput.dropDownWidth = binding.valueInput.width - requireContext().dpToPx(60).toInt() }
 
         binding.addValueButton.setOnClickListener {
             if (!isFormComplete() || binding.valueInput.text.isBlank()) return@setOnClickListener
-            values.add(value)
-            onAddedValue(value)
+            addValue(value)
         }
         showSuggestions()
     }
@@ -94,11 +94,18 @@ abstract class AMultiValueQuestForm<T> : AbstractOsmQuestForm<T>() {
     override fun onAttach(ctx: Context) {
         super.onAttach(ctx)
         favs = LastPickedValuesStore(
-            PreferenceManager.getDefaultSharedPreferences(ctx.applicationContext),
+            prefs,
             key = javaClass.simpleName,
             serialize = { it },
             deserialize = { it },
         )
+    }
+
+    private fun addValue(value: String) {
+        val modifiedValue = value.trim()
+        if (modifiedValue.isEmpty()) return
+        if (!values.add(modifiedValue)) return // we don't want duplicates
+        onAddedValue(modifiedValue)
     }
 
     private fun onAddedValue(value: String) {

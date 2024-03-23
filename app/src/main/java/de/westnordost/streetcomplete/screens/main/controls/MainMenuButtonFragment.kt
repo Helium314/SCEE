@@ -1,7 +1,6 @@
 package de.westnordost.streetcomplete.screens.main.controls
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.KeyEvent
@@ -9,9 +8,9 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
-import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.download.DownloadController
+import de.westnordost.streetcomplete.data.download.DownloadProgressSource
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.visiblequests.QuestPresetsController
 import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilter
@@ -21,6 +20,7 @@ import de.westnordost.streetcomplete.util.ktx.popIn
 import de.westnordost.streetcomplete.util.ktx.popOut
 import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
+import de.westnordost.streetcomplete.util.prefs.Preferences
 import de.westnordost.streetcomplete.util.viewBinding
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -32,7 +32,8 @@ class MainMenuButtonFragment : Fragment(R.layout.fragment_main_menu_button) {
 
     private val teamModeQuestFilter: TeamModeQuestFilter by inject()
     private val downloadController: DownloadController by inject()
-    private val prefs: SharedPreferences by inject()
+    private val downloadProgressSource: DownloadProgressSource by inject()
+    private val prefs: Preferences by inject()
     private val questPresetsController: QuestPresetsController by inject()
 
     interface Listener {
@@ -109,8 +110,11 @@ class MainMenuButtonFragment : Fragment(R.layout.fragment_main_menu_button) {
     /* ------------------------------------ Download Button  ------------------------------------ */
 
     private fun onClickDownload() {
-        if (isConnected()) downloadDisplayedArea()
-        else context?.toast(R.string.offline)
+        if (isConnected()) {
+            downloadDisplayedArea()
+        } else {
+            context?.toast(R.string.offline)
+        }
     }
 
     private fun isConnected(): Boolean {
@@ -122,16 +126,17 @@ class MainMenuButtonFragment : Fragment(R.layout.fragment_main_menu_button) {
     private fun downloadDisplayedArea() {
         val downloadArea = listener?.getDownloadArea() ?: return
 
-        if (downloadController.isPriorityDownloadInProgress) {
+        if (downloadProgressSource.isUserInitiatedDownloadInProgress) {
             context?.let {
                 AlertDialog.Builder(it)
                     .setMessage(R.string.confirmation_cancel_prev_download_title)
                     .setPositiveButton(R.string.confirmation_cancel_prev_download_confirmed) { _, _ ->
                         downloadController.download(downloadArea, true)
                     }
-                    .setNeutralButton(R.string.enqueue_download) { _, _ ->
-                        downloadController.download(downloadArea, true, true)
-                    }
+                    // todo: make enqueue work again, see downloadworker
+//                    .setNeutralButton(R.string.enqueue_download) { _, _ ->
+//                        downloadController.download(downloadArea, true, true)
+//                    }
                     .setNegativeButton(R.string.confirmation_cancel_prev_download_cancel, null)
                     .show()
             }

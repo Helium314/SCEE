@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
-import androidx.preference.PreferenceManager
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.databinding.ViewShopTypeBinding
@@ -91,7 +90,7 @@ class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
     override fun onAttach(ctx: Context) {
         super.onAttach(ctx)
         favs = LastPickedValuesStore(
-            PreferenceManager.getDefaultSharedPreferences(ctx.applicationContext),
+            prefs,
             key = javaClass.simpleName,
             serialize = { it },
             deserialize = { it },
@@ -121,8 +120,8 @@ class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
                 featureCtrl.feature?.name,
                 ::filterOnlySpecialitiesOfMedicalDoctors,
                 ::onSelectedFeature,
-                false,
                 getSuggestions(),
+                false,
                 geometry.center
             ).show()
         }
@@ -166,7 +165,7 @@ class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
         checkIsFormComplete()
     }
 
-    private fun getSuggestions(): Collection<String> {
+    private fun getSuggestions(): List<String> {
         if (lastPickedAnswers.size >= 12) return lastPickedAnswers
         return (lastPickedAnswers + listOf(
                 // based on https://taginfo.openstreetmap.org/keys/healthcare%3Aspeciality#values

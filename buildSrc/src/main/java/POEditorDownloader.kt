@@ -47,18 +47,17 @@ fun fetchAvailableLocalizations(apiToken: String, projectId: String): List<Local
 data class Localization(val code: String, val translations: Int, val percentage: Int)
 
 /** Fetch the download URL for the given language code. Handle quota. */
-private fun fetchLocalizationDownloadUrl(apiToken: String, projectId: String, languageCode: String, format: String): String {
-    return URL("https://api.poeditor.com/v2/projects/export").retryingQuotaConnection({ connection ->
+private fun fetchLocalizationDownloadUrl(apiToken: String, projectId: String, languageCode: String, format: String): String =
+    URL("https://api.poeditor.com/v2/projects/export").retryingQuotaConnection({ connection ->
         connection.doOutput = true
         connection.requestMethod = "POST"
         connection.outputStream.bufferedWriter().use { it.write(
-            "api_token=$apiToken&id=$projectId&language=${languageCode.toLowerCase(Locale.US)}&type=$format&filters=translated"
+            "api_token=$apiToken&id=$projectId&language=${languageCode.lowercase()}&type=$format&filters=translated"
         ) }
     }) { inputStream ->
         val response = Parser.default().parse(inputStream) as JsonObject
         (response.obj("result")!!)["url"] as String
     }
-}
 
 // this is for waiting and retrying for quota to replenish when querying POEditor API... :-|
 private fun <T> URL.retryingQuotaConnection(setup: ((HttpURLConnection) -> Unit)? = null, block: (InputStream) -> T): T {

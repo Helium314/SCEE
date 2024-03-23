@@ -1,6 +1,5 @@
 package de.westnordost.streetcomplete.quests
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import de.westnordost.streetcomplete.Prefs
@@ -11,7 +10,6 @@ import de.westnordost.streetcomplete.util.math.getOrientationAtCenterLineInDegre
 import de.westnordost.streetcomplete.view.ResImage
 import de.westnordost.streetcomplete.view.controller.StreetSideDisplayItem
 import de.westnordost.streetcomplete.view.controller.StreetSideSelectWithLastAnswerButtonViewController
-import org.koin.android.ext.android.inject
 
 /** Abstract base class for any quest answer form in which the user selects items for the left and
  *  the right side of the street */
@@ -25,11 +23,11 @@ abstract class AStreetSideSelectForm<I, T> : AbstractOsmQuestForm<T>() {
     protected lateinit var streetSideSelect: StreetSideSelectWithLastAnswerButtonViewController<I>
 
     protected var isDisplayingPrevious: Boolean = false
-    set(value) {
-        field = value
-        streetSideSelect.isEnabled = !value
-        updateButtonPanel()
-    }
+        set(value) {
+            field = value
+            streetSideSelect.isEnabled = !value
+            updateButtonPanel()
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

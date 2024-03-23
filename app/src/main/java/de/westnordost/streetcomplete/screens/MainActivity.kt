@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -21,7 +20,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.AnyThread
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.commit
@@ -32,8 +30,7 @@ import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.UnsyncedChangesCountSource
 import de.westnordost.streetcomplete.data.download.ConnectionException
-import de.westnordost.streetcomplete.data.download.DownloadController
-import de.westnordost.streetcomplete.data.download.DownloadProgressListener
+import de.westnordost.streetcomplete.data.download.DownloadProgressSource
 import de.westnordost.streetcomplete.data.messages.Message
 import de.westnordost.streetcomplete.data.osm.edits.ElementEdit
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditsSource
@@ -42,8 +39,7 @@ import de.westnordost.streetcomplete.data.osmnotes.ImageUploadServerException
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEdit
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditsSource
 import de.westnordost.streetcomplete.data.quest.QuestAutoSyncer
-import de.westnordost.streetcomplete.data.upload.UploadController
-import de.westnordost.streetcomplete.data.upload.UploadProgressListener
+import de.westnordost.streetcomplete.data.upload.UploadProgressSource
 import de.westnordost.streetcomplete.data.upload.VersionBannedException
 import de.westnordost.streetcomplete.data.urlconfig.UrlConfigController
 import de.westnordost.streetcomplete.data.user.AuthorizationException
@@ -60,11 +56,11 @@ import de.westnordost.streetcomplete.screens.tutorial.TutorialFragment
 import de.westnordost.streetcomplete.util.CrashReportExceptionHandler
 import de.westnordost.streetcomplete.util.ktx.hasLocationPermission
 import de.westnordost.streetcomplete.util.ktx.isLocationEnabled
-import de.westnordost.streetcomplete.util.ktx.putDouble
 import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.location.LocationAvailabilityReceiver
 import de.westnordost.streetcomplete.util.location.LocationRequestFragment
 import de.westnordost.streetcomplete.util.parseGeoUri
+import de.westnordost.streetcomplete.util.prefs.Preferences
 import de.westnordost.streetcomplete.view.dialogs.RequestLoginDialog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -81,8 +77,8 @@ class MainActivity :
 
     private val crashReportExceptionHandler: CrashReportExceptionHandler by inject()
     private val questAutoSyncer: QuestAutoSyncer by inject()
-    private val downloadController: DownloadController by inject()
-    private val uploadController: UploadController by inject()
+    private val downloadProgressSource: DownloadProgressSource by inject()
+    private val uploadProgressSource: UploadProgressSource by inject()
     private val locationAvailabilityReceiver: LocationAvailabilityReceiver by inject()
     private val userUpdater: UserUpdater by inject()
     private val elementEditsSource: ElementEditsSource by inject()
@@ -91,7 +87,7 @@ class MainActivity :
     private val userLoginStatusController: UserLoginStatusController by inject()
     private val urlConfigController: UrlConfigController by inject()
     private val questPresetsSource: QuestPresetsSource by inject()
-    private val prefs: SharedPreferences by inject()
+    private val prefs: Preferences by inject()
 
     private var mainFragment: MainFragment? = null
     private var questMonitorJob: Job? = null
@@ -198,8 +194,8 @@ class MainActivity :
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
-        uploadController.addUploadProgressListener(uploadProgressListener)
-        downloadController.addDownloadProgressListener(downloadProgressListener)
+        uploadProgressSource.addListener(uploadProgressListener)
+        downloadProgressSource.addListener(downloadProgressListener)
 
         locationAvailabilityReceiver.addListener(::updateLocationAvailability)
         updateLocationAvailability(hasLocationPermission && isLocationEnabled)
@@ -218,12 +214,6 @@ class MainActivity :
                 catch (_: IllegalArgumentException) { }
             }
         }
-    }
-
-    public override fun onResume() {
-        super.onResume()
-        downloadController.showNotification = false
-        uploadController.showNotification = false
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
@@ -252,18 +242,14 @@ class MainActivity :
     public override fun onPause() {
         super.onPause()
         val pos = mainFragment?.getCameraPosition()?.position ?: return
-        prefs.edit {
-            putDouble(Prefs.MAP_LATITUDE, pos.latitude)
-            putDouble(Prefs.MAP_LONGITUDE, pos.longitude)
-        }
-        downloadController.showNotification = true
-        uploadController.showNotification = true
+        prefs.putDouble(Prefs.MAP_LATITUDE, pos.latitude)
+        prefs.putDouble(Prefs.MAP_LONGITUDE, pos.longitude)
     }
 
     public override fun onStop() {
         super.onStop()
-        uploadController.removeUploadProgressListener(uploadProgressListener)
-        downloadController.removeDownloadProgressListener(downloadProgressListener)
+        uploadProgressSource.removeListener(uploadProgressListener)
+        downloadProgressSource.removeListener(downloadProgressListener)
         locationAvailabilityReceiver.removeListener(::updateLocationAvailability)
 
         if (prefs.getBoolean(Prefs.QUEST_MONITOR, false) && !NearbyQuestMonitor.running) {
@@ -310,7 +296,7 @@ class MainActivity :
 
     /* ------------------------------ Upload progress listener ---------------------------------- */
 
-    private val uploadProgressListener: UploadProgressListener = object : UploadProgressListener {
+    private val uploadProgressListener = object : UploadProgressSource.Listener {
         @AnyThread
         override fun onError(e: Exception) {
             runOnUiThread {
@@ -350,8 +336,7 @@ class MainActivity :
 
     /* ----------------------------- Download Progress listener  -------------------------------- */
 
-    private val downloadProgressListener: DownloadProgressListener = object :
-        DownloadProgressListener {
+    private val downloadProgressListener = object : DownloadProgressSource.Listener {
         @AnyThread
         override fun onError(e: Exception) {
             runOnUiThread {
@@ -390,7 +375,7 @@ class MainActivity :
     override fun onTutorialFinished() {
         requestLocation()
 
-        prefs.edit { putBoolean(Prefs.HAS_SHOWN_TUTORIAL, true) }
+        prefs.putBoolean(Prefs.HAS_SHOWN_TUTORIAL, true)
         removeTutorialFragment()
     }
 
@@ -420,7 +405,7 @@ class MainActivity :
     /* --------------------------- OverlaysTutorialFragment.Listener ---------------------------- */
 
     override fun onOverlaysTutorialFinished() {
-        prefs.edit { putBoolean(Prefs.HAS_SHOWN_OVERLAYS_TUTORIAL, true) }
+        prefs.putBoolean(Prefs.HAS_SHOWN_OVERLAYS_TUTORIAL, true)
         removeTutorialFragment()
     }
 

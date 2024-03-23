@@ -6,13 +6,14 @@ import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.streetcomplete.Prefs
+import de.westnordost.streetcomplete.data.location.checkIsSurvey
+import de.westnordost.streetcomplete.data.location.confirmIsSurvey
 import de.westnordost.streetcomplete.data.osm.edits.create.createNodeAction
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
-import de.westnordost.streetcomplete.osm.IS_SHOP_EXPRESSION
+import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.quests.TagEditor
 import de.westnordost.streetcomplete.util.math.PositionOnWay
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -31,22 +32,25 @@ class InsertNodeTagEditor : TagEditor() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lastEditDate.text = arguments?.getString(ARG_FEATURE_NAME) ?: ""
+        binding.elementInfo.text = arguments?.getString(ARG_FEATURE_NAME) ?: ""
     }
 
-    override fun applyEdit() {
+    override suspend fun applyEdit() {
         val args = requireArguments()
         val positionOnWay: PositionOnWay = Json.decodeFromString(args.getString(ARG_POSITION_ON_WAY)!!)
+        val isSurvey = checkIsSurvey(ElementPointGeometry(positionOnWay.position), recentLocationStore.get())
+        if (!isSurvey && !confirmIsSurvey(requireContext()))
+            return
         val action = createNodeAction(positionOnWay, mapDataSource) { changeBuilder ->
             changeBuilder.keys.forEach { if (it !in element.tags) changeBuilder.remove(it) } // remove tags, only relevant if there are startTags
             element.tags.forEach { changeBuilder[it.key] = it.value } // and add changes
         } ?: return
 
-        elementEditsController.add(addNodeEdit, ElementPointGeometry(positionOnWay.position), "survey", action)
+        elementEditsController.add(addNodeEdit, ElementPointGeometry(positionOnWay.position), "survey", action, isSurvey)
         listener?.onCreatedNote(positionOnWay.position)
         arguments?.getString(ARG_FEATURE_ID)?.let {
             val initialTags: Map<String, String> = arguments?.getString(ARG_TAGS)?.let { Json.decodeFromString(it) } ?: emptyMap()
-            if (!IS_SHOP_EXPRESSION.matches(element) && initialTags != element.tags)
+            if (!element.isPlace() && initialTags != element.tags)
                 prefs.edit { putString(Prefs.CREATE_NODE_LAST_TAGS_FOR_FEATURE + it, Json.encodeToString(element.tags)) }
         }
     }

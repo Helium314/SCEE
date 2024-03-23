@@ -3,13 +3,13 @@ package de.westnordost.streetcomplete.data
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.Cursor
+import io.requery.android.database.sqlite.SQLiteDatabase
 import io.requery.android.database.sqlite.SQLiteDatabase.CONFLICT_ABORT
 import io.requery.android.database.sqlite.SQLiteDatabase.CONFLICT_FAIL
 import io.requery.android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE
 import io.requery.android.database.sqlite.SQLiteDatabase.CONFLICT_NONE
 import io.requery.android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE
 import io.requery.android.database.sqlite.SQLiteDatabase.CONFLICT_ROLLBACK
-import io.requery.android.database.sqlite.SQLiteOpenHelper
 import io.requery.android.database.sqlite.SQLiteStatement
 import androidx.core.database.getBlobOrNull
 import androidx.core.database.getDoubleOrNull
@@ -27,8 +27,7 @@ import de.westnordost.streetcomplete.data.ConflictAlgorithm.ROLLBACK
 /** Implementation of Database using android's SQLiteOpenHelper. Since the minimum API version is
  *  21, the minimum SQLite version is 3.8. */
 @SuppressLint("Recycle")
-class AndroidDatabase(private val dbHelper: SQLiteOpenHelper) : Database {
-    private val db get() = dbHelper.writableDatabase
+class AndroidDatabase(private val db: SQLiteDatabase) : Database {
 
     override fun exec(sql: String, args: Array<Any>?) {
         if (args == null) db.execSQL(sql) else db.execSQL(sql, args)
@@ -77,14 +76,13 @@ class AndroidDatabase(private val dbHelper: SQLiteOpenHelper) : Database {
         table: String,
         values: Collection<Pair<String, Any?>>,
         conflictAlgorithm: ConflictAlgorithm?
-    ): Long {
-        return db.insertWithOnConflict(
+    ): Long =
+        db.insertWithOnConflict(
             table,
             null,
             values.toContentValues(),
             conflictAlgorithm.toConstant()
         )
-    }
 
     override fun insertMany(
         table: String,
@@ -119,15 +117,14 @@ class AndroidDatabase(private val dbHelper: SQLiteOpenHelper) : Database {
         where: String?,
         args: Array<Any>?,
         conflictAlgorithm: ConflictAlgorithm?
-    ): Int {
-        return db.updateWithOnConflict(
+    ): Int =
+        db.updateWithOnConflict(
             table,
             values.toContentValues(),
             where,
             args?.primitivesArrayToStringArray(),
             conflictAlgorithm.toConstant()
         )
-    }
 
     override fun delete(table: String, where: String?, args: Array<Any>?): Int {
         val strArgs = args?.primitivesArrayToStringArray()

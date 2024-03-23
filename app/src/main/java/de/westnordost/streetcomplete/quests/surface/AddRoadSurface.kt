@@ -37,9 +37,8 @@ class AddRoadSurface : OsmFilterQuestType<SurfaceAndNote>() {
         and (access !~ private|no or (foot and foot !~ private|no))
     """
 
-    private fun tracktypeConflictClause(conflictEntry: Map.Entry<String, Set<String>>): String {
-        return "          or tracktype = " + conflictEntry.key + " and surface ~ ${conflictEntry.value.joinToString("|")}"
-    }
+    private fun tracktypeConflictClause(conflictEntry: Map.Entry<String, Set<String>>): String =
+        "          or tracktype = " + conflictEntry.key + " and surface ~ ${conflictEntry.value.joinToString("|")}"
 
     override val changesetComment = "Specify road surfaces"
     override val wikiLink = "Key:surface"
@@ -47,8 +46,11 @@ class AddRoadSurface : OsmFilterQuestType<SurfaceAndNote>() {
     override val achievements = listOf(CAR, BICYCLIST)
 
     override fun getTitle(tags: Map<String, String>) =
-        if (tags["area"] == "yes") R.string.quest_streetSurface_square_title
-        else                       R.string.quest_streetSurface_title
+        if (tags["area"] == "yes") {
+            R.string.quest_streetSurface_square_title
+        } else {
+            R.string.quest_streetSurface_title
+        }
 
     override fun createForm() = AddRoadSurfaceForm()
 

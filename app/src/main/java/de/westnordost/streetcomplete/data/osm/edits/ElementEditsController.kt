@@ -44,6 +44,7 @@ class ElementEditsController(
         geometry: ElementGeometry,
         source: String,
         action: ElementEditAction,
+        isNearUserLocation: Boolean,
         key: QuestKey?
     ) {
         // removes discardable tags if they were part of original element, but not if user added them
@@ -58,7 +59,7 @@ class ElementEditsController(
             UpdateElementTagsAction(action.originalElement, builder.create())
         } else
             action
-        add(ElementEdit(0, type, geometry, source, nowAsEpochMilliseconds(), false, newAction), key)
+        add(ElementEdit(0, type, geometry, source, nowAsEpochMilliseconds(), false, newAction, isNearUserLocation), key)
     }
 
     override fun get(id: Long): ElementEdit? = synchronized(this) { editCache[id] }
@@ -147,8 +148,8 @@ class ElementEditsController(
     /** Undo edit with the given id. If unsynced yet, will delete the edit if it is undoable. If
      *  already synced, will add a revert of that edit as a new edit, if possible */
     fun undo(edit: ElementEdit): Boolean {
-        // already uploaded
         if (edit.isSynced) {
+            // already uploaded
             val action = edit.action
             if (action !is IsActionRevertable) return false
             // first create the revert action, as ElementIdProvider will be deleted when deleting the edit
@@ -156,10 +157,9 @@ class ElementEditsController(
             // need to delete the original edit from history because this should not be undoable anymore
             delete(edit)
             // ... and add a new revert to the queue
-            add(ElementEdit(0, edit.type, edit.originalGeometry, edit.source, nowAsEpochMilliseconds(), false, reverted))
-        }
-        // not uploaded yet
-        else {
+            add(ElementEdit(0, edit.type, edit.originalGeometry, edit.source, nowAsEpochMilliseconds(), false, reverted, edit.isNearUserLocation))
+        } else {
+            // not uploaded yet
             delete(edit)
         }
         return true

@@ -21,8 +21,10 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.data.AllEditTypes
 import de.westnordost.streetcomplete.data.location.RecentLocationStore
 import de.westnordost.streetcomplete.data.location.checkIsSurvey
+import de.westnordost.streetcomplete.data.location.confirmIsSurvey
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditType
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditsController
 import de.westnordost.streetcomplete.data.osm.edits.split_way.SplitAtLinePosition
@@ -34,10 +36,6 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementPolylinesGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.ElementKey
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
-import de.westnordost.streetcomplete.data.osm.mapdata.key
-import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
-import de.westnordost.streetcomplete.data.overlays.OverlayRegistry
-import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.databinding.FragmentSplitWayBinding
 import de.westnordost.streetcomplete.overlays.IsShowingElement
 import de.westnordost.streetcomplete.screens.main.map.ShowsGeometryMarkers
@@ -73,8 +71,8 @@ class SplitWayFragment :
     private val binding by viewBinding(FragmentSplitWayBinding::bind)
 
     private val elementEditsController: ElementEditsController by inject()
-    private val questTypeRegistry: QuestTypeRegistry by inject()
-    private val overlayRegistry: OverlayRegistry by inject()
+
+    private val allEditTypes: AllEditTypes by inject()
     private val soundFx: SoundFx by inject()
     private val recentLocationStore: RecentLocationStore by inject()
     private val prefs: SharedPreferences by inject()
@@ -106,8 +104,7 @@ class SplitWayFragment :
         super.onCreate(savedInstanceState)
         val args = requireArguments()
         way = Json.decodeFromString(args.getString(ARG_WAY)!!)
-        editType = questTypeRegistry.getByName(args.getString(ARG_QUESTTYPE)!!) as? OsmElementQuestType<*>
-            ?: overlayRegistry.getByName(args.getString(ARG_QUESTTYPE)!!)!!
+        editType = allEditTypes.getByName(args.getString(ARG_QUESTTYPE)!!) as ElementEditType
         geometry = Json.decodeFromString(args.getString(ARG_GEOMETRY)!!)
     }
 
@@ -160,10 +157,11 @@ class SplitWayFragment :
         restoreBackground()
         binding.glassPane.isGone = false
         if (splits.size <= 2 || confirmManySplits()) {
-            if (checkIsSurvey(requireContext(), geometry, recentLocationStore.get())) {
+            val isSurvey = checkIsSurvey(geometry, recentLocationStore.get())
+            if (isSurvey || confirmIsSurvey(requireContext())) {
                 val action = SplitWayAction(way, ArrayList(splits.map { it.first }))
                 withContext(Dispatchers.IO) {
-                    elementEditsController.add(editType, geometry, "survey,extra", action)
+                    elementEditsController.add(editType, geometry, "survey,extra", action, isSurvey)
                 }
                 listener?.onSplittedWay(editType, way, geometry)
                 return
@@ -213,7 +211,6 @@ class SplitWayFragment :
 
     @UiThread
     override fun onClickMapAt(position: LatLon, clickAreaSizeInMeters: Double): Boolean {
-
         val splitWayCandidates = createSplits(position, clickAreaSizeInMeters)
         if (splitWayCandidates.isEmpty()) return true
 

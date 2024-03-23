@@ -8,11 +8,11 @@ import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.sqrt
 
-/** Calculate stuff assuming an (almost) flat Earth. The main exception from assuming a completely
- *  flat earth is use of cos(lat) to take into account decreasing longitude distance at
- *  high latitudes.
- *  Optimized for performance with precision within 1 m of spherical functions for up to
- *  0.03° difference between points (several km at common latitudes). */
+/* Calculate stuff assuming an (almost) flat Earth. The main exception from assuming a completely
+ * flat earth is use of cos(lat) to take into account decreasing longitude distance at
+ * high latitudes.
+ * Optimized for performance with precision within 1 m of spherical functions for up to
+ * 0.03° difference between points (several km at common latitudes). */
 
 // ~5 times faster than spherical version
 /** Returns the approximate distance from this point to the other point.
@@ -82,9 +82,11 @@ private fun flatAngularDistanceToArc(φ1: Double, λ1: Double, φ2: Double, λ2:
     // need the cosine as sort of "weight factor", because λ distances are much shorter at high φ
     val u = ((φ3 - φ1) * δφ12 + δλ13 * δλ12 * c * c) / (δφ12 * δφ12 + δλ12 * δλ12 * c * c)
 
-    val (closestPointφ, closestPointλ) = if (u < 0) φ1 to λ1
-        else if (u > 1) φ2 to λ2
-        else φ1 + u * δφ12 to λ1 + u * δλ12
+    val (closestPointφ, closestPointλ) = when {
+        u < 0 -> φ1 to λ1
+        u > 1 -> φ2 to λ2
+        else -> φ1 + u * δφ12 to λ1 + u * δλ12
+    }
 
     return flatAngularDistance(closestPointφ, closestPointλ, φ3, λ3)
 }

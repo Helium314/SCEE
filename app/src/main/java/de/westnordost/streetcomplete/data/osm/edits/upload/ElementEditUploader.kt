@@ -11,7 +11,6 @@ import de.westnordost.streetcomplete.data.osm.mapdata.MapDataChanges
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataController
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataUpdates
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
-import de.westnordost.streetcomplete.data.osm.mapdata.key
 import de.westnordost.streetcomplete.data.upload.ConflictException
 import de.westnordost.streetcomplete.data.user.UserLoginStatusController
 import de.westnordost.streetcomplete.util.ktx.copy
@@ -27,7 +26,6 @@ class ElementEditUploader(
      *  @throws ConflictException if element has been changed server-side in an incompatible way
      *  */
     fun upload(edit: ElementEdit, getIdProvider: () -> ElementIdProvider): MapDataUpdates {
-
         val remoteChanges by lazy { edit.action.createUpdates(mapDataApi, getIdProvider()) }
         val localChanges by lazy { edit.action.createUpdates(mapDataController, getIdProvider()) }
 
@@ -79,8 +77,11 @@ class ElementEditUploader(
 
     private fun uploadChanges(edit: ElementEdit, mapDataChanges: MapDataChanges, newChangeset: Boolean): MapDataUpdates {
         val changesetId =
-            if (newChangeset) changesetManager.createChangeset(edit.type, edit.source)
-            else              changesetManager.getOrCreateChangeset(edit.type, edit.source)
+            if (newChangeset) {
+                changesetManager.createChangeset(edit.type, edit.source, edit.position)
+            } else {
+                changesetManager.getOrCreateChangeset(edit.type, edit.source, edit.position, edit.isNearUserLocation)
+            }
         return mapDataApi.uploadChanges(changesetId, mapDataChanges, ApplicationConstants.IGNORED_RELATION_TYPES)
     }
 }

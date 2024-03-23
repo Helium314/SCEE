@@ -31,7 +31,6 @@ import de.westnordost.streetcomplete.data.osm.edits.ElementEditType
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditsController
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapChanges
-import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapChangesBuilder
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.UpdateElementTagsAction
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
@@ -39,7 +38,11 @@ import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuest
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
+import de.westnordost.streetcomplete.data.location.RecentLocationStore
+import de.westnordost.streetcomplete.data.location.checkIsSurvey
+import de.westnordost.streetcomplete.data.location.confirmIsSurvey
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.createChanges
+import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.overlays.OverlayRegistry
 import de.westnordost.streetcomplete.data.quest.ExternalSourceQuestKey
@@ -71,14 +74,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import java.util.Date
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.FutureTask
 import kotlin.math.min
 
 // todo: ideas for improvements
@@ -98,11 +99,12 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
     private val osmQuestController: OsmQuestController by inject()
     protected val prefs: SharedPreferences by inject()
     protected val elementEditsController: ElementEditsController by inject()
-    private val featureDictionaryFuture: FutureTask<FeatureDictionary> by inject(named("FeatureDictionaryFuture"))
+    private val featureDictionary: Lazy<FeatureDictionary> by inject(named("FeatureDictionaryLazy"))
     protected val mapDataSource: MapDataWithEditsSource by inject()
     private val externalSourceQuestController: ExternalSourceQuestController by inject()
     private val questTypeRegistry: QuestTypeRegistry by inject()
     private val overlayRegistry: OverlayRegistry by inject()
+    protected val recentLocationStore: RecentLocationStore by inject()
 
     protected lateinit var originalElement: Element
     protected lateinit var element: Element // element with adjusted tags and edit date
@@ -170,10 +172,10 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
             if (keyboardShowing) {
                 // setting layout params or requestLayout is unneeded? though some sources say it is...
                 binding.questsGrid.layoutParams.height = questIconWidth
-                binding.lastEditDate.layoutParams.height = 0
+                binding.elementInfo.layoutParams.height = 0
             } else {
                 binding.questsGrid.layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT
-                binding.lastEditDate.layoutParams.height = LayoutParams.WRAP_CONTENT
+                binding.elementInfo.layoutParams.height = LayoutParams.WRAP_CONTENT
             }
             minBottomInset = min(it.bottom, minBottomInset)
             if (keyboardShowing || activity?.currentFocus == null)
@@ -186,14 +188,14 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
             DateFormat.getDateTimeInstance().format(date)
         else
             date.toString()
-        binding.lastEditDate.text = resources.getString(R.string.tag_editor_last_edited, dateText)
-        binding.lastEditDate.layoutParams.height = LayoutParams.WRAP_CONTENT
+        binding.elementInfo.text = resources.getString(R.string.tag_editor_last_edited, dateText)
+        binding.elementInfo.layoutParams.height = LayoutParams.WRAP_CONTENT
 
         // fill recyclerview and quests view
         binding.editTags.layoutManager = LinearLayoutManager(requireContext())
         val geometryType = if (element is Node && (this is InsertNodeTagEditor || mapDataSource.getWaysForNode(element.id).isNotEmpty())) GeometryType.VERTEX
             else element.geometryType
-        binding.editTags.adapter = EditTagsAdapter(tagList, newTags, geometryType, featureDictionaryFuture.get(), requireContext(), prefs) {
+        binding.editTags.adapter = EditTagsAdapter(tagList, newTags, geometryType, featureDictionary.value, requireContext(), prefs) {
             viewLifecycleScope.launch(Dispatchers.IO) { updateQuests(750) }
             showOk()
         }.apply { setHasStableIds(true) }
@@ -201,6 +203,11 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
         binding.okButton.setOnClickListener {
             if (!tagsChangedAndOk()) return@setOnClickListener // for now keep the button visible and just do nothing if invalid
             newTags.keys.removeAll { it.isBlank() } // if value is not blank ok button is disabled, so we discard only empty lines here
+            newTags.filterKeys { it != it.trim() }.forEach {
+                newTags.remove(it.key)
+                newTags[it.key.trim()] = it.value
+            } // trim keys
+            newTags.filterValues { it != it.trim() }.forEach { newTags[it.key] = it.value.trim() } // trim values
             showingTagEditor = false
             viewLifecycleScope.launch { applyEdit() } // tags are updated, and the different timestamp should not matter
         }
@@ -238,7 +245,7 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
         }
 
         if (element.id == 0L) {
-            val previousTagsForFeature: Map<String, String>? = try { featureDictionaryFuture.get()
+            val previousTagsForFeature: Map<String, String>? = try { featureDictionary.value
                 .byTags(newTags)
                 .isSuggestion(false)
                 .forLocale(*getLocalesForFeatureDictionary(resources.configuration))
@@ -323,7 +330,7 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
         binding.editTags.visibility = View.GONE
         binding.questsGrid.visibility = View.GONE
         binding.okButton.visibility = View.GONE
-        binding.lastEditDate.visibility = View.GONE
+        binding.elementInfo.visibility = View.GONE
 
         viewLifecycleScope.launch {
             // this thread waits while the quest form is showing
@@ -334,7 +341,7 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
             val ch = changes
             binding.editTags.visibility = View.VISIBLE
             binding.questsGrid.visibility = View.VISIBLE
-            binding.lastEditDate.visibility = View.VISIBLE
+            binding.elementInfo.visibility = View.VISIBLE
             f.onClickClose {
                 parentFragmentManager.popBackStack()
                 changes = null
@@ -359,7 +366,10 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
         }
     }
 
-    protected open fun applyEdit() {
+    protected open suspend fun applyEdit() {
+        val isSurvey = checkIsSurvey(geometry, recentLocationStore.get())
+        if (!isSurvey && !confirmIsSurvey(requireContext()))
+            return
         val builder = element.tags.createChanges(originalElement.tags)
 
         val action = UpdateElementTagsAction(originalElement, builder.create())
@@ -372,7 +382,7 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
         if (questKey is OsmQuestKey && prefs.getBoolean(Prefs.DYNAMIC_QUEST_CREATION, false))
             OsmQuestController.lastAnsweredQuestKey = questKey
         // always use "survey", because either it's tag editor or some external quest that's most like supposed to allow this
-        elementEditsController.add(editType, geometry, "survey", action, questKey)
+        elementEditsController.add(editType, geometry, "survey", action, isSurvey, questKey)
         listener?.onEdited(editType, geometry)
     }
 

@@ -11,9 +11,10 @@ import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.
 import de.westnordost.streetcomplete.osm.LAST_CHECK_DATE_KEYS
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.updateCheckDate
+import de.westnordost.streetcomplete.util.ktx.containsAll
 
 class CheckExistence(
-    private val getFeature: (tags: Map<String, String>) -> Feature?
+    private val getFeature: (Element) -> Feature?
 ) : OsmFilterQuestType<Unit>() {
 
     override val elementFilter = """
@@ -34,6 +35,7 @@ class CheckExistence(
             or amenity = post_box
             or leisure = picnic_table
             or amenity = bbq
+            or amenity = car_sharing
             or leisure = firepit
             or (leisure = pitch and sport ~ table_tennis|chess|table_soccer|teqball)
             or leisure = fitness_station
@@ -59,6 +61,7 @@ class CheckExistence(
             or amenity = recycling and recycling_type = container
             or amenity = toilets
             or amenity = drinking_water
+            or man_made = planter
           )
           and (${lastChecked(6.0)})
         ) or (
@@ -75,6 +78,8 @@ class CheckExistence(
         ))
         and access !~ no|private
         and (!seasonal or seasonal = no)
+        and (!intermittent or intermittent = no)
+        and (!permanent or permanent = yes)
     """
     // - traffic_calming = table is often used as a property of a crossing: we don't want the app
     //    to delete the crossing if the table is not there anymore, so exclude that
@@ -94,7 +99,7 @@ class CheckExistence(
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry): Sequence<Element> {
         /* put markers for objects that are exactly the same as for which this quest is asking for
            e.g. it's a ticket validator? -> display other ticket validators. Etc. */
-        val feature = getFeature(element.tags) ?: return emptySequence()
+        val feature = getFeature(element) ?: return emptySequence()
         return getMapData().filter { it.tags.containsAll(feature.tags) }.asSequence()
     }
 
@@ -109,5 +114,3 @@ class CheckExistence(
         or ${LAST_CHECK_DATE_KEYS.joinToString(" or ") { "$it < today -$yearsAgo years" }}
     """.trimIndent()
 }
-
-private fun <X, Y> Map<X, Y>.containsAll(other: Map<X, Y>) = other.all { this[it.key] == it.value }

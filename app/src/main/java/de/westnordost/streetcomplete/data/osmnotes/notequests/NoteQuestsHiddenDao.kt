@@ -11,7 +11,7 @@ import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 class NoteQuestsHiddenDao(private val db: Database) {
 
     fun add(noteId: Long) {
-        db.insert(NAME, listOf(
+        db.insertOrIgnore(NAME, listOf(
             NOTE_ID to noteId,
             TIMESTAMP to nowAsEpochMilliseconds()
         ))
@@ -34,6 +34,9 @@ class NoteQuestsHiddenDao(private val db: Database) {
 
     fun deleteAll(): Int =
         db.delete(NAME)
+
+    fun countAll(): Long =
+        db.queryOne(NAME, columns = arrayOf("COUNT(*)")) { it.getLong("COUNT(*)") } ?: 0L
 }
 
 private fun CursorPosition.toNoteIdWithTimestamp() =

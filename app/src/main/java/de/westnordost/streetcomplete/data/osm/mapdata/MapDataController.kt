@@ -6,7 +6,6 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryCreator
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryDao
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryEntry
-import de.westnordost.streetcomplete.util.Log
 import de.westnordost.streetcomplete.util.Listeners
 import de.westnordost.streetcomplete.util.ktx.format
 import kotlinx.coroutines.CoroutineScope
@@ -15,6 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 
 /** Controller to access element data and its geometry and handle updates to it (from OSM API) */
@@ -98,7 +98,9 @@ class MapDataController internal constructor(
 
         val oldDbJob = dbJob
         dbJob = scope.launch {
-            downloadController.setPersisting(true)
+            // can't set persisting to show notification, so let's hope the system doesn't kill the app...
+            // no idea how aggressive Android is for such things
+            // or maybe we could not use the background stuff when app is in background, so the worker is still running
             oldDbJob?.join()
             synchronized(this@MapDataController) {
                 elementDB.deleteAll(oldElementKeys)
@@ -111,7 +113,6 @@ class MapDataController internal constructor(
                 "Persisted ${geometryEntries.size} and deleted ${oldElementKeys.size} elements and geometries" +
                 " in ${((nowAsEpochMilliseconds() - time) / 1000.0).format(1)}s"
             )
-            downloadController.setPersisting(false)
         }
     }
 
@@ -141,7 +142,15 @@ class MapDataController internal constructor(
         val mapDataWithGeom = MutableMapDataWithGeometry(elements, geometryEntries)
         mapDataWithGeom.boundingBox = mapData.boundingBox
 
-        val bbox = geometryEntries.flatMap { listOf(it.geometry.getBounds().min, it.geometry.getBounds().max) }.enclosingBoundingBox()
+        val bbox = (geometryEntries + getGeometries(mapDataUpdates.deleted))
+            .ifEmpty { getGeometries(geometryEntries.map { it.key }) }
+            .flatMap { listOf(it.geometry.getBounds().min, it.geometry.getBounds().max) }
+            .ifEmpty {
+                // in some cases this list can be empty, find out what is going on
+                Log.w(TAG, "updateAll: geometries empty? $mapDataUpdates")
+                listOf(LatLon(0.0, 0.0))
+            }
+            .enclosingBoundingBox()
         cache.noTrimPlus(bbox) // quest creation can trigger trim, so we need to set noTrim here
         onUpdated(updated = mapDataWithGeom, deleted = deletedKeys)
 

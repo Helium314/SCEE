@@ -1,6 +1,5 @@
 package de.westnordost.streetcomplete.screens.main.bottom_sheet
 
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -21,6 +20,7 @@ import de.westnordost.streetcomplete.quests.TagEditor
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.updateMargins
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
+import de.westnordost.streetcomplete.util.prefs.Preferences
 import de.westnordost.streetcomplete.view.RoundRectOutlineProvider
 import de.westnordost.streetcomplete.view.SlidingRelativeLayout
 import de.westnordost.streetcomplete.view.insets_animation.respectSystemInsets
@@ -41,7 +41,7 @@ abstract class AbstractBottomSheetFragment : Fragment(), IsCloseableBottomSheet 
     protected abstract val bottomSheetContainer: SlidingRelativeLayout
     protected abstract val bottomSheet: ViewGroup
     protected abstract val scrollViewChild: View
-    protected val prefs: SharedPreferences by inject()
+    protected val prefs: Preferences by inject()
 
     /** Title view of the bottom sheet. Tapping on it expands / retracts the bottom sheet */
     protected abstract val bottomSheetTitle: View?
@@ -157,9 +157,7 @@ abstract class AbstractBottomSheetFragment : Fragment(), IsCloseableBottomSheet 
     }
 
     @UiThread
-    override fun onClickMapAt(position: LatLon, clickAreaSizeInMeters: Double): Boolean {
-        return false
-    }
+    override fun onClickMapAt(position: LatLon, clickAreaSizeInMeters: Double): Boolean = false
 
     /** Request to close the form through user interaction (back button, clicked other quest,..),
      * requires user confirmation if any changes have been made  */

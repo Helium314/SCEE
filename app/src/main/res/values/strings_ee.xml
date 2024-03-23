@@ -35,7 +35,7 @@
     <string name="pref_hide_notes_hint">Use comma to separate user names or IDs</string>
     <string name="pref_hide_notes_message">Enter user names or IDs to ignore</string>
     <string name="pref_show_gpx_button_title">Show GPX note button</string>
-    <string name="pref_show_gpx_button_summary">Contrary to OSM notes, adding a GPX not will not hide any quest at the affected location</string>
+    <string name="pref_show_gpx_button_summary">Contrary to OSM notes, adding a GPX note will not hide any quest at the affected location</string>
     <string name="pref_swap_gpx_note_button">Swap OSM and GPX note buttons</string>
     <string name="pref_hide_keyboard_title">Hide keyboard before creating note</string>
     <string name="pref_hide_keyboard_summary">Hides the keyboard when open before the note is actually created (to allow re-view of position)</string>
@@ -108,6 +108,7 @@
     <string name="import_export_presets">Presets</string>
     <string name="import_export_presets_select">Select presets to export</string>
     <string name="import_export_custom_overlays">Custom Overlays</string>
+    <string name="import_export_custom_overlays_select">Select overlays to export</string>
     <string name="import_export_settings">Other app settings</string>
     <string name="import_export_hidden_quests">Hidden quests</string>
     <string name="import_presets_overlays_message">Add imported, or replace existing? If you choose replace, all currently existing will be removed.</string>
@@ -250,6 +251,9 @@
     <string name="quest_custom_quest_add_node">Add node</string>
     <string name="quest_custom_quest_add_node_text">You can add a node with: %s</string>
 
+    <!--barrier locked -->
+    <string name="quest_barrier_locked_title">"Is this barrier (usually) locked?"</string>
+
     <!-- bench material -->
     <string name="quest_benchMaterial_title">What’s this made of?</string>
     <string name="quest_benchMaterial_wood">Wood</string>
@@ -259,8 +263,27 @@
     <string name="quest_benchMaterial_stone">Stone</string>
     <string name="quest_benchMaterial_brick">Bricks</string>
 
+    <!-- guidepost sports -->
+    <string name="quest_guidepost_sports_title">For which sport is this guidepost intended?</string>
+    <string name="quest_guidepost_sports_note">If there is anything not covered by the features listed, please leave a note instead.</string>
+    <string name="quest_guidepost_sports_answer_simple">"It´s just a simple guidepost"</string>
+    <string name="quest_guidepost_sports_answer_simple_description">"This is just a simple guidepost with no specific sports."</string>
+    <string name="quest_guidepost_sports_hiking">Hiking</string>
+    <string name="quest_guidepost_sports_bicycle">Cycling</string>
+    <string name="quest_guidepost_sports_mtb">MTB</string>
+    <string name="quest_guidepost_sports_climbing">Climbing</string>
+    <string name="quest_guidepost_sports_horse">Horse Riding</string>
+    <string name="quest_guidepost_sports_nordic_walking">Nordic Walking</string>
+    <string name="quest_guidepost_sports_ski">Skiing</string>
+    <string name="quest_guidepost_sports_inline_skating">Inline Skating</string>
+    <string name="quest_guidepost_sports_running">Running</string>
+    <string name="quest_guidepost_sports_winter_hiking">Winter Hiking</string>
+
     <!-- pharmacy dispensing -->
     <string name="quest_is_pharmacy_dispensing_title">Is this pharmacy dispensing all prescription drugs?</string>
+
+    <!-- piste lit -->
+    <string name="quest_piste_lit_title">"Is this piste lit here?"</string>
 
     <!-- poi quests -->
     <string name="quest_poi_seating_title">POI: Seating</string>
@@ -505,7 +528,6 @@
     <string name="quest_buildingType_digester">Digester (bioreactor)</string>
     <string name="quest_buildingType_transformer_tower">Transformer tower</string>
     <string name="quest_buildingType_transit_shelter">Transit shelter</string>
-    <string name="quest_buildingType_tent">Stationary tent</string>
     <string name="quest_buildingType_elevator">Elevator</string>
     <string name="quest_crossing_type_zebra">Zebra</string>
     <string name="quest_crossing_type_signals_controlled_zebra">Traffic lights and zebra</string>
@@ -526,6 +548,13 @@
     <string name="time_limited_from">From</string>
     <string name="time_limited_to">To</string>
     <string name="quest_name_brand">It has a brand name…</string>
+    <string name="quest_guidepostName_title">"What is the name here?"</string>
+    <string name="quest_guidepostEle_title">"What is the elevation here?"</string>
+    <string name="quest_guidepostEle_hint">Do not use GPS altitude, as it typically is too inaccurate and not provided in the correct height reference system.</string>
+    <string name="quest_guidepostRef_hint">Reference number of this map or guidepost, not the reference number of signed routes.</string>
+    <string name="quest_guidepostName_hint">Signed (location) name of this map or guidepost. Do not enter a reference number here.</string>
+    <string name="quest_guidepost_disabled_msg">This quest is disabled by default because what is signed strongly varies by region and operator. You may need to refine the element selection for your area (e.g. add or remove maps, only select elements with hiking=yes, etc.)</string>
+
 
     <!-- piste difficulty -->
     <string name="quest_piste_difficulty_title">What is the difficulty of this piste?</string>

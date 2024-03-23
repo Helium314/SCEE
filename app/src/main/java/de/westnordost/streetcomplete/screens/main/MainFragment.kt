@@ -30,7 +30,6 @@ import androidx.annotation.UiThread
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.Insets
 import androidx.core.graphics.minus
@@ -44,6 +43,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.lifecycle.Lifecycle
 import de.westnordost.countryboundaries.CountryBoundaries
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.osmfeatures.FeatureDictionary
@@ -51,6 +51,7 @@ import de.westnordost.osmfeatures.GeometryType
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.StreetCompleteApplication
 import de.westnordost.streetcomplete.data.download.tiles.asBoundingBoxOfEnclosingTiles
 import de.westnordost.streetcomplete.data.edithistory.Edit
 import de.westnordost.streetcomplete.data.edithistory.EditKey
@@ -93,9 +94,10 @@ import de.westnordost.streetcomplete.data.visiblequests.LevelFilter
 import de.westnordost.streetcomplete.data.visiblequests.QuestPresetsController
 import de.westnordost.streetcomplete.databinding.EffectQuestPlopBinding
 import de.westnordost.streetcomplete.databinding.FragmentMainBinding
-import de.westnordost.streetcomplete.osm.IS_SHOP_EXPRESSION
-import de.westnordost.streetcomplete.osm.level.createLevelsOrNull
+import de.westnordost.streetcomplete.osm.POPULAR_PLACE_FEATURE_IDS
+import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.osm.level.levelsIntersect
+import de.westnordost.streetcomplete.osm.level.parseLevelsOrNull
 import de.westnordost.streetcomplete.overlays.AbstractOverlayForm
 import de.westnordost.streetcomplete.overlays.IsShowingElement
 import de.westnordost.streetcomplete.overlays.custom.CustomOverlay
@@ -126,7 +128,6 @@ import de.westnordost.streetcomplete.screens.main.map.getPinIcon
 import de.westnordost.streetcomplete.screens.main.map.getTitle
 import de.westnordost.streetcomplete.screens.main.map.tangram.CameraPosition
 import de.westnordost.streetcomplete.screens.settings.DisplaySettingsFragment
-import de.westnordost.streetcomplete.util.Log
 import de.westnordost.streetcomplete.util.SoundFx
 import de.westnordost.streetcomplete.util.buildGeoUri
 import de.westnordost.streetcomplete.util.dialogs.showProfileSelectionDialog
@@ -146,10 +147,12 @@ import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import de.westnordost.streetcomplete.util.location.FineLocationManager
 import de.westnordost.streetcomplete.util.location.LocationAvailabilityReceiver
 import de.westnordost.streetcomplete.util.location.LocationRequestFragment
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.area
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import de.westnordost.streetcomplete.util.math.enlargedBy
 import de.westnordost.streetcomplete.util.math.initialBearingTo
+import de.westnordost.streetcomplete.util.prefs.Preferences
 import de.westnordost.streetcomplete.util.showOverlayCustomizer
 import de.westnordost.streetcomplete.util.viewBinding
 import de.westnordost.streetcomplete.view.dialogs.SearchFeaturesDialog
@@ -161,7 +164,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
-import java.util.concurrent.FutureTask
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.cos
@@ -209,6 +211,7 @@ class MainFragment :
     SelectedOverlaySource.Listener,
     // rest
     ShowsGeometryMarkers,
+    // we need the android preferences listener, because the new one can't to what is needed
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val visibleQuestsSource: VisibleQuestsSource by inject()
@@ -216,12 +219,12 @@ class MainFragment :
     private val notesSource: NotesWithEditsSource by inject()
     private val locationAvailabilityReceiver: LocationAvailabilityReceiver by inject()
     private val selectedOverlaySource: SelectedOverlayController by inject()
-    private val featureDictionaryFuture: FutureTask<FeatureDictionary> by inject(named("FeatureDictionaryFuture"))
+    private val featureDictionary: Lazy<FeatureDictionary> by inject(named("FeatureDictionaryLazy"))
     private val soundFx: SoundFx by inject()
-    private val prefs: SharedPreferences by inject()
+    private val prefs: Preferences by inject()
     private val questPresetsController: QuestPresetsController by inject()
     private val levelFilter: LevelFilter by inject()
-    private val countryBoundaries: FutureTask<CountryBoundaries> by inject(named("CountryBoundariesFuture"))
+    private val countryBoundaries: Lazy<CountryBoundaries> by inject(named("CountryBoundariesLazy"))
     private val questTypeRegistry: QuestTypeRegistry by inject()
     private val overlayRegistry: OverlayRegistry by inject()
     private val osmQuestController: OsmQuestController by inject()
@@ -407,7 +410,7 @@ class MainFragment :
         selectedOverlaySource.addListener(this)
         locationAvailabilityReceiver.addListener(::updateLocationAvailability)
         updateLocationAvailability(requireContext().run { hasLocationPermission && isLocationEnabled })
-        prefs.registerOnSharedPreferenceChangeListener(this)
+        StreetCompleteApplication.preferences.registerOnSharedPreferenceChangeListener(this)
         reloadOverlaySelector()
     }
 
@@ -421,7 +424,7 @@ class MainFragment :
         mapDataWithEditsSource.removeListener(this)
         selectedOverlaySource.removeListener(this)
         locationManager.removeUpdates()
-        prefs.unregisterOnSharedPreferenceChangeListener(this)
+        StreetCompleteApplication.preferences.unregisterOnSharedPreferenceChangeListener(this)
         clearOverlaySelector()
     }
 
@@ -497,7 +500,7 @@ class MainFragment :
                 } else {
                     // if other overlay was tapped, enable it
                     if (overlay.title == 0) {
-                        prefs.edit { putInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, index!!) }
+                        prefs.putInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, index!!)
                         selectedOverlaySource.selectedOverlay = overlayRegistry.getByName(CustomOverlay::class.simpleName!!)
                     } else
                         selectedOverlaySource.selectedOverlay = overlay
@@ -509,8 +512,8 @@ class MainFragment :
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key.startsWith("custom_overlay") && key != Prefs.CUSTOM_OVERLAY_SELECTED_INDEX)
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
+        if (key != null && key.startsWith("custom_overlay") && key != Prefs.CUSTOM_OVERLAY_SELECTED_INDEX)
             reloadOverlaySelector()
     }
 
@@ -720,9 +723,9 @@ class MainFragment :
         if (ways.isNotEmpty() || relations.isNotEmpty()) {
             val multipolygons = relations.filter { it.tags["type"] == "multipolygon" }
             val message = if (ways.isNotEmpty() || multipolygons.isNotEmpty())
-                getString(R.string.move_node_with_geometry, (ways + multipolygons).map { featureDictionaryFuture.get().byTags(it.tags).find().firstOrNull()?.name ?: it.tags }.toString())
+                getString(R.string.move_node_with_geometry, (ways + multipolygons).map { featureDictionary.value.byTags(it.tags).find().firstOrNull()?.name ?: it.tags }.toString())
             else
-                getString(R.string.move_node_of_other_relation, relations.map { featureDictionaryFuture.get().byTags(it.tags).find().firstOrNull()?.name ?: it.tags }.toString())
+                getString(R.string.move_node_of_other_relation, relations.map { featureDictionary.value.byTags(it.tags).find().firstOrNull()?.name ?: it.tags }.toString())
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.general_warning)
                 .setMessage(message)
@@ -969,7 +972,7 @@ class MainFragment :
             when(item.itemId) {
                 1 -> showProfileSelectionDialog(requireContext(), questPresetsController, prefs)
                 2 -> this.context?.let { levelFilter.showLevelFilterDialog(it) }
-                3 -> prefs.edit { putString(Prefs.THEME_BACKGROUND, if (prefs.getString(Prefs.THEME_BACKGROUND, "MAP") == "MAP") "AERIAL" else "MAP") }
+                3 -> prefs.putString(Prefs.THEME_BACKGROUND, if (prefs.getString(Prefs.THEME_BACKGROUND, "MAP") == "MAP") "AERIAL" else "MAP")
                 4 -> { viewLifecycleScope.launch { mapFragment?.reverseQuests() } }
             }
             true
@@ -995,7 +998,7 @@ class MainFragment :
     }
 
     private fun onClickCompassButton() {
-        /* Clicking the compass button will always rotate the map back to north and remove tilt */
+        // Clicking the compass button will always rotate the map back to north and remove tilt
         val mapFragment = mapFragment ?: return
         val camera = mapFragment.cameraPosition ?: return
 
@@ -1109,8 +1112,11 @@ class MainFragment :
         }
 
         val f = bottomSheetFragment
-        if (f is IsCloseableBottomSheet) f.onClickClose { composeNote(pos) }
-        else composeNote(pos)
+        if (f is IsCloseableBottomSheet) {
+            f.onClickClose { composeNote(pos) }
+        } else {
+            composeNote(pos)
+        }
     }
 
     private fun composeNote(pos: LatLon, hasGpxAttached: Boolean = false) {
@@ -1134,21 +1140,21 @@ class MainFragment :
     }
 
     private fun selectPoiType(pos: LatLon) {
-        val country = countryBoundaries.get().getIds(pos.longitude, pos.latitude).firstOrNull()
-        val defaultFeatureIds: List<String>? = prefs.getString(Prefs.CREATE_POI_RECENT_FEATURE_IDS, "")!!
+        val country = countryBoundaries.value.getIds(pos.longitude, pos.latitude).firstOrNull()
+        val defaultFeatureIds: List<String> = prefs.getString(Prefs.CREATE_POI_RECENT_FEATURE_IDS, "")
             .split("§").filter { it.isNotBlank() }
-            .ifEmpty { null } // null will show defaults, while empty list will not
+            .ifEmpty { POPULAR_PLACE_FEATURE_IDS }
 
         SearchFeaturesDialog(
             requireContext(),
-            featureDictionaryFuture.get(),
+            featureDictionary.value,
             GeometryType.POINT,
             country,
             null, // pre-filled search text
             { true }, // filter, but we want everything
             { addPoi(pos, it) },
+            defaultFeatureIds.reversed(),
             false,
-            defaultFeatureIds?.reversed(), // features shown without entering text
             pos,
         ).show()
     }
@@ -1160,18 +1166,21 @@ class MainFragment :
         viewLifecycleScope.launch {
             val bbox = pos.enclosingBoundingBox(50.0)
             val data = withContext(Dispatchers.IO) { mapDataWithEditsSource.getMapDataWithGeometry(bbox) }
-            val filter = if (IS_SHOP_EXPRESSION.matches(Node(0L, pos, feature.addTags))) IS_SHOP_EXPRESSION
-            else "nodes, ways, relations with ${feature.tags
+            val elements = if (Node(0L, pos, feature.addTags).isPlace()) {
+                data.filter { it.isPlace() }
+            } else {
+                val filter = "nodes, ways, relations with ${feature.tags
                     .map { if (it.value == "*") it.key else it.key + "=" + it.value }
                     .joinToString(" and ")}".toElementFilterExpression()
-            val elements = data.filter { filter.matches(it) }
+                data.filter { filter.matches(it) }
+            }
 
             for (e in elements) {
                 // include only elements that fit with the currently active level filter
                 if (!levelFilter.levelAllowed(e)) continue
 
                 val geometry = data.getGeometry(e.type, e.id) ?: continue
-                val icon = getPinIcon(featureDictionaryFuture.get(), e.tags)
+                val icon = getPinIcon(featureDictionary.value, e)
                 val title = getTitle(e.tags)
                 putMarkerForCurrentHighlighting(geometry, icon, title)
             }
@@ -1241,9 +1250,12 @@ class MainFragment :
     private fun showEditHistorySidebar(allHidden: Boolean) {
         val appearAnim = R.animator.edit_history_sidebar_appear
         val disappearAnim = R.animator.edit_history_sidebar_disappear
+        if (editHistoryFragment != null) {
+            childFragmentManager.popBackStack(EDIT_HISTORY, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
         childFragmentManager.commit(true) {
             setCustomAnimations(appearAnim, disappearAnim, appearAnim, disappearAnim)
-            replace(R.id.edit_history_container, EditHistoryFragment(allHidden), EDIT_HISTORY)
+            add(R.id.edit_history_container, EditHistoryFragment(allHidden), EDIT_HISTORY)
             addToBackStack(EDIT_HISTORY)
         }
         mapFragment?.hideOverlay()
@@ -1272,6 +1284,8 @@ class MainFragment :
         val showing = (bottomSheetFragment as? IsShowingElement)?.elementKey ?: (bottomSheetFragment as? IsShowingQuestDetails)?.questKey
         Log.i(TAG, "closeBottomSheet while showing $showing")
         activity?.currentFocus?.hideKeyboard()
+        if (activity?.lifecycle?.currentState?.isAtLeast(Lifecycle.State.STARTED) != true)
+            return // weird crash where a listener that was already removed still called onUpdatedVisibleQuests (after onSaveInstanceState)
         if (bottomSheetFragment != null) {
             childFragmentManager.popBackStack(BOTTOM_SHEET, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             binding.otherQuestsLayout.removeAllViews()
@@ -1292,14 +1306,15 @@ class MainFragment :
         activity?.currentFocus?.hideKeyboard()
         binding.overlayScrollView.isGone = true
         freezeMap()
-        if (bottomSheetFragment != null && clearPreviousHighlighting) {
-            clearHighlighting()
+        if (bottomSheetFragment != null) {
+            if (clearPreviousHighlighting) clearHighlighting()
+            childFragmentManager.popBackStack(BOTTOM_SHEET, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
         val appearAnim = R.animator.quest_answer_form_appear
         val disappearAnim = R.animator.quest_answer_form_disappear
         childFragmentManager.commit(true) {
             setCustomAnimations(appearAnim, disappearAnim, appearAnim, disappearAnim)
-            replace(R.id.map_bottom_sheet_container, f, BOTTOM_SHEET)
+            add(R.id.map_bottom_sheet_container, f, BOTTOM_SHEET)
             addToBackStack(BOTTOM_SHEET)
         }
         sheetBackPressedCallback.isEnabled = f is IsCloseableBottomSheet
@@ -1493,19 +1508,19 @@ class MainFragment :
                 else -> emptySequence()
             }
         if (elements == emptySequence<Element>()) return emptyList()
-        val levels = element?.let { createLevelsOrNull(it.tags) }
+        val levels = element?.let { parseLevelsOrNull(it.tags) }
         val localLanguages = ConfigurationCompat.getLocales(resources.configuration).toList().map { it.language }
         for (e in elements) {
             // don't highlight "this" element
             if (element == e) continue
             // include only elements with the same (=intersecting) level, if any
-            val eLevels = createLevelsOrNull(e.tags)
+            val eLevels = parseLevelsOrNull(e.tags)
             if (!levels.levelsIntersect(eLevels)) continue
             // include only elements with the same layer, if any (except for bridges)
             if (element?.tags?.get("layer") != e.tags["layer"] && e.tags["bridge"] == null) continue
 
             val geometry = mapData?.getGeometry(e.type, e.id) ?: continue
-            val icon = getPinIcon(featureDictionaryFuture.get(), e.tags)
+            val icon = getPinIcon(featureDictionary.value, e)
             val title = getTitle(e.tags, localLanguages)
             markers.add(Marker(geometry, icon, title))
         }
@@ -1616,7 +1631,7 @@ class MainFragment :
     }
 
     private val isAutosync: Boolean get() =
-        Prefs.Autosync.valueOf(prefs.getString(Prefs.AUTOSYNC, "ON")!!) == Prefs.Autosync.ON
+        Prefs.Autosync.valueOf(prefs.getStringOrNull(Prefs.AUTOSYNC) ?: "ON") == Prefs.Autosync.ON
 
     private fun flingQuestMarkerTo(quest: View, target: View, onFinished: () -> Unit) {
         val targetPos = target.getLocationInWindow().toPointF()
@@ -1641,9 +1656,7 @@ class MainFragment :
 
     //region Interface - For the parent fragment / activity
 
-    fun getCameraPosition(): CameraPosition? {
-        return mapFragment?.cameraPosition
-    }
+    fun getCameraPosition(): CameraPosition? = mapFragment?.cameraPosition
 
     fun setCameraPosition(position: LatLon, zoom: Float) {
         mapFragment?.isFollowingPosition = false

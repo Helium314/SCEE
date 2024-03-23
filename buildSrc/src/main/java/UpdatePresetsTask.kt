@@ -76,9 +76,8 @@ open class UpdatePresetsTask : DefaultTask() {
 
     /** Download and pick the localization for only the presets from iD localizations
      *  (the iD localizations contain everything, such as localizations of iD UI etc)*/
-    private fun fetchPresetsLocalizations(localization: LocalizationMetadata): String {
-        return URL(localization.downloadUrl).openStream().bufferedReader().use { it.readText() }.unescapeUnicode()
-    }
+    private fun fetchPresetsLocalizations(localization: LocalizationMetadata): String =
+        URL(localization.downloadUrl).openStream().bufferedReader().use { it.readText() }.unescapeUnicode()
 }
 
 private data class LocalizationMetadata(val locale: Locale, val downloadUrl: String)
@@ -101,8 +100,9 @@ private fun String.unescapeUnicode(): String {
             }
         } else if (hadSlash) {
             hadSlash = false
-            if (ch == 'u') inUnicode = true
-            else {
+            if (ch == 'u') {
+                inUnicode = true
+            } else {
                 out.write(92)
                 out.write(ch.toString())
             }

@@ -1,7 +1,7 @@
 package de.westnordost.streetcomplete.screens.settings
 
-import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -26,6 +26,7 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.Cleaner
 import de.westnordost.streetcomplete.data.ConflictAlgorithm
 import de.westnordost.streetcomplete.data.Database
+import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestsHiddenTable
 import de.westnordost.streetcomplete.data.osmnotes.notequests.NoteQuestsHiddenTable
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestTables
@@ -39,10 +40,16 @@ import de.westnordost.streetcomplete.data.visiblequests.VisibleQuestTypeTable
 import de.westnordost.streetcomplete.overlays.custom.getCustomOverlayIndices
 import de.westnordost.streetcomplete.overlays.custom.getIndexedCustomOverlayPref
 import de.westnordost.streetcomplete.quests.custom.FILENAME_CUSTOM_QUEST
+import de.westnordost.streetcomplete.quests.osmose.OsmoseDao
 import de.westnordost.streetcomplete.quests.tree.FILENAME_TREES
 import de.westnordost.streetcomplete.screens.HasTitle
+import de.westnordost.streetcomplete.util.TempLogger
 import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
+import de.westnordost.streetcomplete.util.getFakeCustomOverlays
 import de.westnordost.streetcomplete.util.ktx.toast
+import de.westnordost.streetcomplete.util.logs.DatabaseLogger
+import de.westnordost.streetcomplete.util.logs.Log
+import de.westnordost.streetcomplete.util.prefs.Preferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -60,12 +67,16 @@ class DataManagementSettingsFragment :
     HasTitle,
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private val prefs: SharedPreferences by inject()
+    private val prefs get() = preferenceManager.sharedPreferences!!
+    private val scPrefs: Preferences by inject()
     private val db: Database by inject()
     private val visibleQuestTypeController: VisibleQuestTypeController by inject()
     private val cleaner: Cleaner by inject()
     private val urlConfigController: UrlConfigController by inject()
     private val questPresetsController: QuestPresetsController by inject()
+    private val databaseLogger: DatabaseLogger by inject()
+    private val osmoseDao: OsmoseDao by inject()
+    private val externalSourceQuestController: ExternalSourceQuestController by inject()
 
     override val title: String get() = getString(R.string.pref_screen_data_management)
 
@@ -170,10 +181,17 @@ class DataManagementSettingsFragment :
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
             Prefs.DATA_RETAIN_TIME -> { lifecycleScope.launch(Dispatchers.IO) { cleaner.clean() } }
             Prefs.PREFER_EXTERNAL_SD -> { moveMapTilesToCurrentLocation() }
+            Prefs.TEMP_LOGGER -> { if (prefs.getBoolean(Prefs.TEMP_LOGGER, false)) {
+                Log.instances.removeAll { it is DatabaseLogger }
+                Log.instances.add(TempLogger)
+            } else {
+                Log.instances.remove(TempLogger)
+                Log.instances.add(databaseLogger)
+            }}
         }
     }
 
@@ -228,12 +246,12 @@ class DataManagementSettingsFragment :
 
                     os.bufferedWriter().use {
                         it.write(version.toString())
-                        it.write("\n$BACKUP_HIDDEN_OSM_QUESTS\n")
+                        it.write("\n\n$BACKUP_HIDDEN_OSM_QUESTS\n")
                         it.write(hiddenOsmQuests.joinToString("\n"))
-                        it.write("\n$BACKUP_HIDDEN_NOTES\n")
+                        it.write("\n\n$BACKUP_HIDDEN_NOTES\n")
                         it.write(hiddenNotes.joinToString("\n"))
-                        it.write("\n$BACKUP_HIDDEN_OTHER_QUESTS\n")
-                        it.write(hiddenExternalSourceQuests.joinToString("\n"))
+                        it.write("\n\n$BACKUP_HIDDEN_OTHER_QUESTS\n")
+                        it.write(hiddenExternalSourceQuests.joinToString("\n") + "\n")
                     }
                 }
             }
@@ -243,19 +261,38 @@ class DataManagementSettingsFragment :
                 allPresets.addAll(questPresetsController.getAll())
                 val array = allPresets.map { it.name }.toTypedArray()
                 val selectedPresets = mutableSetOf<Long>()
-                AlertDialog.Builder(requireContext())
+                val d = AlertDialog.Builder(requireContext())
                     .setTitle(R.string.import_export_presets_select)
-                    .setMultiChoiceItems(array, null) { _, which, isChecked ->
+                    .setMultiChoiceItems(array, null) { di, which, isChecked ->
                         if (isChecked) selectedPresets.add(allPresets[which].id)
                         else selectedPresets.remove(allPresets[which].id)
+                        (di as AlertDialog).getButton(Dialog.BUTTON_POSITIVE)?.isEnabled = selectedPresets.isNotEmpty()
                     }
                     .setNegativeButton(android.R.string.cancel, null)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
                         exportPresets(selectedPresets, uri)
                     }
                     .show()
+                d.getButton(Dialog.BUTTON_POSITIVE)?.isEnabled = false
             }
-            REQUEST_CODE_OVERLAYS_EXPORT -> exportCustomOverlays(uri)
+            REQUEST_CODE_OVERLAYS_EXPORT -> {
+                val allOverlays = getFakeCustomOverlays(scPrefs, requireContext(), false)
+                val array = allOverlays.map { it.changesetComment }.toTypedArray()
+                val selectedOverlays = mutableSetOf<String>()
+                val d = AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.import_export_custom_overlays_select)
+                    .setMultiChoiceItems(array, null) { di, which, isChecked ->
+                        if (isChecked) selectedOverlays.add(allOverlays[which].wikiLink!!)
+                        else selectedOverlays.remove(allOverlays[which].wikiLink!!)
+                        (di as AlertDialog).getButton(Dialog.BUTTON_POSITIVE)?.isEnabled = selectedOverlays.isNotEmpty()
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        exportCustomOverlays(selectedOverlays, uri)
+                    }
+                    .show()
+                d.getButton(Dialog.BUTTON_POSITIVE)?.isEnabled = false
+            }
             REQUEST_CODE_SETTINGS_IMPORT -> if (!importSettings(uri)) context?.toast(getString(R.string.import_error), Toast.LENGTH_LONG)
             REQUEST_CODE_HIDDEN_IMPORT -> {
                 // do not delete existing hidden quests; this can be done manually anyway
@@ -264,10 +301,10 @@ class DataManagementSettingsFragment :
                 val quests = mutableListOf<Array<Any?>>()
                 val notes = mutableListOf<Array<Any?>>()
                 val externalSourceQuests = mutableListOf<Array<Any?>>()
+                val added = hashSetOf<String>() // avoid duplicates
                 var currentThing = BACKUP_HIDDEN_OSM_QUESTS
                 for (line in lines) {
-
-                    if (line.isEmpty()) continue // happens if a section is completely empty
+                    if (line.isEmpty()) continue
                     if (line == BACKUP_HIDDEN_NOTES || line == BACKUP_HIDDEN_OTHER_QUESTS) {
                         currentThing = line
                         continue
@@ -275,9 +312,9 @@ class DataManagementSettingsFragment :
                     val split = line.split(",")
                     if (split.size < 2) break
                     when (currentThing) {
-                        BACKUP_HIDDEN_OSM_QUESTS -> quests.add(arrayOf(split[0].toLong(), split[1], split[2], split[3].toLong()))
-                        BACKUP_HIDDEN_NOTES -> notes.add(arrayOf(split[0].toLong(), split[1].toLong()))
-                        BACKUP_HIDDEN_OTHER_QUESTS -> externalSourceQuests.add(arrayOf(split[0], split[1], split[2].toLong()))
+                        BACKUP_HIDDEN_OSM_QUESTS -> if (added.add(line)) quests.add(arrayOf(split[0].toLong(), split[1], split[2], split[3].toLong()))
+                        BACKUP_HIDDEN_NOTES -> if (added.add(line)) notes.add(arrayOf(split[0].toLong(), split[1].toLong()))
+                        BACKUP_HIDDEN_OTHER_QUESTS -> if (added.add(line)) externalSourceQuests.add(arrayOf(split[0], split[1], split[2].toLong()))
                     }
                 }
 
@@ -311,7 +348,6 @@ class DataManagementSettingsFragment :
             REQUEST_CODE_PRESETS_IMPORT -> {
                 val lines = importLinesAndCheck(uri, BACKUP_PRESETS)
                 if (lines.isEmpty()) {
-                    context?.toast(getString(R.string.import_error), Toast.LENGTH_LONG)
                     return
                 }
                 AlertDialog.Builder(requireContext())
@@ -377,23 +413,28 @@ class DataManagementSettingsFragment :
         activity?.contentResolver?.openInputStream(uri)?.use { it.bufferedReader().use { input ->
             val fileVersion = input.readLine().toLongOrNull()
             if (fileVersion == null || (input.readLine() != checkLine && input.readLine() != checkLine)) {
+                Log.w(TAG, "import error, file version $fileVersion, checkLine $checkLine")
                 context?.toast(getString(R.string.import_error), Toast.LENGTH_LONG)
                 return emptyList()
             }
             val dbVersion = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
             if (fileVersion != dbVersion && (fileVersion > LAST_KNOWN_DB_VERSION || dbVersion > LAST_KNOWN_DB_VERSION)) {
+                Log.w(TAG, "import error, file version $fileVersion, dbVersion $dbVersion, last known db version $LAST_KNOWN_DB_VERSION")
                 context?.toast(getString(R.string.import_error_db_version), Toast.LENGTH_LONG)
                 return emptyList()
             }
-            input.readLines().renameUpdateQuests()
+            input.readLines().renameUpdatedQuests()
         } } ?: emptyList()
 
-    @SuppressLint("ApplySharedPref") // we want to commit, so that setting is written before the immediately following restart
     private fun importPresets(lines: List<String>, replaceExistingPresets: Boolean) {
-        val lines = lines.renameUpdateQuests()
+        val lines = lines.renameUpdatedQuests()
         val presets = mutableListOf<Array<Any?>>()
         val orders = mutableListOf<Array<Any?>>()
         val visibilities = mutableListOf<Array<Any?>>()
+        // set of lines to avoid duplicates that might arise when user has quests of old and new name in the backup
+        val presetsSet = hashSetOf<String>()
+        val ordersSet = hashSetOf<String>()
+        val visibilitiesSet = hashSetOf<String>()
         var currentThing = BACKUP_PRESETS
         val profileIdMap = mutableMapOf(0L to 0L) // "default" is not in the presets section
         val qsRegex = "(\\d+)_qs_".toRegex()
@@ -404,19 +445,7 @@ class DataManagementSettingsFragment :
             profileIdMap[id] = id
         }
 
-        if (replaceExistingPresets) {
-            prefs.edit {
-                // remove all per-preset quest settings for proper replace
-                prefs.all.keys.filter { qsRegex.containsMatchIn(it) }.forEach { remove(it) }
-                // set selected preset to default, because previously selected may not exist any more
-                putLong(Prefs.SELECTED_QUESTS_PRESET, 0)
-            }
-
-            // delete existing data in all tables
-            db.delete(QuestPresetsTable.NAME)
-            db.delete(QuestTypeOrderTable.NAME)
-            db.delete(VisibleQuestTypeTable.NAME)
-        } else {
+        if (!replaceExistingPresets) {
             // map profile ids to ids greater than existing maximum
             val max = db.query(QuestPresetsTable.NAME) { it.getLong(QuestPresetsTable.Columns.QUEST_PRESET_ID) }.maxOrNull() ?: 0L
             val keys = profileIdMap.keys.toList()
@@ -427,6 +456,7 @@ class DataManagementSettingsFragment :
             presets.add(arrayOf(profileIdMap[0L]!!, "Default"))
         }
 
+        val questSettingsLines = mutableListOf<String>()
         for (line in lines) {
             if (line.isEmpty()) continue // happens if a section is completely empty
             if (line == BACKUP_PRESETS_ORDERS || line == BACKUP_PRESETS_VISIBILITIES) {
@@ -443,7 +473,7 @@ class DataManagementSettingsFragment :
                             "${result.groupValues[1].toLongOrNull()?.let { profileIdMap[it] }}_qs_"
                         else throw (IllegalStateException())
                     } }
-                    readToSettings(adjustedLines)
+                    questSettingsLines.addAll(adjustedLines)
                 } catch (_: Exception){
                     // do nothing if lines are broken somehow
                 }
@@ -453,28 +483,47 @@ class DataManagementSettingsFragment :
             if (split.size < 2) break
             val id = profileIdMap[split[0].toLong()]!!
             when (currentThing) {
-                BACKUP_PRESETS -> presets.add(arrayOf(id, split[1]))
-                BACKUP_PRESETS_ORDERS -> orders.add(arrayOf(id, split[1], split[2]))
-                BACKUP_PRESETS_VISIBILITIES -> visibilities.add(arrayOf(id, split[1], split[2].toLong()))
+                BACKUP_PRESETS -> if (presetsSet.add(line)) presets.add(arrayOf(id, split[1]))
+                BACKUP_PRESETS_ORDERS -> if (ordersSet.add(line)) orders.add(arrayOf(id, split[1], split[2]))
+                BACKUP_PRESETS_VISIBILITIES -> if (visibilitiesSet.add(line)) visibilities.add(arrayOf(id, split[1], split[2].toLong()))
             }
         }
 
-        db.insertMany(QuestPresetsTable.NAME,
-            arrayOf(QuestPresetsTable.Columns.QUEST_PRESET_ID, QuestPresetsTable.Columns.QUEST_PRESET_NAME),
-            presets
-        )
-        db.insertMany(QuestTypeOrderTable.NAME,
-            arrayOf(QuestTypeOrderTable.Columns.QUEST_PRESET_ID,
-                QuestTypeOrderTable.Columns.BEFORE,
-                QuestTypeOrderTable.Columns.AFTER),
-            orders
-        )
-        db.insertMany(VisibleQuestTypeTable.NAME,
-            arrayOf(VisibleQuestTypeTable.Columns.QUEST_PRESET_ID,
-                VisibleQuestTypeTable.Columns.QUEST_TYPE,
-                VisibleQuestTypeTable.Columns.VISIBILITY),
-            visibilities
-        )
+        db.transaction {
+            if (replaceExistingPresets) {
+                // delete existing data in all tables
+                db.delete(QuestPresetsTable.NAME)
+                db.delete(QuestTypeOrderTable.NAME)
+                db.delete(VisibleQuestTypeTable.NAME)
+            }
+            db.insertMany(QuestPresetsTable.NAME,
+                arrayOf(QuestPresetsTable.Columns.QUEST_PRESET_ID, QuestPresetsTable.Columns.QUEST_PRESET_NAME),
+                presets
+            )
+            db.insertMany(QuestTypeOrderTable.NAME,
+                arrayOf(QuestTypeOrderTable.Columns.QUEST_PRESET_ID,
+                    QuestTypeOrderTable.Columns.BEFORE,
+                    QuestTypeOrderTable.Columns.AFTER),
+                orders
+            )
+            db.insertMany(VisibleQuestTypeTable.NAME,
+                arrayOf(VisibleQuestTypeTable.Columns.QUEST_PRESET_ID,
+                    VisibleQuestTypeTable.Columns.QUEST_TYPE,
+                    VisibleQuestTypeTable.Columns.VISIBILITY),
+                visibilities
+            )
+        }
+
+        // database stuff successful, update preferences
+        if (replaceExistingPresets) {
+            prefs.edit {
+                // remove all per-preset quest settings for proper replace
+                prefs.all.keys.filter { qsRegex.containsMatchIn(it) }.forEach { remove(it) }
+                // set selected preset to default, because previously selected may not exist any more
+                putLong(Prefs.SELECTED_QUESTS_PRESET, 0)
+            }
+        }
+        readToSettings(questSettingsLines)
 
         visibleQuestTypeController.setVisibilities(emptyMap()) // reload stuff
     }
@@ -548,7 +597,7 @@ class DataManagementSettingsFragment :
         val settings = prefs.all.filterKeys {
             !it.contains("TangramPinsSpriteSheet") // this is huge and gets generated if missing anyway
                 && !it.contains("TangramIconsSpriteSheet") // this is huge and gets generated if missing anyway
-                && !it.contains("oauth.") // login data
+                && it != Prefs.OAUTH2_ACCESS_TOKEN // login
                 && !it.contains("osm.") // login data
                 && !it.matches(perPresetQuestSetting) // per-preset quest settings should be stored with presets, because preset id is never guaranteed to match
                 && !it.startsWith("custom_overlay") // custom overlays are exported separately
@@ -556,8 +605,12 @@ class DataManagementSettingsFragment :
         activity?.contentResolver?.openOutputStream(uri)?.use { it.bufferedWriter().use { settingsToJsonStream(settings, it) } }
     }
 
-    private fun exportCustomOverlays(uri: Uri) {
-        val settings = prefs.all.filterKeys { it.startsWith("custom_overlay") }
+    private fun exportCustomOverlays(indices: Collection<String>, uri: Uri) {
+        val filterRegex = "custom_overlay_(?:${indices.joinToString("|")})_.*".toRegex()
+        val settings = prefs.all.filterKeys { filterRegex.matches(it) }.toMutableMap()
+        settings[Prefs.CUSTOM_OVERLAY_INDICES] = indices.joinToString(",")
+        if (prefs.getInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, 0).toString() in indices)
+            settings[Prefs.CUSTOM_OVERLAY_SELECTED_INDEX] = prefs.getInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, 0)
         activity?.contentResolver?.openOutputStream(uri)?.use { it.bufferedWriter().use {
             it.appendLine("overlays")
             settingsToJsonStream(settings, it)
@@ -624,8 +677,7 @@ class DataManagementSettingsFragment :
     }
 
     // this will ignore settings with value null
-    // it can be both string and string set, and i have no idea how to tell apart...
-    @Suppress("UNCHECKED_CAST") // it is checked... but whatever (except string set, because can't check for that))
+    @Suppress("UNCHECKED_CAST") // it is checked... but whatever (except string set, because not allowed to check for that)
     private fun settingsToJsonStream(settings: Map<String, Any?>, out: BufferedWriter) {
         val booleans = settings.filterValues { it is Boolean } as Map<String, Boolean>
         val ints = settings.filterValues { it is Int } as Map<String, Int>
@@ -636,30 +688,28 @@ class DataManagementSettingsFragment :
         // now write
         out.appendLine("boolean settings")
         out.appendLine( Json.encodeToString(booleans))
+        out.appendLine()
         out.appendLine("int settings")
         out.appendLine( Json.encodeToString(ints))
+        out.appendLine()
         out.appendLine("long settings")
         out.appendLine( Json.encodeToString(longs))
+        out.appendLine()
         out.appendLine("float settings")
         out.appendLine( Json.encodeToString(floats))
+        out.appendLine()
         out.appendLine("string settings")
         out.appendLine( Json.encodeToString(strings))
+        out.appendLine()
         out.appendLine("string set settings")
         out.appendLine( Json.encodeToString(stringSets))
     }
 
     private fun importSettings(uri: Uri): Boolean {
-        val lines = activity?.contentResolver?.openInputStream(uri)?.use { it.reader().readLines().renameUpdateQuests() } ?: return false
-        if (lines.firstOrNull()?.startsWith("<?xml version") == true) {
-            // we have an xml file, just replace current settings file
-            val f = File(context?.applicationInfo?.dataDir + File.separator + "shared_prefs" + File.separator + context?.applicationInfo?.packageName + "_preferences.xml")
-            if (!f.exists()) return false
-            f.writeText(lines.filterNot { it.contains("TangramPinsSpriteSheet") || it.contains("TangramIconsSpriteSheet") }.joinToString("\n"))
-            // need to immediately restart the app to avoid current settings writing to new file
-            restartApp()
-            return true
-        }
+        val lines = activity?.contentResolver?.openInputStream(uri)?.use { it.reader().readLines().renameUpdatedQuests() } ?: return false
         val r = readToSettings(lines)
+        osmoseDao.reloadIgnoredItems()
+        externalSourceQuestController.invalidate()
         preferenceScreen.removeAll()
         onCreatePreferences(null, null)
         return r
@@ -670,7 +720,9 @@ class DataManagementSettingsFragment :
         val e = prefs.edit()
         try {
             while (i.hasNext()) {
-                when (i.next()) {
+                val next = i.next()
+                if (next.isBlank()) continue
+                when (next) {
                     "boolean settings" -> Json.decodeFromString<Map<String, Boolean>>(i.next()).forEach { e.putBoolean(it.key, it.value) }
                     "int settings" -> Json.decodeFromString<Map<String, Int>>(i.next()).forEach { e.putInt(it.key, it.value) }
                     "long settings" -> Json.decodeFromString<Map<String, Long>>(i.next()).forEach { e.putLong(it.key, it.value) }
@@ -742,9 +794,9 @@ class DataManagementSettingsFragment :
 }
 
 // when importing, names should be updated!
-private fun List<String>.renameUpdateQuests() = map { it.renameUpdateQuests() }
+private fun List<String>.renameUpdatedQuests() = map { it.renameUpdatedQuests() }
 
-fun String.renameUpdateQuests() = replace("ExternalQuest", "CustomQuest")
+fun String.renameUpdatedQuests() = replace("ExternalQuest", "CustomQuest")
     .replace("AddPicnicTableCover", "AddAmenityCover")
 val oldQuestNames = listOf("ExternalQuest", "AddPicnicTableCover")
 
@@ -761,8 +813,7 @@ private const val REQUEST_CODE_TREES_EXPORT = 5332
 private const val REQUEST_CODE_CUSTOM_QUEST_IMPORT = 5333
 private const val REQUEST_CODE_CUSTOM_QUEST_EXPORT = 5334
 
-// TODO: adjust this every time the version changes, and adjust data handling if necessary!
-private const val LAST_KNOWN_DB_VERSION = 11L
+const val LAST_KNOWN_DB_VERSION = 16L
 
 private const val BACKUP_HIDDEN_OSM_QUESTS = "quests"
 private const val BACKUP_HIDDEN_NOTES = "notes"
@@ -771,3 +822,5 @@ private const val BACKUP_PRESETS = "presets"
 private const val BACKUP_PRESETS_ORDERS = "orders"
 private const val BACKUP_PRESETS_VISIBILITIES = "visibilities"
 private const val BACKUP_PRESETS_QUEST_SETTINGS = "quest_settings"
+
+private const val TAG = "DataManagementSettingsFragment"

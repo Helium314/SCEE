@@ -1,7 +1,6 @@
 package de.westnordost.streetcomplete.screens.tutorial
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AlertDialog
 import android.content.pm.ActivityInfo
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
@@ -265,8 +264,11 @@ class TutorialFragment : Fragment(R.layout.fragment_tutorial) {
     private fun updateIndicatorDots() {
         listOf(binding.dot1, binding.dot2, binding.dot3, binding.dot4).forEachIndexed { index, dot ->
             dot.setImageResource(
-                if (currentPage == index) R.drawable.indicator_dot_selected
-                else R.drawable.indicator_dot_default
+                if (currentPage == index) {
+                    R.drawable.indicator_dot_selected
+                } else {
+                    R.drawable.indicator_dot_default
+                }
             )
         }
     }

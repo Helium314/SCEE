@@ -77,8 +77,11 @@ class NoteDiscussionForm : AbstractQuestForm() {
 
         val alreadyHidden = osmNoteQuestController.getVisible(noteId) == null
         setButtonPanelAnswers(listOf(
-            if (alreadyHidden) AnswerItem(R.string.short_no_answer_on_button) { closeQuest() }
-            else               AnswerItem(R.string.quest_noteDiscussion_no) { hideQuest() }
+            if (alreadyHidden) {
+                AnswerItem(R.string.short_no_answer_on_button) { closeQuest() }
+            } else {
+                AnswerItem(R.string.quest_noteDiscussion_no) { hideQuest() }
+            }
         ))
 
         binding.noteInput.doAfterTextChanged { checkIsFormComplete() }
@@ -120,7 +123,7 @@ class NoteDiscussionForm : AbstractQuestForm() {
 
     override fun onClickOk() {
         val close = binding.closeNoteCheckBox.isChecked
-        require(noteText != null || close ) { "NoteQuest has been answered with an empty comment!" }
+        require(noteText != null || close) { "NoteQuest has been answered with an empty comment!" }
         val imagePaths = attachPhotoFragment?.imagePaths.orEmpty()
         viewLifecycleScope.launch {
             withContext(Dispatchers.IO) {
@@ -158,11 +161,10 @@ class NoteDiscussionForm : AbstractQuestForm() {
 
     private inner class NoteCommentListAdapter(list: List<NoteComment>) : ListAdapter<NoteComment>(list) {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<NoteComment> {
-            return NoteCommentViewHolder(
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<NoteComment> =
+            NoteCommentViewHolder(
                 QuestNoteDiscussionItemBinding.inflate(layoutInflater, parent, false)
             )
-        }
     }
 
     private inner class NoteCommentViewHolder(private val itemBinding: QuestNoteDiscussionItemBinding) :

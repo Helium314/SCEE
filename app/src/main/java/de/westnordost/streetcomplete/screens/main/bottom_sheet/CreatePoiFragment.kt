@@ -6,10 +6,14 @@ import android.widget.RelativeLayout
 import androidx.core.content.edit
 import androidx.core.graphics.toPointF
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesSource
+import de.westnordost.streetcomplete.data.location.RecentLocationStore
+import de.westnordost.streetcomplete.data.location.checkIsSurvey
+import de.westnordost.streetcomplete.data.location.confirmIsSurvey
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditType
 import de.westnordost.streetcomplete.data.osm.edits.create.CreateNodeAction
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
@@ -17,10 +21,11 @@ import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.quest.QuestKey
 import de.westnordost.streetcomplete.data.visiblequests.LevelFilter
-import de.westnordost.streetcomplete.osm.IS_SHOP_EXPRESSION
+import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.quests.TagEditor
 import de.westnordost.streetcomplete.util.ktx.getLocationInWindow
-import de.westnordost.streetcomplete.util.showOutsideDownloadedAreaDialog
+import de.westnordost.streetcomplete.util.dialogs.showOutsideDownloadedAreaDialog
+import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
@@ -53,7 +58,7 @@ class CreatePoiFragment : TagEditor() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lastEditDate.text = arguments?.getString(ARG_NAME) ?: ""
+        binding.elementInfo.text = arguments?.getString(ARG_NAME) ?: ""
         // set editorContainer top margin so the marker is always visible
         val p = binding.editorContainer.layoutParams as RelativeLayout.LayoutParams
         p.topMargin = (resources.displayMetrics.heightPixels - resources.getDimensionPixelOffset(R.dimen.quest_form_bottomOffset)) * 2 / 3
@@ -71,20 +76,25 @@ class CreatePoiFragment : TagEditor() {
 
     }
 
-    override fun applyEdit() {
+    override suspend fun applyEdit() {
         val createNoteMarker = binding.markerCreateLayout.createNoteMarker
         val screenPos = createNoteMarker.getLocationInWindow()
         screenPos.offset(createNoteMarker.width / 2, createNoteMarker.height / 2)
         val position = listener?.getMapPositionAt(screenPos.toPointF()) ?: return
-        showOutsideDownloadedAreaDialog(requireContext(), position, downloadedTilesSource) { reallyApplyEdit(position) }
+        showOutsideDownloadedAreaDialog(requireContext(), position, downloadedTilesSource) {
+            lifecycleScope.launch { reallyApplyEdit(position) }
+        }
     }
 
-    private fun reallyApplyEdit(position: LatLon) {
-        elementEditsController.add(addNodeEdit, ElementPointGeometry(position), "survey", CreateNodeAction(position, element.tags), questKey)
+    private suspend fun reallyApplyEdit(position: LatLon) {
+        val isSurvey = checkIsSurvey(ElementPointGeometry(position), recentLocationStore.get())
+        if (!isSurvey && !confirmIsSurvey(requireContext()))
+            return
+        elementEditsController.add(addNodeEdit, ElementPointGeometry(position), "survey", CreateNodeAction(position, element.tags), isSurvey, questKey)
         listener?.onCreatedNote(position)
         arguments?.getString(ARG_ID)?.let {
             val prefillTags: Map<String, String> = arguments?.getString(ARG_PREFILLED_TAGS)?.let { Json.decodeFromString(it) } ?: emptyMap()
-            if (!IS_SHOP_EXPRESSION.matches(element) && prefillTags != element.tags)
+            if (!element.isPlace() && prefillTags != element.tags)
                 prefs.edit { putString(Prefs.CREATE_NODE_LAST_TAGS_FOR_FEATURE + it, Json.encodeToString(element.tags)) }
         }
     }

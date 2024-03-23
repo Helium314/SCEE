@@ -6,8 +6,8 @@ import de.westnordost.streetcomplete.data.download.tiles.upToTwoMinTileRects
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryEntry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
-import de.westnordost.streetcomplete.util.Log
 import de.westnordost.streetcomplete.util.SpatialCache
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.contains
 import de.westnordost.streetcomplete.util.math.isCompletelyInside
 import kotlin.math.min
@@ -78,7 +78,6 @@ class MapDataCache(
         updatedGeometries: Iterable<ElementGeometryEntry> = emptyList(),
         bbox: BoundingBox? = null
     ) { synchronized(this) {
-
         val updatedNodes = updatedElements.filterIsInstance<Node>()
         val deletedNodeKeys = deletedKeys.filter { it.type == ElementType.NODE }
         if (bbox == null) {
@@ -172,7 +171,6 @@ class MapDataCache(
         // update relations
         val updatedRelations = updatedElements.filterIsInstance<Relation>()
         if (updatedRelations.isNotEmpty()) {
-
             // for adding relations to relationIdsByElementKeyCache we want the element to be
             // in spatialCache, or have a node / member in spatialCache (same reasoning as for ways)
             val (wayIds, relationIds) = determineWayAndRelationIdsWithElementsInSpatialCache()
@@ -547,7 +545,6 @@ class MapDataCache(
     /** return the ids of all ways whose nodes are in the spatial cache plus as all ids of
      *  relations referred to by those ways or nodes that are in the spatial cache */
     private fun determineWayAndRelationIdsWithElementsInSpatialCache(): Pair<Set<Long>, Set<Long>> {
-
         // note: wayIdsByNodeIdCache and relationIdsByElementKeyCache cannot be used here to get the
         // result because this method is called in places where the spatial cache has been updated
         // and now the other caches are outdated. So this method exists to find those elements that

@@ -1,14 +1,11 @@
 package de.westnordost.streetcomplete.screens.main.map
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
 import android.hardware.SensorManager
 import android.location.Location
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.location.RecentLocationStore
@@ -24,6 +21,7 @@ import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import de.westnordost.streetcomplete.util.location.FineLocationManager
 import de.westnordost.streetcomplete.util.location.LocationAvailabilityReceiver
 import de.westnordost.streetcomplete.util.math.translate
+import de.westnordost.streetcomplete.util.prefs.Preferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -37,7 +35,7 @@ open class LocationAwareMapFragment : MapFragment() {
 
     private val locationAvailabilityReceiver: LocationAvailabilityReceiver by inject()
     private val recentLocationStore: RecentLocationStore by inject()
-    private val prefs: SharedPreferences by inject()
+    private val prefs: Preferences by inject()
 
     private lateinit var compass: Compass
     private lateinit var locationManager: FineLocationManager
@@ -197,9 +195,7 @@ open class LocationAwareMapFragment : MapFragment() {
         tracksMapComponent?.startNewTrack(false)
     }
 
-    protected open fun shouldCenterCurrentPosition(): Boolean {
-        return isFollowingPosition
-    }
+    protected open fun shouldCenterCurrentPosition(): Boolean = isFollowingPosition
 
     fun centerCurrentPosition() {
         val displayedPosition = displayedLocation?.toLatLon() ?: return
@@ -285,16 +281,13 @@ open class LocationAwareMapFragment : MapFragment() {
     /* -------------------------------- Save and Restore State ---------------------------------- */
 
     private fun restoreMapState() {
-        val prefs = activity?.getPreferences(Activity.MODE_PRIVATE) ?: return
-        isFollowingPosition = prefs.getBoolean(PREF_FOLLOWING, true)
-        isNavigationMode = prefs.getBoolean(PREF_NAVIGATION_MODE, false)
+        isFollowingPosition = prefs.getBoolean(Prefs.MAP_FOLLOWING, true)
+        isNavigationMode = prefs.getBoolean(Prefs.MAP_NAVIGATION_MODE, false)
     }
 
     private fun saveMapState() {
-        activity?.getPreferences(Activity.MODE_PRIVATE)?.edit {
-            putBoolean(PREF_FOLLOWING, isFollowingPosition)
-            putBoolean(PREF_NAVIGATION_MODE, isNavigationMode)
-        }
+        prefs.putBoolean(Prefs.MAP_FOLLOWING, isFollowingPosition)
+        prefs.putBoolean(Prefs.MAP_NAVIGATION_MODE, isNavigationMode)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -309,9 +302,6 @@ open class LocationAwareMapFragment : MapFragment() {
     }
 
     companion object {
-        private const val PREF_FOLLOWING = "map_following"
-        private const val PREF_NAVIGATION_MODE = "map_compass_mode"
-
         private const val DISPLAYED_LOCATION = "displayed_location"
         private const val TRACKS = "tracks"
         private const val TRACKS_IS_RECORDING = "tracks_is_recording"

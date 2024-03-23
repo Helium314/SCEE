@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.databinding.QuestBuildingLevelsBinding
@@ -31,6 +30,8 @@ class AddBuildingLevelsForm : AbstractOsmQuestForm<BuildingLevelsAnswer>() {
     private val levels get() = binding.levelsInput.intOrNull?.takeIf { it >= 0 }
     private val roofLevels get() = binding.roofLevelsInput.intOrNull?.takeIf { it >= 0 }
 
+    private lateinit var favs: LastPickedValuesStore<BuildingLevelsAnswer>
+
     private val lastPickedAnswers by lazy {
         favs.get()
             .mostCommonWithin(target = 5, historyCount = 15, first = 1)
@@ -38,12 +39,10 @@ class AddBuildingLevelsForm : AbstractOsmQuestForm<BuildingLevelsAnswer>() {
             .toList()
     }
 
-    private lateinit var favs: LastPickedValuesStore<BuildingLevelsAnswer>
-
     override fun onAttach(ctx: Context) {
         super.onAttach(ctx)
         favs = LastPickedValuesStore(
-            PreferenceManager.getDefaultSharedPreferences(ctx.applicationContext),
+            prefs,
             key = javaClass.simpleName,
             serialize = { listOfNotNull(it.levels, it.roofLevels).joinToString("#") },
             deserialize = { value ->
@@ -70,8 +69,9 @@ class AddBuildingLevelsForm : AbstractOsmQuestForm<BuildingLevelsAnswer>() {
     }
 
     private fun onLastPickedButtonClicked(position: Int) {
-        binding.levelsInput.setText(lastPickedAnswers[position].levels.toString())
-        binding.roofLevelsInput.setText(lastPickedAnswers[position].roofLevels?.toString() ?: "")
+        val buildingLevelsAnswer = lastPickedAnswers[position]
+        binding.levelsInput.setText(buildingLevelsAnswer.levels.toString())
+        binding.roofLevelsInput.setText(buildingLevelsAnswer.roofLevels?.toString() ?: "")
     }
 
     override fun onClickOk() {

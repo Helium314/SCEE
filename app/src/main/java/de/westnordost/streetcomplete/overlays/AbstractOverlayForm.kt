@@ -29,6 +29,7 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.location.RecentLocationStore
 import de.westnordost.streetcomplete.data.location.checkIsSurvey
+import de.westnordost.streetcomplete.data.location.confirmIsSurvey
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.meta.CountryInfos
 import de.westnordost.streetcomplete.data.meta.getByLocation
@@ -54,12 +55,12 @@ import de.westnordost.streetcomplete.databinding.FragmentOverlayBinding
 import de.westnordost.streetcomplete.osm.ALL_PATHS
 import de.westnordost.streetcomplete.osm.ALL_ROADS
 import de.westnordost.streetcomplete.overlays.custom.CustomOverlayForm
+import de.westnordost.streetcomplete.overlays.street_parking.LaneNarrowingTrafficCalmingForm
 import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.IsCloseableBottomSheet
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.IsMapOrientationAware
 import de.westnordost.streetcomplete.util.AccessManagerDialog
 import de.westnordost.streetcomplete.util.FragmentViewBindingPropertyDelegate
-import de.westnordost.streetcomplete.util.Log
 import de.westnordost.streetcomplete.util.accessKeys
 import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
 import de.westnordost.streetcomplete.util.getNameAndLocationLabel
@@ -74,6 +75,7 @@ import de.westnordost.streetcomplete.util.ktx.toInstant
 import de.westnordost.streetcomplete.util.ktx.toLocalDate
 import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.view.CharSequenceText
 import de.westnordost.streetcomplete.view.ResText
 import de.westnordost.streetcomplete.view.RoundRectOutlineProvider
@@ -93,7 +95,6 @@ import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import java.util.concurrent.FutureTask
 
 /** Abstract base class for any form displayed for an overlay */
 abstract class AbstractOverlayForm :
@@ -102,18 +103,18 @@ abstract class AbstractOverlayForm :
     // dependencies
     private val elementEditsController: ElementEditsController by inject()
     private val countryInfos: CountryInfos by inject()
-    private val countryBoundaries: FutureTask<CountryBoundaries> by inject(named("CountryBoundariesFuture"))
+    private val countryBoundaries: Lazy<CountryBoundaries> by inject(named("CountryBoundariesLazy"))
     private val overlayRegistry: OverlayRegistry by inject()
     private val mapDataWithEditsSource: MapDataWithEditsSource by inject()
     private val recentLocationStore: RecentLocationStore by inject()
-    private val featureDictionaryFuture: FutureTask<FeatureDictionary> by inject(named("FeatureDictionaryFuture"))
+    private val featureDictionaryLazy: Lazy<FeatureDictionary> by inject(named("FeatureDictionaryLazy"))
+    protected val featureDictionary: FeatureDictionary get() = featureDictionaryLazy.value
     private val prefs: SharedPreferences by inject()
-    protected val featureDictionary: FeatureDictionary get() = featureDictionaryFuture.get()
     private var _countryInfo: CountryInfo? = null // lazy but resettable because based on lateinit var
         get() {
             if (field == null) {
                 field = countryInfos.getByLocation(
-                    countryBoundaries.get(),
+                    countryBoundaries.value,
                     geometry.center.longitude,
                     geometry.center.latitude,
                 )
@@ -125,7 +126,7 @@ abstract class AbstractOverlayForm :
     /** either DE or US-NY (or null), depending on what countryBoundaries returns */
     protected val countryOrSubdivisionCode: String? get() {
         val latLon = geometry.center
-        return countryBoundaries.get().getIds(latLon.longitude, latLon.latitude).firstOrNull()
+        return countryBoundaries.value.getIds(latLon.longitude, latLon.latitude).firstOrNull()
     }
 
     private val englishResources: Resources
@@ -151,7 +152,7 @@ abstract class AbstractOverlayForm :
         private set
     private var _geometry: ElementGeometry? = null
     protected val geometry: ElementGeometry
-    get() = _geometry ?: ElementPointGeometry(getDefaultMarkerPosition()!!)
+        get() = _geometry ?: ElementPointGeometry(getDefaultMarkerPosition()!!)
 
     private var initialMapRotation = 0f
     private var initialMapTilt = 0f
@@ -282,9 +283,7 @@ abstract class AbstractOverlayForm :
 
     /* --------------------------------- IsCloseableBottomSheet  ------------------------------- */
 
-    @UiThread override fun onClickMapAt(position: LatLon, clickAreaSizeInMeters: Double): Boolean {
-        return false
-    }
+    @UiThread override fun onClickMapAt(position: LatLon, clickAreaSizeInMeters: Double): Boolean = false
 
     /** Request to close the form through user interaction (back button, clicked other quest,..),
      * requires user confirmation if any changes have been made  */
@@ -410,7 +409,9 @@ abstract class AbstractOverlayForm :
             if (element.isSplittable()) {
                 answers.add(AnswerItem(R.string.split_way) { splitWay(element) })
             }
-            if (prefs.getBoolean(Prefs.EXPERT_MODE, false) && element is Node)
+            if (prefs.getBoolean(Prefs.EXPERT_MODE, false) && element is Node
+                && this !is LaneNarrowingTrafficCalmingForm
+                && otherAnswers.none { (it.title as? ResText)?.resId == R.string.quest_generic_answer_does_not_exist })
                 answers.add(createDeleteElementAnswer(element))
             if (prefs.getBoolean(Prefs.EXPERT_MODE, false)) {
                 createItsDemolishedAnswer()?.let { answers.add(it) }
@@ -518,20 +519,35 @@ abstract class AbstractOverlayForm :
         val element = element ?: return null
         if (!element.isArea()) return null
         return if (AbstractOsmQuestForm.demolishableBuildingsFilter.matches(element))
-            AnswerItem(R.string.quest_building_demolished) {
-                viewLifecycleScope.launch {
-                    val builder = StringMapChangesBuilder(element.tags)
-                    builder["demolished:building"] = builder["building"] ?: "yes"
-                    builder.remove("building")
-                    solve(UpdateElementTagsAction(element, builder.create()), geometry, true)
-                }
+            AnswerItem(R.string.quest_generic_answer_does_not_exist) {
+                AlertDialog.Builder(requireContext())
+                    .setItems(arrayOf(requireContext().getString(R.string.quest_building_demolished), requireContext().getString(R.string.leave_note))) { di, i ->
+                        di.dismiss()
+                        if (i == 0) {
+                            viewLifecycleScope.launch {
+                                val builder = StringMapChangesBuilder(element.tags)
+                                builder["demolished:building"] = builder["building"] ?: "yes"
+                                builder.remove("building")
+                                solve(UpdateElementTagsAction(element, builder.create()), geometry, true)
+                            }
+                        } else {
+                            composeNote(element)
+                        }
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
             }
         else null
     }
 
     protected fun composeNote(element: Element) {
         val overlayTitle = englishResources.getString(overlay.title)
-        val leaveNoteContext = "In context of \"$overlayTitle\" overlay"
+        val hintLabel = getNameAndLocationLabel(element, englishResources, featureDictionary)
+        val leaveNoteContext = if (hintLabel.isNullOrBlank()) {
+            "In context of overlay \"$overlayTitle\""
+        } else {
+            "In context of overlay \"$overlayTitle\" – $hintLabel"
+        }
         listener?.onComposeNote(overlay, element, geometry, leaveNoteContext)
     }
 
@@ -541,12 +557,13 @@ abstract class AbstractOverlayForm :
         Log.i(TAG, "solve ${overlay.name} for ${element?.key}, extra: $extra")
         val source = if (extra) "survey,extra" else "survey"
         setLocked(true)
-        if (!checkIsSurvey(requireContext(), geometry, recentLocationStore.get())) {
+        val isSurvey = checkIsSurvey(geometry, recentLocationStore.get())
+        if (!isSurvey && !confirmIsSurvey(requireContext())) {
             setLocked(false)
             return
         }
         withContext(Dispatchers.IO) {
-            addElementEditsController.add(overlay, geometry, source, action)
+            addElementEditsController.add(overlay, geometry, source, action, isSurvey)
         }
         listener?.onEdited(overlay, geometry)
     }

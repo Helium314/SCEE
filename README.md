@@ -22,14 +22,14 @@ Functionality added in SCEE is considerably less tested than what you might be u
 
 F-Droid releases of SCEE make use of reproducible builds, so releases on F-Droid and GitHub are signed with the same keys. This means you can switch between GitHub and F-Droid releases anytime without needing to uninstall first.
 
-F-Droid anti-feature, non-free network: SCEE uses map tiles provided by [jawg](https://www.jawg.io), and optionally [aerial / satellite imagery](https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer) by [Esri](https://www.esri.com).
+__F-Droid anti-feature__ _non-free network_: SCEE uses map tiles provided by [jawg](https://www.jawg.io), and optionally [aerial / satellite imagery](https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer) by [Esri](https://www.esri.com).
 
 ## Translations
 Translations for strings added in SCEE can be done [using Weblate](https://translate.codeberg.org/projects/scee/).
 You will need an account to update translations and add languages. Add the language you want to translate to in _Languages_ -> _Manage translated languages_ in the top menu bar.
 
 ## Permissions
-SCEE asks for two more permissions than StreetComplete: `ACCESS_BACKGROUND_LOCATION` and `POST_NOTIFICATIONS`. Both are used only in an experimental feature to notify about nearby quests when the app is in the background.
+SCEE asks for two more permissions than StreetComplete: `ACCESS_BACKGROUND_LOCATION` and `POST_NOTIFICATIONS`. Both are requested and used only in feature to notify about nearby quests while the app is in the background.
 
 ## Differences to StreetComplete
 * Non-optional differences to StreetComplete
@@ -38,7 +38,7 @@ SCEE asks for two more permissions than StreetComplete: `ACCESS_BACKGROUND_LOCAT
   * Dark theme uses dark buttons
   * Prevent short scroll to user location at app start when map was at a different position
   * Downloading data will interrupt upload queue (will resume afterwards)
-  * Manual downloads can be queued instead of always cancelling the previous one
+  * Manual downloads can be queued instead of always cancelling the previous one (**currently not working, option is not shown**)
   * Show all hidden quests on long press on undo button (works only for downloaded areas)
   * Additional answers for some quests
     * Additional building types
@@ -60,13 +60,23 @@ SCEE asks for two more permissions than StreetComplete: `ACCESS_BACKGROUND_LOCAT
   * Outdoor seating type
   * Service building type
   * Service building operator
+  * Street cabinet type
   * Artwork type
   * Railway platform number
+  * Trail visibility of hiking trails
   * Genus / species of trees
     * Allows providing a file containing translated tree names instead of the default English ones
   * Color of building roofs
+  * Whether a barrier is locked
+  * Height of barriers
   * Whether pharmacy is dispensing prescription drugs
   * Destination of some road types after intersections
+  * Which beers are sold in restaurants
+  * Elevation, ref, sports and name of guideposts
+  * Width of footways
+  * Size and type of maps
+  * Via ferrata scale
+  * Difficulty and ref for pistes, and whether they are lit
   * Quests based on external sources
     * Osmose quest showing Osmose issues as quests, with filter options
     * Custom quest from CSV file, allows creating nodes (see in-app description)
@@ -151,7 +161,7 @@ SCEE asks for two more permissions than StreetComplete: `ACCESS_BACKGROUND_LOCAT
 Database and preferences files are compatible with StreetComplete, so if you have root privileges you can transfer them in either direction.
 
 ## Contributing quests
-The original [contributing guidelines](#contributing) are still valid, but note that the [guidelines for contributing a quest](QUEST_GUIDELINES.md) have been significantly relaxed:
+The original [contributing guidelines](README_StreetComplete.md#contributing) are still valid, but note that the [guidelines for contributing a quest](QUEST_GUIDELINES.md) have been significantly relaxed:
 * Creating, moving and deleting nodes is possible
   * Inserting nodes into a way is not (yet) possible
 * Guidelines are useful suggestions, but not enforced
@@ -183,3 +193,6 @@ Furthermore SCEE adds new answers leading to such a changeset comment:
 * There are further "quest types" (though neither quests nor overlays, they are identified in `StreetComplete:quest_type` changeset tag)
   * _TagEdit_: may modify any tag
   * _AddNode_: adds nodes, free floating or part of ways, (may change tags of existing way node instead of inserting a new one under some circumstances)
+
+## Screenshots
+<img src="metadata/en-US/images/phoneScreenshots/screenshot1.png" width="240"/> <img src="metadata/en-US/images/phoneScreenshots/screenshot2.png" width="240"/> <img src="metadata/en-US/images/phoneScreenshots/screenshot3.png" width="240"/> <img src="metadata/en-US/images/phoneScreenshots/screenshot4.png" width="240"/> <img src="metadata/en-US/images/phoneScreenshots/screenshot5.png" width="240"/> <img src="metadata/en-US/images/phoneScreenshots/screenshot6.png" width="240"/> <img src="metadata/en-US/images/phoneScreenshots/screenshot7.png" width="240"/> <img src="metadata/en-US/images/phoneScreenshots/screenshot8.png" width="240"/>

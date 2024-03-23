@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.postDelayed
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.westnordost.streetcomplete.R
@@ -30,9 +29,9 @@ abstract class AGroupedImageListQuestForm<I, T> : AbstractOsmQuestForm<T>() {
 
     protected lateinit var imageSelector: GroupedImageSelectAdapter<I>
 
-    /** all items to display (after user pressed "see more"). May not be accessed before onCreate */
+    /** all items to display. May not be accessed before onCreate */
     protected abstract val allItems: List<GroupableDisplayItem<I>>
-    /** initial items to display. May not be accessed before onCreate */
+    /** items to display that are shown on the top. May not be accessed before onCreate */
     protected abstract val topItems: List<GroupableDisplayItem<I>>
 
     private lateinit var favs: LastPickedValuesStore<GroupableDisplayItem<I>>
@@ -46,7 +45,7 @@ abstract class AGroupedImageListQuestForm<I, T> : AbstractOsmQuestForm<T>() {
     override fun onAttach(ctx: Context) {
         super.onAttach(ctx)
         favs = LastPickedValuesStore(
-            PreferenceManager.getDefaultSharedPreferences(ctx.applicationContext),
+            prefs,
             key = javaClass.simpleName,
             serialize = { it.value.toString() },
             deserialize = { itemsByString[it] }
@@ -64,9 +63,8 @@ abstract class AGroupedImageListQuestForm<I, T> : AbstractOsmQuestForm<T>() {
 
         val layoutManager = GridLayoutManager(activity, itemsPerRow)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (imageSelector.items[position].isGroup) layoutManager.spanCount else 1
-            }
+            override fun getSpanSize(position: Int): Int =
+                if (imageSelector.items[position].isGroup) layoutManager.spanCount else 1
         }
         binding.list.layoutManager = layoutManager
         binding.list.isNestedScrollingEnabled = false

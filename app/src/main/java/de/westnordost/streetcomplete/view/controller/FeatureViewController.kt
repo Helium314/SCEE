@@ -26,18 +26,18 @@ class FeatureViewController(
     var countryOrSubdivisionCode: String? = null
 
     var searchText: String? = null
-    set(value) {
-        if (field == value) return
-        field = value
-        update()
-    }
+        set(value) {
+            if (field == value) return
+            field = value
+            update()
+        }
 
     var feature: Feature? = null
-    set(value) {
-        if (field == value) return
-        field = value
-        update()
-    }
+        set(value) {
+            if (field == value) return
+            field = value
+            update()
+        }
 
     init {
         update()
@@ -130,7 +130,6 @@ private fun Feature.findMatchedName(searchText: String): String? {
 }
 
 private fun Feature.getIconDrawable(context: Context): Drawable? {
-    if (icon == null) return null
-    val id = presetIconIndex[icon] ?: return null
+    val id = icon?.let { presetIconIndex[it] } ?: R.drawable.ic_preset_maki_marker_stroked
     return context.getDrawable(id)
 }

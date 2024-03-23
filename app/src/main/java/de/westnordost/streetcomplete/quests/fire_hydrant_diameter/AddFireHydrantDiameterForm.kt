@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isGone
 import androidx.core.widget.doAfterTextChanged
-import androidx.preference.PreferenceManager
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
@@ -42,7 +41,7 @@ class AddFireHydrantDiameterForm : AbstractOsmQuestForm<FireHydrantDiameterAnswe
     override fun onAttach(ctx: Context) {
         super.onAttach(ctx)
         favs = LastPickedValuesStore(
-            PreferenceManager.getDefaultSharedPreferences(ctx.applicationContext),
+            prefs,
             key = javaClass.simpleName,
             serialize = { it.toString() },
             deserialize = { it.toInt() }
@@ -138,7 +137,7 @@ class AddFireHydrantDiameterForm : AbstractOsmQuestForm<FireHydrantDiameterAnswe
 }
 
 private fun getHydrantDiameterSignLayoutResId(countryCode: String): Int = when (countryCode) {
-    "DE", "BE" -> R.layout.quest_fire_hydrant_diameter_sign_de
+    "DE", "BE", "LU", "AT" -> R.layout.quest_fire_hydrant_diameter_sign_de
     "FI" -> R.layout.quest_fire_hydrant_diameter_sign_fi
     "NL" -> R.layout.quest_fire_hydrant_diameter_sign_nl
     "PL" -> R.layout.quest_fire_hydrant_diameter_sign_pl

@@ -48,16 +48,18 @@ class UpdatedElementsHandler(val ignoreRelationTypes: Set<String?> = emptySet())
             is Relation -> createUpdatedRelation(element, newId, newVersion)
         }
 
-    private fun createUpdatedNode(node: Node, newId: Long, newVersion: Int): Node {
-        return Node(newId, node.position, HashMap(node.tags), newVersion, node.timestampEdited)
-    }
+    private fun createUpdatedNode(node: Node, newId: Long, newVersion: Int): Node =
+        Node(newId, node.position, HashMap(node.tags), newVersion, node.timestampEdited)
 
     private fun createUpdatedWay(way: Way, newId: Long, newVersion: Int): Way {
         val newNodeIds = ArrayList<Long>(way.nodeIds.size)
         for (nodeId in way.nodeIds) {
             val diff = nodeDiffs[nodeId]
-            if (diff == null) newNodeIds.add(nodeId)
-            else if (diff.serverId != null) newNodeIds.add(diff.serverId)
+            if (diff == null) {
+                newNodeIds.add(nodeId)
+            } else if (diff.serverId != null) {
+                newNodeIds.add(diff.serverId)
+            }
         }
         return Way(newId, newNodeIds, HashMap(way.tags), newVersion, way.timestampEdited)
     }
@@ -66,8 +68,11 @@ class UpdatedElementsHandler(val ignoreRelationTypes: Set<String?> = emptySet())
         val newRelationMembers = ArrayList<RelationMember>(relation.members.size)
         for (member in relation.members) {
             val diff = getDiff(member.type, member.ref)
-            if (diff == null) newRelationMembers.add(RelationMember(member.type, member.ref, member.role))
-            else if (diff.serverId != null) newRelationMembers.add(RelationMember(member.type, diff.serverId, member.role))
+            if (diff == null) {
+                newRelationMembers.add(RelationMember(member.type, member.ref, member.role))
+            } else if (diff.serverId != null) {
+                newRelationMembers.add(RelationMember(member.type, diff.serverId, member.role))
+            }
         }
         return Relation(newId, newRelationMembers, HashMap(relation.tags), newVersion, relation.timestampEdited)
     }

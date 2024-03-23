@@ -18,7 +18,6 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import androidx.preference.PreferenceManager
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPolylinesGeometry
@@ -285,7 +284,7 @@ class AddDestinationForm : AbstractOsmQuestForm<Pair<DestinationLanes?, Destinat
     override fun onAttach(ctx: Context) {
         super.onAttach(ctx)
         favs = LastPickedValuesStore(
-            PreferenceManager.getDefaultSharedPreferences(ctx.applicationContext),
+            prefs,
             key = javaClass.simpleName,
             serialize = { it },
             deserialize = { it },

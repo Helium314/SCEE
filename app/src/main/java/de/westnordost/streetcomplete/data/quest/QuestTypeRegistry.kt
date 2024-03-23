@@ -8,6 +8,7 @@ import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.meta.CountryInfos
 import de.westnordost.streetcomplete.data.meta.getByLocation
+import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.quests.custom.CustomQuestList
 import de.westnordost.streetcomplete.quests.getQuestTypeList
@@ -20,8 +21,6 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 
-import java.util.concurrent.FutureTask
-
 /** Every osm quest needs to be registered here.
  *
  * Could theoretically be done with Reflection, but that doesn't really work on Android.
@@ -32,15 +31,13 @@ import java.util.concurrent.FutureTask
 class QuestTypeRegistry(initialOrdinalsAndEntries: List<Pair<Int, QuestType>>, private val ordinalsAndEntries: MutableList<Pair<Int, QuestType>> = initialOrdinalsAndEntries.toMutableList()) : ObjectTypeRegistry<QuestType>(ordinalsAndEntries), KoinComponent {
     private val trafficFlowSegmentsApi: TrafficFlowSegmentsApi by inject()
     private val trafficFlowDao: WayTrafficFlowDao by inject()
-    private val featureDictionaryFuture: FutureTask<FeatureDictionary> by inject(named("FeatureDictionaryFuture"))
+    private val featureDictionary: Lazy<FeatureDictionary> by inject(named("FeatureDictionaryLazy"))
     private val countryInfos: CountryInfos by inject()
-    private val countryBoundariesFuture: FutureTask<CountryBoundaries> by inject(named("CountryBoundariesFuture"))
+    private val countryBoundaries: Lazy<CountryBoundaries> by inject(named("CountryBoundariesLazy"))
     private val arSupportChecker: ArSupportChecker by inject()
-    private val getFeature: (tags: Map<String, String>) -> Feature? = { tags ->
-        featureDictionaryFuture.get().getFeature(tags)
-    }
+    private val getFeature: (Element) -> Feature? = { featureDictionary.value.getFeature(it) }
     private val getCountryInfoByLocation:  (location: LatLon) -> CountryInfo = { location ->
-        countryInfos.getByLocation(countryBoundariesFuture.get(), location.longitude, location.latitude)
+        countryInfos.getByLocation(countryBoundaries.value, location.longitude, location.latitude)
     }
     private val osmoseDao: OsmoseDao by inject()
     private val customQuestList: CustomQuestList by inject()

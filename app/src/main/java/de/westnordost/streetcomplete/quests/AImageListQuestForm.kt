@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
@@ -13,7 +12,6 @@ import de.westnordost.streetcomplete.util.LastPickedValuesStore
 import de.westnordost.streetcomplete.util.padWith
 import de.westnordost.streetcomplete.view.image_select.DisplayItem
 import de.westnordost.streetcomplete.view.image_select.ImageSelectAdapter
-import kotlin.collections.ArrayList
 
 /**
  * Abstract class for quests with a list of images and one or several to select.
@@ -57,7 +55,7 @@ abstract class AImageListQuestForm<I, T> : AbstractOsmQuestForm<T>() {
     override fun onAttach(ctx: Context) {
         super.onAttach(ctx)
         favs = LastPickedValuesStore(
-            PreferenceManager.getDefaultSharedPreferences(ctx.applicationContext),
+            prefs,
             key = javaClass.simpleName,
             serialize = { it.value.toString() },
             deserialize = { itemsByString[it] }
@@ -111,13 +109,12 @@ abstract class AImageListQuestForm<I, T> : AbstractOsmQuestForm<T>() {
 
     override fun isFormComplete() = imageSelector.selectedIndices.isNotEmpty()
 
-    private fun moveFavouritesToFront(originalList: List<DisplayItem<I>>): List<DisplayItem<I>> {
-        return if (originalList.size > prefs.getInt(Prefs.FAVS_FIRST_MIN_LINES, 1) * itemsPerRow && moveFavoritesToFront) {
+    private fun moveFavouritesToFront(originalList: List<DisplayItem<I>>): List<DisplayItem<I>> =
+        if (originalList.size > prefs.getInt(Prefs.FAVS_FIRST_MIN_LINES, 1) * itemsPerRow && moveFavoritesToFront) {
             favs.get().filterNotNull().padWith(originalList).toList()
         } else {
             originalList
         }
-    }
 
     companion object {
         private const val SELECTED_INDICES = "selected_indices"

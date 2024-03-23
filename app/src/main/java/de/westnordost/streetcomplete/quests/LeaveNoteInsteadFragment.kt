@@ -22,7 +22,6 @@ import de.westnordost.streetcomplete.util.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
@@ -103,7 +102,7 @@ class LeaveNoteInsteadFragment : AbstractCreateNoteFragment() {
     override fun onComposedNote(text: String, imagePaths: List<String>, isGpxNote: Boolean) {
         val fullText = mutableListOf<String>()
         leaveNoteContext?.let { fullText += it }
-        fullText += "for https://osm.org/${elementType.name.lowercase()}/$elementId"
+        fullText += "– https://osm.org/${elementType.name.lowercase()}/$elementId"
         fullText += if (isGpxNote) "\n$text" else "via ${ApplicationConstants.USER_AGENT}:\n\n$text"
 
         viewLifecycleScope.launch {

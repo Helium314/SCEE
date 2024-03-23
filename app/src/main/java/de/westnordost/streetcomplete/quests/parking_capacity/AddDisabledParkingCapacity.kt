@@ -35,7 +35,11 @@ class AddDisabledParkingCapacity : OsmFilterQuestType<Int>() {
     override fun applyAnswerTo(answer: Int, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         if (answer == -1) {
             tags["capacity:disabled"] = "yes"
-        } else {
+        }
+        else if (answer == 0) {
+            tags["capacity:disabled"] = "no"
+        }
+        else {
             tags["capacity:disabled"] = answer.toString()
         }
     }

@@ -35,7 +35,7 @@ class AddDisabledParkingCapacityForm : AbstractOsmQuestForm<Int>() {
         }
     }
 
-    override fun isFormComplete() = capacity > 0
+    override fun isFormComplete() = capacity >= 0
 
     override fun onClickOk() {
         applyAnswer(capacity)

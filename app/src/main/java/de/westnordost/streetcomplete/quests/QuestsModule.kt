@@ -631,9 +631,9 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 40 to AddPisteLit(),
     EE_QUEST_OFFSET + 35 to AddPisteRef(),
     EE_QUEST_OFFSET + 36 to AddPisteDifficulty(),
-    EE_QUEST_OFFSET + 39 to AddParkingCapacity(),
-    EE_QUEST_OFFSET + 40 to AddDisabledParkingCapacity(),
-    EE_QUEST_OFFSET + 41 to AddParkingOrientation(),
+    EE_QUEST_OFFSET + 45 to AddParkingCapacity(),
+    EE_QUEST_OFFSET + 46 to AddDisabledParkingCapacity(),
+    EE_QUEST_OFFSET + 47 to AddParkingOrientation(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

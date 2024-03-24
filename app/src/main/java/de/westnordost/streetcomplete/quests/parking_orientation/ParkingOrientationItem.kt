@@ -28,7 +28,7 @@ fun ParkingOrientation.asItem(context: Context): Item2<ParkingOrientation> {
 
 }
 private val ParkingOrientation.titleResId: Int get() = when (this) {
-        PARALLEL ->      R.string.quest_parking_orientation_answer_parallel
-        DIAGONAL ->      R.string.quest_parking_orientation_answer_diagonal
-        PERPENDICULAR -> R.string.quest_parking_orientation_answer_perpendicular
+        PARALLEL ->      R.string.street_parking_parallel
+        DIAGONAL ->      R.string.street_parking_diagonal
+        PERPENDICULAR -> R.string.street_parking_perpendicular
     }

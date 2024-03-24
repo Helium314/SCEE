@@ -6,13 +6,15 @@ import de.westnordost.streetcomplete.quests.TextItem
 import de.westnordost.streetcomplete.quests.parking_orientation.ParkingOrientation.DIAGONAL
 import de.westnordost.streetcomplete.quests.parking_orientation.ParkingOrientation.PARALLEL
 import de.westnordost.streetcomplete.quests.parking_orientation.ParkingOrientation.PERPENDICULAR
+import de.westnordost.streetcomplete.quests.AImageListQuestForm
 
+class AddParkingOrientationForm : AImageListQuestForm<ParkingOrientation, ParkingOrientation>() {
 
-class AddParkingOrientationForm : AListQuestForm<ParkingOrientation>() {
+    // get the context and save it in the variable ctx
+    override val items = ParkingOrientation.values().map { it.asItem(requireContext()) }
+    override val itemsPerRow = 3
 
-    override val items = listOf(
-        TextItem(PARALLEL, R.string.quest_parking_orientation_answer_parallel),
-        TextItem(DIAGONAL, R.string.quest_parking_orientation_answer_diagonal),
-        TextItem(PERPENDICULAR, R.string.quest_parking_orientation_answer_perpendicular),
-    )
+    override fun onClickOk(selectedItems: List<ParkingOrientation>) {
+        applyAnswer(selectedItems.single())
+    }
 }

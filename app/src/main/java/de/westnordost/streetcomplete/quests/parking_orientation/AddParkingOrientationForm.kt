@@ -9,9 +9,7 @@ import de.westnordost.streetcomplete.quests.parking_orientation.ParkingOrientati
 import de.westnordost.streetcomplete.quests.AImageListQuestForm
 
 class AddParkingOrientationForm : AImageListQuestForm<ParkingOrientation, ParkingOrientation>() {
-
-    // get the context and save it in the variable ctx
-    override val items = ParkingOrientation.values().map { it.asItem(requireContext()) }
+    override val items get() = ParkingOrientation.values().map { it.asItem(requireContext()) }
     override val itemsPerRow = 3
 
     override fun onClickOk(selectedItems: List<ParkingOrientation>) {

@@ -22,7 +22,6 @@ class AddDisabledParkingCapacity : OsmFilterQuestType<Int>() {
     override val wikiLink = "Key:capacity:disabled"
     override val icon = R.drawable.ic_quest_parking_capacity_disabled
     override val achievements = listOf(WHEELCHAIR)
-    // set the default disabled msg
     override val defaultDisabledMessage = R.string.quest_parking_capacity_disabled_default_disabled_msg
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_parking_capacity_disabled_title

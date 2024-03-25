@@ -23,18 +23,18 @@ import de.westnordost.streetcomplete.osm.street_parking.ParkingPosition.HALF_ON_
 
 fun ParkingOrientation.asItem(context: Context, parkingTagValue: String?): Item2<ParkingOrientation> {
 
-    val orientation_display_val = when (this) {
+    val orientationDisplayVal = when (this) {
         PARALLEL -> DISPLAY_PARALLEL
         DIAGONAL -> DISPLAY_DIAGONAL
         PERPENDICULAR -> DISPLAY_PERPENDICULAR
     }
-    val position_display_val = when (parkingTagValue) {
+    val positionDisplayVal = when (parkingTagValue) {
         "street_side" -> DISPLAY_STREET_SIDE
         "on_kerb" -> DISPLAY_OFF_STREET
         "half_on_kerb" -> DISPLAY_HALF_ON_STREET
         else -> DISPLAY_ON_STREET
     }
-    val drawable = DrawableImage(StreetParkingDrawable(context, orientation_display_val, position_display_val, false, 128, 128, R.drawable.ic_car1).asBitmapDrawable(context.resources))
+    val drawable = DrawableImage(StreetParkingDrawable(context, orientationDisplayVal, positionDisplayVal, false, 128, 128, R.drawable.ic_car1).asBitmapDrawable(context.resources))
     return Item2(this, drawable, ResText(titleResId), null)
 
 }

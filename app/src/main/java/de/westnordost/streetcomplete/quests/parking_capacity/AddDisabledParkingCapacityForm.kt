@@ -10,7 +10,7 @@ import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
 import de.westnordost.streetcomplete.util.ktx.intOrNull
 
-class AddDisabledParkingCapacityForm : AbstractOsmQuestForm<Int>() {
+class AddDisabledParkingCapacityForm : AbstractOsmQuestForm<String>() {
 
     override val contentLayoutResId = R.layout.quest_disabled_parking_capacity
     private val binding by contentViewBinding(QuestBikeParkingCapacityBinding::bind)
@@ -26,7 +26,7 @@ class AddDisabledParkingCapacityForm : AbstractOsmQuestForm<Int>() {
         if (element.tags["capacity:disabled"] != "yes") {
             otherAnswers.add(AnswerItem(R.string.quest_parking_capacity_disabled_answer_yes) {
                 applyAnswer(
-                    -1
+                    "yes"
                 )
             })
         }
@@ -35,7 +35,11 @@ class AddDisabledParkingCapacityForm : AbstractOsmQuestForm<Int>() {
     override fun isFormComplete() = capacity >= 0
 
     override fun onClickOk() {
-        applyAnswer(capacity)
+        if (capacity == 0) {
+            applyAnswer("no")
+        } else {
+            applyAnswer(capacity.toString())
+        }
     }
 
     companion object {

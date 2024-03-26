@@ -9,7 +9,7 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.WHEELCHAIR
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddDisabledParkingCapacity : OsmFilterQuestType<Int>() {
+class AddDisabledParkingCapacity : OsmFilterQuestType<String>() {
 
     override val elementFilter = """
         nodes, ways with
@@ -31,13 +31,7 @@ class AddDisabledParkingCapacity : OsmFilterQuestType<Int>() {
 
     override fun createForm() = AddDisabledParkingCapacityForm.create()
 
-    override fun applyAnswerTo(answer: Int, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        if (answer == -1) {
-            tags["capacity:disabled"] = "yes"
-        } else if (answer == 0) {
-            tags["capacity:disabled"] = "no"
-        } else {
-            tags["capacity:disabled"] = answer.toString()
-        }
+    override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+            tags["capacity:disabled"] = answer
     }
 }

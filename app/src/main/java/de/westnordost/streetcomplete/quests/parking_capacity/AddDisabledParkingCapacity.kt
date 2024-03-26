@@ -29,16 +29,14 @@ class AddDisabledParkingCapacity : OsmFilterQuestType<Int>() {
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
         getMapData().filter("nodes, ways with amenity = parking")
 
-    override fun createForm() = AddDisabledParkingCapacityForm.create(showClarificationText = false)
+    override fun createForm() = AddDisabledParkingCapacityForm.create()
 
     override fun applyAnswerTo(answer: Int, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         if (answer == -1) {
             tags["capacity:disabled"] = "yes"
-        }
-        else if (answer == 0) {
+        } else if (answer == 0) {
             tags["capacity:disabled"] = "no"
-        }
-        else {
+        } else {
             tags["capacity:disabled"] = answer.toString()
         }
     }

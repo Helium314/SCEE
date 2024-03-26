@@ -2,7 +2,6 @@ package de.westnordost.streetcomplete.quests.parking_capacity
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.widget.doAfterTextChanged
 import de.westnordost.streetcomplete.R
@@ -19,8 +18,7 @@ class AddParkingCapacityForm : AbstractOsmQuestForm<Int>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val showClarificationText = arguments?.getBoolean(ARG_SHOW_CLARIFICATION) ?: false
-        binding.clarificationText.isGone = !showClarificationText
+        binding.clarificationText.isGone = false
         binding.capacityInput.doAfterTextChanged { checkIsFormComplete() }
     }
 
@@ -31,12 +29,6 @@ class AddParkingCapacityForm : AbstractOsmQuestForm<Int>() {
     }
 
     companion object {
-        private const val ARG_SHOW_CLARIFICATION = "show_clarification"
-
-        fun create(showClarificationText: Boolean): AddParkingCapacityForm {
-            val form = AddParkingCapacityForm()
-            form.arguments = bundleOf(ARG_SHOW_CLARIFICATION to showClarificationText)
-            return form
-        }
+        fun create(): AddParkingCapacityForm = AddParkingCapacityForm()
     }
 }

@@ -5,6 +5,7 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.CAR
 import de.westnordost.streetcomplete.osm.Tags
+import de.westnordost.streetcomplete.osm.street_parking.ParkingOrientation
 
 class AddParkingOrientation : OsmFilterQuestType<ParkingOrientation>() {
 

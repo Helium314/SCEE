@@ -18,7 +18,6 @@ class AddParkingCapacityForm : AbstractOsmQuestForm<Int>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.clarificationText.isGone = false
         binding.capacityInput.doAfterTextChanged { checkIsFormComplete() }
     }
 
@@ -26,9 +25,5 @@ class AddParkingCapacityForm : AbstractOsmQuestForm<Int>() {
 
     override fun onClickOk() {
         applyAnswer(capacity)
-    }
-
-    companion object {
-        fun create(): AddParkingCapacityForm = AddParkingCapacityForm()
     }
 }

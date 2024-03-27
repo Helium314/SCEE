@@ -21,7 +21,6 @@ class AddDisabledParkingCapacityForm : AbstractOsmQuestForm<String>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.clarificationText.isGone = true
         binding.capacityInput.doAfterTextChanged { checkIsFormComplete() }
         if (element.tags["capacity:disabled"] != "yes") {
             otherAnswers.add(AnswerItem(R.string.quest_parking_capacity_disabled_answer_yes) {
@@ -40,9 +39,5 @@ class AddDisabledParkingCapacityForm : AbstractOsmQuestForm<String>() {
         } else {
             applyAnswer(capacity.toString())
         }
-    }
-
-    companion object {
-        fun create(): AddDisabledParkingCapacityForm = AddDisabledParkingCapacityForm()
     }
 }

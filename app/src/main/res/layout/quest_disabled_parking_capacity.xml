@@ -6,6 +6,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/clarificationText" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -6,12 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/clarificationText"
-        android:text="@string/quest_parking_capacity_hint" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

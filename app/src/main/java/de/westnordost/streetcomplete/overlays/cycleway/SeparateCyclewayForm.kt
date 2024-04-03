@@ -74,7 +74,7 @@ class SeparateCyclewayForm : AImageSelectOverlayForm<SeparateCycleway>() {
             prerequisite for it being  displayed as a selectable option due to the reasons stated
             above.
          */
-        currentCycleway = if (cycleway == NOT_ALLOWED) NON_DESIGNATED else cycleway
+        currentCycleway = cycleway
         selectedItem = currentCycleway?.asItem(countryInfo.isLeftHandTraffic)
     }
 

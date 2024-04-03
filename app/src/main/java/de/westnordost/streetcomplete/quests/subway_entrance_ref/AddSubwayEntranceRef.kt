@@ -19,7 +19,7 @@ class AddSubwayEntranceRef : OsmFilterQuestType<SubwayEntranceRefAnswer>() {
     """
     override val changesetComment = "Specify subway entrance refs"
     override val wikiLink = "Tag:railway=subway_entrance"
-    override val icon = R.drawable.ic_quest_guidepost_ref
+    override val icon = R.drawable.ic_quest_subway_entrance_ref
     override val isDeleteElementEnabled = true
     override val achievements = listOf(CITIZEN)
 

@@ -555,7 +555,7 @@
     <string name="quest_guidepostRef_hint">Reference number of this map or guidepost, not the reference number of signed routes.</string>
     <string name="quest_guidepostName_hint">Signed (location) name of this map or guidepost. Do not enter a reference number here.</string>
     <string name="quest_guidepost_disabled_msg">This quest is disabled by default because what is signed strongly varies by region and operator. You may need to refine the element selection for your area (e.g. add or remove maps, only select elements with hiking=yes, etc.)</string>
-
+    <string name="quest_cycleway_value_sidewalk_ok">None, but cycling allowed on sidewalk</string>
 
     <!-- piste difficulty -->
     <string name="quest_piste_difficulty_title">What is the difficulty of this piste?</string>
@@ -576,6 +576,7 @@
 
     <!-- parking orientation quest -->
     <string name="quest_parking_orientation_title">In what orientation do cars park here?</string>
+
 
     <!-- new overlays -->
 

@@ -1,4 +1,4 @@
-package de.westnordost.streetcomplete.quests.guidepost
+package de.westnordost.streetcomplete.quests.general_ref
 
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
@@ -8,7 +8,8 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.OUTDOORS
 import de.westnordost.streetcomplete.osm.Tags
-class AddGuidepostRef : OsmFilterQuestType<GuidepostRefAnswer>() {
+
+class AddGeneralRef : OsmFilterQuestType<GeneralRefAnswer>() {
 
     override val elementFilter = """
         nodes with
@@ -18,7 +19,7 @@ class AddGuidepostRef : OsmFilterQuestType<GuidepostRefAnswer>() {
     """
     override val changesetComment = "Specify guidepost refs"
     override val wikiLink = "Tag:information=guidepost"
-    override val icon = R.drawable.ic_quest_guidepost_ref
+    override val icon = R.drawable.ic_quest_general_ref
     override val isDeleteElementEnabled = true
     override val achievements = listOf(OUTDOORS)
 
@@ -30,12 +31,12 @@ class AddGuidepostRef : OsmFilterQuestType<GuidepostRefAnswer>() {
 
     override val defaultDisabledMessage: Int = R.string.quest_guidepost_disabled_msg
 
-    override fun createForm() = AddGuidepostRefForm()
+    override fun createForm() = AddGeneralRefForm()
 
-    override fun applyAnswerTo(answer: GuidepostRefAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+    override fun applyAnswerTo(answer: GeneralRefAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         when (answer) {
-            is NoVisibleGuidepostRef -> tags["ref:signed"] = "no"
-            is GuidepostRef ->          tags["ref"] = answer.ref
+            is NoVisibleGeneralRef -> tags["ref:signed"] = "no"
+            is GeneralRef ->          tags["ref"] = answer.ref
         }
     }
 }

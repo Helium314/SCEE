@@ -6,15 +6,15 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.databinding.QuestGuidepostRefBinding
+import de.westnordost.streetcomplete.databinding.QuestGeneralRefBinding
 import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
 import de.westnordost.streetcomplete.util.ktx.nonBlankTextOrNull
 
 class AddGuidepostNameForm : AbstractOsmQuestForm<GuidepostNameAnswer>() {
 
-    override val contentLayoutResId = R.layout.quest_guidepost_ref
-    private val binding by contentViewBinding(QuestGuidepostRefBinding::bind)
+    override val contentLayoutResId = R.layout.quest_general_ref
+    private val binding by contentViewBinding(QuestGeneralRefBinding::bind)
 
     override val otherAnswers = listOf(
         AnswerItem(R.string.quest_placeName_no_name_answer) { confirmNoRef() }

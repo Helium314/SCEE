@@ -12,24 +12,39 @@ import de.westnordost.streetcomplete.osm.Tags
 class AddGeneralRef : OsmFilterQuestType<GeneralRefAnswer>() {
 
     override val elementFilter = """
-        nodes with
-            (information = guidepost or guidepost) and guidepost != simple
-        and !ref and noref != yes and !~"ref:.*" and hiking = yes
-
+        nodes, ways with
+          (
+            (information = guidepost or guidepost) and guidepost != simple and hiking = yes
+            or railway = subway_entrance and highway != elevator
+            or building = service and power = substation
+            or man_made = street_cabinet
+            or highway = street_lamp
+          )
+          and !ref
+          and noref != yes
+          and ref:signed != no
+          and !~"ref:.*"
     """
-    override val changesetComment = "Specify guidepost refs"
-    override val wikiLink = "Tag:information=guidepost"
+    override val changesetComment = "Specify refs"
+    override val wikiLink = "Key:ref"
     override val icon = R.drawable.ic_quest_general_ref
     override val isDeleteElementEnabled = true
     override val achievements = listOf(OUTDOORS)
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_genericRef_title
 
+    // substation buildings are not highlighted because those are usually far apart
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with information ~ guidepost|map")
+        getMapData().filter("""
+            nodes with
+              information ~ guidepost|map
+              or railway = subway_entrance
+              or man_made = street_cabinet
+              or highway = street_lamp
+        """)
     override val highlightedElementsRadius: Double get() = 200.0
 
-    override val defaultDisabledMessage: Int = R.string.quest_guidepost_disabled_msg
+    override val defaultDisabledMessage: Int = R.string.quest_generalRef_disabled_msg
 
     override fun createForm() = AddGeneralRefForm()
 

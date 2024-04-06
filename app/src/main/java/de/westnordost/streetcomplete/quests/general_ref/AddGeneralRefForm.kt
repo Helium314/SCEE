@@ -24,6 +24,10 @@ class AddGeneralRefForm : AbstractOsmQuestForm<GeneralRefAnswer>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.refInput.doAfterTextChanged { checkIsFormComplete() }
+
+        if (element.tags.containsKey("guidepost") || element.tags["information"] == "guidepost") {
+            binding.tvHint.setText(R.string.quest_guidepostRef_hint)
+        }
     }
 
     override fun onClickOk() {

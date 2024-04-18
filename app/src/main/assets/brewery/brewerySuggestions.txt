@@ -53,6 +53,7 @@ Hatz
 Heineken
 Herrnbräu
 Hirsch
+Hirter
 Hoegaarden
 Hoepfner
 Hofbräu München
@@ -99,6 +100,7 @@ Sapporo
 Schloss Eggenberg
 Schlossbrauerei Haimhausen
 Schlösser
+Schremser
 Schützengarten
 Shepherd Neame
 Spalter Bier
@@ -123,9 +125,12 @@ Ur-Krostitzer
 Veltins
 Waldhaus
 Warsteiner
+Weitra Bräu
 Weldebräu
+Wieselburger
 Wildbräu
 Zipfer
+Zwettler
 Zwiefalter
 Zötler
 Сыктывкарпиво

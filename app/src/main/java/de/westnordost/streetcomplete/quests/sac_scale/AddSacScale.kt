@@ -16,6 +16,7 @@ class AddSacScale : OsmFilterQuestType<SacScale>() {
           highway ~ path
           and !sac_scale
           and (!lit or lit = no)
+          and surface ~ "grass|sand|dirt|soil|fine_gravel|compacted|wood|gravel|pebblestone|rock|ground|earth|mud|woodchips|snow|ice|salt|stone"
     """
     override val changesetComment = "Specify SAC Scale"
     override val wikiLink = "Key:sac_scale"

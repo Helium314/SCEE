@@ -1112,6 +1112,25 @@ If any lanes are reserved for buses, please leave a note instead."</string>
     <string name="quest_leaf_type_mixed">Both are present</string>
     <string name="quest_leafType_tree_title">Does this tree have needles or leaves?</string>
 
+    <string name="quest_lgbtq_signed">Is there signage displaying its relation to LGBTQ people?</string>
+
+    <string name="quest_lgbtq_access">What is this places relation to LGBTQ people?</string>
+    <string name="quest_lgbtq_access_no">banned</string>
+    <string name="quest_lgbtq_access_welcome">explicitly welcome</string>
+    <string name="quest_lgbtq_access_primary">target audience</string>
+    <string name="quest_lgbtq_access_only">only</string>
+    <string name="quest_lgbtq_access_not_marked">not posted</string>
+    <string name="quest_lgbtq_access_hide_forever">hide forever</string>
+
+    <string name="quest_lgbtq_gender_specialization">Does this venue cater to specific groups within the LGBTQ community?</string>
+    <string name="quest_lgbtq_gender_specialization_men">Men</string>
+    <string name="quest_lgbtq_gender_specialization_woman">Woman</string>
+    <string name="quest_lgbtq_gender_specialization_non_binary">Non Binary People</string>
+    <string name="quest_lgbtq_gender_specialization_none">All Groups</string>
+
+    <string name="quest_lgbtq_transgender_specialization">Does this venue cater to specifically to trans people?</string>
+    <string name="quest_lgbtq_transgender_specialization_banned">Transgender people are banned</string>
+
     <string name="quest_level_title2">On which level number is this place located?</string>
 
     <string name="quest_lit_title">"Is it lit here?"</string>

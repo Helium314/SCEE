@@ -125,6 +125,7 @@ import de.westnordost.streetcomplete.quests.memorial_type.AddMemorialType
 import de.westnordost.streetcomplete.quests.moped.AddMopedAccess
 import de.westnordost.streetcomplete.quests.motorcycle_parking_capacity.AddMotorcycleParkingCapacity
 import de.westnordost.streetcomplete.quests.motorcycle_parking_cover.AddMotorcycleParkingCover
+import de.westnordost.streetcomplete.quests.mtb_scale.AddMtbScale
 import de.westnordost.streetcomplete.quests.oneway.AddOneway
 import de.westnordost.streetcomplete.quests.oneway_suspects.AddSuspectedOneway
 import de.westnordost.streetcomplete.quests.oneway_suspects.data.TrafficFlowSegmentsApi
@@ -635,6 +636,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 28 to AddFootwayWidth(arSupportChecker),
     EE_QUEST_OFFSET + 41 to AddGuidepostSports(),
     EE_QUEST_OFFSET + 31 to AddViaFerrataScale(),
+    EE_QUEST_OFFSET + 48 to AddMtbScale(),
     EE_QUEST_OFFSET + 37 to AddMapType(),
     EE_QUEST_OFFSET + 38 to AddMapSize(),
     EE_QUEST_OFFSET + 34 to AddBarrierHeight(arSupportChecker),

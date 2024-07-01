@@ -232,6 +232,10 @@
 
     <!-- new quests -->
 
+    <!-- atpsync quest -->
+    <string name="quest_atpsync_title">Missing location (ATP): %s</string>
+    <string name="quest_atpsync_message">These quests are downloaded from atpsync service and indicate missing locations.</string>
+
     <!-- osmose quest -->
     <string name="quest_osmose_title">Osmose quest: %s</string>
     <string name="quest_osmose_false_positive">Report false positive</string>

@@ -20,7 +20,7 @@ class AddSacScale : OsmFilterQuestType<SacScale>() {
     """
     override val changesetComment = "Specify SAC Scale"
     override val wikiLink = "Key:sac_scale"
-    override val icon = R.drawable.ic_quest_trail_visibility
+    override val icon = R.drawable.ic_quest_sac_scale
     override val defaultDisabledMessage = R.string.default_disabled_msg_sacScale
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_sacScale_title

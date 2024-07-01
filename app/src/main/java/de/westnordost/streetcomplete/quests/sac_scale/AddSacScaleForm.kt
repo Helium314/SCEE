@@ -10,7 +10,7 @@ class AddSacScaleForm : AImageListQuestForm<SacScale, SacScale>() {
 
     override val items: List<DisplayItem<SacScale>> get() = SacScale.entries.toItems()
 
-    override val itemsPerRow = 2
+    override val itemsPerRow = 1
 
     override val moveFavoritesToFront = false
 

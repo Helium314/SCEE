@@ -15,6 +15,8 @@ class AddSacScale : OsmFilterQuestType<SacScale>() {
         ways with
           highway ~ path
           and !sac_scale
+          and access !~ no|private
+          and foot !~ no|private
           and (!lit or lit = no)
           and surface ~ "grass|sand|dirt|soil|fine_gravel|compacted|wood|gravel|pebblestone|rock|ground|earth|mud|woodchips|snow|ice|salt|stone"
     """

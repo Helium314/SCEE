@@ -768,4 +768,36 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_roofOrientation_along">Parallel to the building’s longer side</string>
     <string name="quest_roofOrientation_across">Parallel to the building’s shorter side</string>
     <string name="quest_roofOrientation_title">How is the roof ridge oriented?</string>
+
+    <!-- building material -->
+    <string name="quest_buildingMaterial_title">"What overall material does this surface material of building walls have?"</string>
+    <string name="quest_buildingPartMaterial_title">"What overall material does this building part have?"</string>
+    <string name="default_disabled_msg_buildingMaterial">This quest type is disabled by default because this quest type is also quite time-consuming and requires expertise</string>
+    <string name="quest_building_material_value_cement_block">cement_block</string>
+    <string name="quest_building_material_value_brick">brick</string>
+    <string name="quest_building_material_value_plaster">plaster</string>
+    <string name="quest_building_material_value_wood">wood</string>
+    <string name="quest_building_material_value_concrete">concrete</string>
+    <string name="quest_building_material_value_metal">metal</string>
+    <string name="quest_building_material_value_steel">steel</string>
+    <string name="quest_building_material_value_stone">stone</string>
+    <string name="quest_building_material_value_glass">glass</string>
+    <string name="quest_building_material_value_mirror">mirror</string>
+    <string name="quest_building_material_value_mud">mud</string>
+    <string name="quest_building_material_value_tin">tin</string>
+    <string name="quest_building_material_value_plastic">plastic</string>
+    <string name="quest_building_material_value_timber_framing">timber_framing</string>
+    <string name="quest_building_material_value_sandstone">sandstone</string>
+    <string name="quest_building_material_value_clay">clay</string>
+    <string name="quest_building_material_value_reed">reed</string>
+    <string name="quest_building_material_value_loam">loam</string>
+    <string name="quest_building_material_value_marble">marble</string>
+    <string name="quest_building_material_value_copper">copper</string>
+    <string name="quest_building_material_value_slate">slate</string>
+    <string name="quest_building_material_value_vinyl">vinyl</string>
+    <string name="quest_building_material_value_limestone">limestone</string>
+    <string name="quest_building_material_value_tiles">tiles</string>
+    <string name="quest_building_material_value_metal_plates">metal_plates</string>
+    <string name="quest_building_material_value_bamboo">bamboo</string>
+    <string name="quest_building_material_value_adobe">adobe</string>
 </resources>

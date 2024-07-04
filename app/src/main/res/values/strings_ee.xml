@@ -672,6 +672,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="close">Close</string>
 
     <!-- sac scale -->
+    <string name="pref_quest_sac_scale_without_relation">Search all paths even those who are not in a hiking relation</string>
     <string name="quest_sacScale_title">"What is the Sac Scale of this path?"</string>
     <string name="default_disabled_msg_sacScale">"This quest type is disabled by default because the sac scale of path is highly subjective and needs expert knowledge in the used grading system and. As there is no "world wide scale" for path difficulty, the SAC Mountain and Alpine Hiking Scale is used here."</string>
     <string name="quest_sacScale_one">"T1 - hiking"</string>

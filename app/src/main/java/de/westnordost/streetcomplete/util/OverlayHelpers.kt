@@ -26,6 +26,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.overlays.Overlay
 import de.westnordost.streetcomplete.overlays.Style
+import de.westnordost.streetcomplete.overlays.custom.CustomOverlay
 import de.westnordost.streetcomplete.overlays.custom.getCustomOverlayIndices
 import de.westnordost.streetcomplete.overlays.custom.getIndexedCustomOverlayPref
 import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
@@ -241,26 +242,32 @@ fun showOverlayCustomizer(
 // title is invalid resId 0
 // name and wikiLink are the overlay index as stored in shared preferences
 // changesetComment is the overlay title
-fun getFakeCustomOverlays(prefs: ObservableSettings, ctx: Context, onlyIfExpertMode: Boolean = true): List<Overlay> {
+fun getFakeCustomOverlays(
+    prefs: ObservableSettings,
+    ctx: Context,
+    onlyIfExpertMode: Boolean = true
+): List<Overlay> {
     if (onlyIfExpertMode && !prefs.getBoolean(Prefs.EXPERT_MODE, false)) return emptyList()
     return prefs.getString(Prefs.CUSTOM_OVERLAY_INDICES, "0").split(",").mapNotNull { index ->
         val i = index.toIntOrNull() ?: return@mapNotNull null
-        object : Overlay {
-            override fun getStyledElements(mapData: MapDataWithGeometry) = emptySequence<Pair<Element, Style>>()
-            override fun createForm(element: Element?) = null
-            override val changesetComment = prefs.getString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_NAME, i), "")
-                .ifBlank { ctx.getString(R.string.custom_overlay_title) } // displayed overlay name
-            override val icon = ctx.resources.getIdentifier(
-                prefs.getString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_ICON, i), "ic_custom_overlay"),
+        CustomOverlay(
+            prefs = prefs,
+            title = 0, // use invalid resId placeholder, the adapter needs to be aware of this
+            icon = ctx.resources.getIdentifier(
+                prefs.getString(
+                    getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_ICON, i),
+                    "ic_custom_overlay"
+                ),
                 "drawable", ctx.packageName
-            ).takeIf { it != 0 } ?: R.drawable.ic_custom_overlay
-            override val title = 0 // use invalid resId placeholder, the adapter needs to be aware of this
-            override val name = index // allows to uniquely identify an overlay
-            override val wikiLink = index
-            override fun equals(other: Any?): Boolean {
-                return if (other !is Overlay) false
-                    else wikiLink == other.wikiLink // we only care about index!
-            }
-        }
+            ).takeIf { it != 0 } ?: R.drawable.ic_custom_overlay,
+            changesetComment = prefs.getString(
+                getIndexedCustomOverlayPref(
+                    Prefs.CUSTOM_OVERLAY_IDX_NAME,
+                    i
+                ), ""
+            )
+                .ifBlank { ctx.getString(R.string.custom_overlay_title) }, // displayed overlay name
+            wikiLink = index
+        )
     }
 }

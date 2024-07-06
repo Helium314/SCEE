@@ -1159,11 +1159,9 @@ class MainFragment :
         popupWindow.setAdapter(adapter)
         popupWindow.setOnItemClickListener { _, _, position, _ ->
 //            controlsViewModel.selectOverlay(adapter.getItem(position)) would be nice to do it like this, but not improtant right now
-            var selectedOverlay = adapter.getItem(position)
+            val selectedOverlay = adapter.getItem(position)
             if (selectedOverlay?.title == 0) {
                 prefs.putInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, selectedOverlay.wikiLink!!.toInt())
-                // set the actual custom overlay instead of the fake one
-                selectedOverlay = overlayRegistry.getByName(CustomOverlay::class.simpleName!!)
             }
             if (selectedOverlay == null && position != 0) {
                 val newIdx = if (prefs.getString(Prefs.CUSTOM_OVERLAY_INDICES, "0").isBlank()) 0

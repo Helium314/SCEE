@@ -1,6 +1,8 @@
 package de.westnordost.streetcomplete.overlays.custom
 
 import android.content.SharedPreferences
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.russhwolf.settings.ObservableSettings
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
@@ -21,12 +23,14 @@ import de.westnordost.streetcomplete.overlays.StrokeStyle
 import de.westnordost.streetcomplete.util.getNameLabel
 import de.westnordost.streetcomplete.util.ktx.isArea
 
-class CustomOverlay(val prefs: ObservableSettings) : Overlay {
-
-    override val title = R.string.custom_overlay_title
-    override val icon = R.drawable.ic_custom_overlay
-    override val changesetComment = "Edit user-defined element selection"
+class CustomOverlay(
+    val prefs: ObservableSettings,
+    @StringRes override val title: Int = R.string.custom_overlay_title,
+    @DrawableRes override val icon: Int = R.drawable.ic_custom_overlay,
+    override val changesetComment: String = "Edit user-defined element selection",
     override val wikiLink: String = "Tags"
+) : Overlay {
+
     override val isCreateNodeEnabled get() = prefs.getString(Prefs.CUSTOM_OVERLAY_IDX_FILTER, "").startsWith("nodes")
 
     override fun getStyledElements(mapData: MapDataWithGeometry): Sequence<Pair<Element, Style>> {

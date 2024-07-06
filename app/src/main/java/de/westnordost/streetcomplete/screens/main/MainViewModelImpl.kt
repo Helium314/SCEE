@@ -74,9 +74,6 @@ class MainViewModelImpl(
         send(selectedOverlayController.selectedOverlay)
         val listener = object : SelectedOverlaySource.Listener {
             override fun onSelectedOverlayChanged() {
-                if (selectedOverlayController.selectedOverlay is CustomOverlay) {
-                    trySend(null) // todo: sometimes this is not helping, button stays the same
-                }
                 trySend(selectedOverlayController.selectedOverlay)
             }
         }

@@ -122,13 +122,24 @@ class MoveNodeFragment :
     }
 
     private fun toggleBackground() {
-        prefs.putString(Prefs.THEME_BACKGROUND, if (prefs.getString(Prefs.THEME_BACKGROUND, "MAP") == "MAP") "AERIAL" else "MAP")
+        val newBackgroundType = when(prefs.getString(Prefs.THEME_BACKGROUND, "MAP")){
+            "MAP" -> "AERIAL"
+            "AERIAL" -> "CUSTOM"
+            "CUSTOM" -> "MAP"
+            else -> "MAP"
+        }
+
+        prefs.putString(Prefs.THEME_BACKGROUND, newBackgroundType)
         updateMapButtonText()
     }
 
     private fun updateMapButtonText() {
-        val isMap = prefs.getString(Prefs.THEME_BACKGROUND, "MAP") == "MAP"
-        val textId = if (isMap) R.string.background_type_aerial_esri else R.string.background_type_map
+        val textId = when(prefs.getString(Prefs.THEME_BACKGROUND, "MAP")){
+            "MAP" ->  R.string.background_type_map
+            "AERIAL" -> R.string.background_type_aerial_esri
+            "CUSTOM" ->  R.string.background_type_custom
+            else ->  R.string.background_type_map
+        }
         binding.mapButton.setText(textId)
     }
 

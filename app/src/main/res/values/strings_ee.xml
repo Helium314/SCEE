@@ -672,4 +672,5 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <!-- actually there are still SC translations available, as only the main string has been removed from SC. -->
     <string name="close">Close</string>
 
+    <string name="background_type_custom">Custom</string>
 </resources>

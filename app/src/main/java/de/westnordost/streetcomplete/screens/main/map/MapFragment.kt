@@ -112,7 +112,7 @@ open class MapFragment :
 
     private val onBackgroundChangedListener = prefs.addStringListener(Prefs.THEME_BACKGROUND, "MAP") {
         sceneMapComponent?.isAerialView =
-            (prefs.getStringOrNull(Prefs.THEME_BACKGROUND) ?: "MAP") == "AERIAL"
+            prefs.getString(Prefs.THEME_BACKGROUND,"MAP") != "MAP"
         viewLifecycleScope.launch { sceneMapComponent?.loadScene() }
     }
 

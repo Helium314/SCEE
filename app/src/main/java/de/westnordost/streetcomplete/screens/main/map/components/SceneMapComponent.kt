@@ -25,7 +25,7 @@ class SceneMapComponent(
     private var loadedSceneFilePath: String? = null
     private var loadedSceneUpdates: List<String>? = null
 
-    var isAerialView: Boolean = false
+    var isAerialView: Boolean = prefs.getString(Prefs.THEME_BACKGROUND,"MAP") != "MAP"
         set(value) {
             field = value
             aerialViewChanged = true
@@ -75,11 +75,24 @@ class SceneMapComponent(
             if (isAerialView && it.first.startsWith("layers.buildings")) null
             else SceneUpdate(it.first, it.second)
         } + listOfNotNull(
-            if (isAerialView)
-                SceneUpdate("sources.raster.url", prefs.getString(Prefs.RASTER_TILE_URL, "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"))
-            else null
-        )
+            when (prefs.getString(Prefs.THEME_BACKGROUND, "MAP")) {
+                "MAP" -> null
+                "AERIAL" -> SceneUpdate(
+                    "sources.raster.url",
+                    "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                )
 
+                "CUSTOM" -> SceneUpdate(
+                    "sources.raster.url",
+                    prefs.getString(
+                        Prefs.RASTER_TILE_URL,
+                        "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                    )
+                )
+
+                else -> null
+            }
+        )
 
     private fun getBaseSceneUpdates(): List<SceneUpdate> = listOf(
         SceneUpdate("global.language", Locale.getDefault().language),

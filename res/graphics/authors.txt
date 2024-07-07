@@ -401,12 +401,6 @@ quest/
     restaurant_vegetarian.svg        parts taken from Twemoji: U+1F37D and U+1F955
     road_construction.svg
     roof_shape.svg
-    sac_scale_t1.jpg                (C) Marco Volken      https://wiki.openstreetmap.org/wiki/File:SAC_SCALE_T1.jpg
-    sac_scale_t2.jpg                (C) Marco Volken      https://wiki.openstreetmap.org/wiki/File:SAC_SCALE_T2.jpg
-    sac_scale_t3.jpg                (C) Marco Volken      https://wiki.openstreetmap.org/wiki/File:SAC_SCALE_T3.jpg
-    sac_scale_t4.jpg                (C) Marco Volken      https://wiki.openstreetmap.org/wiki/File:SAC_SCALE_T4.jpg
-    sac_scale_t5.jpg                (C) Marco Volken      https://wiki.openstreetmap.org/wiki/File:SAC_SCALE_T5.jpg
-    sac_scale_t6.jpg                (C) Marco Volken      https://wiki.openstreetmap.org/wiki/File:SAC_SCALE_T6.jpg
     seating.svg
     shelter_type.svg                 modified from https://wiki.openstreetmap.org/wiki/File:Shelter-14.svg
     shower.svg

@@ -779,12 +779,10 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_building_material_value_wood">Wood</string>
     <string name="quest_building_material_value_concrete">Concrete</string>
     <string name="quest_building_material_value_metal">Metal</string>
-    <string name="quest_building_material_value_steel">Steel</string>
     <string name="quest_building_material_value_stone">Stone</string>
     <string name="quest_building_material_value_glass">Glass</string>
     <string name="quest_building_material_value_mirror">Mirror</string>
     <string name="quest_building_material_value_mud">Mud</string>
-    <string name="quest_building_material_value_tin">Tin</string>
     <string name="quest_building_material_value_plastic">Plastic</string>
     <string name="quest_building_material_value_timber_framing">Timber Framing</string>
     <string name="quest_building_material_value_sandstone">Sandstone</string>
@@ -792,12 +790,10 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_building_material_value_reed">Reed</string>
     <string name="quest_building_material_value_loam">Loam</string>
     <string name="quest_building_material_value_marble">Marble</string>
-    <string name="quest_building_material_value_copper">Copper</string>
     <string name="quest_building_material_value_slate">Slate</string>
     <string name="quest_building_material_value_vinyl">Vinyl</string>
     <string name="quest_building_material_value_limestone">Limestone</string>
     <string name="quest_building_material_value_tiles">Tiles</string>
-    <string name="quest_building_material_value_metal_plates">Metal_plates</string>
     <string name="quest_building_material_value_bamboo">Bamboo</string>
     <string name="quest_building_material_value_adobe">Adobe</string>
 </resources>

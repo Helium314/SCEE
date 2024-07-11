@@ -41,11 +41,6 @@ enum class BuildingMaterial(
         imageResId = R.drawable.building_material_metal,
         titleResId = R.string.quest_building_material_value_metal
     ),
-    STEEL(
-        osmValue = "steel",
-        imageResId = R.drawable.building_material_steel,
-        titleResId = R.string.quest_building_material_value_steel
-    ),
     STONE(
         osmValue = "stone",
         imageResId = R.drawable.building_material_stone,
@@ -65,11 +60,6 @@ enum class BuildingMaterial(
         osmValue = "mud",
         imageResId = R.drawable.building_material_mud,
         titleResId = R.string.quest_building_material_value_mud
-    ),
-    TIN(
-        osmValue = "tin",
-        imageResId = R.drawable.building_material_tin,
-        titleResId = R.string.quest_building_material_value_tin
     ),
     PLASTIC(
         osmValue = "plastic",
@@ -106,11 +96,6 @@ enum class BuildingMaterial(
         imageResId = R.drawable.building_material_marble,
         titleResId = R.string.quest_building_material_value_marble
     ),
-    COPPER(
-        osmValue = "copper",
-        imageResId = R.drawable.building_material_copper,
-        titleResId = R.string.quest_building_material_value_copper
-    ),
     SLATE(
         osmValue = "slate",
         imageResId = R.drawable.building_material_slate,
@@ -130,11 +115,6 @@ enum class BuildingMaterial(
         osmValue = "tiles",
         imageResId = R.drawable.building_material_tiles,
         titleResId = R.string.quest_building_material_value_tiles
-    ),
-    METAL_PLATES(
-        osmValue = "metal_plates",
-        imageResId = R.drawable.building_material_metal_plates,
-        titleResId = R.string.quest_building_material_value_metal_plates
     ),
     BAMBOO(
         osmValue = "bamboo",

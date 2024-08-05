@@ -6,6 +6,7 @@ import io.requery.android.database.sqlite.SQLiteOpenHelper
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable
 import de.westnordost.streetcomplete.quests.osmose.OsmoseTable
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestTables
+import de.westnordost.streetcomplete.quests.atpsync.AtpsyncTable
 
 class StreetCompleteSQLiteOpenHelper(context: Context, dbName: String) :
     SQLiteOpenHelper(context, dbName, null, DatabaseInitializer.DB_VERSION) {
@@ -16,6 +17,8 @@ class StreetCompleteSQLiteOpenHelper(context: Context, dbName: String) :
         // external source and osmose tables (get created in init as well, but apparently may still cause issues)
         db.execSQL(ExternalSourceQuestTables.CREATE_HIDDEN)
         db.execSQL(ExternalSourceQuestTables.CREATE_EDITS)
+        db.execSQL(AtpsyncTable.CREATE_IF_NOT_EXISTS)
+        db.execSQL(AtpsyncTable.CREATE_SPATIAL_INDEX_IF_NOT_EXISTS)
         db.execSQL(OsmoseTable.CREATE_IF_NOT_EXISTS)
         db.execSQL(OsmoseTable.CREATE_SPATIAL_INDEX_IF_NOT_EXISTS)
     }
@@ -27,6 +30,10 @@ class StreetCompleteSQLiteOpenHelper(context: Context, dbName: String) :
         // create other source tables
         writableDatabase.execSQL(ExternalSourceQuestTables.CREATE_HIDDEN)
         writableDatabase.execSQL(ExternalSourceQuestTables.CREATE_EDITS)
+
+        // create atpsync table
+        writableDatabase.execSQL(AtpsyncTable.CREATE_IF_NOT_EXISTS)
+        writableDatabase.execSQL(AtpsyncTable.CREATE_SPATIAL_INDEX_IF_NOT_EXISTS)
 
         // create osmose table
         writableDatabase.execSQL(OsmoseTable.CREATE_IF_NOT_EXISTS)

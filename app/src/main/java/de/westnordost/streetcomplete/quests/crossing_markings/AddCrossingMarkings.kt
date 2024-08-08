@@ -42,7 +42,7 @@ class AddCrossingMarkings : OsmElementQuestType<CrossingMarkings> {
     """.toElementFilterExpression()
     }
 
-    override val changesetComment = "Specify whether pedestrian crossings have markings"
+    override val changesetComment = "Specify type or existence of pedestrian crossing markings"
     override val wikiLink = "Key:crossing:markings"
     override val icon = R.drawable.ic_quest_pedestrian_crossing
     override val achievements = listOf(PEDESTRIAN)

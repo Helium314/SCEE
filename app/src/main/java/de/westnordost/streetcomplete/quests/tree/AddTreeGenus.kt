@@ -8,7 +8,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddTreeGenus : OsmFilterQuestType<Tree>() {
+class AddTreeGenus : OsmFilterQuestType<TreeAnswer>() {
 
     override val elementFilter = """
         nodes with
@@ -31,9 +31,11 @@ class AddTreeGenus : OsmFilterQuestType<Tree>() {
     override val isDeleteElementEnabled = true
 
     override fun applyAnswerTo(answer: Tree, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        if (answer.isSpecies)
-            tags["species"] = answer.name
-        else
-            tags["genus"] = answer.name
+    override fun applyAnswerTo(answer: TreeLeafTypeAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        when (answer) {
+            NotTreeButStump -> tags["natural"] = "tree_stump"
+            isSpecies -> tags["species"] = answer.name
+            else tags["genus"] = answer.name
+        }
     }
 }

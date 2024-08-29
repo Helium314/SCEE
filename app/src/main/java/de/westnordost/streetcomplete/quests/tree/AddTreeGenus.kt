@@ -31,13 +31,14 @@ class AddTreeGenus : OsmFilterQuestType<TreeAnswer>() {
     override val isDeleteElementEnabled = true
 
     override fun applyAnswerTo(answer: TreeAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-	if (answer is NotTreeButStump) {
-            tags["natural"] = "tree_stump"
-        } else {
-            if (answer.isSpecies)
-                tags["species"] = answer.name
-            else
-                tags["genus"] = answer.name
+        when (this) {
+            is Tree -> 
+                if (answer.isSpecies)
+                    tags["species"] = answer.name
+                else
+                    tags["genus"] = answer.name
+
+            is NotTreeButStump -> tags["natural"] = "tree_stump"
         }
     }
 }

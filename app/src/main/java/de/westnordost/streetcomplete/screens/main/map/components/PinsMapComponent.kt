@@ -6,9 +6,12 @@ import android.content.res.Configuration
 import androidx.annotation.UiThread
 import androidx.core.graphics.Insets
 import com.google.gson.JsonObject
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
+import de.westnordost.streetcomplete.data.preferences.Preferences
+import de.westnordost.streetcomplete.data.preferences.Theme
 import de.westnordost.streetcomplete.screens.main.map.createPinBitmap
 import de.westnordost.streetcomplete.screens.main.map.maplibre.MapImages
 import de.westnordost.streetcomplete.screens.main.map.maplibre.clear
@@ -20,6 +23,7 @@ import de.westnordost.streetcomplete.screens.main.map.maplibre.toLatLon
 import de.westnordost.streetcomplete.screens.main.map.maplibre.toMapLibreGeometry
 import de.westnordost.streetcomplete.screens.main.map.maplibre.toPoint
 import de.westnordost.streetcomplete.screens.main.map.maplibre.updateCamera
+import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -62,7 +66,7 @@ class PinsMapComponent(
     private val contentResolver: ContentResolver,
     private val map: MapLibreMap,
     private val mapImages: MapImages,
-    private val clickRadius: Float,
+    private val prefs: Preferences,
     private val onClickPin: (properties: Map<String, String>) -> Unit
 ) {
     private val pinsSource = GeoJsonSource(SOURCE,
@@ -71,6 +75,8 @@ class PinsMapComponent(
             .withClusterMaxZoom(CLUSTER_MAX_ZOOM)
             .withClusterRadius(55)
     )
+
+    private val radius = context.resources.dpToPx(4)
 
     // separate sources because this should not count towards clustering
     private val pinsGeometrySource = GeoJsonSource(GEOMETRY_SOURCE)
@@ -115,7 +121,7 @@ class PinsMapComponent(
             ),
         SymbolLayer("pin-cluster-layer", SOURCE)
             .withFilter(all(
-                gte(zoom(), 14f),
+                gte(zoom(), 13f),
                 lte(zoom(), CLUSTER_MAX_ZOOM),
                 gt(toNumber(get("point_count")), 1)
             ))
@@ -137,18 +143,17 @@ class PinsMapComponent(
             .withProperties(
                 circleColor("white"),
                 circleStrokeColor("#aaaaaa"),
-                circleRadius(4f),
+                circleRadius(6f),
                 circleStrokeWidth(1f),
-                circleTranslate(arrayOf(0f, -5f)), // so that it hides behind the pin
+                circleTranslate(arrayOf(0f, if (prefs.prefs.getBoolean(Prefs.OFFSET_FIX, false)) 0f else -8f)), // so that it hides behind the pin
                 circleTranslateAnchor(Property.CIRCLE_TRANSLATE_ANCHOR_VIEWPORT),
             ),
         CircleLayer("pin-quest-dot-layer", DOT_SOURCE)
             .withFilter(all(gt(zoom(), CLUSTER_MAX_ZOOM)))
             .withProperties(
                 circleColor(get("dot-color")),
-                circleStrokeOpacity(0.4f),
-                circleStrokeColor("#aaaaaa"),
-                circleRadius(9f),
+                circleStrokeColor(if (prefs.theme == Theme.LIGHT) "#666666" else "#333333"),
+                circleRadius(8f),
                 circleStrokeWidth(1f),
                 circleSortKey(get("dot-order"))
             ),
@@ -156,9 +161,14 @@ class PinsMapComponent(
             .withFilter(gt(zoom(), CLUSTER_MAX_ZOOM))
             .withProperties(
                 iconImage(get("icon-image")),
+                // constant icon size because click area would become a bit too small and more
+                // importantly, dynamic size per zoom + collision doesn't work together well, it
+                // results in a lot of flickering.
                 iconSize(1f),
+
                 // better would be arrayOf(-2.5f, 0f, -7f, 2.5f) or something like that, but setting
-                // different paddings per side is not supported by MapLibre Native yet
+                // different paddings per side is not supported by MapLibre Native yet. See
+                // https://github.com/maplibre/maplibre-native/issues/2368
                 iconPadding(-2f),
                 iconOffset(listOf(-4.5f, -34.5f).toTypedArray()),
                 symbolSortKey(get("icon-order")),
@@ -205,9 +215,9 @@ class PinsMapComponent(
 
     private fun onClick(position: LatLng): Boolean {
         val feature = map.queryRenderedFeatures(
-            coordinates = map.projection.toScreenLocation(position),
-            radius = clickRadius,
-            layerIds = arrayOf("pins-layer", "pin-cluster-layer", "pin-quest-dot-layer")
+            map.projection.toScreenLocation(position),
+            radius, // makes using SCEE quest dots much easier
+            *arrayOf("pins-layer", "pin-cluster-layer", "pin-quest-dot-layer")
         ).firstOrNull() ?: return false
 
         val properties = feature.properties()
@@ -269,7 +279,7 @@ class PinsMapComponent(
         private const val SOURCE = "pins-source"
         private const val GEOMETRY_SOURCE = "pins-geometry-source"
         private const val DOT_SOURCE = "pins-dot-source"
-        private const val CLUSTER_MAX_ZOOM = 16
+        private const val CLUSTER_MAX_ZOOM = 14
     }
 }
 

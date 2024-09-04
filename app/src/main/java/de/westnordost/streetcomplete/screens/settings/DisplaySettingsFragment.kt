@@ -27,7 +27,6 @@ import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.visiblequests.VisibleQuestTypeController
 import de.westnordost.streetcomplete.screens.HasTitle
 import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
-import de.westnordost.streetcomplete.util.ktx.setUpToolbarTitleAndIcon
 import de.westnordost.streetcomplete.util.ktx.toast
 import io.ticofab.androidgpxparser.parser.GPXParser
 import kotlinx.coroutines.GlobalScope
@@ -50,7 +49,7 @@ class DisplaySettingsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.rootView.findViewById<Toolbar>(R.id.toolbar)?.apply {
-            setUpToolbarTitleAndIcon(this)
+//            setUpToolbarTitleAndIcon(this)
         }
     }
 
@@ -146,6 +145,13 @@ class DisplaySettingsFragment :
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         if (key == Prefs.QUEST_GEOMETRIES)
             visibleQuestTypeController.onQuestTypeVisibilitiesChanged()
+        if (key == Prefs.OFFSET_FIX) {
+            // trigger map update
+            val old = prefs.getString(Prefs.THEME_BACKGROUND, "MAP")
+            val new = if (old == "MAP") "AERIAL" else "MAP"
+            sharedPreferences.edit().putString(Prefs.THEME_BACKGROUND, new).commit()
+            prefs.putString(Prefs.THEME_BACKGROUND, old)
+        }
     }
 
     override fun onResume() {

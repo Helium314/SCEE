@@ -19,16 +19,21 @@ class AddBarrierOpening(
 
     private val nodeFilter by lazy { """
         nodes with
-            barrier ~ gate|entrance|sliding_gate|swing_gate|wicket_gate|bollard|block
+            (
+                barrier ~ gate|entrance|sliding_gate|swing_gate|wicket_gate|bollard|block
+                or barrier = cycle_barrier and cycle_barrier ~ single|diagonal
+            )
             and (!maxwidth:physical or source:maxwidth_physical ~ ".*estimat.*")
             and (!width or source:width ~ ".*estimat.*")
             and (!maxwidth or source:maxwidth ~ ".*estimat.*")
             and access !~ private|no|customers|agricultural
         """.toElementFilterExpression() }
 
-    private val excludedWaysFilter by lazy { """
+    private val waysFilter by lazy { """
         ways with
-            highway and access ~ private|no|customers|agricultural
+            highway
+            and area != yes
+            and (access !~ private|no or (foot and foot !~ private|no))
     """.toElementFilterExpression() }
 
     override val changesetComment = "Specify width of opening"
@@ -39,19 +44,19 @@ class AddBarrierOpening(
         get() = if (!checkArSupport()) R.string.default_disabled_msg_no_ar else 0
 
     override fun getTitle(tags: Map<String, String>) =
-        if (tags["barrier"] == "bollard" || tags["barrier"] == "block") {
+        if (tags["barrier"] == "bollard" || tags["barrier"] == "block" || tags["cycle_barrier"] == "diagonal") {
             R.string.quest_barrier_opening_width_bollard
         } else {
             R.string.quest_barrier_opening_width_gate
         }
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
-        val excludedWayNodeIds = mapData.ways
-            .filter { excludedWaysFilter.matches(it) }
+        val wayNodeIds = mapData.ways
+            .filter { waysFilter.matches(it) }
             .flatMapTo(HashSet()) { it.nodeIds }
 
         return mapData.nodes
-            .filter { nodeFilter.matches(it) && it.id !in excludedWayNodeIds }
+            .filter { it.id in wayNodeIds && nodeFilter.matches(it) }
     }
 
     override fun isApplicableTo(element: Element) =

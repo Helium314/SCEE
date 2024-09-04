@@ -1,6 +1,8 @@
 package de.westnordost.streetcomplete.util
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.StringRes
@@ -83,6 +85,10 @@ class CrashReportExceptionHandler(
             }
             .setNegativeButton(android.R.string.cancel) { _, _ ->
                 activityCtx.toast("\uD83D\uDE22")
+            }
+            .setNeutralButton(android.R.string.copy) { _, _ ->
+                val clip = ClipData.newPlainText("SCEE error message", reportText)
+                (activityCtx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(clip)
             }
             .setCancelable(false)
             .show()

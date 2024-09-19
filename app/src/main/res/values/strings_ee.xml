@@ -223,6 +223,10 @@
     <string name="quick_switch_map_background">Toggle aerial / map background</string>
     <string name="quick_switch_preset">Switch preset</string>
 
+    <!-- extended quests -->
+    <!-- bicycle parking type -->
+    <string name="quest_bicycle_parking_type_safeloops">Safe Loops (supports wheel and frame)</string>
+    <string name="quest_bicycle_parking_type_saddleholder">Saddle holder</string>
 
     <!-- new quests -->
 

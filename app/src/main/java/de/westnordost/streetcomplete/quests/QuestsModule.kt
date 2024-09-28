@@ -610,7 +610,7 @@ fun getQuestTypeList(
     // quests added in SCEE
     EE_QUEST_OFFSET + 0 to AddBenchMaterial(),
     EE_QUEST_OFFSET + 27 to AddBuildingColour(),
-    EE_QUEST_OFFSET + 48 to AddBuildingMaterial(),
+    EE_QUEST_OFFSET + 49 to AddBuildingMaterial(),
     EE_QUEST_OFFSET + 24 to AddRoofColour(),
     EE_QUEST_OFFSET + 56 to AddRoofOrientation(),
     EE_QUEST_OFFSET + 1 to AddContactPhone(),

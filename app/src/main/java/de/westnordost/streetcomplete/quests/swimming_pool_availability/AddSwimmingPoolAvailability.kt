@@ -14,8 +14,8 @@ class AddSwimmingPoolAvailability : OsmFilterQuestType<SwimmingPoolAvailability>
     override val elementFilter = """
         nodes, ways with
          (
-           leisure ~ resort
-           or leisure = sports_hall and sport = swimming
+           leisure = resort
+           or (leisure = sports_hall and sport = swimming)
            or tourism ~ camp_site|hotel
          )
          and !swimming_pool

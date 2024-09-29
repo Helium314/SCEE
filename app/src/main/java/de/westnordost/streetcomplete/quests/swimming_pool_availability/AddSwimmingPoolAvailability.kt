@@ -4,6 +4,7 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.isPlaceOrDisusedPlace
@@ -29,7 +30,14 @@ class AddSwimmingPoolAvailability : OsmFilterQuestType<SwimmingPoolAvailability>
     override fun getTitle(tags: Map<String, String>) = R.string.quest_swimmingPoolAvailability_title
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlaceOrDisusedPlace() }
+        getMapData().filter("""
+                nodes, ways with
+                (
+                   leisure ~ resort|swimming_pool
+                   or (leisure = sports_hall and sport = swimming)
+                   or tourism ~ camp_site|hotel
+                 )
+            """)
 
     override fun createForm() = AddSwimmingPoolAvailabilityForm()
 

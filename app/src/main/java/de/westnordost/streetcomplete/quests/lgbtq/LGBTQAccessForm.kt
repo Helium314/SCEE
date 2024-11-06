@@ -12,12 +12,14 @@ class LGBTQAccessForm : AListQuestForm<String?>() {
         TextItem("welcome", R.string.quest_lgbtq_access_welcome),
         TextItem("primary", R.string.quest_lgbtq_access_primary),
         TextItem("only", R.string.quest_lgbtq_access_only),
-        TextItem(null, R.string.quest_lgbtq_access_not_marked),
     )
 
     override val otherAnswers get() = listOfNotNull(
+        AnswerItem(R.string.quest_lgbtq_access_not_marked) {
+            tempHideQuest()
+        },
         AnswerItem(R.string.quest_lgbtq_access_hide_forever) {
             hideQuest()
-        }
+        },
     )
 }

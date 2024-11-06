@@ -1,35 +1,18 @@
 package de.westnordost.streetcomplete.quests.lgbtq
 
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.view.image_select.DisplayItem
-import de.westnordost.streetcomplete.view.image_select.Item
+import de.westnordost.streetcomplete.quests.TextItem
 
-enum class LGTBQAccess(
-    val osmValue: String? = null
+enum class LGBTQAccess(
+    val osmValue: String?,
+    val titleId: Int,
 ) {
-    NO("no"),
-    WELCOME("welcome"),
-    PRIMARY("primary"),
-    ONLY("only"),
-    UNKNOWN,
+    NO("no", R.string.quest_lgbtq_access_no),
+    WELCOME("welcome", R.string.quest_lgbtq_access_welcome),
+    PRIMARY("primary", R.string.quest_lgbtq_access_primary),
+    ONLY("only", R.string.quest_lgbtq_access_only),
+    UNKNOWN(null, R.string.quest_lgbtq_access_not_marked),
 }
 
-fun List<LGTBQAccess>.toItems() = this.map { it.asItem() }
-fun LGTBQAccess.asItem(): DisplayItem<LGTBQAccess> = Item(this, iconResId, titleResId)
-
-val LGTBQAccess.titleResId: Int get() = when (this) {
-    LGTBQAccess.NO -> R.string.quest_lgbtq_access_no
-    LGTBQAccess.WELCOME -> R.string.quest_lgbtq_access_welcome
-    LGTBQAccess.PRIMARY -> R.string.quest_lgbtq_access_primary
-    LGTBQAccess.ONLY -> R.string.quest_lgbtq_access_only
-    LGTBQAccess.UNKNOWN -> R.string.quest_lgbtq_access_not_marked
-}
-
-// TOOD: populate icons
-val LGTBQAccess.iconResId: Int get() = when (this) {
-    LGTBQAccess.NO -> R.drawable.surface_asphalt
-    LGTBQAccess.WELCOME -> R.drawable.lgbtq_welcome
-    LGTBQAccess.PRIMARY -> R.drawable.surface_asphalt
-    LGTBQAccess.ONLY -> R.drawable.surface_asphalt
-    LGTBQAccess.UNKNOWN -> R.drawable.surface_asphalt
-}
+fun List<LGBTQAccess>.toItems() = this.map { it.asItem() }
+fun LGBTQAccess.asItem(): TextItem<LGBTQAccess> = TextItem(this, this.titleId)

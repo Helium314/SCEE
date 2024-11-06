@@ -1,18 +1,17 @@
 package de.westnordost.streetcomplete.quests.lgbtq
 
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.data.quest.OsmQuestKey
-import de.westnordost.streetcomplete.quests.AImageListQuestForm
+import de.westnordost.streetcomplete.quests.AListQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
 
-class LGBTQAccessForm : AImageListQuestForm<LGTBQAccess, LGBTQAccessAnswer>() {
+class LGBTQAccessForm : AListQuestForm<LGBTQAccess>() {
 
     override val items get() = listOf(
-        LGTBQAccess.NO,
-        LGTBQAccess.WELCOME,
-        LGTBQAccess.PRIMARY,
-        LGTBQAccess.ONLY,
-        LGTBQAccess.UNKNOWN,
+        LGBTQAccess.NO,
+        LGBTQAccess.WELCOME,
+        LGBTQAccess.PRIMARY,
+        LGBTQAccess.ONLY,
+        LGBTQAccess.UNKNOWN,
     ).toItems()
 
     override val otherAnswers get() = listOfNotNull(
@@ -20,15 +19,4 @@ class LGBTQAccessForm : AImageListQuestForm<LGTBQAccess, LGBTQAccessAnswer>() {
             hideQuest()
         }
     )
-
-    override val itemsPerRow = 3
-
-    override fun onClickOk(selectedItems: List<LGTBQAccess>) {
-        val value = selectedItems.single()
-        if (value.osmValue == null) {
-            hideOsmQuestController.hide(questKey as OsmQuestKey)
-            return
-        }
-        applyAnswer(LGBTQAccessAnswer(value))
-    }
 }

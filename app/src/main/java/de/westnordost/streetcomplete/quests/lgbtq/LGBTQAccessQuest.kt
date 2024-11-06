@@ -8,9 +8,8 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
 
-class LGBTQAccessQuest : OsmFilterQuestType<LGBTQAccessAnswer>() {
+class LGBTQAccessQuest : OsmFilterQuestType<String?>() {
     override val elementFilter = """
-
         nodes, ways with (
           amenity ~ swingerclub|nightclub|bar|pub|cafe|restaurant|place_of_worship|community_centre|library|doctors|social_facility
           or shop ~ erotic|books
@@ -38,9 +37,9 @@ class LGBTQAccessQuest : OsmFilterQuestType<LGBTQAccessAnswer>() {
     override fun isApplicableTo(element: Element): Boolean = filter.matches(element)
     override fun createForm() = LGBTQAccessForm()
 
-    override fun applyAnswerTo(answer: LGBTQAccessAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        if (answer.access.osmValue != null) {
-            tags["lgbtq"] = answer.access.osmValue
+    override fun applyAnswerTo(answer: String?, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        answer?.let {
+            tags["lgbtq"] = it
         }
     }
 }

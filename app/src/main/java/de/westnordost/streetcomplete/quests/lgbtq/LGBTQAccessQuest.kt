@@ -11,8 +11,8 @@ import de.westnordost.streetcomplete.osm.Tags
 class LGBTQAccessQuest : OsmFilterQuestType<String?>() {
     override val elementFilter = """
         nodes, ways with (
-          amenity ~ swingerclub|nightclub|bar|pub|cafe|restaurant|place_of_worship|community_centre|library|doctors|social_facility
-          or shop ~ erotic|books
+          amenity ~ swingerclub|nightclub|bar|pub|cafe|restaurant|place_of_worship|community_centre|library|doctors|social_facility|veterinary
+          or shop ~ erotic|books|music
           or leisure ~ sauna|nightclub|nightlife
         )
         and (!seasonal or seasonal = no)

@@ -16,9 +16,6 @@ class LGBTQAccessForm : AListQuestForm<String?>() {
 
     override val otherAnswers get() = listOfNotNull(
         AnswerItem(R.string.quest_lgbtq_access_not_marked) {
-            tempHideQuest()
-        },
-        AnswerItem(R.string.quest_lgbtq_access_hide_forever) {
             hideQuest()
         },
     )

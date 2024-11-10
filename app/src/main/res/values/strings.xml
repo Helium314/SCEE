@@ -1146,8 +1146,7 @@ If any lanes are reserved for buses, please leave a note instead."</string>
     <string name="quest_lgbtq_access_welcome">explicitly welcome</string>
     <string name="quest_lgbtq_access_primary">target audience</string>
     <string name="quest_lgbtq_access_only">only</string>
-    <string name="quest_lgbtq_access_not_marked">not posted</string>
-    <string name="quest_lgbtq_access_hide_forever">hide forever</string>
+    <string name="quest_lgbtq_access_not_marked">not posted/hide forever</string>
 
     <string name="quest_lgbtq_gender_specialization">Does this venue cater to specific groups within the LGBTQ community?</string>
     <string name="quest_lgbtq_gender_specialization_men">Men</string>

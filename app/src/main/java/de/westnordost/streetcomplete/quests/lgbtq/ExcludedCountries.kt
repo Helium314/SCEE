@@ -6,15 +6,15 @@ import de.westnordost.streetcomplete.data.quest.AllCountriesExcept
 // where homosexuality is illegal
 val LGBTPropagandaCountries =
     listOf(
-	// Belarus, see https://www.reuters.com/world/europe/belarus-prepares-law-against-lgbt-propaganda-state-media-says-2024-02-19/
-	// "BY",
-	// Georgia, see https://oc-media.org/georgian-dream-announces-draft-law-against-pseudo-liberal-ideology/
-	// "GE",
-	// Kyrgyzstan, see https://en.wikipedia.org/wiki/Kyrgyz_anti-LGBT_propaganda_law
-	"KY",
-	// Russia, since 2013 and worst since 2023
-	"RU",
-)
+        // Belarus, see https://www.reuters.com/world/europe/belarus-prepares-law-against-lgbt-propaganda-state-media-says-2024-02-19/
+        // "BY",
+        // Georgia, see https://oc-media.org/georgian-dream-announces-draft-law-against-pseudo-liberal-ideology/
+        // "GE",
+        // Kyrgyzstan, see https://en.wikipedia.org/wiki/Kyrgyz_anti-LGBT_propaganda_law
+        "KY",
+        // Russia, since 2013 and worst since 2023
+        "RU",
+    )
 
 // countries where homosexuality is illegal
 // even if unenforced or just for male

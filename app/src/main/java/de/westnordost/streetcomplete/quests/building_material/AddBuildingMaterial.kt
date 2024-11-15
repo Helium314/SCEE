@@ -19,7 +19,7 @@ class AddBuildingMaterial : OsmFilterQuestType<BuildingMaterial>() {
     override val wikiLink = "Key:building:material"
     override val icon = R.drawable.ic_quest_building_material
 
-    override val defaultDisabledMessage = R.string.default_disabled_msg_buildingMaterial
+    override val defaultDisabledMessage = R.string.default_disabled_msg_difficult_and_time_consuming
 
     override fun getTitle(tags: Map<String, String>) = when {
         tags.containsKey("building:part") -> R.string.quest_buildingPartMaterial_title

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
@@ -62,6 +63,10 @@ class DisplaySettingsFragment :
             onClickDisplayGpxTrack()
             true
         }
+        findPreference<Preference>("display_custom_geometry")?.setOnPreferenceClickListener {
+            onClickDisplayCustomGeometry()
+            true
+        }
     }
 
     private fun onClickDisplayGpxTrack() {
@@ -118,12 +123,56 @@ class DisplaySettingsFragment :
         d.show()
     }
 
+    private fun onClickDisplayCustomGeometry() {
+        val fileExists = context?.getExternalFilesDir(null)?.let { File(it, CUSTOM_GEOMETRY_FILE) }?.exists() == true
+        var d: AlertDialog? = null
+        val selectFileButton = Button(context).apply {
+            setText(R.string.pref_gpx_track_provide) // todo
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "*/*"
+            }
+            setOnClickListener {
+                d?.dismiss()
+                startActivityForResult(intent, CUSTOM_GEOMETRY_CODE)
+            }
+        }
+        val enableSwitch = SwitchCompat(requireContext()).apply {
+            setText(R.string.pref_gpx_track_enable) // todo
+            isChecked = prefs.getBoolean(Prefs.SHOW_CUSTOM_GEOMETRY, false)
+            isEnabled = fileExists
+            setOnCheckedChangeListener { _, _ ->
+                prefs.putBoolean(Prefs.SHOW_CUSTOM_GEOMETRY, isChecked)
+                custom_geometry_changed = true
+            }
+        }
+        val layout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(selectFileButton)
+            addView(enableSwitch)
+        }
+        d = AlertDialog.Builder(requireContext())
+            .setTitle(R.string.pref_gpx_track_title) // todo
+            .setViewWithDefaultPadding(layout)
+            .setPositiveButton(R.string.close, null)
+            .create()
+        d.show()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val uri = data?.data
-        if (resultCode != Activity.RESULT_OK || requestCode != GPX_TRACK_CODE || uri == null) {
-            context?.toast(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
+        if (resultCode != Activity.RESULT_OK || uri == null) {
+            context?.toast(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG) // todo
             return
         }
+        when (requestCode) {
+            GPX_TRACK_CODE -> loadGpxTrack(uri)
+            CUSTOM_GEOMETRY_CODE -> saveCustomGeometry(uri)
+            else -> context?.toast(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG) // todo
+        }
+    }
+
+    private fun loadGpxTrack(uri: Uri) {
         // fail if file doesn't have gpx ending
         activity?.contentResolver?.query(uri, null, null, null, null).use {
             if (it != null && it.moveToFirst()) {
@@ -142,6 +191,18 @@ class DisplaySettingsFragment :
             onClickDisplayGpxTrack()
         } catch (e: IOException) {
             context?.toast(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
+        }
+    }
+
+    private fun saveCustomGeometry(uri: Uri) {
+        try {
+            activity?.contentResolver?.openInputStream(uri)?.use { it.bufferedReader().use { reader ->
+                File(context?.getExternalFilesDir(null), CUSTOM_GEOMETRY_FILE).writeText(reader.readText())
+            } }
+            custom_geometry_changed = true
+            onClickDisplayCustomGeometry()
+        } catch (e: IOException) {
+            context?.toast(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG) // todo
         }
     }
 
@@ -169,6 +230,7 @@ class DisplaySettingsFragment :
 
     companion object {
         var gpx_track_changed = false
+        var custom_geometry_changed = false
     }
 }
 
@@ -204,5 +266,13 @@ fun loadGpxTrackPoints(context: Context, complain: Boolean = false): List<LatLon
     return gpxPoints
 }
 
+fun loadCustomGeometryText(context: Context): String? {
+    val file = context.getExternalFilesDir(null)?.let { File(it, CUSTOM_GEOMETRY_FILE) }
+    if (file?.exists() != true) return null
+    return file.readText()
+}
+
 private const val GPX_TRACK_CODE = 56327
 private const val GPX_TRACK_FILE = "display_track.gpx"
+private const val CUSTOM_GEOMETRY_CODE = 56328
+private const val CUSTOM_GEOMETRY_FILE = "customGeometry.geojson"

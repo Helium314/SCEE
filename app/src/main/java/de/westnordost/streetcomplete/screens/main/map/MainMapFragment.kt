@@ -256,7 +256,8 @@ class MainMapFragment : MapFragment(), ShowsGeometryMarkers {
             geometryMapComponent?.layers,
             locationMapComponent?.layers,
             pinsMapComponent?.layers,
-            selectedPinsMapComponent?.layers
+            selectedPinsMapComponent?.layers,
+            customGeometryMapComponent?.layers
         ).flatten()) {
             style.addLayer(layer)
         }

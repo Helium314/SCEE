@@ -48,6 +48,6 @@
     <Preference
         app:iconSpaceReserved="false"
         android:key="display_custom_geometry"
-        android:title="custom geometry, replace with string" />
+        android:title="@string/pref_custom_geometry_title" />
 
 </PreferenceScreen>

@@ -69,6 +69,9 @@
     <string name="pref_gpx_track_loading_error">Error loading GPX track file</string>
     <string name="pref_gpx_track_enable">Display GPX track</string>
     <string name="pref_gpx_track_download">Download area covered by GPX track</string>
+    <string name="pref_custom_geometry_title">Display map features from GeoJson file</string>
+    <string name="file_provide">Select file</string>
+    <string name="file_loading_error">Error loading file</string>
 
     <!-- ui settings -->
     <string name="pref_screen_ui">UI</string>

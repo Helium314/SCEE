@@ -127,7 +127,7 @@ class DisplaySettingsFragment :
         val fileExists = context?.getExternalFilesDir(null)?.let { File(it, CUSTOM_GEOMETRY_FILE) }?.exists() == true
         var d: AlertDialog? = null
         val selectFileButton = Button(context).apply {
-            setText(R.string.pref_gpx_track_provide) // todo
+            setText(R.string.file_provide)
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "*/*"
@@ -138,7 +138,7 @@ class DisplaySettingsFragment :
             }
         }
         val enableSwitch = SwitchCompat(requireContext()).apply {
-            setText(R.string.pref_gpx_track_enable) // todo
+            setText(R.string.quest_enabled)
             isChecked = prefs.getBoolean(Prefs.SHOW_CUSTOM_GEOMETRY, false)
             isEnabled = fileExists
             setOnCheckedChangeListener { _, _ ->
@@ -152,7 +152,7 @@ class DisplaySettingsFragment :
             addView(enableSwitch)
         }
         d = AlertDialog.Builder(requireContext())
-            .setTitle(R.string.pref_gpx_track_title) // todo
+            .setTitle(R.string.pref_custom_geometry_title)
             .setViewWithDefaultPadding(layout)
             .setPositiveButton(R.string.close, null)
             .create()
@@ -162,13 +162,13 @@ class DisplaySettingsFragment :
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val uri = data?.data
         if (resultCode != Activity.RESULT_OK || uri == null) {
-            context?.toast(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG) // todo
+            context?.toast(R.string.file_loading_error, Toast.LENGTH_LONG)
             return
         }
         when (requestCode) {
             GPX_TRACK_CODE -> loadGpxTrack(uri)
             CUSTOM_GEOMETRY_CODE -> saveCustomGeometry(uri)
-            else -> context?.toast(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG) // todo
+            else -> context?.toast(R.string.file_loading_error, Toast.LENGTH_LONG)
         }
     }
 
@@ -202,7 +202,7 @@ class DisplaySettingsFragment :
             custom_geometry_changed = true
             onClickDisplayCustomGeometry()
         } catch (e: IOException) {
-            context?.toast(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG) // todo
+            context?.toast(R.string.file_loading_error, Toast.LENGTH_LONG)
         }
     }
 

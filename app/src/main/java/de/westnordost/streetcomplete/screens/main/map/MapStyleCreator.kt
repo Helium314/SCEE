@@ -208,7 +208,7 @@ private data class Text(
     ).joinToString()
 }
 
-fun createMapStyle(name: String, accessToken: String, languages: List<String>, colors: MapColors, rasterSource: String? = null, rasterMaxZoom: Int? = 21): String {
+fun createMapStyle(name: String, accessToken: String, languages: List<String>, colors: MapColors, rasterSource: String? = null, rasterMaxZoom: Int? = null): String {
 
     val pathWidth = listOf(14.0 to 0.5, 16.0 to 1.0, 24.0 to 256.0)  // ~1m
 

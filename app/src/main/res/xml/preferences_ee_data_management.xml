@@ -25,6 +25,21 @@
 
     <de.westnordost.streetcomplete.screens.settings.NumberPickerPreference
         app:iconSpaceReserved="false"
+        android:key="raster_tile_maxzoom"
+        android:title="@string/pref_tile_maxzoom"
+        android:summary="@string/pref_tile_maxzoom_summary"
+        android:defaultValue="21"
+        android:persistent="true"
+        app:minValue="8"
+        app:maxValue="30"
+        app:step="1"
+        android:dialogMessage="@string/pref_tile_maxzoom_message"
+        android:dialogLayout="@layout/dialog_number_picker_preference"
+        android:positiveButtonText="@android:string/ok"
+        android:negativeButtonText="@android:string/cancel" />
+
+    <de.westnordost.streetcomplete.screens.settings.NumberPickerPreference
+        app:iconSpaceReserved="false"
         android:key="data_retain_time"
         android:title="@string/pref_delete_old_data_after"
         android:summary="@string/pref_delete_old_data_after_summary"

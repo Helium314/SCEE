@@ -88,7 +88,7 @@ fun AboutScreen(
 
                 Preference(
                     name = stringResource(R.string.about_title_faq),
-                    onClick = { uriHandler.openUri("https://wiki.openstreetmap.org/wiki/StreetComplete/FAQ") },
+                    onClick = { uriHandler.openUri("https://wiki.openstreetmap.org/wiki/SCEE/FAQ") },
                 ) { OpenInBrowserIcon() }
 
                 Preference(

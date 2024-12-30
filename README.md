@@ -14,6 +14,7 @@ Functionality added in SCEE is considerably less tested than what you might be u
 6. [Differences in changesets](#changeset-differences-compared-to-streetcomplete)
 
 [StreetComplete readme](README_StreetComplete.md)
+
 [SCEE FAQ](https://wiki.openstreetmap.org/wiki/SCEE/FAQ)
 
 ## Download SCEE

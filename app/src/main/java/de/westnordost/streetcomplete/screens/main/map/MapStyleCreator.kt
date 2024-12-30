@@ -208,7 +208,7 @@ private data class Text(
     ).joinToString()
 }
 
-fun createMapStyle(name: String, accessToken: String, languages: List<String>, colors: MapColors, rasterSource: String? = null, rasterMaxZoom: Integer? = 21): String {
+fun createMapStyle(name: String, accessToken: String, languages: List<String>, colors: MapColors, rasterSource: String? = null, rasterMaxZoom: Int? = 21): String {
 
     val pathWidth = listOf(14.0 to 0.5, 16.0 to 1.0, 24.0 to 256.0)  // ~1m
 
@@ -646,7 +646,7 @@ fun createMapStyle(name: String, accessToken: String, languages: List<String>, c
 """
 }
 
-private fun partBeforeLayers(name: String, accessToken: String, rasterSource: String?, rasterMaxZoom: Integer?) = """{
+private fun partBeforeLayers(name: String, accessToken: String, rasterSource: String?, rasterMaxZoom: Int?) = """{
   "version": 8,
   "name": "$name",
   "sources": {

@@ -155,14 +155,15 @@ class DataManagementSettingsFragment :
                 setText(R.string.pref_tile_source_hide_labels)
                 isChecked = prefs.getBoolean(Prefs.NO_SATELLITE_LABEL, false)
             }
-            val currentMaxZoom = prefs.getInt(Prefs.RASTER_MAXZOOM, 21)!!
             val maxZoom = EditText(requireContext()).apply {
-                setText(currentMaxZoom) // FIXME
+                inputType = InputType.TYPE_CLASS_NUMBER
+                setText(prefs.getInt(Prefs.RASTER_MAXZOOM, 21).toString())
             }
             val layout = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.VERTICAL
                 addView(TextView(requireContext()).apply { setText(R.string.pref_tile_source_message) })
                 addView(urlText)
+                addView(TextView(requireContext()).apply { setText(R.string.pref_tile_maxzoom) })
                 addView(maxZoom)
                 addView(hideLabelsSwitch)
             }
@@ -180,7 +181,7 @@ class DataManagementSettingsFragment :
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     prefs.edit {
                         putString(Prefs.RASTER_TILE_URL, urlText.text.toString())
-                        putInt(Prefs.RASTER_TILE_MAXZOOM, maxZoom.text.toInt()) // FIXME
+                        putInt(Prefs.RASTER_TILE_MAXZOOM, maxZoom.text.toInt())
                         putBoolean(Prefs.NO_SATELLITE_LABEL, hideLabelsSwitch.isChecked)
                     }
 

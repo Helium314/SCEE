@@ -10,6 +10,7 @@ import android.provider.OpenableColumns
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
@@ -146,8 +147,12 @@ class DisplaySettingsFragment :
                 custom_geometry_changed = true
             }
         }
+        val info = TextView(requireContext()).apply {
+            setText(R.string.pref_custom_geometry_info)
+        }
         val layout = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
+            addView(info)
             addView(selectFileButton)
             addView(enableSwitch)
         }

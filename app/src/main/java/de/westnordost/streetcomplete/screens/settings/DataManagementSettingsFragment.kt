@@ -22,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.StreetCompleteApplication
@@ -158,7 +159,7 @@ class DataManagementSettingsFragment :
             }
             val maxZoom = EditText(requireContext()).apply {
                 inputType = InputType.TYPE_CLASS_NUMBER
-                setText(prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, 21).toString())
+                setText(prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, RASTER_DEFAULT_MAXZOOM).toString())
             }
             val layout = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.VERTICAL

@@ -159,7 +159,7 @@ class DataManagementSettingsFragment :
             }
             val maxZoom = EditText(requireContext()).apply {
                 inputType = InputType.TYPE_CLASS_NUMBER
-                setText(prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, RASTER_DEFAULT_MAXZOOM).toString())
+                setText(prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, ApplicationConstants.RASTER_DEFAULT_MAXZOOM).toString())
             }
             val layout = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.VERTICAL

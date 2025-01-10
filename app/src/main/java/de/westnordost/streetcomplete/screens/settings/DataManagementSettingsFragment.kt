@@ -753,9 +753,12 @@ class DataManagementSettingsFragment :
 // when importing, names should be updated!
 private fun List<String>.renameUpdatedQuests() = map { it.renameUpdatedQuests() }
 
-fun String.renameUpdatedQuests() = replace("ExternalQuest", CustomQuest::class.simpleName!!)
-    .replace("AddPicnicTableCover", AddAmenityCover::class.simpleName!!)
-val oldQuestNames = listOf("ExternalQuest", "AddPicnicTableCover")
+val renamedQuests = mapOf(
+    "ExternalQuest" to CustomQuest::class.simpleName!!,
+    "AddPicnicTableCover" to AddAmenityCover::class.simpleName!!,
+)
+fun String.renameUpdatedQuests() =
+    renamedQuests.entries.fold(this) { acc, (old, new) -> acc.replace(old, new) }
 
 private const val REQUEST_CODE_SETTINGS_EXPORT = 532527
 private const val REQUEST_CODE_HIDDEN_EXPORT = 532528

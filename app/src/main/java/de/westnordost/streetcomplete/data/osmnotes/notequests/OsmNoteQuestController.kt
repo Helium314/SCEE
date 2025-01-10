@@ -229,7 +229,7 @@ private fun Note.shouldShowAsQuest(
     // don't show notes hidden by user
     if (id in blockedNoteIds) return false
     if (isClosed) return false // don't show closed notes
-    val ignoreThisUserId = showOwnNotes ? 0 : userId
+    val ignoreThisUserId = showOwnNotes ? 0 : userId    // ignoreThisUserId==0 won't ever match any user
 
     // don't show notes created by specific users
     comments.firstOrNull()?.let {

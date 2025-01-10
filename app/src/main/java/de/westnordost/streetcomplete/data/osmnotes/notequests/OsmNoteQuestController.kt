@@ -225,6 +225,7 @@ private fun Note.shouldShowAsQuest(
     // don't show notes hidden by user
     if (id in blockedNoteIds) return false
     if (isClosed) return false // don't show closed notes
+    val ignoreThisUserId = prefs.getBoolean(Prefs.SHOW_OWN_NOTES, false)) ? 0 : userId
 
     // don't show notes created by specific users
     comments.firstOrNull()?.let {
@@ -234,14 +235,14 @@ private fun Note.shouldShowAsQuest(
 
     // don't show notes where user replied last unless he wrote a survey required marker
     if (showOnlyNotesPhrasedAsQuestions
-        && comments.last().isReplyFromUser(userId)
+        && comments.last().isReplyFromUser(ignoreThisUserId)
         && !comments.last().containsSurveyRequiredMarker()
     ) {
         return false
     }
 
     // newly created notes by user should not be shown if it was both created in this app and has no replies yet
-    if (probablyCreatedByUserInThisApp(userId, !showOnlyNotesPhrasedAsQuestions) && !hasReplies) return false
+    if (probablyCreatedByUserInThisApp(ignoreThisUserId, !showOnlyNotesPhrasedAsQuestions) && !hasReplies) return false
 
     /*
         many notes are created to report problems on the map that cannot be resolved

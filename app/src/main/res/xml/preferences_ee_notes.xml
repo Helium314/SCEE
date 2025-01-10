@@ -27,6 +27,14 @@
 
     <SwitchPreference
         app:iconSpaceReserved="false"
+        android:key="show_own_notes"
+        android:title="@string/pref_show_own_notes_title"
+        android:summary="@string/pref_show_own_notes_summary"
+        android:defaultValue="false"
+        android:persistent="true" />
+
+    <SwitchPreference
+        app:iconSpaceReserved="false"
         android:key="create_external_quests"
         android:title="@string/pref_create_custom_quest_title"
         android:summary="@string/pref_create_custom_quest_summary"

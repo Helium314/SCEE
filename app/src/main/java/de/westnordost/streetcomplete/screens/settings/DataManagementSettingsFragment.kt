@@ -43,6 +43,8 @@ import de.westnordost.streetcomplete.data.visiblequests.VisibleQuestTypeControll
 import de.westnordost.streetcomplete.data.visiblequests.VisibleQuestTypeTable
 import de.westnordost.streetcomplete.overlays.custom.getCustomOverlayIndices
 import de.westnordost.streetcomplete.overlays.custom.getIndexedCustomOverlayPref
+import de.westnordost.streetcomplete.quests.amenity_cover.AddAmenityCover
+import de.westnordost.streetcomplete.quests.custom.CustomQuest
 import de.westnordost.streetcomplete.quests.custom.FILENAME_CUSTOM_QUEST
 import de.westnordost.streetcomplete.quests.osmose.OsmoseDao
 import de.westnordost.streetcomplete.quests.tree.FILENAME_TREES
@@ -751,8 +753,8 @@ class DataManagementSettingsFragment :
 // when importing, names should be updated!
 private fun List<String>.renameUpdatedQuests() = map { it.renameUpdatedQuests() }
 
-fun String.renameUpdatedQuests() = replace("ExternalQuest", "CustomQuest")
-    .replace("AddPicnicTableCover", "AddAmenityCover")
+fun String.renameUpdatedQuests() = replace("ExternalQuest", CustomQuest::class.simpleName!!)
+    .replace("AddPicnicTableCover", AddAmenityCover::class.simpleName!!)
 val oldQuestNames = listOf("ExternalQuest", "AddPicnicTableCover")
 
 private const val REQUEST_CODE_SETTINGS_EXPORT = 532527

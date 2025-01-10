@@ -32,7 +32,7 @@ class OsmNoteQuestController(
         !prefs.showAllNotes
 
     private val showOwnNotes: Boolean get() =
-        prefs.getBoolean(Prefs.SHOW_OWN_NOTES, false))
+        prefs.getBoolean(Prefs.SHOW_OWN_NOTES, false)
 
     private val settingsListener: SettingsListener
 
@@ -229,7 +229,7 @@ private fun Note.shouldShowAsQuest(
     // don't show notes hidden by user
     if (id in blockedNoteIds) return false
     if (isClosed) return false // don't show closed notes
-    val ignoreThisUserId = showOwnNotes ? 0 : userId    // ignoreThisUserId==0 won't ever match any user
+    val ignoreThisUserId: Long = if (showOwnNotes) 0L else userId    // ignoreThisUserId==0 won't ever match any user
 
     // don't show notes created by specific users
     comments.firstOrNull()?.let {

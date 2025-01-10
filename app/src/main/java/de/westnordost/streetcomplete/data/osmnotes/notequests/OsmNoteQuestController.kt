@@ -31,6 +31,9 @@ class OsmNoteQuestController(
     private val showOnlyNotesPhrasedAsQuestions: Boolean get() =
         !prefs.showAllNotes
 
+    private val showOwnNotes: Boolean get() =
+        prefs.getBoolean(Prefs.SHOW_OWN_NOTES, false))
+
     private val settingsListener: SettingsListener
 
     private val blockedUserIds = hashSetOf<Long>()
@@ -109,7 +112,7 @@ class OsmNoteQuestController(
     }
 
     private fun createQuestForNote(note: Note, blockedNoteIds: Set<Long> = setOf()): OsmNoteQuest? =
-        if (note.shouldShowAsQuest(userDataSource.userId, showOnlyNotesPhrasedAsQuestions, blockedNoteIds, blockedUserIds, blockedUserNames)) {
+        if (note.shouldShowAsQuest(userDataSource.userId, showOnlyNotesPhrasedAsQuestions, showOwnNotes, blockedNoteIds, blockedUserIds, blockedUserNames)) {
             OsmNoteQuest(note.id, note.position)
         } else {
             null
@@ -218,6 +221,7 @@ class OsmNoteQuestController(
 private fun Note.shouldShowAsQuest(
     userId: Long,
     showOnlyNotesPhrasedAsQuestions: Boolean,
+    showOwnNotes: Boolean,
     blockedNoteIds: Set<Long>,
     blockedIds: Collection<Long>,
     blockedNames: Collection<String>,
@@ -225,7 +229,7 @@ private fun Note.shouldShowAsQuest(
     // don't show notes hidden by user
     if (id in blockedNoteIds) return false
     if (isClosed) return false // don't show closed notes
-    val ignoreThisUserId = prefs.getBoolean(Prefs.SHOW_OWN_NOTES, false)) ? 0 : userId
+    val ignoreThisUserId = showOwnNotes ? 0 : userId
 
     // don't show notes created by specific users
     comments.firstOrNull()?.let {

@@ -31,8 +31,8 @@ class OsmNoteQuestController(
     private val showOnlyNotesPhrasedAsQuestions: Boolean get() =
         !prefs.showAllNotes
 
-    private val showAllNotes: Boolean get() =
-        prefs.getBoolean(Prefs.SHOW_ALL_NOTES, false)
+    private val reallyAllNotes: Boolean get() =
+        prefs.getBoolean(Prefs.REALLY_ALL_NOTES, false)
 
     private val settingsListener: SettingsListener
 
@@ -112,7 +112,7 @@ class OsmNoteQuestController(
     }
 
     private fun createQuestForNote(note: Note, blockedNoteIds: Set<Long> = setOf()): OsmNoteQuest? =
-        if (note.shouldShowAsQuest(userDataSource.userId, showOnlyNotesPhrasedAsQuestions, showAllNotes, blockedNoteIds, blockedUserIds, blockedUserNames)) {
+        if (note.shouldShowAsQuest(userDataSource.userId, showOnlyNotesPhrasedAsQuestions, reallyAllNotes, blockedNoteIds, blockedUserIds, blockedUserNames)) {
             OsmNoteQuest(note.id, note.position)
         } else {
             null
@@ -221,7 +221,7 @@ class OsmNoteQuestController(
 private fun Note.shouldShowAsQuest(
     userId: Long,
     showOnlyNotesPhrasedAsQuestions: Boolean,
-    showAllNotes: Boolean,
+    reallyAllNotes: Boolean,
     blockedNoteIds: Set<Long>,
     blockedIds: Collection<Long>,
     blockedNames: Collection<String>,
@@ -229,13 +229,15 @@ private fun Note.shouldShowAsQuest(
     // don't show notes hidden by user
     if (id in blockedNoteIds) return false
     if (isClosed) return false // don't show closed notes
-    val ignoreThisUserId: Long = if (showAllNotes) 0L else userId    // ignoreThisUserId==0 won't ever match any user
 
     // don't show notes created by specific users
     comments.firstOrNull()?.let {
         if (blockedIds.contains(it.user?.id)) return false
         if (blockedNames.contains(it.user?.displayName?.lowercase())) return false
     }
+
+    // If we've chosen that "all notes" means "ALL notes", then show this note too (we need no further checks, as it is not blocked nor closed)
+    if (reallyAllNotes && !showOnlyNotesPhrasedAsQuestions) return true
 
     /*
         We usually don't show notes where either the user is the last responder, or the

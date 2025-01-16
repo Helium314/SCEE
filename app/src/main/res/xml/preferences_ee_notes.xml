@@ -27,9 +27,9 @@
 
     <SwitchPreference
         app:iconSpaceReserved="false"
-        android:key="show_all_notes"
-        android:title="@string/pref_show_all_notes_title"
-        android:summary="@string/pref_show_all_notes_summary"
+        android:key="really_all_notes"
+        android:title="@string/pref_really_all_notes_title"
+        android:summary="@string/pref_really_all_notes_summary"
         android:defaultValue="false"
         android:persistent="true" />
 

@@ -22,16 +22,27 @@ import de.westnordost.streetcomplete.data.quest.OsmQuestKey
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.quests.address.AddHousenumber
+import de.westnordost.streetcomplete.quests.barrier_type.AddBarrierOnPath
+import de.westnordost.streetcomplete.quests.barrier_type.AddBarrierOnRoad
+import de.westnordost.streetcomplete.quests.building_entrance.AddEntrance
+import de.westnordost.streetcomplete.quests.building_entrance_reference.AddEntranceReference
+import de.westnordost.streetcomplete.quests.crossing.AddCrossing
 import de.westnordost.streetcomplete.quests.cycleway.AddCycleway
+import de.westnordost.streetcomplete.quests.destination.AddDestination
 import de.westnordost.streetcomplete.quests.existence.CheckExistence
+import de.westnordost.streetcomplete.quests.kerb_height.AddKerbHeight
+import de.westnordost.streetcomplete.quests.max_height.AddMaxHeight
 import de.westnordost.streetcomplete.quests.opening_hours.AddOpeningHours
+import de.westnordost.streetcomplete.quests.piste_difficulty.AddPisteDifficulty
+import de.westnordost.streetcomplete.quests.piste_lit.AddPisteLit
+import de.westnordost.streetcomplete.quests.piste_ref.AddPisteRef
 import de.westnordost.streetcomplete.quests.place_name.AddPlaceName
 import de.westnordost.streetcomplete.util.Listeners
 import de.westnordost.streetcomplete.util.ktx.format
 import de.westnordost.streetcomplete.util.ktx.intersects
 import de.westnordost.streetcomplete.util.ktx.isInAny
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
-import de.westnordost.streetcomplete.util.ktx.truncateTo5Decimals
+import de.westnordost.streetcomplete.util.ktx.truncateTo6Decimals
 import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.contains
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
@@ -78,11 +89,21 @@ class OsmQuestController internal constructor(
             .map { it.name }.toHashSet()
     }
 
-    // must be valid names!
-    // todo: use actual class names, or better re-evaluate whether this is worth it and maybe invert to blacklist
-    private val questsRequiringElementsWithoutTags = hashSetOf("AddBarrierOnRoad", "AddBarrierOnPath", "AddCrossing",
-        "AddMaxHeight", "AddEntrance", "AddEntranceReference", "AddHousenumber", "AddDestination", "AddPisteDifficulty",
-        "AddKerbHeight", "AddPisteRef", "AddPisteLit")
+    // todo: re-evaluate whether this is worth it and maybe invert to blacklist
+    private val questsRequiringElementsWithoutTags = hashSetOf(
+        AddBarrierOnRoad::class.simpleName!!,
+        AddBarrierOnPath::class.simpleName!!,
+        AddCrossing::class.simpleName!!,
+        AddMaxHeight::class.simpleName!!,
+        AddEntrance::class.simpleName!!,
+        AddEntranceReference::class.simpleName!!,
+        AddHousenumber::class.simpleName!!,
+        AddDestination::class.simpleName!!,
+        AddPisteDifficulty::class.simpleName!!,
+        AddKerbHeight::class.simpleName!!,
+        AddPisteRef::class.simpleName!!,
+        AddPisteLit::class.simpleName!!,
+    )
 
     private val hiddenCache by lazy { synchronized(this) { hiddenDB.getAllIds().toHashSet() } }
 
@@ -319,12 +340,12 @@ class OsmQuestController internal constructor(
         if (prefs.getBoolean(Prefs.DYNAMIC_QUEST_CREATION, false)) {
             val mapData = mapDataSource.getMapDataWithGeometry(bbox.enlargedBy(ApplicationConstants.QUEST_FILTER_PADDING))
             val quests = createQuestsForBBox(bbox, mapData, questTypes?.filterIsInstance<OsmElementQuestType<*>>() ?: allQuestTypes)
-            return if (getHidden) quests else quests.filterNot { it.key in hiddenCache || it.position.truncateTo5Decimals() in hiddenPositions }
+            return if (getHidden) quests else quests.filterNot { it.key in hiddenCache || it.position.truncateTo6Decimals() in hiddenPositions }
         }
         val allEntries = db.getAllInBBox(bbox, questTypes?.map { it.name })
         val entries = if (getHidden) allEntries
             else allEntries.filter { entry ->
-                entry.key !in hiddenCache && entry.position.truncateTo5Decimals() !in hiddenPositions
+                entry.key !in hiddenCache && entry.position.truncateTo6Decimals() !in hiddenPositions
             }
 
         val elementKeys = HashSet<ElementKey>(entries.size)
@@ -348,12 +369,12 @@ class OsmQuestController internal constructor(
 
     private fun getBlacklistedPositions(bbox: BoundingBox): Set<LatLon> =
         notesSource
-            .getAllPositions(bbox.enlargedBy(1.2))
-            .map { it.truncateTo5Decimals() }
+            .getAllPositions(bbox.enlargedBy(0.2))
+            .map { it.truncateTo6Decimals() }
             .toHashSet()
 
     private fun isBlacklistedPosition(pos: LatLon): Boolean =
-        pos.truncateTo5Decimals() in getBlacklistedPositions(BoundingBox(pos, pos))
+        pos.truncateTo6Decimals() in getBlacklistedPositions(BoundingBox(pos, pos))
 
     override fun hide(key: OsmQuestKey) {
         if (synchronized(hiddenCache) { hiddenCache.add(key) })
@@ -438,7 +459,7 @@ class OsmQuestController internal constructor(
             if (hiddenPositions.isEmpty())
                 synchronized(hiddenCache) { added.filter { it.key !in hiddenCache } }
             else
-                synchronized(hiddenCache) { added.filter { it.key !in hiddenCache && it.position.truncateTo5Decimals() !in hiddenPositions } }
+                synchronized(hiddenCache) { added.filter { it.key !in hiddenCache && it.position.truncateTo6Decimals() !in hiddenPositions } }
         } else {
             added
         }

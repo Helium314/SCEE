@@ -28,7 +28,6 @@ import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.AnyThread
 import androidx.annotation.DrawableRes
@@ -144,7 +143,7 @@ import de.westnordost.streetcomplete.util.ktx.observe
 import de.westnordost.streetcomplete.util.ktx.toLatLon
 import de.westnordost.streetcomplete.util.ktx.toList
 import de.westnordost.streetcomplete.util.ktx.toast
-import de.westnordost.streetcomplete.util.ktx.truncateTo5Decimals
+import de.westnordost.streetcomplete.util.ktx.truncateTo6Decimals
 import de.westnordost.streetcomplete.util.location.FineLocationManager
 import de.westnordost.streetcomplete.util.location.LocationAvailabilityReceiver
 import de.westnordost.streetcomplete.util.location.LocationRequestFragment
@@ -284,8 +283,7 @@ class MainActivity :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val systemBarStyle = SystemBarStyle.dark(Color.argb(0x80, 0x1b, 0x1b, 0x1b))
-        enableEdgeToEdge(systemBarStyle, systemBarStyle)
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate")
 
@@ -1220,8 +1218,8 @@ class MainActivity :
         val center = geometry.center
         val note = withContext(Dispatchers.IO) {
             notesSource
-                .getAll(BoundingBox(center, center).enlargedBy(1.2)).filterNot { it.isClosed }
-                .firstOrNull { it.position.truncateTo5Decimals() == center.truncateTo5Decimals() }
+                .getAll(BoundingBox(center, center).enlargedBy(0.2)).filterNot { it.isClosed }
+                .firstOrNull { it.position.truncateTo6Decimals() == center.truncateTo6Decimals() }
                 ?.takeIf { noteQuestsHiddenSource.getHidden(it.id) == null }
         }
         if (note != null) {

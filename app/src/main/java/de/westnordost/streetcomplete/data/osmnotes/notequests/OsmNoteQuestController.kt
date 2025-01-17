@@ -32,7 +32,7 @@ class OsmNoteQuestController(
         !prefs.showAllNotes
 
     private val reallyAllNotes: Boolean get() =
-        prefs.getBoolean(Prefs.REALLY_ALL_NOTES, false)
+        prefs.reallyAllNotes
 
     private val settingsListener: SettingsListener
 

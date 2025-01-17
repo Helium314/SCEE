@@ -147,7 +147,7 @@ class DataManagementSettingsFragment :
 
         findPreference<Preference>("raster_tile_url")?.setOnPreferenceClickListener {
             var d: AlertDialog? = null
-            val currentUrl = prefs.getString(Prefs.RASTER_TILE_URL, RASTER_DEFAULT_URL)!!
+            val currentUrl = prefs.getString(Prefs.RASTER_TILE_URL, ApplicationConstants.RASTER_DEFAULT_URL)!!
             val urlText = EditText(requireContext()).apply {
                 setText(currentUrl)
                 doAfterTextChanged {

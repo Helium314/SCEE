@@ -64,8 +64,8 @@ fun QuickSettingsDropdown(
             viewModel.reverseQuestOrder.value = !viewModel.reverseQuestOrder.value
         }) {
             val textResId = if (viewModel.reverseQuestOrder.collectAsState().value)
-                R.string.quest_order_reverse
-            else R.string.quest_order_normal
+                R.string.quest_order_normal
+            else R.string.quest_order_reverse
             Text(text = stringResource(textResId))
         }
     }

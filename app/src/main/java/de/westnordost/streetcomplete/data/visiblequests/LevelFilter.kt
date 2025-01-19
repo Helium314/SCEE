@@ -44,7 +44,7 @@ class LevelFilter internal constructor(private val prefs: ObservableSettings) : 
 
     private fun reload() {
         allowedLevel = prefs.getString(Prefs.ALLOWED_LEVEL, "").let { if (it.isBlank()) null else it.trim() }
-        allowedLevelTags = prefs.getString(Prefs.ALLOWED_LEVEL_TAGS, "level,repeat_on,level:ref").split(",").toHashSet()
+        allowedLevelTags = prefs.getString(Prefs.ALLOWED_LEVEL_TAGS, "level,repeat_on,level:ref,addr:floor").split(",").toHashSet()
     }
 
     fun isVisible(quest: Quest): Boolean =
@@ -89,7 +89,7 @@ class LevelFilter internal constructor(private val prefs: ObservableSettings) : 
         builder.setTitle(R.string.level_filter_title)
         binding.level.setText(prefs.getString(Prefs.ALLOWED_LEVEL, ""))
         binding.enableSwitch.isChecked = isEnabled
-        val levelTags = prefs.getString(Prefs.ALLOWED_LEVEL_TAGS, "level,repeat_on,level:ref").split(",")
+        val levelTags = prefs.getString(Prefs.ALLOWED_LEVEL_TAGS, "level,repeat_on,level:ref,addr:floor").split(",")
         val allowedLevelTypes = LevelTypes.entries.filter { levelTags.contains(it.tag) }
         binding.plus.setOnClickListener {
             val selectableLevels = getLevelsInView(camera?.position?.enclosingBoundingBox(50.0), allowedLevelTypes)

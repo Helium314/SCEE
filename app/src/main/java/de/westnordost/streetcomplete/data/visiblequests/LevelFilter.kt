@@ -25,6 +25,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.ceil
 import kotlin.math.floor
+import de.westnordost.streetcomplete.util.logs.Log
 
 /** Controller for filtering all quests that are hidden because they are on the wrong level */
 class LevelFilter internal constructor(private val prefs: ObservableSettings) : KoinComponent {
@@ -45,6 +46,7 @@ class LevelFilter internal constructor(private val prefs: ObservableSettings) : 
     private fun reload() {
         allowedLevel = prefs.getString(Prefs.ALLOWED_LEVEL, "").let { if (it.isBlank()) null else it.trim() }
         allowedLevelTags = prefs.getString(Prefs.ALLOWED_LEVEL_TAGS, "level,repeat_on,level:ref,addr:floor").split(",").toHashSet()
+        Log.d("LevelFilter.reload", "allowedLevel=$allowedLevel, allowedLevelTags=$allowedLevelTags")
     }
 
     fun isVisible(quest: Quest): Boolean =
@@ -122,6 +124,7 @@ class LevelFilter internal constructor(private val prefs: ObservableSettings) : 
         binding.repeatOnBox.isChecked = allowedLevelTypes.contains(LevelTypes.REPEAT_ON)
         binding.levelRefBox.isChecked = allowedLevelTypes.contains(LevelTypes.LEVEL_REF)
         binding.addrFloorBox.isChecked = allowedLevelTypes.contains(LevelTypes.ADDR_FLOOR)
+        Log.d("LevelFilter.showLevelFilterDialog", "levelRefBox=${binding.levelRefBox.isChecked}, addrFloorBox=${binding.addrFloorBox.isChecked}")
 
         builder.setView(ScrollView(context).apply { addView(binding.root) })
         builder.setNegativeButton(android.R.string.cancel, null)

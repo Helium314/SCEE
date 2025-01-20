@@ -124,7 +124,7 @@ class LevelFilter internal constructor(private val prefs: ObservableSettings) : 
         binding.repeatOnBox.isChecked = allowedLevelTypes.contains(LevelTypes.REPEAT_ON)
         binding.levelRefBox.isChecked = allowedLevelTypes.contains(LevelTypes.LEVEL_REF)
         binding.addrFloorBox.isChecked = allowedLevelTypes.contains(LevelTypes.ADDR_FLOOR)
-        Log.d("LevelFilter.showLevelFilterDialog", "levelRefBox=${binding.levelRefBox.isChecked}, addrFloorBox=${binding.addrFloorBox.isChecked}")
+        Log.d("LevelFilter.showLevelFilterDialog", "levelBox=${binding.levelBox.isChecked} repeatOnBox=${binding.repeatOnBox.isChecked} levelRefBox=${binding.levelRefBox.isChecked}, addrFloorBox=${binding.addrFloorBox.isChecked}")
 
         builder.setView(ScrollView(context).apply { addView(binding.root) })
         builder.setNegativeButton(android.R.string.cancel, null)

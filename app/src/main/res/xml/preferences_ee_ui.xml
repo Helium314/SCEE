@@ -120,13 +120,19 @@
         android:defaultValue="false"
         android:persistent="true" />
 
-    <EditTextPreference
+    <de.westnordost.streetcomplete.screens.settings.NumberPickerPreference
         app:iconSpaceReserved="false"
         android:key="rotate_angle_threshold"
-        android:inputType="numberDecimal"
-        android:numeric="decimal"
         android:title="@string/pref_rotate_angle_threshold_title"
-        android:defaultValue="1.5"
-        android:persistent="true" />
+        android:summary="@string/pref_rotate_angle_threshold_summary"
+        android:defaultValue="2"
+        android:persistent="true"
+        app:minValue="0"
+        app:maxValue="90"
+        app:step="1"
+        android:dialogMessage="@string/pref_rotate_angle_threshold_message"
+        android:dialogLayout="@layout/dialog_number_picker_preference"
+        android:positiveButtonText="@android:string/ok"
+        android:negativeButtonText="@android:string/cancel" />
 
 </PreferenceScreen>

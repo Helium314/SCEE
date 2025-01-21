@@ -117,7 +117,7 @@
         app:iconSpaceReserved="false"
         android:key="rotate_while_zooming"
         android:title="@string/pref_rotate_while_zooming_title"
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:persistent="true" />
 
     <EditTextPreference

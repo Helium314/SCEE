@@ -124,8 +124,9 @@
         app:iconSpaceReserved="false"
         android:key="rotate_angle_threshold"
         android:inputType="numberDecimal"
+        android:numeric="decimal"
         android:title="@string/pref_rotate_angle_threshold_title"
-        android:defaultValue="1.5f"
+        android:defaultValue="1.5"
         android:persistent="true" />
 
 </PreferenceScreen>

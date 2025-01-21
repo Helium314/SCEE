@@ -161,10 +161,11 @@ open class MapFragment : Fragment(R.layout.fragment_map) {
         map.uiSettings.isLogoEnabled = false
         map.uiSettings.flingThreshold = 250
         map.uiSettings.flingAnimationBaseTime = 500
-        map.uiSettings.isDisableRotateWhenScaling = true
+        map.uiSettings.isDisableRotateWhenScaling = prefs.getBoolean(Prefs.ROTATE_WHILE_ZOOMING, true)
+
         // workaround for https://github.com/maplibre/maplibre-native/issues/2792
         map.gesturesManager.moveGestureDetector.moveThreshold = resources.dpToPx(5f)
-        map.gesturesManager.rotateGestureDetector.angleThreshold = 1.5f
+        map.gesturesManager.rotateGestureDetector.angleThreshold = prefs.getFloat(Prefs.ROTATE_ANGLE_THRESHOLD, ApplicationConstants.ROTATE_ANGLE_THRESHOLD_DEFAULT)
         map.gesturesManager.shoveGestureDetector.pixelDeltaThreshold = resources.dpToPx(8f)
 
         map.addOnMoveListener(object : MapLibreMap.OnMoveListener {

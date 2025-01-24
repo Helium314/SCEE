@@ -123,11 +123,9 @@
     <EditTextPreference
         app:iconSpaceReserved="false"
         android:key="rotate_angle_threshold"
-        android:inputType="numberDecimal"
-        android:digits="0123456789."
-        android:numeric="decimal"
+        android:inputType="numberPassword"
         android:title="@string/pref_rotate_angle_threshold_title"
-        android:defaultValue="1.5"
+        android:defaultValue="1.6"
         android:persistent="true" />
 
 </PreferenceScreen>

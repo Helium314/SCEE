@@ -632,4 +632,7 @@
     <string name="pref_custom_geometry_title">Zeige Map-Features aus GeoJson-Datei an</string>
     <string name="pref_custom_geometry_info">Wenn du Text anzeigen möchtest, muss er in der Eigenschaft \"name\" enthalten sein</string>
     <string name="pref_tile_maxzoom">Maximal unterstützter Zoom</string>
+    <string name="quest_roofOrientation_along">Parallel zur längeren Gebäudeseite</string>
+    <string name="quest_roofOrientation_across">Parallel zur kürzeren Gebäudeseite</string>
+    <string name="quest_roofOrientation_title">Wie ist der Dachfirst ausgerichtet?</string>
 </resources>

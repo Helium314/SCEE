@@ -352,7 +352,7 @@
     <string name="pref_screen_quests">Aufgaben</string>
     <string name="quest_cuisine_title">Welche Küche gibt es in diesem Ort\? Verwende die vorgeschlagenen OSM-Tags!</string>
     <string name="pref_hide_button_title">Schaltfläche „Ausblenden“ anzeigen</string>
-    <string name="default_disabled_msg_roofColour">Dieser Aufgabentyp ist standardmäßig deaktiviert, da die Farben der Dächer von der Straße aus oft nicht gut sichtbar sind. Dieser Aufgabentyp ist auch recht zeitaufwändig; in den meisten Fällen ist es einfacher und effizienter, diese aus Luftbildern zu Hause zu kartieren.</string>
+    <string name="default_disabled_msg_roof">Dieser Aufgabentyp ist standardmäßig deaktiviert, da Dächer von der Straße aus oft nicht gut sichtbar sind. Dieser Aufgabentyp ist auch recht zeitaufwändig; in den meisten Fällen ist es einfacher und effizienter, diese aus Luftbildern zu Hause zu kartieren.</string>
     <string name="tree_custom_quest_export">Abrufen</string>
     <string name="quest_artwork_mosaic">Mosaik</string>
     <string name="import_export_custom_overlays">Benutzerdefinierte Overlays</string>

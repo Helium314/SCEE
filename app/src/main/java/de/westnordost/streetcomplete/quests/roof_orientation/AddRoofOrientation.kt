@@ -21,7 +21,7 @@ class AddRoofOrientation : OsmFilterQuestType<String>() {
     override val wikiLink = "Key:roof:orientation"
     override val icon = R.drawable.ic_quest_roof_orientation
     override val achievements = listOf(BUILDING)
-    override val defaultDisabledMessage = R.string.default_disabled_msg_roofColour
+    override val defaultDisabledMessage = R.string.default_disabled_msg_roof
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_roofOrientation_title
 

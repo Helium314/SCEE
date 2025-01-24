@@ -96,7 +96,7 @@ class UiSettingsFragment : PreferenceFragmentCompat(), HasTitle {
             true
         }
 
-        findPreference<Preference>(Prefs.ROTATE_ANGLE_THRESHOLD)?.setOnBindEditTextListener {
+        findPreference<EditTextPreference>(Prefs.ROTATE_ANGLE_THRESHOLD)?.setOnBindEditTextListener {
             editText -> editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         }
     }

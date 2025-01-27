@@ -780,8 +780,8 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_building_material_value_metal">Metal</string>
     <string name="quest_building_material_value_stone">Stone</string>
     <string name="quest_building_material_value_glass">Glass</string>
-    <string name="quest_building_material_value_mirror">Mirror</string>
-    <string name="quest_building_material_value_mud">Mud</string>
+    <string name="quest_building_material_value_mirror">Mirrored-glass</string>
+    <string name="quest_building_material_value_mud">Dried mud</string>
     <string name="quest_building_material_value_plastic">Plastic</string>
     <string name="quest_building_material_value_timber_framing">Timber Framing</string>
     <string name="quest_building_material_value_sandstone">Sandstone</string>
@@ -790,7 +790,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_building_material_value_loam">Loam</string>
     <string name="quest_building_material_value_marble">Marble</string>
     <string name="quest_building_material_value_slate">Slate</string>
-    <string name="quest_building_material_value_vinyl">Vinyl</string>
+    <string name="quest_building_material_value_vinyl">Plastic vinyl strips</string>
     <string name="quest_building_material_value_limestone">Limestone</string>
     <string name="quest_building_material_value_tiles">Tiles</string>
     <string name="quest_building_material_value_bamboo">Bamboo</string>

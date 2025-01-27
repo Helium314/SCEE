@@ -37,6 +37,7 @@ import de.westnordost.streetcomplete.quests.piste_difficulty.AddPisteDifficulty
 import de.westnordost.streetcomplete.quests.piste_lit.AddPisteLit
 import de.westnordost.streetcomplete.quests.piste_ref.AddPisteRef
 import de.westnordost.streetcomplete.quests.place_name.AddPlaceName
+import de.westnordost.streetcomplete.quests.roof_orientation.AddRoofOrientation
 import de.westnordost.streetcomplete.util.Listeners
 import de.westnordost.streetcomplete.util.ktx.format
 import de.westnordost.streetcomplete.util.ktx.intersects
@@ -103,6 +104,7 @@ class OsmQuestController internal constructor(
         AddKerbHeight::class.simpleName!!,
         AddPisteRef::class.simpleName!!,
         AddPisteLit::class.simpleName!!,
+        AddRoofOrientation::class.simpleName!!,
     )
 
     private val hiddenCache by lazy { synchronized(this) { hiddenDB.getAllIds().toHashSet() } }

@@ -108,42 +108,27 @@ private fun approximatelyEqual(length1: Double, length2: Double, tolerance: Doub
     abs(length1 - length2) <= tolerance
 
 /**
- * Returns true if the four corners of the [quadrangle] form a rectangle within an allowed tolerance.
+ * Returns true if the four corners of the quadrangle [q] form a rectangle within an allowed tolerance.
  */
-private fun isNearlyRectangular(quadrangle: Quadrangle): Boolean {
-    val sideA = quadrangle.sideA
-    val sideB = quadrangle.sideB
-    val sideC = quadrangle.sideC
-    val sideD = quadrangle.sideD
-
+private fun isNearlyRectangular(q: Quadrangle): Boolean {
     if (
-        !approximatelyEqual(sideA, sideC, 0.1 * max(sideB, sideD)) ||
-        !approximatelyEqual(sideB, sideD, 0.1 * max(sideA, sideC))
+        !approximatelyEqual(q.sideA, q.sideC, 0.1 * q.maxBD) ||
+        !approximatelyEqual(q.sideB, q.sideD, 0.1 * q.maxAC)
     ) {
         return false
     }
 
-    val diagonal1 = quadrangle.corner0.distanceTo(quadrangle.corner2)
-    val diagonal2 = quadrangle.corner1.distanceTo(quadrangle.corner3)
+    val diagonal1 = q.corner0.distanceTo(q.corner2)
+    val diagonal2 = q.corner1.distanceTo(q.corner3)
 
     return approximatelyEqual(diagonal1, diagonal2, 0.1 * max(diagonal1, diagonal2))
 }
 
 /**
- * Returns true if the four corners of the [quadrangle] form a square within an allowed tolerance.
+ * Returns true if the four corners of the quadrangle [q] form a square within an allowed tolerance.
  */
-private fun isNearlySquare(quadrangle: Quadrangle): Boolean {
-    val sideA = quadrangle.sideA
-    val sideB = quadrangle.sideB
-    val sideC = quadrangle.sideC
-    val sideD = quadrangle.sideD
-
-    return approximatelyEqual(
-        max(sideA, sideC),
-        max(sideB, sideD),
-        0.1 * maxOf(sideA, sideB, sideC, sideD)
-    )
-}
+private fun isNearlySquare(q: Quadrangle): Boolean =
+    approximatelyEqual(q.maxAC, q.maxBD, 0.1 * max(q.maxAC, q.maxBD))
 
 private fun List<LatLon>.circumference() = (this + first()).measuredLength()
 private fun LatLon.distanceTo(arc: Pair<LatLon, LatLon>) = distanceToArc(arc.first, arc.second)
@@ -158,6 +143,9 @@ private data class Quadrangle(
     val sideB = corner1.distanceTo(corner2)
     val sideC = corner2.distanceTo(corner3)
     val sideD = corner3.distanceTo(corner0)
+
+    val maxAC = max(sideA, sideC)
+    val maxBD = max(sideB, sideD)
 
     val circumference = sideA + sideB + sideC + sideD
 }

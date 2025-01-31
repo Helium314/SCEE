@@ -93,9 +93,9 @@ private fun isRectangularOutline(points: List<LatLon>): Boolean {
 /** Returns all 4-point-subsets that could form a rectangle */
 private fun findAllQuadrangles(points: List<LatLon>): Sequence<Quadrangle> = sequence {
     val n = points.size
-    for (i in 0 until n) {
-        for (j in i + 1 until n) {
-            for (k in j + 1 until n) {
+    for (i in 0 until n - 3) {
+        for (j in i + 1 until n - 2) {
+            for (k in j + 1 until n - 1) {
                 for (l in k + 1 until n) {
                     yield(Quadrangle(points[i], points[j], points[k], points[l]))
                 }

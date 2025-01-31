@@ -84,9 +84,9 @@ private fun isRectangularOutline(points: List<LatLon>): Boolean {
         return true
     }
 
-    val sides = rectangle.sides()
+    val sides = rectangle.sidesWithLengths()
     return remainingPoints.all { point ->
-        sides.any { side -> point.distanceTo(side) < 0.1 * side.length() }
+        sides.any { (side, length) -> point.distanceTo(side) < 0.1 * length }
     }
 }
 
@@ -140,7 +140,6 @@ private fun isNearlySquare(quadrangle: Quadrangle): Boolean {
 }
 
 private fun List<LatLon>.circumference() = (this + first()).measuredLength()
-private fun Pair<LatLon, LatLon>.length() = first.distanceTo(second)
 private fun LatLon.distanceTo(arc: Pair<LatLon, LatLon>) = distanceToArc(arc.first, arc.second)
 
 private data class Quadrangle(
@@ -161,9 +160,9 @@ private data class QuadrangleSides(val sideA: Double, val sideB: Double, val sid
 private fun Quadrangle.toSet() = setOf(corner0, corner1, corner2, corner3)
 private fun Quadrangle.circumference() =
     sideLengths.sideA + sideLengths.sideB + sideLengths.sideC + sideLengths.sideD
-private fun Quadrangle.sides() = setOf(
-    corner0 to corner1,
-    corner1 to corner2,
-    corner2 to corner3,
-    corner3 to corner0,
+private fun Quadrangle.sidesWithLengths() = setOf(
+    Pair(corner0 to corner1, corner0.distanceTo(corner1)),
+    Pair(corner1 to corner2, corner1.distanceTo(corner2)),
+    Pair(corner2 to corner3, corner2.distanceTo(corner3)),
+    Pair(corner3 to corner0, corner3.distanceTo(corner0)),
 )

@@ -139,7 +139,7 @@ private fun isNearlySquare(quadrangle: Quadrangle): Boolean {
     )
 }
 
-private fun List<LatLon>.circumference() = (this + last()).measuredLength()
+private fun List<LatLon>.circumference() = (this + first()).measuredLength()
 private fun Pair<LatLon, LatLon>.length() = first.distanceTo(second)
 private fun LatLon.distanceTo(arc: Pair<LatLon, LatLon>) = distanceToArc(arc.first, arc.second)
 

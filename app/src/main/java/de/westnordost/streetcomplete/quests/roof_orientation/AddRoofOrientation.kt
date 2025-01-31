@@ -46,7 +46,7 @@ class AddRoofOrientation : OsmElementQuestType<String> {
                 return@filter false
             }
 
-            return@filter isRectangularOutline(points.dropLast<LatLon>(1))
+            isRectangularOutline(points.dropLast(1))
         }
 
     override fun isApplicableTo(element: Element) =

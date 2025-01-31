@@ -67,14 +67,14 @@ class AddRoofOrientation : OsmElementQuestType<String> {
 private fun isRectangularOutline(points: List<LatLon>): Boolean {
     val rectangle = findAllQuadrangles(points)
         .filter { isNearlyRectangular(it) }
-        .maxByOrNull { it.circumference() }
+        .maxByOrNull { it.circumference }
 
     if (rectangle == null || isNearlySquare(rectangle)) {
         return false
     }
 
     // Exclude rectangles that differ too much from the whole outline
-    if (rectangle.circumference() < points.circumference() * 0.75) {
+    if (rectangle.circumference < points.circumference() * 0.75) {
         return false
     }
 
@@ -111,7 +111,10 @@ private fun approximatelyEqual(length1: Double, length2: Double, tolerance: Doub
  * Returns true if the four corners of the [quadrangle] form a rectangle within an allowed tolerance.
  */
 private fun isNearlyRectangular(quadrangle: Quadrangle): Boolean {
-    val (sideA, sideB, sideC, sideD) = quadrangle.sideLengths
+    val sideA = quadrangle.sideA
+    val sideB = quadrangle.sideB
+    val sideC = quadrangle.sideC
+    val sideD = quadrangle.sideD
 
     if (
         !approximatelyEqual(sideA, sideC, 0.1 * max(sideB, sideD)) ||
@@ -130,7 +133,10 @@ private fun isNearlyRectangular(quadrangle: Quadrangle): Boolean {
  * Returns true if the four corners of the [quadrangle] form a square within an allowed tolerance.
  */
 private fun isNearlySquare(quadrangle: Quadrangle): Boolean {
-    val (sideA, sideB, sideC, sideD) = quadrangle.sideLengths
+    val sideA = quadrangle.sideA
+    val sideB = quadrangle.sideB
+    val sideC = quadrangle.sideC
+    val sideD = quadrangle.sideD
 
     return approximatelyEqual(
         max(sideA, sideC),
@@ -148,21 +154,18 @@ private data class Quadrangle(
     val corner2: LatLon,
     val corner3: LatLon,
 ) {
-    val sideLengths = QuadrangleSides(
-        corner0.distanceTo(corner1),
-        corner1.distanceTo(corner2),
-        corner2.distanceTo(corner3),
-        corner3.distanceTo(corner0),
-    )
+    val sideA = corner0.distanceTo(corner1)
+    val sideB = corner1.distanceTo(corner2)
+    val sideC = corner2.distanceTo(corner3)
+    val sideD = corner3.distanceTo(corner0)
+
+    val circumference = sideA + sideB + sideC + sideD
 }
-private data class QuadrangleSides(val sideA: Double, val sideB: Double, val sideC: Double, val sideD: Double)
 
 private fun Quadrangle.toSet() = setOf(corner0, corner1, corner2, corner3)
-private fun Quadrangle.circumference() =
-    sideLengths.sideA + sideLengths.sideB + sideLengths.sideC + sideLengths.sideD
 private fun Quadrangle.sidesWithLengths() = setOf(
-    Pair(corner0 to corner1, corner0.distanceTo(corner1)),
-    Pair(corner1 to corner2, corner1.distanceTo(corner2)),
-    Pair(corner2 to corner3, corner2.distanceTo(corner3)),
-    Pair(corner3 to corner0, corner3.distanceTo(corner0)),
+    Pair(corner0 to corner1, sideA),
+    Pair(corner1 to corner2, sideB),
+    Pair(corner2 to corner3, sideC),
+    Pair(corner3 to corner0, sideD),
 )

@@ -111,7 +111,7 @@ private fun approximatelyEqual(length1: Double, length2: Double, tolerance: Doub
  * Returns true if the four corners of the [quadrangle] form a rectangle within an allowed tolerance.
  */
 private fun isNearlyRectangular(quadrangle: Quadrangle): Boolean {
-    val (sideA, sideB, sideC, sideD) = quadrangle.sideLengths()
+    val (sideA, sideB, sideC, sideD) = quadrangle.sideLengths
 
     if (
         !approximatelyEqual(sideA, sideC, 0.1 * max(sideB, sideD)) ||
@@ -130,7 +130,7 @@ private fun isNearlyRectangular(quadrangle: Quadrangle): Boolean {
  * Returns true if the four corners of the [quadrangle] form a square within an allowed tolerance.
  */
 private fun isNearlySquare(quadrangle: Quadrangle): Boolean {
-    val (sideA, sideB, sideC, sideD) = quadrangle.sideLengths()
+    val (sideA, sideB, sideC, sideD) = quadrangle.sideLengths
 
     return approximatelyEqual(
         max(sideA, sideC),
@@ -143,17 +143,24 @@ private fun List<LatLon>.circumference() = (this + first()).measuredLength()
 private fun Pair<LatLon, LatLon>.length() = first.distanceTo(second)
 private fun LatLon.distanceTo(arc: Pair<LatLon, LatLon>) = distanceToArc(arc.first, arc.second)
 
-private data class Quadrangle(val corner0: LatLon, val corner1: LatLon, val corner2: LatLon, val corner3: LatLon)
+private data class Quadrangle(
+    val corner0: LatLon,
+    val corner1: LatLon,
+    val corner2: LatLon,
+    val corner3: LatLon,
+) {
+    val sideLengths = QuadrangleSides(
+        corner0.distanceTo(corner1),
+        corner1.distanceTo(corner2),
+        corner2.distanceTo(corner3),
+        corner3.distanceTo(corner0),
+    )
+}
 private data class QuadrangleSides(val sideA: Double, val sideB: Double, val sideC: Double, val sideD: Double)
 
 private fun Quadrangle.toSet() = setOf(corner0, corner1, corner2, corner3)
-private fun Quadrangle.circumference() = listOf(corner0, corner1, corner2, corner3).circumference()
-private fun Quadrangle.sideLengths() = QuadrangleSides(
-    corner0.distanceTo(corner1),
-    corner1.distanceTo(corner2),
-    corner2.distanceTo(corner3),
-    corner3.distanceTo(corner0),
-)
+private fun Quadrangle.circumference() =
+    sideLengths.sideA + sideLengths.sideB + sideLengths.sideC + sideLengths.sideD
 private fun Quadrangle.sides() = setOf(
     corner0 to corner1,
     corner1 to corner2,

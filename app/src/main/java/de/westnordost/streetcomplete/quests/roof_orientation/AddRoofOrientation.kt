@@ -9,8 +9,8 @@ import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.BUILDING
 import de.westnordost.streetcomplete.osm.Tags
-import de.westnordost.streetcomplete.util.math.distanceTo
-import de.westnordost.streetcomplete.util.math.distanceToArc
+import de.westnordost.streetcomplete.util.math.flatDistanceTo
+import de.westnordost.streetcomplete.util.math.flatDistanceToArc
 import de.westnordost.streetcomplete.util.math.measuredLength
 import kotlin.math.abs
 import kotlin.math.max
@@ -86,7 +86,7 @@ private fun isRectangularOutline(points: List<LatLon>): Boolean {
 
     val sides = rectangle.sidesWithLengths()
     return remainingPoints.all { point ->
-        sides.any { (side, length) -> point.distanceTo(side) < 0.1 * length }
+        sides.any { (side, length) -> point.flatDistanceToArc(side) < 0.1 * length }
     }
 }
 
@@ -118,8 +118,8 @@ private fun isNearlyRectangular(q: Quadrangle): Boolean {
         return false
     }
 
-    val diagonal1 = q.corner0.distanceTo(q.corner2)
-    val diagonal2 = q.corner1.distanceTo(q.corner3)
+    val diagonal1 = q.corner0.flatDistanceTo(q.corner2)
+    val diagonal2 = q.corner1.flatDistanceTo(q.corner3)
 
     return approximatelyEqual(diagonal1, diagonal2, 0.1 * max(diagonal1, diagonal2))
 }
@@ -131,7 +131,7 @@ private fun isNearlySquare(q: Quadrangle): Boolean =
     approximatelyEqual(q.maxAC, q.maxBD, 0.1 * max(q.maxAC, q.maxBD))
 
 private fun List<LatLon>.circumference() = (this + first()).measuredLength()
-private fun LatLon.distanceTo(arc: Pair<LatLon, LatLon>) = distanceToArc(arc.first, arc.second)
+private fun LatLon.flatDistanceToArc(arc: Pair<LatLon, LatLon>) = flatDistanceToArc(arc.first, arc.second)
 
 private data class Quadrangle(
     val corner0: LatLon,
@@ -139,10 +139,10 @@ private data class Quadrangle(
     val corner2: LatLon,
     val corner3: LatLon,
 ) {
-    val sideA = corner0.distanceTo(corner1)
-    val sideB = corner1.distanceTo(corner2)
-    val sideC = corner2.distanceTo(corner3)
-    val sideD = corner3.distanceTo(corner0)
+    val sideA = corner0.flatDistanceTo(corner1)
+    val sideB = corner1.flatDistanceTo(corner2)
+    val sideC = corner2.flatDistanceTo(corner3)
+    val sideD = corner3.flatDistanceTo(corner0)
 
     val maxAC = max(sideA, sideC)
     val maxBD = max(sideB, sideD)

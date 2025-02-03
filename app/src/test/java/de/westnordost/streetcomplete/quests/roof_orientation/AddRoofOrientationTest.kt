@@ -20,27 +20,13 @@ class AddRoofOrientationTest {
         assertEquals(0, getApplicableElementsCount(roof, emptyList()))
     }
 
-    @Test fun `applicable to rectangular way with 4 points`() {
-        // https://osm.org/way/128296730
-        val nodes = listOf(
-            node(1, p(48.1035587, 11.7906178)),
-            node(2, p( 48.1035966, 11.7905417)),
-            node(3, p( 48.1036687, 11.7906222)),
-            node(4, p( 48.1036308, 11.7906984)),
-        )
-        val roof = getGabledRoofWay(nodes)
-
-        assertEquals(null, questType.isApplicableTo(roof))
-        assertEquals(1, getApplicableElementsCount(roof, nodes))
-    }
-
     @Test fun `not applicable to rectangular open way with 4 points`() {
         // https://osm.org/way/128296730
         val nodes = listOf(
             node(1, p(48.1035587, 11.7906178)),
-            node(2, p( 48.1035966, 11.7905417)),
-            node(3, p( 48.1036687, 11.7906222)),
-            node(4, p( 48.1036308, 11.7906984)),
+            node(2, p(48.1035966, 11.7905417)),
+            node(3, p(48.1036687, 11.7906222)),
+            node(4, p(48.1036308, 11.7906984)),
         )
         val roof = way(
             tags = gabledRoofTags,
@@ -51,13 +37,40 @@ class AddRoofOrientationTest {
         assertEquals(0, getApplicableElementsCount(roof, nodes))
     }
 
+    @Test fun `not applicable to way with 3 points`() {
+        // https://osm.org/way/926313667
+        val nodes = listOf(
+            node(1, p(-33.9308156, 18.4423625)),
+            node(2, p(-33.9309294, 18.4422969)),
+            node(3, p(-33.9308989, 18.4422201)),
+        )
+        val roof = getGabledRoofWay(nodes)
+
+        assertEquals(null, questType.isApplicableTo(roof))
+        assertEquals(0, getApplicableElementsCount(roof, nodes))
+    }
+
+    @Test fun `applicable to rectangular way with 4 points`() {
+        // https://osm.org/way/128296730
+        val nodes = listOf(
+            node(1, p(48.1035587, 11.7906178)),
+            node(2, p(48.1035966, 11.7905417)),
+            node(3, p(48.1036687, 11.7906222)),
+            node(4, p(48.1036308, 11.7906984)),
+        )
+        val roof = getGabledRoofWay(nodes)
+
+        assertEquals(null, questType.isApplicableTo(roof))
+        assertEquals(1, getApplicableElementsCount(roof, nodes))
+    }
+
     @Test fun `applicable to nearly rectangular way with 4 points`() {
         // https://osm.org/way/525058074
         val nodes = listOf(
             node(1, p(16.7519640, -93.1121874)),
-            node(2, p( 16.7518947, -93.1117797)),
-            node(3, p( 16.7516789, -93.1118173)),
-            node(4, p( 16.7517123, -93.1122384)),
+            node(2, p(16.7518947, -93.1117797)),
+            node(3, p(16.7516789, -93.1118173)),
+            node(4, p(16.7517123, -93.1122384)),
         )
         val roof = getGabledRoofWay(nodes)
 
@@ -82,6 +95,67 @@ class AddRoofOrientationTest {
 
         assertEquals(null, questType.isApplicableTo(roof))
         assertEquals(1, getApplicableElementsCount(roof, nodes))
+    }
+
+    @Test fun `applicable to nearly rectangular way with 19 points`() {
+        // https://osm.org/way/485537214
+        val nodes = listOf(
+            node(1, p(48.1387378, 11.7027654)),
+            node(2, p(48.1383987, 11.7027700)),
+            node(3, p(48.1381105, 11.7027740)),
+            node(4, p(48.1378080, 11.7027781)),
+            node(5, p(48.1374445, 11.7027831)),
+            node(6, p(48.1374442, 11.7027269)),
+            node(7, p(48.1374433, 11.7025754)),
+            node(8, p(48.1374397, 11.7019867)),
+            node(9, p(48.1374390, 11.7018660)),
+            node(10, p(48.1374385, 11.7017975)),
+            node(11, p(48.1374751, 11.7017970)),
+            node(12, p(48.1375431, 11.7017961)),
+            node(13, p(48.1378044, 11.7017925)),
+            node(14, p(48.1381033, 11.7017884)),
+            node(15, p(48.1383915, 11.7017845)),
+            node(16, p(48.1386619, 11.7017808)),
+            node(17, p(48.1387318, 11.7017799)),
+            node(18, p(48.1387322, 11.7018418)),
+            node(19, p(48.1387340, 11.7021518)),
+        )
+        val roof = getGabledRoofWay(nodes)
+
+        assertEquals(null, questType.isApplicableTo(roof))
+        assertEquals(1, getApplicableElementsCount(roof, nodes))
+    }
+
+    @Test fun `not applicable to way with 20 points`() {
+        // exclude overly complex ways for performance reasons, see https://github.com/Helium314/SCEE/pull/733#issuecomment-2629260126
+
+        // https://osm.org/way/17744441
+        val nodes = listOf(
+            node(1, p(48.1372581, 11.6972367)),
+            node(2, p(48.1372652, 11.6972366)),
+            node(3, p(48.1372652, 11.6972450)),
+            node(4, p(48.1373350, 11.6972440)),
+            node(5, p(48.1373353, 11.6972937)),
+            node(6, p(48.1373361, 11.6974319)),
+            node(7, p(48.1373395, 11.6980166)),
+            node(8, p(48.1373403, 11.6981528)),
+            node(9, p(48.1373406, 11.6982100)),
+            node(10, p(48.1372714, 11.6982109)),
+            node(11, p(48.1372715, 11.6982213)),
+            node(12, p(48.1372639, 11.6982214)),
+            node(13, p(48.1371946, 11.6982223)),
+            node(14, p(48.1359528, 11.6982384)),
+            node(15, p(48.1358848, 11.6982393)),
+            node(16, p(48.1358790, 11.6972547)),
+            node(17, p(48.1359450, 11.6972538)),
+            node(18, p(48.1362410, 11.6972500)),
+            node(19, p(48.1368952, 11.6972414)),
+            node(20, p(48.1371937, 11.6972375)),
+        )
+        val roof = getGabledRoofWay(nodes)
+
+        assertEquals(null, questType.isApplicableTo(roof))
+        assertEquals(0, getApplicableElementsCount(roof, nodes))
     }
 
     @Test fun `not applicable to nearly square way`() {
@@ -144,7 +218,7 @@ class AddRoofOrientationTest {
     )
 
     private fun getApplicableElementsCount(roof: Way, nodes: List<Node>): Int {
-        val mapData = TestMapDataWithGeometry(listOf(roof) + nodes)
+        val mapData = TestMapDataWithGeometry(nodes + roof)
         return questType.getApplicableElements(mapData).toList().size
     }
 }

@@ -37,16 +37,13 @@ class AddRoofOrientation : OsmElementQuestType<String> {
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
         mapData.ways.filter { way ->
-            if (!roofsFilter.matches(way)) {
+            if (!way.isClosed || way.nodeIds.size !in 5..20 || !roofsFilter.matches(way)) {
                 return@filter false
             }
 
-            val points = way.nodeIds.mapNotNull { mapData.getNode(it)?.position }
-            if (points.size < 5 || points.first() != points.last()) {
-                return@filter false
-            }
-
-            isRectangularOutline(points.dropLast(1))
+            val nodeIds = way.nodeIds.dropLast(1) // last equals first for closed ways
+            val points = nodeIds.mapNotNull { mapData.getNode(it)?.position }
+            isRectangularOutline(points)
         }
 
     override fun isApplicableTo(element: Element) =

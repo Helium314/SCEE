@@ -26,7 +26,7 @@ class AddPostOffice : OsmFilterQuestType<String>() {
     override fun getTitle(tags: Map<String, String>) = R.string.quest_postOffice_title
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with highway = post_office or post_office")
+        getMapData().filter("nodes with amenity = post_office or post_office")
 
     override fun createForm() = AddPostOfficeForm()
 

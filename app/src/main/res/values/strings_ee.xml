@@ -677,6 +677,13 @@
     <string name="quest_lampType_mercury">Mercury-vapor lamp</string>
     <string name="quest_lampType_halogen">Halogen lamp</string>
 
+    <!-- post office -->
+    <string name="quest_postOffice_title">What type is this post office?</string>
+    <string name="quest_postOffice_disabled_msg">This quest is disabled by default because it’s not easy to answer.</string>
+    <string name="quest_postOffice_bureau">Full (official) post office</string>
+    <string name="quest_postOffice_postAnnex">Post office (privatly owned, perhaps with restricted service)</string>
+    <string name="quest_postOffice_postOffice">Post relay point in shops or amenities (as a service)</string>
+
     <!-- new overlays -->
 
     <!-- custom overlay -->

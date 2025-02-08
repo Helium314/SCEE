@@ -9,7 +9,7 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddPostOffice : OsmFilterQuestType<String>() {
+class AddPostOfficeType : OsmFilterQuestType<String>() {
 
     override val elementFilter = """
         nodes, ways with
@@ -17,7 +17,7 @@ class AddPostOffice : OsmFilterQuestType<String>() {
           and !post_office
     """
     override val changesetComment = "Add post office"
-    override val defaultDisabledMessage = R.string.quest_postOffice_disabled_msg
+    override val defaultDisabledMessage = R.string.default_disabled_msg_ee
     override val wikiLink = "Key:post_office"
     override val icon = R.drawable.ic_quest_post_office
     override val isReplacePlaceEnabled = true
@@ -28,7 +28,7 @@ class AddPostOffice : OsmFilterQuestType<String>() {
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
         getMapData().filter("nodes with amenity = post_office or post_office")
 
-    override fun createForm() = AddPostOfficeForm()
+    override fun createForm() = AddPostOfficeTypeForm()
 
     override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         tags["post_office"] = answer

@@ -453,7 +453,7 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
                                 val builder = StringMapChangesBuilder(element.tags)
                                 builder["demolished:building"] = builder["building"] ?: "yes"
                                 builder.remove("building")
-                                builder.keys.toList().filter { it.matches(Regex("^(building:|roof:)")) }
+                                builder.keys.toList().filter { it.matches(Regex("^(building:|roof:).*")) }
                                     .forEach { builder.remove(it) }
                                 solve(UpdateElementTagsAction(element, builder.create()), true)
                             }

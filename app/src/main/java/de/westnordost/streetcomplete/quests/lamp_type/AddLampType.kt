@@ -16,7 +16,7 @@ class AddLampType : OsmFilterQuestType<String>() {
     override val elementFilter = """
         nodes with
           highway = street_lamp
-          and !lamp_type
+          and ( !lamp_type or lamp_type ~ electric|floodlight|sodium|solar_lamp )
           and !light:method
     """
     override val changesetComment = "Add lamp type"

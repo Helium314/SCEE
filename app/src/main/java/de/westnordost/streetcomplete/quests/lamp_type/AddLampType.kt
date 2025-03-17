@@ -35,5 +35,6 @@ class AddLampType : OsmFilterQuestType<String>() {
 
     override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         tags["lamp_type"] = answer
+        tags.remove("light:method")
     }
 }

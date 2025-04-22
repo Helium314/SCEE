@@ -20,7 +20,7 @@ class AddLampMount : OsmFilterQuestType<LampMountAnswer>() {
     override val changesetComment = "Add lamp mount"
     override val defaultDisabledMessage = R.string.quest_lampMount_disabled_msg
     override val wikiLink = "Key:lamp_mount"
-    override val icon = R.drawable.ic_quest_lamp_type
+    override val icon = R.drawable.ic_quest_lamp_mount
     override val isReplacePlaceEnabled = true
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
 

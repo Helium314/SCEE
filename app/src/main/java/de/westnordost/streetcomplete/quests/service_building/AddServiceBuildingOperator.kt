@@ -5,7 +5,7 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddServiceBuildingOperator : OsmFilterQuestType<String>() {
+class AddServiceBuildingOperator : OsmFilterQuestType<ServiceBuildingOperatorAnswer>() {
 
     override val elementFilter = """
         ways, relations with

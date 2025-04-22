@@ -17,6 +17,7 @@ class AddServiceBuildingType : OsmFilterQuestType<ServiceBuildingType>() {
           and !pipeline and !disused:pipeline and !abandoned:pipeline and !was:pipeline and !construction:pipeline
           and !utility and !disused:utility and !abandoned:utility and !was:utility and !construction:utility
           and !railway and !disused:railway and !abandoned:railway and !was:railway and !construction:railway
+          and disused != yes and abandoned != yes and !construction
     """
     override val changesetComment = "Add service building type"
     override val wikiLink = "Tag:building=service"

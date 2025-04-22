@@ -144,7 +144,7 @@ private val ServiceBuildingType.iconResId: Int get() = when (this) {
     TELECOM_EXCHANGE ->    R.drawable.ic_quest_service_building_telecom_exchange
     INTERNET_EXCHANGE ->    R.drawable.ic_quest_service_building_internet_exchange
     MONITORING_STATION ->    R.drawable.ic_quest_service_building_monitoring
-    DISUSED -> null
+    DISUSED -> R.drawable.ic_quest_service_building
 }
 
 private val ServiceBuildingTypeCategory.titleResId: Int get() = when (this) {

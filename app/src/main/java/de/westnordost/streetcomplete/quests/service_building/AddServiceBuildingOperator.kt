@@ -24,7 +24,7 @@ class AddServiceBuildingOperator : OsmFilterQuestType<String>() {
 
     override fun createForm() = AddServiceBuildingOperatorForm()
 
-    override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+    override fun applyAnswerTo(answer: ServiceBuildingOperatorAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         when (answer) {
             is ServiceBuildingOperator -> {
                 tags["operator"] = answer.name

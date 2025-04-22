@@ -13,6 +13,7 @@ class AddServiceBuildingOperator : OsmFilterQuestType<String>() {
           and !operator
           and !name
           and !brand
+          and disused != yes and abandoned != yes and !construction
     """
     override val changesetComment = "Add service building operator"
     override val wikiLink = "Tag:building=service"
@@ -24,6 +25,13 @@ class AddServiceBuildingOperator : OsmFilterQuestType<String>() {
     override fun createForm() = AddServiceBuildingOperatorForm()
 
     override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        tags["operator"] = answer
+        when (answer) {
+            is ServiceBuildingOperator -> {
+                tags["operator"] = answer.name
+            }
+            is DisusedServiceBuilding -> {
+                tags["disused"] = "yes"
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
 
-class AddLampMount : OsmFilterQuestType<String>() {
+class AddLampMount : OsmFilterQuestType<LampMountAnswer>() {
 
     override val elementFilter = """
         nodes with
@@ -31,11 +31,14 @@ class AddLampMount : OsmFilterQuestType<String>() {
 
     override fun createForm() = AddLampMountForm()
 
-    override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        if (answer in listOf("ceiling", "street_furniture:transit_shelter")) {
-            tags["support"] = answer
-        } else {
-            tags["lamp_mount"] = answer
+    override fun applyAnswerTo(answer: LampMountAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        when (answer) {
+            is LampMount -> {
+                tags["lamp_mount"] = answer.mount
+            }
+            is Support -> {
+                tags["support"] = answer.mount
+            }
         }
     }
 }

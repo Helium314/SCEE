@@ -38,6 +38,9 @@ enum class ServiceBuildingType(val tags: List<Pair<String, String>>) {
     // TELECOM
     INTERNET_EXCHANGE(listOf("utility" to "communication", "telecom" to "internet_exchange")),
     TELECOM_EXCHANGE(listOf("utility" to "communication", "telecom" to "exchange")),
+    // DISUSED
+    DISUSED(listOf("disused", "yes")),
+
 }
 
 enum class ServiceBuildingTypeCategory(val type: ServiceBuildingType?, val subTypes: List<ServiceBuildingType>) {

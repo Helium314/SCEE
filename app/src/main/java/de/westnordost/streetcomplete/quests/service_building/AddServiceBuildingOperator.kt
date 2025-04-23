@@ -31,6 +31,11 @@ class AddServiceBuildingOperator : OsmFilterQuestType<ServiceBuildingOperatorAns
             }
             is DisusedServiceBuilding -> {
                 tags["disused"] = "yes"
+                tags.keys.toList().filter { it.matches(Regex("^(power|service|man_made|substation|pipeline|utility|railway)$")) }
+                    .forEach {
+                        tags["disused:" + it] = tags[it]
+                        tags.remove(it)
+                    }
             }
         }
     }

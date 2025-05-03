@@ -117,7 +117,7 @@ fun QuestSettingsScreen(
                     description = stringResource(R.string.pref_override_country_restrictions_summary),
                     pref = Prefs.OVERRIDE_COUNTRY_RESTRICTIONS,
                     default = false,
-                    onCheckedChange = { visibleEditTypeController.onVisibilitiesChanged() }
+                    onCheckedChange = { OsmQuestController.reloadQuestTypes() },
                 )
             Preference(
                 name = stringResource(R.string.pref_quest_monitor_title),

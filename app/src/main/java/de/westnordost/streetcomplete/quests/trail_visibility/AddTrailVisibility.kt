@@ -15,7 +15,7 @@ class AddTrailVisibility : OsmFilterQuestType<TrailVisibility>() {
           highway ~ path|footway|cycleway|bridleway
           and !trail_visibility
           and ( access !~ no|private or foot ~ yes|permissive|designated or bicycle ~ yes|permissive|designated)
-          and (sac_scale and sac_scale != hiking)
+          and (sac_scale and sac_scale !~ hiking|strolling)
           and (!lit or lit = no)
           and surface ~ "ground|earth|dirt|soil|grass|sand|mud|ice|salt|snow|rock|stone"
     """

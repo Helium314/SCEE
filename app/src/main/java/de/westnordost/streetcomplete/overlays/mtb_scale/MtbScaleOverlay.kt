@@ -1,6 +1,7 @@
 package de.westnordost.streetcomplete.overlays.mtb_scale
 
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
@@ -32,6 +33,7 @@ class MtbScaleOverlay : Overlay {
                 or foot ~ yes|permissive|designated
                 or bicycle ~ yes|permissive|designated
               )
+              and mtb != no
               and (
                 surface ~ ${UNPAVED_SURFACES.joinToString("|")}|wood
                 or (highway = track and tracktype and tracktype != grade1)
@@ -41,18 +43,33 @@ class MtbScaleOverlay : Overlay {
     override fun createForm(element: Element?) = MtbScaleOverlayForm()
 
     private fun getStyle(element: Element): Style {
-        val color = parseMtbScale(element.tags).color
-        return PolylineStyle(stroke = color?.let { StrokeStyle(it) })
+        val mtbScale = parseMtbScale(element.tags)
+        val color = mtbScale.color
+            ?: if (isMtbTaggingExpected(element)) Color.DATA_REQUESTED else null
+        return PolylineStyle(
+            stroke = color?.let { StrokeStyle(it) },
+            label = mtbScale?.value.toString()
+        )
     }
 }
 
+private val mtbTaggingExpectedFilter by lazy { """
+    ways with
+      mtb ~ designated|yes
+      or mtb:scale:uphill
+      or mtb:scale:imba
+""".toElementFilterExpression() }
+
+private fun isMtbTaggingExpected(element: Element) =
+    mtbTaggingExpectedFilter.matches(element)
+
 private val MtbScale?.color get() = when (this?.value) {
     0 -> Color.BLUE
-    1 -> Color.SKY
-    2 -> Color.CYAN
-    3 -> Color.LIME
-    4 -> Color.GOLD
-    5 -> Color.ORANGE
+    1 -> Color.CYAN
+    2 -> Color.LIME
+    3 -> Color.GOLD
+    4 -> Color.ORANGE
+    5 -> Color.PURPLE
     6 -> Color.BLACK
     else -> null
 }

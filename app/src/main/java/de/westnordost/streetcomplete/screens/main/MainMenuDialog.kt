@@ -97,6 +97,11 @@ fun MainMenuDialog(
                         )
                     }
                     Divider()
+                    CompactMenuButton(
+                        onClick = { onDismissRequest(); onClickDownload() },
+                        icon = { DownloadIcon() },
+                        text = stringResource(R.string.action_download),
+                    )
                     if (unsyncedEditsCount != null) {
                         CompactMenuButton(
                             onClick = { onDismissRequest(); onClickUpload() },
@@ -112,11 +117,6 @@ fun MainMenuDialog(
                             enabled = !isUploadingOrDownloading,
                         )
                     }
-                    CompactMenuButton(
-                        onClick = { onDismissRequest(); onClickDownload() },
-                        icon = { DownloadIcon() },
-                        text = stringResource(R.string.action_download),
-                    )
                     if (indexInTeam == null) {
                         CompactMenuButton(
                             onClick = { onDismissRequest(); onClickEnterTeamMode() },
@@ -163,6 +163,11 @@ fun MainMenuDialog(
                             icon = { Icon(painterResource(R.drawable.ic_info_outline_48dp), null) },
                             text = LocalContext.current.getString(R.string.action_about2) + " SCEE",
                         )
+                        BigMenuButton(
+                            onClick = { onDismissRequest(); onClickDownload() },
+                            icon = { DownloadIcon() },
+                            text = stringResource(R.string.action_download),
+                        )
                         if (unsyncedEditsCount != null && !isUploadingOrDownloading) {
                             BigMenuButton(
                                 onClick = { onDismissRequest(); onClickUpload() },
@@ -177,11 +182,6 @@ fun MainMenuDialog(
                                 text = stringResource(R.string.action_upload),
                             )
                         }
-                        BigMenuButton(
-                            onClick = { onDismissRequest(); onClickDownload() },
-                            icon = { DownloadIcon() },
-                            text = stringResource(R.string.action_download),
-                        )
                         if (indexInTeam == null) {
                             BigMenuButton(
                                 onClick = { onDismissRequest(); onClickEnterTeamMode() },

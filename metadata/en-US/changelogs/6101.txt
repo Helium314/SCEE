@@ -1,0 +1,9 @@
+* lamp mount quest, by @dokutan (#777)
+* building material quest by @ravenfeld (#569)
+* changed destination quest icon, by @mnalis (#776)
+* improvements to service building quest, by @mnalis and @FloEdelmann (#772, #778)
+* ask for lamp type also on generic values, by @mnalis (#758)
+* open CSV files via intent (#768)
+* add zoom by swiping the zoom buttons
+* don't show generic features in right-click-add-poi menu to avoid crashes (#757)
+* minor fixes

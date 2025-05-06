@@ -554,8 +554,6 @@ fun getQuestTypeList(
     // toilets
     118 to AddToiletAvailability(), // shown in OsmAnd descriptions
     119 to AddToiletsFee(), // used by OsmAnd in the object description
-    120 to AddBabyChangingTable(), // used by OsmAnd in the object description
-    121 to AddWheelchairAccessToiletsPart(),
     122 to AddWheelchairAccessToilets(), // used by wheelmap, OsmAnd, Organic Maps
 
     // shop
@@ -570,6 +568,10 @@ fun getQuestTypeList(
     130 to AddInternetAccess(), // used by OsmAnd
     131 to AddAcceptsCards(), // this will often involve going inside and near the till
     132 to AddAcceptsCash(),
+
+    // shop and others, but have to go inside
+    120 to AddBabyChangingTable(), // used by OsmAnd in the object description, have to go inside
+    121 to AddWheelchairAccessToiletsPart(), // have to go inside
 
     133 to AddFuelSelfService(),
     156 to CheckShopExistence(getFeature), // after opening hours and similar so they will be preferred if enabled

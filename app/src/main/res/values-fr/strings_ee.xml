@@ -244,7 +244,7 @@
     <string name="quest_benchMaterial_title">En quelle matière est-il \?</string>
     <string name="quest_poi_seating_title">POI : Places assises</string>
     <string name="quest_poi_business_title">POI : Entreprises</string>
-    <string name="quest_poi_has_atm_title">POI : Dispose d\'un DAB</string>
+    <string name="quest_poi_has_atm_title">POI : Dispose d\'un distributeur automatique de billets</string>
     <string name="quest_poi_recycling_title">POI : Recyclage</string>
     <string name="quest_poi_vacant_title">POI : Emplacement vacant</string>
     <string name="quest_traffic_stuff_raised">C\'est un passage surélevé</string>
@@ -418,7 +418,7 @@
     <string name="quest_guidepost_sports_bicycle">Vélo</string>
     <string name="quest_guidepost_sports_horse">Équitation</string>
     <string name="quest_guidepost_sports_inline_skating">Roller</string>
-    <string name="quest_guidepost_sports_winter_hiking">Randonnées d\'hiver</string>
+    <string name="quest_guidepost_sports_winter_hiking">Randonnée hivernale</string>
     <string name="quest_piste_ref_title">Quel est le numéro de cette piste ?</string>
     <string name="quest_piste_ref_connection">Il s\'agit d\'une liaison de piste</string>
     <string name="quest_service_building_type_traction_substation">Sous-station de traction</string>
@@ -652,4 +652,27 @@
     <string name="quest_lampType_metalHalide">Ampoule métal-halide</string>
     <string name="quest_lampType_mercury">Ampoule vapeur de mercure</string>
     <string name="quest_lampType_halogen">Ampoule halogène</string>
+    <string name="quest_disused">Il est désaffecté</string>
+    <string name="quest_lampMount_straightMast">Poteau droit</string>
+    <string name="quest_lampMount_suspended">Suspendu par un fil</string>
+    <string name="quest_lampMount_angledMast">Poteau incliné</string>
+    <string name="quest_lampMount_highMast">Grand poteau (plus de 30 m)</string>
+    <string name="quest_lampMount_bollard">Borne</string>
+    <string name="quest_lampMount_wall">Mur</string>
+    <string name="quest_lampMount_ceiling">Plafond</string>
+    <string name="quest_lampMount_transitShelter">Abri bus</string>
+    <string name="quest_material_sandstone">Grès</string>
+    <string name="quest_material_clay">Argile</string>
+    <string name="quest_material_reed">Roseau</string>
+    <string name="quest_buildingMaterial_title">De quel matériau général ce bâtiment est-il fait ?</string>
+    <string name="quest_buildingPartMaterial_title">De quel matériau global est constituée cette partie de bâtiment ?</string>
+    <string name="quest_material_cement_block">Bloc de ciment</string>
+    <string name="quest_material_plaster">Plâtre</string>
+    <string name="quest_material_glass">Verre</string>
+    <string name="quest_material_mirror">Verre miroir</string>
+    <string name="quest_material_mud">Boue séchée</string>
+    <string name="quest_material_timber_framing">Charpente en bois</string>
+    <string name="quest_lampMount_title">Comment cette lampe est-elle accrochée ?</string>
+    <string name="quest_lampMount_disabled_msg">Cette quête est désactivée par défaut car elle peut être du spam selon la région.</string>
+    <string name="quest_lampMount_bentMast">Poteau courbé</string>
 </resources>

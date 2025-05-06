@@ -174,12 +174,12 @@ fun DataManagementScreen(
             Preference(
                 name = stringResource(R.string.pref_gps_interval_title),
                 onClick = { showGpsIntervalDialog = true },
-                description = stringResource(R.string.pref_interval_summary, prefs.getInt(Prefs.DATA_RETAIN_TIME, 0))
+                description = stringResource(R.string.pref_interval_summary, prefs.getInt(Prefs.GPS_INTERVAL, 0))
             )
             Preference(
                 name = stringResource(R.string.pref_network_interval_title),
                 onClick = { showNetIntervalDialog = true },
-                description = stringResource(R.string.pref_interval_summary, prefs.getInt(Prefs.DATA_RETAIN_TIME, 5))
+                description = stringResource(R.string.pref_interval_summary, prefs.getInt(Prefs.NETWORK_INTERVAL, 5))
             )
             Preference(
                 name = stringResource(R.string.pref_export),

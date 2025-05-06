@@ -1,11 +1,13 @@
 package de.westnordost.streetcomplete.quests.summit
 
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.OUTDOORS
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.RARE
@@ -28,7 +30,7 @@ class AddSummitCross : OsmElementQuestType<Boolean> {
     override val wikiLink = "Key:summit:cross"
     override val icon = R.drawable.ic_quest_summit_cross
     override val achievements = listOf(RARE, OUTDOORS)
-    override val enabledInCountries = NoCountriesExcept(
+    override val enabledInCountries = if (prefs.getBoolean(Prefs.OVERRIDE_COUNTRY_RESTRICTIONS, false)) AllCountries else NoCountriesExcept(
         // Europe
         "AT", // https://de.wikipedia.org/wiki/Gipfelkreuz
         "CH", // https://de.wikipedia.org/wiki/Gipfelkreuz

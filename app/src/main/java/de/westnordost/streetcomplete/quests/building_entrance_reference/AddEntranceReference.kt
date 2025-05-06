@@ -1,5 +1,6 @@
 package de.westnordost.streetcomplete.quests.building_entrance_reference
 
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
@@ -10,6 +11,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Relation
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.BLIND
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.CITIZEN
@@ -45,7 +47,7 @@ class AddEntranceReference : OsmElementQuestType<EntranceAnswer> {
     override val wikiLink = "Key:ref"
     override val icon = R.drawable.ic_quest_door_address
     override val achievements = listOf(CITIZEN, BLIND)
-    override val enabledInCountries = NoCountriesExcept(
+    override val enabledInCountries = if (prefs.getBoolean(Prefs.OVERRIDE_COUNTRY_RESTRICTIONS, false)) AllCountries else NoCountriesExcept(
         "PL", // Poland - own knowledge of Mateusz Konieczny https://github.com/streetcomplete/StreetComplete/issues/3064#issuecomment-879447168
         "RU", // Russia - https://github.com/streetcomplete/StreetComplete/issues/3064#issuecomment-880231076
         "MK", // North Macedonia https://github.com/streetcomplete/StreetComplete/issues/3064#issuecomment-1158016740

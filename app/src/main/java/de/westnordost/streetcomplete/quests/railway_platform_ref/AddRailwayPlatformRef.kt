@@ -3,6 +3,7 @@ package de.westnordost.streetcomplete.quests.railway_platform_ref
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
@@ -11,6 +12,7 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementPolylinesGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
@@ -78,7 +80,9 @@ class AddRailwayPlatformRef : OsmElementQuestType<String> {
     override val wikiLink = "Tag:railway=platform"
     override val icon = R.drawable.ic_quest_railway_platform_ref
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
-    override val enabledInCountries = NoCountriesExcept("DE", "FR", "CH", "AT")
+    override val enabledInCountries = if (prefs.getBoolean(Prefs.OVERRIDE_COUNTRY_RESTRICTIONS, false)) AllCountries else NoCountriesExcept(
+        "DE", "FR", "CH", "AT"
+    )
     override val defaultDisabledMessage = R.string.quest_disabled_msg_railway_platform_ref
 
     override fun getTitle(tags: Map<String, String>) = R.string.quest_railwayPlatformRef_title

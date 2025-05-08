@@ -784,8 +784,8 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_roofOrientation_title">How is the roof ridge oriented?</string>
 
     <!-- building material -->
-    <string name="quest_buildingMaterial_title">"What overall material is this building made of?"</string>
-    <string name="quest_buildingPartMaterial_title">"What overall material is this building part made of?"</string>
+    <string name="quest_buildingMaterial_title">"What material is this building's facade made of?"</string>
+    <string name="quest_buildingPartMaterial_title">"What material is this building part's facade made of?"</string>
     <string name="quest_material_cement_block">Cement block</string>
     <string name="quest_material_plaster">Plaster</string>
     <string name="quest_material_glass">Glass</string>

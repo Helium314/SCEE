@@ -8,9 +8,8 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.CITIZEN
 import de.westnordost.streetcomplete.osm.Tags
-import de.westnordost.streetcomplete.osm.updateWithCheckDate
 
-class AddArtworkType : OsmFilterQuestType<String>() {
+class AddArtworkType : OsmFilterQuestType<ArtworkType>() {
 
     override val elementFilter = "nodes, ways with tourism = artwork and !artwork_type"
 
@@ -27,7 +26,7 @@ class AddArtworkType : OsmFilterQuestType<String>() {
 
     override fun createForm() = AddArtworkTypeForm()
 
-    override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        tags.updateWithCheckDate("artwork_type", answer)
+    override fun applyAnswerTo(answer: ArtworkType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+        answer.applyTo(tags)
     }
 }

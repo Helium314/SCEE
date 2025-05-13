@@ -16,12 +16,14 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.LayerDrawable
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.OvershootInterpolator
@@ -41,8 +43,10 @@ import androidx.core.graphics.Insets
 import androidx.core.net.toUri
 import androidx.core.os.ConfigurationCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.doOnNextLayout
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -369,6 +373,11 @@ class MainActivity :
         }
         observe(viewModel.selectedOverlay) {
             reloadOverlaySelector()
+        }
+        binding.overlayScrollView.doOnNextLayout {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return@doOnNextLayout
+            val insets = it.rootWindowInsets.getInsets(WindowInsets.Type.systemBars())
+            it.updatePadding(top = it.paddingTop + insets.top)
         }
     }
 

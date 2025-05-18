@@ -3,9 +3,11 @@ package de.westnordost.streetcomplete.quests.fire_hydrant_ref
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
+import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.Tags
+import de.westnordost.streetcomplete.Prefs
 
 class AddFireHydrantRef : OsmFilterQuestType<FireHydrantRefAnswer>() {
 
@@ -19,7 +21,7 @@ class AddFireHydrantRef : OsmFilterQuestType<FireHydrantRefAnswer>() {
     override val icon = R.drawable.ic_quest_fire_hydrant_ref
     override val achievements = listOf(EditTypeAchievement.LIFESAVER)
     override val isDeleteElementEnabled = true
-    override val enabledInCountries = NoCountriesExcept(
+    override val enabledInCountries = if (prefs.getBoolean(Prefs.OVERRIDE_COUNTRY_RESTRICTIONS, false)) AllCountries else NoCountriesExcept(
         "CH", "FR", "LI"
     )
 

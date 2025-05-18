@@ -1,11 +1,13 @@
 package de.westnordost.streetcomplete.quests.postbox_ref
 
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
+import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.POSTMAN
 import de.westnordost.streetcomplete.osm.Tags
@@ -23,7 +25,7 @@ class AddPostboxRef : OsmFilterQuestType<PostboxRefAnswer>() {
     override val isDeleteElementEnabled = true
     override val achievements = listOf(POSTMAN)
     // source: https://commons.wikimedia.org/wiki/Category:Post_boxes_by_country
-    override val enabledInCountries = NoCountriesExcept(
+    override val enabledInCountries = if (prefs.getBoolean(Prefs.OVERRIDE_COUNTRY_RESTRICTIONS, false)) AllCountries else NoCountriesExcept(
         "FR", "GB", "GG", "IM", "JE", "MT", "IE", "SG", "CZ", "SK", "CH", "US"
     )
 

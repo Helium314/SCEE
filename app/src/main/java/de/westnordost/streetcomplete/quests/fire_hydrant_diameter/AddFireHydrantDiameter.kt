@@ -1,11 +1,13 @@
 package de.westnordost.streetcomplete.quests.fire_hydrant_diameter
 
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
+import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.LIFESAVER
 import de.westnordost.streetcomplete.osm.Tags
@@ -29,7 +31,7 @@ class AddFireHydrantDiameter : OsmFilterQuestType<FireHydrantDiameterAnswer>() {
     /* NOTE: if any countries that (sometimes) use anything else than millimeters as hydrant
        diameters are added, the code in the form needs to be adapted */
     // source: https://commons.wikimedia.org/wiki/Category:Fire_hydrant_signs_by_country
-    override val enabledInCountries = NoCountriesExcept(
+    override val enabledInCountries = if (prefs.getBoolean(Prefs.OVERRIDE_COUNTRY_RESTRICTIONS, false)) AllCountries else NoCountriesExcept(
         "DE", "BE", "LU",
         // not "AT", - see https://community.openstreetmap.org/t/streetcomplete-quest-zu-hydrantendurchmesser-in-osterreich/108899
         "GB", "IE",

@@ -1,8 +1,10 @@
 package de.westnordost.streetcomplete.quests.bus_stop_ref
 
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
+import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.PEDESTRIAN
 import de.westnordost.streetcomplete.osm.Tags
@@ -19,7 +21,7 @@ class AddBusStopRef : OsmFilterQuestType<BusStopRefAnswer>() {
         and access !~ no|private
         and !ref and noref != yes and ref:signed != no and !~"ref:.*"
     """
-    override val enabledInCountries = NoCountriesExcept(
+    override val enabledInCountries = if (prefs.getBoolean(Prefs.OVERRIDE_COUNTRY_RESTRICTIONS, false)) AllCountries else NoCountriesExcept(
         "AU", // https://github.com/streetcomplete/StreetComplete/issues/4487
         "CA",
         "CO", // https://github.com/streetcomplete/StreetComplete/issues/5124

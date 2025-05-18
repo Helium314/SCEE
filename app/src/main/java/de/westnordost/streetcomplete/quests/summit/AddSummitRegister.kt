@@ -1,11 +1,13 @@
 package de.westnordost.streetcomplete.quests.summit
 
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.quest.AllCountries
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.OUTDOORS
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.RARE
@@ -28,7 +30,7 @@ class AddSummitRegister : OsmElementQuestType<Boolean> {
     override val wikiLink = "Key:summit:register"
     override val icon = R.drawable.ic_quest_peak
     override val achievements = listOf(RARE, OUTDOORS)
-    override val enabledInCountries = NoCountriesExcept(
+    override val enabledInCountries = if (prefs.getBoolean(Prefs.OVERRIDE_COUNTRY_RESTRICTIONS, false)) AllCountries else NoCountriesExcept(
         // regions gathered in
         // https://github.com/streetcomplete/StreetComplete/issues/561#issuecomment-325623974
 

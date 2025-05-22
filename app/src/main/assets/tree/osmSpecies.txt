@@ -9,127 +9,102 @@ Acacia implexa
 Acacia iteaphylla
 Acacia mearnsii
 Acacia melanoxylon
-Acacia nilotica
 Acacia pycnantha
 Acer buergerianum
 Acer campestre
 Acer campestre 'Elegant'
-Acer campestre Elsrijk
+Acer campestre 'Elsrijk'
 Acer cappadocicum
-Acer freemanii Autumn Blaze
-Acer ginnala
+Acer × freemanii
+Acer × freemanii Autumn Blaze
 Acer griseum
 Acer negundo
 Acer palmatum
 Acer platanoides
-Acer platanoïdes
-Acer platanoïdes Columnare
+Acer platanoides 'Columnare'
 Acer platanoides 'Crimson King'
 Acer platanoides 'Globosum'
 Acer platanoides 'Purpureum'
 Acer platanoides 'Schwedleri'
 Acer pseudoplatanus
 Acer pseudoplatanus 'Atropurpureum'
-Acer psuedoplatanus
 Acer rubrum
-Acer rubrum "Armstrong"
-Acer rubrum Morgan
-Acer rubrum Red Sunset
-Acer saccarinum
+Acer rubrum 'Armstrong'
+Acer rubrum 'Morgan'
+Acer rubrum 'Red Sunset'
 Acer saccharinum
-Acer saccharinum laciniatum
-Acer saccharinum Laciniatum Wieri
 Acer saccharum
-Acer x freemanii
+Acer tataricum
 Adansonia digitata
 Adansonia grandidieri
-Aesculus carnea
+Aesculus × carnea
 Aesculus glabra
 Aesculus hippocastanum
-Aesculus rubicunda
-Aesculus x carnea
-Agave tequilana F.A.C.Weber
+Agave tequilana
 Agonis flexuosa
 Ailanthus altissima
 Albizia julibrissin
-Albizia saman
 Allocasuarina verticillata
+Alnus alnobetula
 Alnus cordata
 Alnus glutinosa
 Alnus incana
-Alnus viridis
 Amelanchier canadensis
 Amelanchier laevis
-Amelanchier lamarckii
-Ananas comosus Merr.
+Amelanchier × lamarckii
+Ananas comosus
 Angophora costata
 Araucaria araucana
 Araucaria heterophylla
 Arbutus unedo
+Aria edulis
 Azadirachta indica
-Azardiraecta indica
 Banksia integrifolia
 Banksia marginata
-Bauhinia kalbreyeri Harms.
-Betula alba
+Bauhinia picta
 Betula ermanii
-Betula jacquemontii
 Betula nigra
 Betula papyrifera
 Betula pendula
-Betula pendula Dalecarlica
-Betula platyphylla Sukaczev var. japonica H.Hara
+Betula platyphylla
 Betula populifolia
 Betula pubescens
 Betula utilis
-Betula verrucosa
 Brachychiton populneus
-Branchychiton populneus
 Broussonetia papyrifera
 Buxus sempervirens
-Caesalpinia pluviosa DC.
-Callistemon citrinus
-Callistemon salignus
-Callistemon viminalis
 Calocedrus decurrens
 Camellia sinensis
-Camellia sinensis Kuntze
 Carica papaya
-Carica papaya L.
 Carpinus betulus
 Carpinus betulus 'Fastigiata'
 Carpinus betulus 'Frans Fontaine'
-Carya illinoinensis K.Koch
+Carpinus orientalis
+Carya illinoinensis
 Castanea dentata
 Castanea sativa
 Casuarina cunninghamiana
 Casuarina glauca
 Catalpa bignonioides
-Catalpa bungeii
+Catalpa bungei
 Cedrus atlantica
-Cedrus atlantica glauca
 Cedrus deodara
 Cedrus libani
 Celtis australis
 Celtis occidentalis
-Celtis rugosa
-Cerasus itosakura
-Cerasus × yedoensis
+Cenostigma pluviosum
 Cercidiphyllum japonicum
 Cercis canadensis
 Cercis siliquastrum
 Chamaecyparis lawsoniana
-Chamaecyparis lawsoniana Columnaris
-Chamaerops excelsa
+Chamaecyparis lawsoniana 'Columnaris'
 Chamaerops humilis
-Ciconia ciconia
 Cinnamomum camphora
 Citrus × aurantium
-Citrus × sinensis
 Cocos nucifera
-Cocos nucifera L.
 Coprosma repens
 Cordyline australis
+Cormus domestica
 Cornus florida
 Cornus mas
 Corylus avellana
@@ -142,18 +117,13 @@ Crataegus crus-gallii
 Crataegus douglasii
 Crataegus laevigata
 Crataegus laevigata 'Paul's Scarlet'
+Crataegus × lavalleei
 Crataegus monogyna
 Crataegus monogyna 'Stricta'
-Crataegus oxyacantha
-Crataegus x lavallei
-Crataegus X prunifolia
+Crataegus persimilis
 Cryptomeria japonica
-Cupressocyparis leylandii
-Cupressus arizonica
-Cupressus macrocarpa
 Cupressus sempervirens
 Cydonia oblonga
-Delonix raius keupartus
 Delonix regia
 Dipterocarpus alatus
 Drimys winteri
@@ -188,29 +158,28 @@ Ficus microcarpa
 Ficus religiosa
 Fraxinus americana
 Fraxinus angustifolia
-Fraxinus angustifolia Raywood
+Fraxinus angustifolia 'Raywood'
 Fraxinus excelsior
 Fraxinus excelsior 'Westhofs Glorie'
 Fraxinus ornus
-Fraxinus oxycarpa
-Fraxinus oxycarpa 'Raywood'
 Fraxinus pennsylvanica
-Fraxinus raywoodii
 Fraxinus velutina
 Gevuina avellana
 Ginkgo biloba
-Ginkgo biloba fastigiata
 Gleditsia triacanthos
-Gleditsia triacanthos inermis
-Gleditsia triacanthos Shademaster
-Gleditsia triacanthos Sunburst
+Gleditsia triacanthos 'Shademaster'
+Gleditsia triacanthos 'Sunburst'
 Grevillea robusta
 Gymnocladus dioicus
 Hakea laurina
 Handroanthus chrysanthus
-Hevea brasiliensis Müll.Arg.
+Hedlundia thuringiaca
+Hesperocyparis arizonica
+Hesperocyparis macrocarpa
+× Hesperotropsis × leylandii
+Hevea brasiliensis
 Hibiscus syriacus
-Humulus lupulus L.
+Humulus lupulus
 Ilex aquifolium
 Jacaranda mimosifolia
 Jubaea chilensis
@@ -225,42 +194,41 @@ Lagunaria patersonia
 Larix decidua
 Larix laricina
 Laurus nobilis
-Ligustrum japonica
-Ligustrum japonica "variegata"
 Ligustrum japonicum
 Ligustrum lucidum
 Ligustrum vulgare
+Liquidambar formonosa
+Liquidambar orientalis
 Liquidambar styraciflua
-Liquidambar styraciflua Worplesdon
+Liquidambar styraciflua 'Worplesdon'
 Liriodendron tulipifera
 Lophostemon confertus
 Luma apiculata
-Magnolia Galaxy
+Macromeles tschonoskii
+Magnolia 'Galaxy'
 Magnolia grandiflora
 Magnolia kobus
-Magnolia x soulangiana
+Magnolia × soulangiana
 Malus domestica
 Malus 'Evereste'
-Malus floribunda
-Malus pumila
+Malus × floribunda
+Malus × purpurea
 Malus 'Rudolph'
 Malus sylvestris
 Malus toringo
-Malus tschonoskii
-Malus x domestica
-Malus x purpurea
-Malus Zierform
+Malus 'Zierform'
 Mangifera indica
-Mangifera indica L.
 Maytenus boaria
 Melaleuca armillaris
+Melaleuca citrina
 Melaleuca ericifolia
 Melaleuca lanceolata
 Melaleuca linariifolia
+Melaleuca lophantha
 Melaleuca nesophila
 Melaleuca styphelioides
+Melaleuca viminalis
 Melia azedarach
-Melia azederach
 Metasequoia glyptostroboides
 Metrosideros excelsa
 Morus alba
@@ -270,20 +238,16 @@ Nerium oleander
 Nothofagus dombeyi
 Nothofagus obliqua
 Olea europaea
-Olea europea
-Opuntia ficus-indica Mill.
+Opuntia ficus-indica
 Ostrya carpinifolia
 Parrotia persica
 Paulownia tomentosa
-Persea americana Mill.
+Persea americana
 Phellodendron amurense
 Phoenix canariensis
-Phoenix canariensis Hort. ex Chabaud
 Phoenix dactylifera
-Phoenix dactylifera L.
-Photinia serrulata
+Photinia glabra
 Picea abies
-Picea abies Karst.
 Picea glauca
 Picea mariana
 Picea omorika
@@ -292,47 +256,36 @@ Pinus banksiana
 Pinus halepensis
 Pinus mugo
 Pinus nigra
-Pinus nigra austriaca
-Pinus nigra nigra
+Pinus nigra subsp. nigra
 Pinus pinaster
 Pinus pinea
 Pinus ponderosa
 Pinus radiata
 Pinus resinosa
 Pinus strobus
-Pinus strobus L.
 Pinus sylvestris
 Pinus taeda
 Pinus wallichiana
-Pirus calleryana
-Pirus calleryana Chanticleer
 Pistacia chinensis
-Platanus acerifolia
-Platanus hybrida
+Platanus × hispanica
 Platanus occidentalis
 Platanus orientalis
-Platanus Platanor "Vallis Clausa"
-Platanus x acerifolia
-Platanus x hybrida
+Platanus Platanor 'Vallis Clausa'
+Platycladus orientalis
 Populus alba
-Populus alba "Bolleana"
+Populus alba 'Bolleana'
 Populus balsamifera
-Populus canadensis
-Populus canescens
+Populus × canescens
 Populus deltoides
+Populus × euramericana
 Populus nigra
 Populus nigra 'Italica'
-Populus pyramidalis
-Populus robusta
 Populus simonii
 Populus tremula
 Populus tremula 'Erecta'
 Populus tremuloides
-Populus x canadensis
-Populus x canescens
-Populus x euramericana
 Prosopis chilensis
-Prunus Accolade
+Prunus 'Accolade'
 Prunus 'Amanogawa'
 Prunus armeniaca
 Prunus avium
@@ -344,29 +297,26 @@ Prunus cerasifera 'Pissardii'
 Prunus cerasus
 Prunus domestica
 Prunus dulcis
-Prunus dulcis D.A.Webb
-Prunus hillierii x Spire
-Prunus kanzan
+Prunus × hillieri 'Spire'
+Prunus hillierii × Spire
+Prunus itosakura
 Prunus laurocerasus
 Prunus lusitanica
 Prunus maackii
 Prunus padus
 Prunus persica
-Prunus Persica
 Prunus sargentii
-Prunus sargentii "Yedoensis"
+Prunus × schmittii
 Prunus serotina
 Prunus serrula
 Prunus serrulata
-Prunus serrulata Kanzan
-Prunus subhirtella
+Prunus serrulata 'Kanzan'
+Prunus × subhirtella
 Prunus 'Sunset Boulevard'
 Prunus 'Tai Haku'
 Prunus 'Umineko'
 Prunus virginiana
-Prunus Virginiana `Schubert`
-Prunus x hillieri Spire
-Prunus x schmittii
+Prunus virginiana 'Schubert'
 Prunus × yedoensis
 Pseudotsuga menziesii
 Pterocarya fraxinifolia
@@ -382,102 +332,81 @@ Quercus coccinea
 Quercus frainetto
 Quercus fusiformis
 Quercus ilex
-Quercus Ilex
 Quercus imbricaria
 Quercus macrocarpa
 Quercus muehlenbergii
 Quercus palustris
-Quercus pedunculata
 Quercus petraea
 Quercus phellos
 Quercus pubescens
 Quercus robur
 Quercus robur 'Fastigiata'
 Quercus robur 'Fastigiata Koster'
-Quercus robur L.
 Quercus rubra
 Quercus suber
 Quillaja saponaria
+Rhapis excelsa
 Rhus typhina
-River Red Gum
 Robinia pseudoacacia
-Robinia umbraculifera
+Robinia viscosa
 Roystonea regia
-SA Blue Gum
 Salix alba
 Salix alba 'Tristis'
 Salix babylonica
-Salix babylonica Pendula
+Salix babylonica 'Pendula'
 Salix caprea
-Salix fragilis
+Salix × fragilis
+Samanea saman
 Sambucus nigra
+Scandosorbus intermedia
 Schinus molle
-Sequoiadendron giganteum
 Sequoia sempervirens
+Sequoiadendron giganteum
 Sophora cassioides
-Sophora japonica
-Sorbus aria
+Sorbus × arnoldiana 'Schouten'
 Sorbus aucuparia
 Sorbus decora
-Sorbus domestica
-Sorbus intermedia
-Sorbus intermedia 'Brouwers'
-Sorbus torminalis
-Sorbus x arnoldiana Schouten
-Sorbus x thuringiaca
 Styphnolobium japonicum
-Syagrus sancona H. Karst.
+Syagrus sancona
 Syringa reticulata
 Syringa vulgaris
 Tamarix gallica
 Taxodium distichum
 Taxus baccata
-Tectona grandis L.f.
-Theobroma cacao L.
+Tectona grandis
+Theobroma cacao
 Thuja occidentalis
-Thuja orientalis
 Thuja plicata
 Tilia americana
-Tilia argentea
 Tilia cordata
-Tilia cordata Green Spire
-Tilia cordata Mill.
+Tilia cordata 'Green Spire'
 Tilia cordata 'Rancho'
-Tilia euchlora
-Tilia europaea
-Tilia europaea Pallida
+Tilia × euchlora
+Tilia × europaea
+Tilia × europaea 'Pallida'
 Tilia mongolica
 Tilia platyphyllos
-Tilia platyphyllos Scop.
+Tilia platyphyllos 'Glenleven'
 Tilia tomentosa
-Tilia x euchlora
-Tilia x europaea
-Tilia x europea
-Tilia x europeana
-Tilia x flavescens Glenleven
-Tilia x intermedia
-Tilia x vulgaris
-Tilia x vulgaris 'Pallida'
 Tipuana tipu
+Torminalis glaberrima
+Trema micranthum
 Trachycarpus fortunei
 Tristaniopsis laurina
 Tsuga canadensis
 Ulmus americana
 Ulmus americana 'Brandon'
-Ulmus carpinifolia
 Ulmus glabra
-Ulmus hollandica
-Ulmus hybride Lobel
+Ulmus × hollandica
 Ulmus laevis
 Ulmus minor
 Ulmus parvifolia
 Ulmus parvifolia 'Yarralumla Clone'
-Ulmus procera
 Ulmus pumila
+Vachellia nilotica
 Washingtonia filifera
 Washingtonia robusta
 Wodyetia bifurcata
 Zelkova carpinifolia
 Zelkova serrata
-Zelkova serrata Green Vase
-Zellkova serrata
+Zelkova serrata 'Green Vase'

@@ -804,4 +804,30 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_material_bamboo">Bamboo</string>
     <string name="quest_material_adobe">Adobe</string>
 
+    <!-- roof material -->
+    <string name="quest_roofMaterial_title">"What overall material does this building’s roof have?"</string>
+    <string name="default_disabled_msg_roofMaterial">This quest type is disabled by default because roof materials are often not easily visible from the street. This quest type is also quite time-consuming; in most cases it is easier and more efficient to map this from aerial imagery at home.</string>
+    <string name="quest_roof_material_value_roof_tiles">Roof tiles</string>
+    <string name="quest_roof_material_value_concrete">Concrete</string>
+    <string name="quest_roof_material_value_tar_paper">Tar paper</string>
+    <string name="quest_roof_material_value_eternit">Eternit</string>
+    <string name="quest_roof_material_value_glass">Glass</string>
+    <string name="quest_roof_material_value_acrylic_glass">Acrylic glass</string>
+    <string name="quest_roof_material_value_metal_sheet">Metal sheet</string>
+    <string name="quest_roof_material_value_slate">Slate</string>
+    <string name="quest_roof_material_value_tin">Tin</string>
+    <string name="quest_roof_material_value_grass">Grass</string>
+    <string name="quest_roof_material_value_copper">Copper</string>
+    <string name="quest_roof_material_value_thatch">Thatch</string>
+    <string name="quest_roof_material_value_gravel">Gravel</string>
+    <string name="quest_roof_material_value_stone">Stone</string>
+    <string name="quest_roof_material_value_wood">Wood</string>
+    <string name="quest_roof_material_value_plastic">Plastic</string>
+    <string name="quest_roof_material_value_asphalt">Asphalt</string>
+    <string name="quest_roof_material_value_asphalt_shingle">Asphalt shingle</string>
+    <string name="quest_roof_material_value_zinc">Zinc</string>
+    <string name="quest_roof_material_value_sandstone">Sandstone</string>
+    <string name="quest_roof_material_value_bamboo">Bamboo</string>
+    <string name="quest_roof_material_value_palm_leaves">Palm leaves</string>
+    <string name="quest_roof_material_value_solar_panels">Solar panels</string>
 </resources>

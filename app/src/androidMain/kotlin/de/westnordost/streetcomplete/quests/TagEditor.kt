@@ -496,4 +496,5 @@ val tagEdit = object : ElementEditType {
 private val emptyEntry = "" to ""
 
 // characters that should not be in keys, see https://taginfo.openstreetmap.org/reports/characters_in_keys
-private val problematicKeyCharacters = "[\\s=+/&<>;'\"?%#@,\\\\]".toRegex()
+// we allow trailing and leading whitespace as we will trim them anyway (see https://github.com/Helium314/SCEE/issues/822)
+private val problematicKeyCharacters = "[=+/&<>;'\"?%#@,\\\\]|\\S\\s\\S".toRegex()

@@ -252,9 +252,16 @@ class StyleableOverlayMapComponent(
             is PointStyle -> {
                 if (style.icon != null) {
                     p.addProperty("icon", context.resources.getResourceEntryName(style.icon))
-                    val color = style.color ?: if (isNightMode) "#ccf" else "#124"
+                    val color =
+                        if (isNightMode) style.nightColor ?: style.color ?: "#ccf"
+                        else style.color ?: "#124"
                     p.addProperty("icon-color", color)
-                    val haloColor = style.color?.let { getDarkenedColor(it) } ?: if (isNightMode) "#2e2e48" else "#fff"
+                    val haloColor =
+                        if (isNightMode)
+                            style.nightColor?.let { getDarkenedColor(it) }
+                            ?: style.color?.let { getDarkenedColor(it) }
+                            ?: "#2e2e48"
+                        else "#fff"
                     p.addProperty("icon-halo-color", haloColor)
                 }
                 if (style.label != null) p.addProperty("label", style.label)
@@ -384,7 +391,7 @@ class StyleableOverlayMapComponent(
         darkenedColors.getOrPut(color) {
             val rgb = color.toRgb()
             val hsv = rgb.toHsv()
-            val darkenedHsv = hsv.copy(value = hsv.value * 2 / 3)
+            val darkenedHsv = hsv.copy(value = hsv.value / 3)
             darkenedHsv.toRgb().toHexString()
         }
 

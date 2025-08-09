@@ -1,3 +1,8 @@
+buildscript {
+    val agp_version by extra("8.9.3")
+    val agp_version1 by extra("8.7.2")
+    val agp_version2 by extra("8.9.3")
+}
 plugins {
     // this is necessary to avoid the plugins to be loaded multiple times
     // in each subproject's classloader

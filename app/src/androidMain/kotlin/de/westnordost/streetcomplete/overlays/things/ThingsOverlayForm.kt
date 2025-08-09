@@ -54,6 +54,7 @@ class ThingsOverlayForm : AbstractOverlayForm() {
 
         return getFeatureDictionaryFeature(element)
             ?: getDisusedFeatureDictionaryFeature(element)
+            ?: getAbandonedFeatureDictionaryFeature(element)
             ?: BaseFeature(
                 id = "thing/unknown",
                 names = listOf(requireContext().getString(R.string.unknown_object)),
@@ -68,6 +69,12 @@ class ThingsOverlayForm : AbstractOverlayForm() {
         val disusedFeature = getFeatureDictionaryFeature(disusedElement) ?: return null
         val disusedLabel = resources.getString(R.string.disused).uppercase()
         return disusedFeature.toPrefixedFeature("disused", disusedLabel)
+    }
+    private fun getAbandonedFeatureDictionaryFeature(element: Element): Feature? {
+        val abandonedElement = element.asIfItWasnt("abandoned") ?: return null
+        val abandonedFeature = getFeatureDictionaryFeature(abandonedElement) ?: return null
+        val abandonedLabel = resources.getString(R.string.abandoned).uppercase()
+        return abandonedFeature.toPrefixedFeature("abandoned", abandonedLabel)
     }
 
     private fun getFeatureDictionaryFeature(element: Element): Feature? {

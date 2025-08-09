@@ -12,7 +12,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.applyReplacePlaceTo
 import de.westnordost.streetcomplete.osm.isDisusedPlace
 import de.westnordost.streetcomplete.osm.isPlace
-import de.westnordost.streetcomplete.osm.isPlaceOrDisusedPlace
+import de.westnordost.streetcomplete.osm.isKindOfPlace
 import de.westnordost.streetcomplete.osm.updateCheckDate
 
 class CheckShopType : OsmElementQuestType<ShopTypeAnswer> {
@@ -58,7 +58,7 @@ class CheckShopType : OsmElementQuestType<ShopTypeAnswer> {
         !element.isPlace()
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlaceOrDisusedPlace() }
+        getMapData().asSequence().filter { it.isKindOfPlace() }
 
     override fun createForm() = ShopTypeForm()
 

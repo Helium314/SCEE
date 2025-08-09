@@ -39,4 +39,6 @@ data class PointStyle(
     val label: String? = null,
     /** color to use for the icon */
     val color: String? = null,
+    /** night mode color for the icon */
+    val nightColor: String? = null,
 ) : Style

@@ -4,14 +4,17 @@ import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpressio
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 
 /** Return whether this element is a kind of thing, regardless whether it is disused or not */
-fun Element.isThingOrDisusedThing(): Boolean =
-    isThing() || isDisusedThing()
+fun Element.isKindOfThing(): Boolean =
+    isThing() || isDisusedThing() || isAbandonedThing()
 
 fun Element.isThing(): Boolean =
     IS_THING_EXPRESSION.matches(this)
 
 fun Element.isDisusedThing(): Boolean =
     this.asIfItWasnt("disused")?.let { IS_THING_EXPRESSION.matches(it) } == true
+
+fun Element.isAbandonedThing(): Boolean =
+    this.asIfItWasnt("abandoned")?.let { IS_THING_EXPRESSION.matches(it) } == true
 
 /** Small map features that are often mapped as points and usually cannot be entered.
  *

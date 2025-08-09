@@ -20,6 +20,7 @@ import de.westnordost.streetcomplete.databinding.FragmentOverlayPlacesBinding
 import de.westnordost.streetcomplete.osm.POPULAR_PLACE_FEATURE_IDS
 import de.westnordost.streetcomplete.osm.applyReplacePlaceTo
 import de.westnordost.streetcomplete.osm.applyTo
+import de.westnordost.streetcomplete.osm.asIfItWasnt
 import de.westnordost.streetcomplete.osm.isDisusedPlace
 import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.osm.localized_name.LocalizedName
@@ -80,6 +81,7 @@ class PlacesOverlayForm : AbstractOverlayForm() {
 
         return getFeatureDictionaryFeature(element)
             ?: if (element.isDisusedPlace()) vacantShopFeature else null
+                ?: getAbandonedFeatureDictionaryFeature(element)
             ?: BaseFeature(
                 id = "shop/unknown",
                 names = listOf(requireContext().getString(R.string.unknown_shop_title)),
@@ -99,6 +101,13 @@ class PlacesOverlayForm : AbstractOverlayForm() {
             country = countryOrSubdivisionCode,
             geometry = geometryType,
         ).firstOrNull { it.toElement().isPlace() }
+    }
+
+    private fun getAbandonedFeatureDictionaryFeature(element: Element): Feature? {
+        val abandonedElement = element.asIfItWasnt("abandoned") ?: return null
+        val abandonedFeature = getFeatureDictionaryFeature(abandonedElement) ?: return null
+        val abandonedLabel = resources.getString(R.string.abandoned).uppercase()
+        return abandonedFeature.toPrefixedFeature("abandoned", abandonedLabel)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -7,7 +7,11 @@ import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
 import de.westnordost.streetcomplete.osm.asIfItWasnt
-import de.westnordost.streetcomplete.osm.isThingOrDisusedThing
+import de.westnordost.streetcomplete.osm.isAbandonedPlace
+import de.westnordost.streetcomplete.osm.isAbandonedThing
+import de.westnordost.streetcomplete.osm.isDisusedPlace
+import de.westnordost.streetcomplete.osm.isDisusedThing
+import de.westnordost.streetcomplete.osm.isKindOfThing
 import de.westnordost.streetcomplete.overlays.Color
 import de.westnordost.streetcomplete.overlays.Overlay
 import de.westnordost.streetcomplete.overlays.PointStyle
@@ -26,18 +30,23 @@ class ThingsOverlay(private val getFeature: (Element) -> Feature?) : Overlay {
     override fun getStyledElements(mapData: MapDataWithGeometry) =
         mapData
             .asSequence()
-            .filter { it.isThingOrDisusedThing() }
+            .filter { it.isKindOfThing() }
             .mapNotNull { element ->
-                // show disused things with the same icon as normal things because they usually look
-                // similar (a disused telephone booth still looks like a telephone booth, etc.)
                 val feature = getFeature(element)
                     ?: element.asIfItWasnt("disused")?.let { getFeature(it) }
+                    ?: element.asIfItWasnt("abandoned")?.let { getFeature(it) }
                     ?: return@mapNotNull null
 
                 val icon = feature.icon?.let { presetIconIndex[it] } ?: R.drawable.preset_maki_marker_stroked
 
                 val style = if (element is Node) {
-                    PointStyle(icon)
+                    PointStyle(icon, null,
+                        if (element.isDisusedThing()) "#606269"
+                        else if (element.isAbandonedThing()) "#B06269"
+                        else null,
+                        if (element.isDisusedThing()) "#9999AF"
+                        else if (element.isAbandonedThing()) "#FF99AF"
+                        else null)
                 } else {
                     PolygonStyle(Color.INVISIBLE, icon)
                 }

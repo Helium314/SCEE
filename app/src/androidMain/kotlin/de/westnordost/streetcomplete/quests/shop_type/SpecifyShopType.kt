@@ -8,7 +8,7 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.CITIZEN
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.applyReplacePlaceTo
-import de.westnordost.streetcomplete.osm.isPlaceOrDisusedPlace
+import de.westnordost.streetcomplete.osm.isKindOfPlace
 import de.westnordost.streetcomplete.osm.removeCheckDates
 import de.westnordost.streetcomplete.osm.removePlaceRelatedTags
 
@@ -43,7 +43,7 @@ class SpecifyShopType : OsmFilterQuestType<ShopTypeAnswer>() {
     override fun getTitle(tags: Map<String, String>) = R.string.quest_shop_type_title2
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlaceOrDisusedPlace() }
+        getMapData().asSequence().filter { it.isKindOfPlace() }
 
     override fun createForm() = ShopTypeForm()
 

@@ -1332,6 +1332,7 @@
     <string name="overlay_places">"Μέρη"</string>
     <string name="overlay_things">"Πράγματα"</string>
     <string name="disused">"αχρησιμοποίητο"</string>
+    <string name="abandoned">εγκαταλειμμένο</string>
     <string name="unknown_object">"Άγνωστο αντικείμενο"</string>
     <string name="quest_leafType_tree_title">"Αυτό το δέντρο έχει βελόνες ή φύλλα;"</string>
     <string name="quest_bbq_fuel_gas">"Καύσιμο"</string>

@@ -6,13 +6,16 @@ import de.westnordost.streetcomplete.data.osm.mapdata.Element
 
 /** Return whether this element is a kind of place, regardless whether it is currently vacant or
  *  not */
-fun Element.isPlaceOrDisusedPlace(): Boolean =
-    isPlace() || isDisusedPlace()
+fun Element.isKindOfPlace(): Boolean =
+    isPlace() || isDisusedPlace() || isAbandonedPlace()
 
 /** Return whether this element is a kind of disused or vacant place */
 fun Element.isDisusedPlace(): Boolean =
     IS_VACANT_PLACE_EXPRESSION.matches(this) ||
     this.asIfItWasnt("disused")?.let { IS_PLACE_EXPRESSION.matches(it) } == true
+
+fun Element.isAbandonedPlace(): Boolean =
+    this.asIfItWasnt("abandoned")?.let { IS_PLACE_EXPRESSION.matches(it) } == true
 
 fun Element.isPlace(): Boolean =
     IS_PLACE_EXPRESSION.matches(this)

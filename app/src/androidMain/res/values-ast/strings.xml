@@ -781,7 +781,7 @@ Repara en qu'esta aplicación solo pide'l númberu de portal d'un edificiu en sa
     <string name="default_disabled_msg_go_inside_regional_warning">"Esti tipu de xera ta desactivada de serie porque nun ye útil en dalgunes rexones y seguramente tengas d'entrar nel sitiu p'alcontrar la información y responder bien a les preguntes."</string>
     <string name="quest_dietType_explanation_kosher">"Los productos kosher han preparase d'una manera especial, hai axencias que los certifiquen denomaes \"kashrut\"."</string>
     <string name="quest_cycleway_answer_no_bicycle_infrastructure">"Nun hai carril bici nengún equí."</string>
-    <string name="quest_cycleway_answer_no_bicycle_infrastructure_explanation">"Pa completar la xera, como siempre; toca un llau de la vía, escueyi la respuesta y fai lo mesmo nel otru llau. 
+    <string name="quest_cycleway_answer_no_bicycle_infrastructure_explanation">"Pa completar la xera, como siempre; toca un llau de la vía, escueyi la respuesta y fai lo mesmo nel otru llau.
 
 Repara en toles opciones disponibles: a veces nun ye tan obvio, como en víes d'un solu sentíu con dos direcciones de carril bici."</string>
     <string name="quest_cycleway_answer_no_bicycle_infrastructure_title">"Marcando como que nun hai carril bici"</string>
@@ -1335,6 +1335,7 @@ Dalgunes capes tamién permiten añader datos que falten al traviés del marcado
     <string name="overlay_places">"Sitios"</string>
     <string name="overlay_things">"Coses"</string>
     <string name="disused">"en desusu"</string>
+    <string name="abandoned">abandoned</string>
     <string name="unknown_object">"Oxetu desconocíu"</string>
     <string name="quest_leafType_tree_title">"¿Esti árbol tien fueya ancho o en forma d'aguya?"</string>
     <string name="quest_bbq_fuel_gas">"Gas"</string>

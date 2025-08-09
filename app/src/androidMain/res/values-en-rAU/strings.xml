@@ -1346,6 +1346,7 @@ Additionally, some overlays allow you to add new data at the position of a displ
     <string name="overlay_places">"Places"</string>
     <string name="overlay_things">"Things"</string>
     <string name="disused">"disused"</string>
+    <string name="abandoned">abandoned</string>
     <string name="unknown_object">"Unknown object"</string>
     <string name="quest_leafType_tree_title">"Does this tree have needles or leaves?"</string>
     <string name="quest_bbq_fuel_gas">"Gas"</string>

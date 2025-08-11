@@ -2,6 +2,9 @@ package de.westnordost.streetcomplete.quests.service_building
 
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.Element
+import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.Tags
 
@@ -27,6 +30,9 @@ class AddServiceBuildingType : OsmFilterQuestType<ServiceBuildingType>() {
     override fun getTitle(tags: Map<String, String>) = R.string.quest_service_building_type_title
 
     override fun createForm() = AddServiceBuildingTypeForm()
+
+    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
+        getMapData().filter("ways, relations with building ~ service|transformer_tower")
 
     override fun applyAnswerTo(answer: ServiceBuildingType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         answer.tags.forEach { tags[it.first] = it.second }

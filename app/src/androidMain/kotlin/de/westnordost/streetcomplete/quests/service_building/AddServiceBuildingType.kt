@@ -32,7 +32,7 @@ class AddServiceBuildingType : OsmFilterQuestType<ServiceBuildingType>() {
     override fun createForm() = AddServiceBuildingTypeForm()
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("ways, relations with building ~ service|transformer_tower")
+        getMapData().filter("ways, relations with building ~ service|transformer_tower or power")
 
     override fun applyAnswerTo(answer: ServiceBuildingType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         answer.tags.forEach { tags[it.first] = it.second }

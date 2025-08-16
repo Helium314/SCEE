@@ -612,6 +612,7 @@ fun getQuestTypeList(
     154 to AddWayLit(),
 
     // quests added in SCEE
+    EE_QUEST_OFFSET + 58 to AddBenchArmrest(),
     EE_QUEST_OFFSET + 0 to AddBenchMaterial(),
     EE_QUEST_OFFSET + 27 to AddBuildingColour(),
     EE_QUEST_OFFSET + 49 to AddBuildingMaterial(),

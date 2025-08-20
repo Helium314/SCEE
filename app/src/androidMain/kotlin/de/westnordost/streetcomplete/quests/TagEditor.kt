@@ -411,7 +411,7 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
             && newTags.keys.all { it.length < 255 }
             && newTags.values.all { it.length < 255 }
             && (newTags.isNotEmpty() || mapDataSource.getWaysForNode(originalElement.id).isNotEmpty()) // allow deleting all tags if node is part of a way
-            && newTags.keys.none { problematicKeyCharacters.containsMatchIn(it) }
+            && newTags.keys.none { problematicKeyCharacters.containsMatchIn(it.trim()) } // trim happens on ok, so no need to fail a check. see #822 / #824
 
     private fun showOk() = requireActivity().runOnUiThread { if (tagsChangedAndOk()) binding.okButton.popIn() else binding.okButton.popOut() }
 
@@ -496,5 +496,4 @@ val tagEdit = object : ElementEditType {
 private val emptyEntry = "" to ""
 
 // characters that should not be in keys, see https://taginfo.openstreetmap.org/reports/characters_in_keys
-// we allow trailing and leading whitespace as we will trim them anyway (see https://github.com/Helium314/SCEE/issues/822)
-private val problematicKeyCharacters = "[=+/&<>;'\"?%#@,\\\\]|\\S\\s\\S".toRegex()
+private val problematicKeyCharacters = "[\\s=+/&<>;'\"?%#@,\\\\]".toRegex()

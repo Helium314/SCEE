@@ -402,8 +402,10 @@ open class TagEditor : Fragment(), IsCloseableBottomSheet {
 
     private fun tagsChangedAndOk(): Boolean =
         originalElement.tags != HashMap<String, String>().apply {
-            putAll(newTags)
-            entries.removeAll { it.key.isBlank() && it.value.isBlank() }
+            newTags.forEach { (k, v) ->
+                if (k.isBlank() || v.isBlank()) return@forEach
+                put(k.trim(), v.trim())
+            }
         }
             && newTags.none {
                 (it.key.isBlank() && it.value.isNotBlank()) || (it.value.isBlank() && it.key.isNotBlank())

@@ -235,6 +235,7 @@
 
 
     <!-- new quests -->
+    <string name="quest_bench_armrest_title">Does this bench have armrests?</string>
 
     <!-- osmose quest -->
     <string name="quest_osmose_title">Osmose quest:</string>

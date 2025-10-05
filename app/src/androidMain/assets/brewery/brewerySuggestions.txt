@@ -3,11 +3,14 @@ Alhambra
 Allgäuer Brauhaus
 Alpirsbacher Klosterbräu
 Amstel
+Arany Ászok
+Arany Fácán
 Asahi
 Astra
 Augustiner Bräu München
 Ayinger
 Badger
+Balatoni Világos
 Beck's
 Beerlao
 Bellheimer
@@ -16,6 +19,7 @@ Berliner Kindl
 Bernard
 Birra Moretti
 Bitburger
+Borsodi
 Bosch
 Brains
 Brauhaus Faust
@@ -28,7 +32,9 @@ Castle Rock
 Chang
 Charles Wells
 Corona
+Csiki
 Dinkelacker-Schwaben Bräu
+Dreher
 Eichbaum
 Engelbräu
 Erdinger
@@ -66,12 +72,14 @@ Karlsberg
 Ketterer
 Kirin
 Klosterbrauerei Reutberg
+Kozel
 Krombacher
 Krušovice
 Kulmbacher
 König Ludwig
 König Pilsner
 Köstrizer
+Kőbányai
 Kühbacher
 Leffe
 Leibinger
@@ -86,14 +94,17 @@ Ninkasi
 Oettinger
 Paulaner
 Pelforth
+Peroni
 Pilsner Urquell
 Puntigamer
+Pécsi
 Radeberger
 Radegast
 Riegele
 Robinsons
 Rothaus
 Ruppaner
+Rákóczi
 Samuel Smith
 San Miguel
 Sapporo
@@ -103,6 +114,7 @@ Schlösser
 Schremser
 Schützengarten
 Shepherd Neame
+Soproni
 Spalter Bier
 Spandauer
 Spaten
@@ -115,6 +127,7 @@ Stuttgarter Hofbräu
 Suntory
 Suwa
 Svijany
+Szalon
 Tegernseer
 Thurn und Taxis
 Thwaites

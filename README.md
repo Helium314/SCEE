@@ -1,3 +1,5 @@
+[![Liberapay](https://img.shields.io/liberapay/patrons/Helium314.svg?logo=liberapay)](https://liberapay.com/Helium314)
+
 SCEE is a modified version of StreetComplete, aimed at experienced OSM users unhappy about the lack of advanced editing capabilities in normal StreetComplete.
 By default, most of the additional capabilities are disabled. Go through the settings (either in the app or [below](#differences-to-streetcomplete)) for details.
 

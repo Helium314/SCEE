@@ -124,6 +124,9 @@ import de.westnordost.streetcomplete.quests.lanes.AddLanes
 import de.westnordost.streetcomplete.quests.leaf_detail.AddForestLeafType
 import de.westnordost.streetcomplete.quests.leaf_detail.AddTreeLeafType
 import de.westnordost.streetcomplete.quests.level.AddLevel
+import de.westnordost.streetcomplete.quests.lgbtq.LGBTQAccessQuest
+import de.westnordost.streetcomplete.quests.lgbtq.LGBTQGenderSpecializationQuest
+import de.westnordost.streetcomplete.quests.lgbtq.LGBTQTransgenderSpecializationQuest
 import de.westnordost.streetcomplete.quests.map.AddMapSize
 import de.westnordost.streetcomplete.quests.map.AddMapType
 import de.westnordost.streetcomplete.quests.max_height.AddMaxHeight
@@ -656,6 +659,9 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 54 to AddLampType(),
     EE_QUEST_OFFSET + 55 to AddPostOfficeType(),
     EE_QUEST_OFFSET + 57 to AddLampMount(),
+    EE_QUEST_OFFSET + 58 to LGBTQAccessQuest(),
+    EE_QUEST_OFFSET + 59 to LGBTQGenderSpecializationQuest(),
+    EE_QUEST_OFFSET + 60 to LGBTQTransgenderSpecializationQuest(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

@@ -3,6 +3,6 @@ package de.westnordost.streetcomplete.quests.lgbtq
 enum class LGBTQGenderSpecialization {
     NONE,
     MEN,
-    WOMAN,
+    WOMEN,
     NON_BINARY,
 }

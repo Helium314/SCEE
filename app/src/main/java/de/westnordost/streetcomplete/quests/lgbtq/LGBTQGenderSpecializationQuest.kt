@@ -34,7 +34,7 @@ class LGBTQGenderSpecializationQuest : OsmFilterQuestType<LGBTQGenderSpecializat
             LGBTQGenderSpecialization.MEN -> {
                 tags["lgbtq:men"] = tags["lgbtq"] ?: "primary"
             }
-            LGBTQGenderSpecialization.WOMAN -> {
+            LGBTQGenderSpecialization.WOMEN -> {
                 tags["lgbtq:woman"] = tags["lgbtq"] ?: "primary"
             }
             LGBTQGenderSpecialization.NON_BINARY -> {

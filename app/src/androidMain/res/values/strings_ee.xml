@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This ( app/src/main/res/values/strings.xml ) is the source file for the app's strings in en-US.
+     All other strings.xml are imported from POEditor crowd translation platform.
+
+     The strings are sorted into categories to
+     - avoid merge conflicts (people tend to append strings at the end of the file)
+     - better organize the strings to make it easier for translators (strings are presented in
+       POEditor in the same order as in this file)
+     -->
+<resources>
+
+    <!-- settings -->
+    <string name="pref_category_mods">SCEE settings</string>
+    <string name="pref_expert_mode_title">Expert mode</string>
+    <string name="pref_expert_mode_summary">Enable advanced editing capabilities</string>
+    <string name="pref_expert_mode_message">This will allow using quests added in SCEE, and ways of\n
+        <li>editing raw tags</li>\n
+        <li>moving nodes that are part of ways or relations</li>\n
+        <li>deleting free-floating any node</li>\n
+        <li>editing elements which should be blocked by a note</li>\n
+        <li>adding free floating nodes anywhere</li>\n
+        <li>changing element selection of quests</li>\n\n
+        This is still less than most other editors allow, but incautious use may result in damaging data in ways that are not possible in StreetComplete.
+        Be aware that by enabling expert mode you bear significantly more responsibility for your edits.\n
+        Please only enable this setting if you have OSM experience outside StreetComplete and understand what you are doing.
+    </string>
+    <!-- no need ot translate, debug only -->
+    <string name="pref_read_log_title">Log reader</string>
+    <!-- no need ot translate, debug only -->
+    <string name="pref_read_log_save">Save full log to file</string>
+    <!-- no need ot translate, debug only -->
+    <string name="pref_read_reverse_button">Reverse</string>
+    <!-- no need ot translate, debug only -->
+    <string name="pref_read_filter_hint">Filter…</string>
+
+    <!-- notes settings -->
+    <string name="pref_screen_notes">Notes</string>
+    <string name="pref_hide_notes_title">Hide notes by specific users</string>
+    <string name="pref_hide_notes_hint">Use comma to separate user names or IDs</string>
+    <string name="pref_hide_notes_message">Enter user names or IDs to ignore</string>
+    <string name="pref_show_gpx_button_title">Show GPX note button</string>
+    <string name="pref_show_gpx_button_summary">Contrary to OSM notes, adding a GPX note will not hide any quest at the affected location</string>
+    <string name="pref_swap_gpx_note_button">Swap OSM and GPX note buttons</string>
+    <string name="pref_hide_keyboard_title">Hide keyboard before creating note</string>
+    <string name="pref_hide_keyboard_summary">Hides the keyboard when open before the note is actually created (to allow re-view of position)</string>
+    <string name="pref_really_all_notes_title">“Show all notes“ means ALL notes</string>
+    <string name="pref_really_all_notes_summary">When requesting to show all notes, show even notes created (or commented on) by yourself</string>
+    <string name="pref_save_gpx">Get GPX notes and attached photos and tracks</string>
+    <string name="pref_save_file_error">Error saving file</string>
+    <string name="pref_files_not_found">No files found</string>
+    <string name="pref_create_custom_quest_title">Allow creating custom quests</string>
+    <string name="pref_create_custom_quest_summary">…as alternative to leaving a note. This can be used as locally stored note visible on the map. Note that you’ll need to enable custom quests.</string>
+    <string name="pref_save_photos_title">Save photos used for notes</string>
+    <string name="pref_save_photos_summary">Store full size versions of photos taken while creating notes, without clearing EXIF data</string>
+    <string name="pref_get_photos_title">Get full size photos</string>
+
+    <!-- display settings -->
+    <string name="pref_screen_display">Display</string>
+    <!-- currently pref_3d_buildings_title is unused, as 3D buildings are disabled with MapLibre due to looking bad -->
+<!--    <string name="pref_3d_buildings_title">Show 3D buildings</string> -->
+    <string name="pref_way_direction">Show direction of ways</string>
+    <string name="pref_way_direction_summary">Displays arrows on highlighted lines when opening a quest. Useful e.g. when adding oneway.</string>
+    <string name="pref_quest_geometries_title">Display quest geometries</string>
+    <string name="pref_quest_geometries_summary">Highlight ways and areas that have quests</string>
+    <string name="pref_offset_fix_title2">Remove offsets for white dots</string>
+    <string name="pref_offset_fix_summary">They exist so white dots are hidden by quest pins</string>
+    <string name="pref_show_solved_animation">Show animation after solving a quest</string>
+    <string name="pref_show_solved_animation_summary">This also controls the quest-solved sound</string>
+    <string name="pref_gpx_track_title">Display GPX track from file</string>
+    <string name="pref_gpx_track_provide">Select GPX file</string>
+    <string name="pref_gpx_track_loading_error">Error loading GPX track file</string>
+    <string name="pref_gpx_track_enable">Display GPX track</string>
+    <string name="pref_gpx_track_download">Download area covered by GPX track</string>
+    <string name="pref_custom_geometry_title">Display map features from GeoJson file</string>
+    <string name="pref_custom_geometry_info">If you want to display text, it must be in the \"name\" property</string>
+    <string name="file_provide">Select file</string>
+    <string name="file_loading_error">Error loading file</string>
+
+    <!-- ui settings -->
+    <string name="pref_screen_ui">UI</string>
+    <string name="pref_volume_zoom_title">Volume button zoom</string>
+    <string name="pref_volume_zoom_summary">Zoom using volume buttons</string>
+    <string name="pref_rotate_while_zooming_title">Allow rotate while zooming</string>
+    <string name="pref_rotate_angle_threshold_title">Threshold for rotate gesture</string>
+    <string name="pref_show_quick_settings_title">Show quick settings button</string>
+    <string name="pref_select_first_edit_title">Select first edit on opening history</string>
+    <string name="pref_select_first_edit_summary">Allows for quicker undo, but moves camera automatically</string>
+    <string name="pref_main_menu_grid">Show all main menu items as grid</string>
+    <string name="pref_caps_word_name_input">Capitalize all words when entering names</string>
+    <string name="pref_show_next_quest_title">Show next quest immediately</string>
+    <string name="pref_show_next_quest_summary">Display further quest for same element right after solving</string>
+    <string name="pref_hide_button_title">Show hide button</string>
+    <string name="pref_hide_button_summary">Click hides quest temporarily, long click hides permanently</string>
+    <string name="pref_recent_answers_first_min_lines">Move recent answers to front</string>
+    <string name="pref_recent_answers_first_min_lines_summary">If form has more than %d line(s)</string>
+    <string name="pref_recent_answers_first_min_lines_message">Move recent answers to front if the quest answer form has more than this many lines of images</string>
+    <string name="pref_show_nearby_quests_title">Show nearby quests</string>
+    <string name="pref_show_nearby_quests_summary">Allows switching nearby quests when a quest form is shown</string>
+    <string name="show_nearby_quests_disable">Don’t show nearby quests</string>
+    <string name="show_nearby_quests_visible">Show only enabled quests types</string>
+    <string name="show_nearby_quests_all_types">Show all quest types</string>
+    <string name="show_nearby_quests_even_hidden">Show all types and hidden quests</string>
+    <string name="show_nearby_quests_distance">Show quests within this distance (limited to 10 meters)</string>
+    <string name="pref_search_more_languages_title">Search features in more languages</string>
+    <string name="pref_search_more_languages_summary">Feature search shows results in all system and local language</string>
+    <string name="pref_overlay_quick_selector_title">Show overlay quick selector</string>
+    <string name="pref_create_node_show_keyboard_title">Automatically show keyboard when adding a node</string>
+    <string name="pref_main_menu_switch_presets_title">Switch preset button in main menu</string>
+    <string name="pref_disable_navigation_mode_title">Disable navigation mode</string>
+    <string name="pref_disable_navigation_mode_summary">Disables the mode that tilts and auto-rotates the map</string>
+
+    <!-- data management settings -->
+    <string name="pref_screen_data_management">Data management</string>
+    <string name="pref_auto_download_title">Auto download</string>
+    <string name="pref_auto_download_summary">Automatically download data in the nearby area</string>
+    <string name="pref_manual_download_cache_title">Always re-download data</string>
+    <string name="pref_manual_download_cache_summary">When disabled, data will not be re-downloaded on manual download unless it’s older than 12 hours</string>
+    <string name="pref_export">Export settings</string>
+    <string name="pref_import">Import settings</string>
+    <string name="import_export_presets">Presets</string>
+    <string name="import_export_presets_select">Select presets to export</string>
+    <string name="import_export_custom_overlays">Custom Overlays</string>
+    <string name="import_export_custom_overlays_select">Select overlays to export</string>
+    <string name="import_export_settings">Other app settings</string>
+    <string name="import_export_hidden_quests">Hidden quests</string>
+    <string name="import_presets_overlays_message">Add imported, or replace existing? If you choose replace, all currently existing will be removed.</string>
+    <string name="import_presets_overlays_add">Add</string>
+    <string name="import_presets_overlays_replace">Replace</string>
+    <string name="import_error">Import error</string>
+    <string name="import_error_db_version">Import error: unknown version</string>
+    <string name="export_warning_db_version">Warning: database version unknown, import may not work. Please ask for the app to be updated.</string>
+    <string name="pref_delete_old_data_after">Delete old data after</string>
+    <string name="pref_delete_old_data_after_message">Remove downloaded OSM data if older than this many days</string>
+    <string name="pref_delete_old_data_after_summary">%d days</string>
+    <string name="pref_trees_title">Load tree quest file</string>
+    <string name="pref_custom_title">Load custom quest file</string>
+    <string name="tree_custom_quest_import_export_message">Get currently used file or provide a new one? Check the corresponding quest enable message for details.</string>
+    <string name="tree_custom_quest_import">Provide</string>
+    <string name="tree_custom_quest_export">Get</string>
+    <string name="pref_tile_source_title">Tile source for satellite / aerial images</string>
+    <string name="pref_tile_source_message">Tile URL must contain {x}, {y} and {z}</string>
+    <string name="pref_tile_source_hide_labels">Hide labels</string>
+    <string name="pref_tile_maxzoom">Max supported zoom</string>
+    <string name="pref_tree_custom_quest_summary">See message when enabling quest for details</string>
+    <string name="pref_update_local_statistics">Update statistics on upload</string>
+    <string name="pref_update_local_statistics_summary">Disabling accelerates upload and stops achievement messages</string>
+
+    <!-- quests settings -->
+    <string name="pref_screen_quests">Quests</string>
+    <string name="pref_advanced_resurvey_title">Advanced resurvey</string>
+    <string name="pref_advanced_resurvey_summary">Force resurvey for selected tags</string>
+    <string name="advanced_resurvey_title">Set resurvey date and keys</string>
+    <string name="advanced_resurvey_message_keys">Always resurvey these keys if there is no check date key. Check date will always be added on answering related quests</string>
+    <string name="advanced_resurvey_message_date">Instead of using resurvey intervals, resurvey above keys if check date older than:</string>
+    <string name="advanced_resurvey_hint_keys">Separate multiple keys using comma</string>
+    <string name="advanced_resurvey_hint_date">Use format: YYYY-MM-DD</string>
+    <string name="pref_day_night_title">Daytime quest filter</string>
+    <string name="day_night_ignore">Ignore daytime</string>
+    <string name="day_night_priority">Increase priority of quests suitable for current daytime</string>
+    <string name="day_night_visibility">Don’t show quests unsuitable for current daytime</string>
+    <string name="pref_quest_settings_preset_title">Per-preset quest settings</string>
+    <string name="pref_quest_settings_preset_summary">When enabled, quest settings are only valid for the current quest preset</string>
+    <string name="pref_dynamic_quest_creation_title">Create quests dynamically</string>
+    <string name="pref_dynamic_quest_creation_summary">Quests are created when loading the viewed area. Somewhat slow, but immediately applies changed quest settings.</string>
+    <string name="quest_settings_per_preset_rescan">For properly applying all changed quest settings, re-scanning for quests is necessary.</string>
+    <string name="pref_quest_monitor_title">Notify about nearby quests</string>
+    <string name="pref_quest_monitor_summary">Monitors location when the app is in background, except if backgrounded using back button</string>
+    <string name="quest_monitor_permission_warning">Background location permission is required for the nearby quest monitor to work</string>
+    <string name="quest_monitor_search_radius_text">Set radius nearby quest search. Note that quests with slightly larger distance may also be found. Locations with accuracy worse than this value are ignored.</string>
+    <string name="quest_monitor_gps">Actively request GPS locations?</string>
+    <string name="quest_monitor_net">Actively request network locations?</string>
+    <string name="quest_monitor_active_request">Actively requesting locations will increase battery use. When not actively requesting locations, locations requested by other apps will still be used.</string>
+    <string name="pref_quest_monitor_download">Download data if necessary? This may considerably consume data and battery, and may be rendered useless by Android for battery saving reasons.</string>
+    <string name="pref_hide_overlay_quests">Hide overlay-specific quests</string>
+
+    <!-- other settings -->
+    <string name="theme_dark_contrast">Dark (increased contrast)</string>
+    <string name="resurvey_intervals_even_less_often">Ask even less often</string>
+    <string name="pref_gps_interval_title">GPS location update interval</string>
+    <string name="pref_network_interval_title">"Network location update interval"</string>
+    <string name="pref_interval_summary">%d seconds</string>
+    <string name="pref_interval_message">Update interval in seconds</string>
+    <!-- currently unused
+    <string name="action_scee_quests">Show only SCEE quests</string>
+    <string name="action_all_quests">Show all quests</string> -->
+    <string name="restore_dialog_hint">You can also manually choose which quests to restore by long-pressing the undo button.</string>
+
+
+    <!-- quest settings -->
+    <string name="quest_settings_reset">Reset</string>
+    <string name="quest_settings_element_selection">Set elements eligible for this quest. &lt;a href=\"https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection\"&gt;Click here&lt;/a&gt; to open info on the element selection syntax in a browser.</string>
+    <string name="quest_settings_eligible_highways">Set highways eligible for this quest, comma separated</string>
+    <string name="quest_settings_what_to_edit">What to set?</string>
+    <string name="quest_settings_sidewalk_cycleway_distance_message">Set minimum distance from separate paths, if lower the quest will not be shown</string>
+    <string name="quest_settings_sidewalk_distance_button">Distance</string>
+    <string name="quest_settings_max_roof_levels">Maximum value for (building levels) minus (roof levels) for the quest to be shown</string>
+    <string name="quest_settings_max_steps_length">Maximum length of steps in meters for the quest to be shown</string>
+    <string name="quest_settings_level_title">Show this quest for:</string>
+    <string name="quest_settings_level_default">Shops &amp; similar in malls (default)</string>
+    <string name="quest_settings_level_more">Doctors and many more nodes inside multi-level buildings</string>
+<!-- not needed any more due to SC changes
+    <string name="quest_generic_surface_message">Allow generic surface answers without requiring a note?</string>
+    <string name="quest_generic_surface_button">Generic surface answers</string>
+    <string name="quest_generic_surface_yes">Allow without note</string>
+    <string name="quest_generic_surface_no">Only with note (default)</string> -->
+    <string name="quest_settings_osmose_level_title">Select issue severity levels to download and display</string>
+    <string name="quest_settings_osmose_level_high">High</string>
+    <string name="quest_settings_osmose_level_medium">Medium</string>
+    <string name="quest_settings_osmose_level_low">Low</string>
+    <string name="quest_settings_fixme_title">Select fixme values to ignore</string>
+    <string name="quest_settings_resurvey_all_opening_hours_title">Resurvey all opening hours</string>
+    <string name="quest_settings_resurvey_all_opening_hours_message">Resurvey all opening hours, including values not understood by SCEE? You may need to use the tag editor to enter the correct values.</string>
+    <string name="quest_settings_resurvey_all_opening_hours_yes">All</string>
+    <string name="quest_settings_resurvey_all_opening_hours_no">Default</string>
+    <string name="element_selection_button">Element selection</string>
+    <string name="quest_settings_building_levels_mandatory_roof">Require entering roof levels in most countries (default)</string>
+    <string name="quest_settings_building_levels_optional_roof">Allow omitting roof levels everywhere</string>
+    <string name="quest_settings_dot_labels_message">Set which tags should be used for the label, in given order. An empty string will never show any labels, \"label\" will show the default StreetComplete name label using name, brand, ref, local_ref and operator.</string>
+    <string name="quest_settings_highlight_changes_button">Highlight changes</string>
+    <string name="quest_settings_leaf_type_single_tree_message">Also ask leaf type for single trees?</string>
+    <string name="quest_settings_leaf_type_single_tree_yes">Yes</string>
+    <string name="quest_settings_leaf_type_single_tree_no">Only for ways and areas</string>
+
+
+    <!-- quick settings -->
+    <string name="quest_order_reverse">Reverse quest order</string>
+    <string name="quest_order_normal">Back to normal quest order</string>
+    <string name="level_filter">Level filter</string>
+    <string name="level_filter_title">Choose keys to check</string>
+    <string name="level_filter_message">Enter level value, or filter using &gt; and &lt;. Use * to match all elements containing an allowed level key</string>
+    <string name="level_filter_hint">Leave empty to show not tagged</string>
+    <string name="level_filter_enable">Enable level filter</string>
+    <string name="quick_switch_map_background">Toggle aerial / map background</string>
+    <string name="quick_switch_preset">Switch preset</string>
+
+
+    <!-- new quests -->
+
+    <!-- osmose quest -->
+    <string name="quest_osmose_title">Osmose quest:</string>
+    <string name="quest_osmose_false_positive">Report false positive</string>
+    <string name="quest_osmose_message">These quests are downloaded from Osmose service and indicate potential problems with OSM data. Download only happens if at least one severity level is selected in quest settings.\n
+        The Osmose message is displayed with the quest, any edit reports the issue as solved.\n
+        It is also possible to report the problem as false positive; this cannot be undone.</string>
+    <string name="quest_osmose_message_for_element">Item type %1$s: %2$s</string>
+    <string name="quest_osmose_remove_checked">Remove</string>
+    <string name="quest_osmose_settings_items">Modify item types to ignore</string>
+    <string name="quest_osmose_use_app_language">Download issues in application language</string>
+    <string name="quest_osmose_use_app_language_information">This will interfere with items that are ignored by subtitle</string>
+    <string name="quest_osmose_hide_type">Ignore issues with same…</string>
+    <string name="quest_osmose_delete_this_issue">Remove this issue locally</string>
+    <string name="quest_osmose_no_undo">Are you sure? This cannot be undone!</string>
+    <string name="quest_osmose_select_element">Select element</string>
+    <string name="quest_custom_quest_osmose_not_found">Entry deleted, removing quest</string>
+
+    <!-- custom quest (also uses osmose string above) -->
+    <string name="quest_custom_quest_title">Custom quest:</string>
+    <string name="quest_custom_quest_message">Use for checking specific pre-defined elements or locations. You can also specify tags and add a node with them. To use it, load a file in the main settings menu, containing either \`type,id,message\` (e.g. NODE,1234,check position) or \`latitude,longitude,message\`. For adding nodes, put the tags in the message after \'addNode\', e.g. addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
+    <string name="quest_custom_quest_remove">Remove from list</string>
+    <string name="quest_custom_quest_add_node">Add node</string>
+    <string name="quest_custom_quest_add_node_text">You can add a node with: %s</string>
+
+    <!--barrier locked -->
+    <string name="quest_barrier_locked_title">"Is this barrier (usually) locked?"</string>
+
+    <!-- bench material -->
+    <string name="quest_benchMaterial_title">What’s this made of?</string>
+    <string name="quest_material_wood">Wood</string>
+    <string name="quest_material_metal">Metal</string>
+    <string name="quest_material_plastic">Plastic</string>
+    <string name="quest_material_concrete">Concrete</string>
+    <string name="quest_material_stone">Stone</string>
+    <string name="quest_material_brick">Bricks</string>
+
+    <!-- guidepost sports -->
+    <string name="quest_guidepost_sports_title">For which sport is this guidepost intended?</string>
+    <string name="quest_guidepost_sports_note">If there is anything not covered by the features listed, please leave a note instead.</string>
+    <string name="quest_guidepost_sports_answer_simple">"It´s just a simple guidepost"</string>
+    <string name="quest_guidepost_sports_answer_simple_description">"This is just a simple guidepost with no specific sports."</string>
+    <string name="quest_guidepost_sports_hiking">Hiking</string>
+    <string name="quest_guidepost_sports_bicycle">Cycling</string>
+    <string name="quest_guidepost_sports_mtb">MTB</string>
+    <string name="quest_guidepost_sports_climbing">Climbing</string>
+    <string name="quest_guidepost_sports_horse">Horse Riding</string>
+    <string name="quest_guidepost_sports_nordic_walking">Nordic Walking</string>
+    <string name="quest_guidepost_sports_ski">Skiing</string>
+    <string name="quest_guidepost_sports_inline_skating">Inline Skating</string>
+    <string name="quest_guidepost_sports_running">Running</string>
+    <string name="quest_guidepost_sports_winter_hiking">Winter Hiking</string>
+
+    <!-- pharmacy dispensing -->
+    <string name="quest_is_pharmacy_dispensing_title">Is this pharmacy dispensing all prescription drugs?</string>
+
+    <!-- piste lit -->
+    <string name="quest_piste_lit_title">"Is this piste lit here?"</string>
+
+    <!-- poi quests -->
+    <string name="quest_poi_seating_title">POI: Seating</string>
+    <string name="default_disabled_msg_poi_bench">This \"quest\" shows POIs like benches or picnic tables as brown dots. Click the dot to show details and other answers.</string>
+    <string name="quest_poi_cycling_title">POI: Cycling</string>
+    <string name="default_disabled_msg_poi_bike">This \"quest\" shows bicycle-related POIs as purple dots. Click the dot to show details and other answers.</string>
+    <string name="quest_poi_business_title">POI: Business</string>
+    <string name="default_disabled_msg_poi_business">This \"quest\" shows shop, restaurants, doctors and similar POIs as orange dots. Click the dot to show details and other answers.</string>
+    <string name="quest_poi_camera_title">POI: Camera</string>
+    <string name="default_disabled_msg_poi_camera">This \"quest\" shows surveillance features as pink dots. Click the dot to show details and other answers.</string>
+    <string name="quest_poi_vending_title">POI: Vending</string>
+    <string name="quest_poi_machine_title">POI: Machine</string>
+    <string name="quest_poi_has_atm_title">POI: Has ATM</string>
+    <string name="default_disabled_msg_poi_machine">This \"quest\" shows POIs like ATMs, phones or vending machines as blue dots. Click the dot to show details and other answers.</string>
+    <string name="quest_poi_misc_title">POI: Miscellaneous</string>
+    <string name="default_disabled_msg_poi_other">This \"quest\" shows miscellaneous POIs like hydrants, viewpoints or toilets as yellow dots. Click the dot to show details and other answers.</string>
+    <string name="quest_poi_recycling_title">POI: Recycling</string>
+    <string name="default_disabled_msg_poi_recycling">This \"quest\" shows recycling/garbage related POIs as green dots. Click the dot to show details and other answers.</string>
+    <string name="quest_poi_traffic_title">POI: Traffic</string>
+    <string name="default_disabled_msg_poi_traffic">This \"quest\" shows traffic-related POIs as light blue dots. Click the dot to show details and other answers.</string>
+    <string name="quest_poi_vacant_title">POI: Vacant Place</string>
+    <string name="default_disabled_msg_poi_vacant">This \"quest\" shows vacant shops as grey dots. Click the dot to show details and other answers.</string>
+    <string name="quest_fixme_title">FixMe:</string>
+    <string name="default_disabled_msg_poi_fixme">This \"quest\" shows FixMes as red dots (with default exceptions of \'yes\' and \'continue\'). Click the dot to show details and other answers.</string>
+    <string name="quest_fixme_remove">Remove this fixme</string>
+    <string name="quest_traffic_stuff_raised">It’s a raised crossing</string>
+    <string name="quest_recycling_excrement_bag_dispenser">It has an excrement bag dispenser</string>
+
+    <!-- piste ref -->
+    <string name="quest_piste_ref_title">"What is the number of this piste?"</string>
+    <string name="quest_piste_ref_connection">"It's a piste connection"</string>
+
+    <!-- shared "utility" types for service building type and street cabinet type -->
+    <string name="quest_utility_power">Electricity</string>
+    <string name="quest_utility_water">Water</string>
+    <string name="quest_utility_gas">Gas</string>
+    <string name="quest_utility_sewerage">Sewerage</string>
+    <string name="quest_utility_telecom">Telecommunication</string>
+
+    <!-- sauna availability quest -->
+    <string name="quest_saunaAvailability_title">Is there a sauna here?</string>
+
+    <!-- swimming pool availability quest -->
+    <string name="quest_swimmingPoolAvailability_title">Is there a swimming pool here?</string>
+    <string name="quest_swimming_pool_indoor_and_outdoor">Both (indoor and outdoor)</string>
+    <string name="quest_swimming_pool_indoor_only">Only indoor</string>
+    <string name="quest_swimming_pool_outdoor_only">Only outdoor</string>
+    <string name="quest_swimming_pool_no">No swimming pool</string>
+
+    <!-- service building type -->
+    <string name="quest_service_building_type_title">What kind of service building is this?</string>
+    <string name="quest_service_building_type_substation">Electrical substation</string>
+    <string name="quest_service_building_type_substation_description">Substations that mainly relates to regional distribution networks</string>
+    <string name="quest_service_building_type_minor_substation">Small electrical substation</string>
+    <string name="quest_service_building_type_minor_substation_description">A small substation at the lowest level of transforming in the distribution grid</string>
+    <string name="quest_service_building_type_industrial_substation">Industrial electrical substation</string>
+    <string name="quest_service_building_type_industrial_substation_description">Dedicated to industrial or heavy business activities feeding</string>
+    <string name="quest_service_building_type_traction_substation">Traction substation</string>
+    <string name="quest_service_building_type_traction_substation_description">Electrical substation that converts power to supply railways, trams or trolleybuses with traction current</string>
+    <string name="quest_service_building_type_switchgear">Switchgear</string>
+    <string name="quest_service_building_type_switchgear_description">Control gear of an electric power system</string>
+    <string name="quest_service_building_type_plant">Power plant</string>
+    <string name="quest_service_building_type_well">Water well</string>
+    <string name="quest_service_building_type_well_description">A structural facility to access ground water, created by digging or drilling</string>
+    <string name="quest_service_building_type_reservoir">Water Reservoir</string>
+    <string name="quest_service_building_type_reservoir_description">Large man-made tank for holding fresh water</string>
+    <string name="quest_service_building_type_pump">Water pumping station</string>
+    <string name="quest_service_building_type_pump_description">Facility including pumps for pumping water from one place to another</string>
+    <string name="quest_service_building_sewerage_description">Service building related to waste water collection, transmission or processing</string>
+    <string name="quest_service_building_oil_pumping_station">Oil pumping station</string>
+    <string name="quest_service_building_oil_pumping_station_description">Facility including pumps for pumping oil from one place to another</string>
+    <string name="quest_service_building_gas_pumping_station">Gas pumping station</string>
+    <string name="quest_service_building_gas_pumping_station_description">Facility including pumps for pumping gas from one place to another</string>
+    <string name="quest_service_building_type_pressure">Gas pressure regulation</string>
+    <string name="quest_service_building_type_pressure_description">Gas distribution substation in a building in charge of dropping pressure towards consumers in surroundings</string>
+    <string name="quest_service_building_heating">Heating</string>
+    <string name="quest_service_building_heating_description">Building for heating transmission and distribution towards industries and domestic consumers (district heating)</string>
+    <string name="quest_service_building_telecom_exchange">Telecom exchange</string>
+    <string name="quest_service_building_telecom_exchange_description">Place to connect landlines subscribers to telecommunication service equipments</string>
+    <string name="quest_service_building_internet_exchange">Internet exchange</string>
+    <string name="quest_service_building_internet_exchange_description">Place to connect internet subscribers to internet service equipments</string>
+    <string name="quest_service_building_railway">Railway</string>
+    <string name="quest_service_building_railway_ventilation_shaft">Railway ventilation</string>
+    <string name="quest_service_building_railway_ventilation_shaft_description">A structure that allows ventilation in railway underground tunnels</string>
+    <string name="quest_service_building_railway_signal_box">Railway signal box</string>
+    <string name="quest_service_building_railway_signal_box_description">Stationary railroad system for control of railway operations</string>
+    <string name="quest_service_building_railway_engine_shed">Railway engine shed</string>
+    <string name="quest_service_building_railway_engine_shed_description">A shed to protect locomotives and rolling stock from the environment</string>
+    <string name="quest_service_building_railway_wash">Railway wash station</string>
+    <string name="quest_service_building_railway_wash_description">A building in which a train washing facility is located</string>
+    <string name="quest_service_building_ventilation">Ventilation shaft</string>
+    <string name="quest_service_building_ventilation_description">Vertical construction allowing air exchange for non-railway infrastructure</string>
+    <string name="quest_service_building_monitoring_station">Monitoring Station</string>
+    <string name="quest_service_building_monitoring_station_description">A station located in a own building that monitors something</string>
+    <string name="quest_service_building_other">Other service building</string>
+
+    <!-- street cabinet type -->
+    <string name="quest_street_cabinet_type_title">What kind of street cabinet is this?</string>
+    <string name="quest_street_cabinet_traffic">Traffic</string>
+    <string name="quest_street_cabinet_postal_service">Postal Service</string>
+    <string name="quest_street_cabinet_traffic_control">Traffic Control</string>
+    <string name="quest_street_cabinet_traffic_monitoring">Traffic Monitoring</string>
+    <string name="quest_street_cabinet_transport_management">Transport Management</string>
+    <string name="quest_street_cabinet_waste">Waste</string>
+    <string name="quest_street_cabinet_television">Television</string>
+    <string name="quest_street_cabinet_street_lighting">Street Lighting</string>
+
+    <!-- outdoor seating type -->
+    <string name="quest_seating_parklet">Next to the curb, or where parking used to be</string>
+    <string name="quest_seating_pedestrian_zone">In a pedestrian zone</string>
+    <string name="quest_seating_street">In a street area</string>
+    <string name="quest_seating_sidewalk">On the sidewalk</string>
+    <string name="quest_seating_patio">In a patio (unroofed, courtyard)</string>
+    <string name="quest_seating_terrace">On a terrace (unroofed, not courtyard)</string>
+    <string name="quest_seating_balcony">On a balcony (not on the ground floor)</string>
+    <string name="quest_seating_veranda">On a veranda/porch (roofed, can be slightly above ground)</string>
+    <string name="quest_seating_roof">On a roof</string>
+    <string name="quest_seating_garden">In a garden area</string>
+    <string name="quest_seating_beach">At a beach</string>
+    <string name="quest_outdoor_seating_name_title">What kind of outdoor seating does this place have?</string>
+
+    <!-- shelter type -->
+    <string name="quest_shelter_type_title">What kind of shelter is this?</string>
+    <string name="quest_shelter_type_disabled_msg">This quest is disabled by default because it’s not easy to answer. The shelter type must be chosen from suggestions, which are taken from most used values and these are often not easy to differentiate.</string>
+    <string name="quest_shelter_type_is_weather_shelter">This is a generic weather shelter</string>
+    <string name="quest_shelter_type_public_transport">Public Transport</string>
+    <string name="quest_shelter_type_picnic_shelter">Picnic Shelter</string>
+    <string name="quest_shelter_type_gazebo">Gazebo</string>
+    <string name="quest_shelter_type_lean_to">Lean-to</string>
+    <string name="quest_shelter_type_basic_hut">Basic hut</string>
+    <string name="quest_shelter_type_sun_shelter">Sun shelter</string>
+    <string name="quest_shelter_type_field_shelter">Field shelter</string>
+    <string name="quest_shelter_type_rock_shelter">Rock shelter</string>
+
+    <!-- valves (air compressor or bicycle pump) -->
+    <string name="quest_valves_title">What types of valves are available here?</string>
+    <string name="quest_valves_disabled_msg">This quest is disabled by default because it requires a very close inspection of the available valves.</string>
+    <string name="quest_valves_sclaverand">SV: Sclaverand / Presta / French valve</string>
+    <string name="quest_valves_dunlop">DV/NV: Dunlop / Woods</string>
+    <string name="quest_valves_schrader">AV: Schrader / Car valve</string>
+    <string name="quest_valves_regina">RV: Regina / Italian</string>
+
+    <!-- artwork type -->
+    <string name="quest_artwork_title">What kind of artwork is this?</string>
+    <string name="quest_artwork_sculpture">Sculpture</string>
+    <string name="quest_artwork_statue">Statue</string>
+    <string name="quest_artwork_mural">Mural</string>
+    <string name="quest_artwork_graffiti">Graffiti</string>
+    <string name="quest_artwork_installation">Installation</string>
+    <string name="quest_artwork_bust">Bust</string>
+    <string name="quest_artwork_stone">Stone</string>
+    <string name="quest_artwork_painting">Painting</string>
+    <string name="quest_artwork_architecture">Architecture</string>
+    <string name="quest_artwork_mosaic">Mosaic</string>
+    <string name="quest_artwork_relief">Relief</string>
+    <string name="quest_artwork_fountain">Fountain</string>
+    <string name="quest_artwork_land_art">Land art</string>
+
+    <!-- trail visibility -->
+    <string name="quest_trail_visibility_title">"What is the Trail Visibility of this way?"</string>
+    <string name="default_disabled_msg_trail_visibility">"This quest type is disabled by default because the rating of the trail visibility is highly subjective and needs expert knowledge in the used grading system."</string>
+    <string name="quest_trail_visibility_excellent">"Excellent"</string>
+    <string name="quest_trail_visibility_excellent_description">"Unambiguous path or markers everywhere. Orientation unproblematic, no map required."</string>
+    <string name="quest_trail_visibility_good">"Good"</string>
+    <string name="quest_trail_visibility_good_description">"Path or next marker always visible, but sometimes has to be searched for. Basic sense of direction needed, map recommended."</string>
+    <string name="quest_trail_visibility_intermediate">"Intermediate"</string>
+    <string name="quest_trail_visibility_intermediate_description">"Path mostly visible, no markers. Good sense of direction needed, map required."</string>
+    <string name="quest_trail_visibility_bad">"Bad"</string>
+    <string name="quest_trail_visibility_bad_description">"Path sometimes invisible, route partly pathless, no markers. Basic skills in orientation required."</string>
+    <string name="quest_trail_visibility_horrible">"Horrible"</string>
+    <string name="quest_trail_visibility_horrible_description">"Often pathless, no markers. Advanced orientational skills required."</string>
+    <string name="quest_trail_visibility_no">"No Visibility"</string>
+    <string name="quest_trail_visibility_no_description">"Mostly pathless, no markers. Excellent orientational skills required."</string>
+
+    <!-- building colour -->
+    <string name="quest_buildingColour_title">"What overall color does this building have?"</string>
+    <string name="quest_buildingPartColour_title">"What overall color does this building part have?"</string>
+
+    <!-- roof colour -->
+    <string name="quest_roofColour_title">"What overall color does this building’s roof have?"</string>
+    <string name="default_disabled_msg_roof">This quest type is disabled by default because roofs are often not easily visible from the street. This quest type is also quite time-consuming; in most cases it is easier and more efficient to map this from aerial imagery at home.</string>
+
+    <!-- map type -->
+    <string name="quest_mapType_title">What kind of map is this?</string>
+    <string name="quest_mapType_topo_title">Topographic</string>
+    <string name="quest_mapType_street_title">Street</string>
+    <string name="quest_mapType_scheme_title">Schematic</string>
+    <string name="quest_mapType_toposcope_title">Toposcope</string>
+    <string name="quest_mapType_topo_description">A map with topographical background for e.g. a historical or hiking map. The map contains contour lines.</string>
+    <string name="quest_mapType_street_description">A map with all streets or ways of an area. The streets are mostly named. The angles, distances etc. are accurate. Used e.g. at tourist offices for the accommodation overview.</string>
+    <string name="quest_mapType_scheme_description">A sketched map with only important ways and POIs. The angles, distances etc. are merely illustrative, not accurate. Used e.g. by travel agencies to explain their tours.</string>
+    <string name="quest_mapType_toposcope_description">A marker erected on high places which indicates the direction to notable landscape features which can be seen from that point. Often used with viewpoints.</string>
+
+    <!-- map size -->
+    <string name="quest_mapSize_title">What area is covered by this map?</string>
+    <string name="quest_mapSize_site">A site, e.g. a park or a zoo</string>
+    <string name="quest_mapSize_city">A whole city</string>
+    <string name="quest_mapSize_region">A larger area with e.g. multiple villages</string>
+    <string name="quest_mapSize_landscape">A whole landscape, mostly used on toposcopes</string>
+
+    <!-- via ferrata scale -->
+    <string name="quest_viaFerrataScale_title">"What is the Via Ferrata Scale of this ferrata?"</string>
+    <string name="default_disabled_msg_viaFerrataScale">"This quest type is disabled by default because the rating of via ferrata routes is highly subjective and needs expert knowledge in the used grading system and when climbing via ferrata, as this requires advanced mountaineering skills. As there is no "world wide scale" for via ferrata difficulty, the German Huesler scale is used here."</string>
+    <string name="quest_viaFerrataScale_zero">"Grade 0 -  none"</string>
+    <string name="quest_viaFerrataScale_zero_description">"Difficulty low; terrain varies from flat to steep; some exposed sections. Secured with cables, chains or brief ladders. Requires surefootedness; fine for the unsporty. Ferrata set optional for most."</string>
+    <string name="quest_viaFerrataScale_one">"Grade 1/K1/A - very easy"</string>
+    <string name="quest_viaFerrataScale_one_description">"Good natural steps or hewn stairs, short ladders or iron steps. Exposed passages are fitted with cables, chains or ropes for handrails rails. Experienced mountaineers may choose not to clip in."</string>
+    <string name="quest_viaFerrataScale_two">"Grade 2/K2/B - easy"</string>
+    <string name="quest_viaFerrataScale_two_description">"Steep or vertical passages are fitted with ladders or iron steps. Steel cables and chains secure the climber, even in less difficult terrain. Ferrata set strongly advised."</string>
+    <string name="quest_viaFerrataScale_three">"Grade 3/K3/C - moderate"</string>
+    <string name="quest_viaFerrataScale_three_description">"Some technical climbing, but nothing that requires particularly strong arms. Ferrata set necessary."</string>
+    <string name="quest_viaFerrataScale_four">"Grade 4/K4/D - difficult"</string>
+    <string name="quest_viaFerrataScale_four_description">"Steep terrain with continuous steel cables to attach to. Arm strength required. Artificial aids (iron steps, handholds) on hardest sections."</string>
+    <string name="quest_viaFerrataScale_five">"Grade 5/K5/E - very difficult"</string>
+    <string name="quest_viaFerrataScale_five_description">"Long, persistently demanding and very strenuous. Exposed terrain may only have cables for safety, these are reserved only for places that would other wise be impossible to cross. For experienced climbers."</string>
+    <string name="quest_viaFerrataScale_six">"Grade 6/K6/F - extremely difficult"</string>
+    <string name="quest_viaFerrataScale_six_description">"Long sparsely secured gymnastic circuits that require real stamina. Climbing shoes may be useful. Additional security to be provided by rope or belaying (recommended)"</string>
+
+    <!-- caravan site type -->
+    <string name="quest_caravanSiteType_title">"Where is this caravan site located?"</string>
+    <string name="default_disabled_msg_caravanSiteType">"This quest type is disabled by default because the classification and use of the tag is not commonly used."</string>
+    <string name="quest_caravanSiteType_village">"Village - a stopover near a smaller village."</string>
+    <string name="quest_caravanSiteType_town">"Town - a stopover near a bigger town."</string>
+    <string name="quest_caravanSiteType_river">"River - the site is located directly on the river."</string>
+    <string name="quest_caravanSiteType_lake">"Lake - the site is located directly on the lake."</string>
+    <string name="quest_caravanSiteType_parking_lot">"Parking Lot - directly on a parking lot."</string>
+    <string name="quest_caravanSiteType_harbour">"Harbor - at a harbor or marina."</string>
+    <string name="quest_caravanSiteType_winery">"Winery - staying at a winery, often right next to vineyards."</string>
+    <string name="quest_caravanSiteType_camp_site">"Camp site - a separate motorhome stopover at a campsite."</string>
+    <string name="quest_caravanSiteType_museum">"Museum - located at a museum, exhibition or similar."</string>
+    <string name="quest_caravanSiteType_restaurant">"Restaurant - at a restaurant or cafe, often on the parking lot."</string>
+    <string name="quest_caravanSiteType_farm">"Farm - staying at a farm."</string>
+    <string name="quest_caravanSiteType_beach">"Beach - next to a beach or by the sea."</string>
+    <string name="quest_caravanSiteType_supermarket">"Supermarket - on the parking lot of a supermarket."</string>
+
+    <!-- other -->
+    <string name="quest_contact_phone">What is the phone number of this place?</string>
+    <string name="quest_contact_website">What is the website of this place?</string>
+    <string name="quest_cuisine_title">What cuisine does this place have? Use suggested OSM tags!</string>
+    <string name="quest_cuisine_add_more">Add another cuisine</string>
+    <string name="quest_brewery_title">Which beer brands are served here?</string>
+    <string name="quest_brewery_add_more">Add another brewery</string>
+    <string name="quest_brewery_is_various">Many brands of beer are served here</string>
+    <string name="quest_brewery_is_not_available">No beer is sold here</string>
+    <string name="quest_service_building_operator_title">"Who is the operator for this service building?"</string>
+    <string name="quest_healthcare_speciality_title">What healthcare specialities does this place have?</string>
+    <string name="quest_healthcare_speciality_switch_ui">Switch UI</string>
+    <string name="quest_healthcare_speciality_add_more">Add another speciality</string>
+    <string name="quest_healthcare_speciality_disabled_message">This quest requires knowledge about the healthcare:speciality tags. Without this knowledge, the quest can be very difficult to answer.</string>
+    <string name="quest_tree_genus_title">What is the genus or species of this tree?</string>
+    <string name="quest_tree_error">Not recognized. Try entering the genus, species or english name of the tree. Otherwise, consider leaving a note.</string>
+    <string name="quest_tree_disabled_msg">This quest is disabled by default because it’s not easy to answer. Species/Genus must be chosen from suggestions, which are taken from most used values. You can provide suggestions from your own list of species with searchable names by providing a file in the data management settings menu, containing \`&lt;species&gt; (&lt;name&gt;)\`.</string>
+    <string name="default_disabled_msg_ee">Quests added in SCEE are always disabled by default, as they may not always be answerable, and may require knowledge of the topic and tagging.</string>
+    <string name="quest_railwayPlatformRef_title">What track number is here?</string>
+    <string name="quest_railwayPlatformRef_abc">ABC</string>
+    <string name="quest_railwayPlatformRef_message">Which tag to use for tracks accessible from this platform? According to OSM wiki, local_ref may be preferable, but actual usage is mostly ref.</string>
+    <string name="quest_disabled_msg_railway_platform_ref">Note that which tag to use best is not entirely clear in the wiki and thus left to the user. Choose between \'ref\' (default) and \'local_ref\' in the quest settings.\n
+    If there are two tracks along a platform, use semicolon separated values, e.g. 2;3
+    </string>
+    <string name="quest_destination_title">Which destinations are signed for this road?</string>
+    <string name="quest_destination_add_more">Add another destination</string>
+    <!-- use 2 lines for the button so it doesn't get too wide -->
+    <string name="quest_destination_all_lanes_button">All\nlanes</string>
+    <string name="quest_footway_width_title">"How wide is the foot path here?"</string>
+    <string name="quest_barrier_height_title">"How tall is this barrier?"</string>
+
+    <!-- additional strings for quests available in StreetComplete -->
+    <string name="quest_bicycle_parking_type_saddleholder">Saddle holder</string>
+    <string name="quest_surface_value_metal_grid">Metal grid</string>
+    <string name="quest_surface_value_stepping_stones">Stepping stones</string>
+    <string name="quest_surface_value_chipseal">"Chipseal"</string>
+    <string name="quest_buildingType_presbytery">Presbytery</string>
+    <string name="quest_buildingType_barn">Barn</string>
+    <string name="quest_buildingType_cowshed">Cowshed</string>
+    <string name="quest_buildingType_stable">Stable</string>
+    <string name="quest_buildingType_sty">Sty</string>
+    <string name="quest_buildingType_sports_hall">Sports hall</string>
+    <string name="quest_buildingType_riding_hall">Riding hall</string>
+    <string name="quest_buildingType_digester">Digester (bioreactor)</string>
+    <string name="quest_buildingType_transformer_tower">Transformer tower</string>
+    <string name="quest_buildingType_transit_shelter">Transit shelter</string>
+    <string name="quest_buildingType_elevator">Elevator</string>
+    <string name="quest_crossing_type_zebra">Zebra</string>
+    <string name="quest_crossing_type_signals_controlled_zebra">Traffic lights and zebra</string>
+    <string name="quest_crossing_type_raised">Raised crossing</string>
+    <string name="quest_lanes_answer_noLanes_known_count">No markings, obvious lane count</string>
+    <string name="quest_wheelchair_description_answer">Add description</string>
+    <string name="quest_wheelchair_description_title">Fill in at least one language</string>
+    <string name="quest_wheelchair_description_no_language">no language specified</string>
+    <string name="quest_seating_no">No seating, but not takeout only</string>
+    <string name="quest_private">It’s private</string>
+    <string name="quest_disused">It’s disused</string>
+    <string name="quest_building_demolished">It’s demolished (traces visible)</string>
+    <string name="quest_construction">It’s under construction until…</string>
+    <string name="quest_construction_value">Set \"construction=…\", or leave empty if unknown</string>
+    <string name="quest_generic_answer_show_edit_tags">Show/edit tags</string>
+    <string name="quest_building_entrance_parking">Parking entrance</string>
+    <string name="quest_maxspeed_conditional">Depends on…</string>
+    <string name="quest_maxspeed_conditional_limited_enter_default">Select the default limit before selecting this answer</string>
+    <string name="time_limited_from">From</string>
+    <string name="time_limited_to">To</string>
+    <string name="quest_name_brand">It has a brand name…</string>
+    <string name="quest_guidepostName_title">"What is the name here?"</string>
+    <string name="quest_guidepostEle_title">"What is the elevation here?"</string>
+    <string name="quest_guidepostEle_hint">Do not use GPS altitude, as it typically is too inaccurate and not provided in the correct height reference system.</string>
+    <string name="quest_guidepostRef_hint">Reference number of this map or guidepost, not the reference number of signed routes.</string>
+    <string name="quest_guidepostName_hint">Signed (location) name of this map or guidepost. Do not enter a reference number here.</string>
+    <string name="quest_guidepost_disabled_msg">This quest is disabled by default because what is signed strongly varies by region and operator. You may need to refine the element selection for your area (e.g. add or remove maps, only select elements with hiking=yes, etc.)</string>
+    <!-- maxheight_answer_noSign strings removed in SC, could take existing translations from https://github.com/streetcomplete/StreetComplete/blob/312dd4135ad75beff9f13c446040d1c3afbc9a80/app/src/main/res/values/strings.xml -->
+    <string name="quest_maxheight_answer_noSign_question">Is there easily enough space for even the tallest trucks (at least about 4.5 meters / 15 feet) to pass through?</string>
+    <string name="quest_maxheight_answer_noSign_question_yes">Tall trucks can pass through</string>
+    <string name="quest_maxheight_answer_noSign_question_no">"Tall trucks don’t fit"</string>
+    <string name="quest_maxheight_answer_noSign_question_unclear">"Unclear"</string>
+    <!-- quest crossing marking -->
+    <string name="pref_quest_pedestrian_crossing_markings_extended">Enable extension of \"Does this crossing have markings on the ground?\", allows you to define the style of crossing markings</string>
+    <string name="quest_crossing_marking_value_no">No</string>
+    <string name="quest_crossing_marking_value_zebra">Zebra</string>
+    <string name="quest_crossing_marking_value_lines">Lines</string>
+    <string name="quest_crossing_marking_value_ladder">Ladder</string>
+    <string name="quest_crossing_marking_value_dashes">Dashes</string>
+    <string name="quest_crossing_marking_value_dots">Dots</string>
+    <string name="quest_crossing_marking_value_surface">Surface</string>
+    <string name="quest_crossing_marking_value_ladder_skewed">Ladder skewed</string>
+    <string name="quest_crossing_marking_value_zebra_paired">Zebra paired</string>
+    <string name="quest_crossing_marking_value_zebra_bicolour">Zebra bicolour</string>
+    <string name="quest_crossing_marking_value_zebra_double">Zebra double</string>
+    <string name="quest_crossing_marking_value_ladder_paired">Ladder paired</string>
+    <string name="quest_crossing_marking_value_zebra_dots">Zebra + dots</string>
+    <string name="quest_crossing_marking_value_pictograms">Pictograms</string>
+
+    <string name="quest_generalRef_hint">Reference number or code</string>
+    <string name="quest_generalRef_disabled_msg">This quest is disabled by default because what is signed strongly varies by region and operator. You may need to refine the element selection for your area (e.g. remove street lamps, add maps, only select guideposts with hiking=yes, etc.)</string>
+
+    <!-- piste difficulty -->
+    <string name="quest_piste_difficulty_title">What is the difficulty of this piste?</string>
+    <string name="quest_piste_difficulty_novice">Novice</string>
+    <string name="quest_piste_difficulty_easy">Easy</string>
+    <string name="quest_piste_difficulty_intermediate">Intermediate</string>
+    <string name="quest_piste_difficulty_advanced">Advanced</string>
+    <string name="quest_piste_difficulty_expert">Expert</string>
+    <string name="quest_piste_difficulty_freeride">Freeride</string>
+    <string name="quest_piste_difficulty_extreme">Extreme</string>
+
+    <!-- parking capacity quests -->
+    <string name="quest_parking_capacity_title">How many cars can park here?</string>
+    <string name="quest_parking_capacity_hint">This also includes special spaces like for disabled people, families, for charging etc. Hide the quest if the parking spaces are not marked and thus not countable</string>
+    <string name="quest_parking_capacity_disabled_title">How many parking spaces for disabled people are here?</string>
+    <string name="quest_parking_capacity_disabled_answer_yes">There are, but unclear count</string>
+    <string name="quest_parking_capacity_disabled_default_disabled_msg">Quests added in SCEE are always disabled by default, as they may not always be answerable, and may require knowledge of the topic and tagging.\nThis quest will not be asked if capacity:disabled=yes is set. If you want to specify them as well, change the element selection from \"and !capacity:disabled\" to \"and (!capacity:disabled or capacity:disabled=yes)\"</string>
+
+    <!-- parking orientation quest -->
+    <string name="quest_parking_orientation_title">In what orientation do cars park here?</string>
+
+    <!-- sac scale -->
+    <string name="pref_quest_sac_scale_without_relation">Search all paths even those who are not in a hiking relation</string>
+    <string name="quest_sacScale_title">"What is the SAC Scale of this path?"</string>
+    <string name="default_disabled_msg_sacScale">"This quest type is disabled by default because the sac scale of path is highly subjective and needs expert knowledge in the used grading system and. As there is no "world wide scale" for path difficulty, the SAC Mountain and Alpine Hiking Scale is used here."</string>
+    <string name="quest_sacScale_strolling">"Strolling"</string>
+    <string name="quest_sacScale_strolling_description">"Smooth, level trail with no obstacles, suitable for all footwear, strollers, or crutches, and requires no orientation skills."</string>
+    <string name="quest_sacScale_one">"T1 - hiking"</string>
+    <string name="quest_sacScale_one_description">"Terrain level or slightly inclined; no risk of falling with appropriate behaviour."</string>
+    <string name="quest_sacScale_two">"T2 - mountain hiking"</string>
+    <string name="quest_sacScale_two_description">"Terrain is steep in places and may pose fall hazards."</string>
+    <string name="quest_sacScale_three">"T3 - demanding mountain hiking"</string>
+    <string name="quest_sacScale_three_description">"Portions of the route exposed with danger of falling. Trail may have unmarked portions and cross fields of loose scree or talus."</string>
+    <string name="quest_sacScale_four">"T4 - alpine hiking"</string>
+    <string name="quest_sacScale_four_description">"Terrain already quite exposed, including steep grassy pitches, talus slopes, easy snowfields, or snow-free glacier crossings."</string>
+    <string name="quest_sacScale_five">"T5 - demanding alpine hiking"</string>
+    <string name="quest_sacScale_five_description">"Exposed and demanding terrain. May include steep rock scrambles, glaciers and snowfields with risk of sliding."</string>
+    <string name="quest_sacScale_six">"T6 - difficult alpine hiking"</string>
+    <string name="quest_sacScale_six_description">"Severe exposure. Difficult craggy terrain. Glaciers with high risk of sliding."</string>
+
+    <!-- lamp type -->
+    <string name="quest_lampType_title">What kind of lamp is this?</string>
+    <string name="quest_lampType_disabled_msg">This quest is disabled by default because it’s not easy to answer and might be spammy depending on the region.</string>
+    <string name="quest_lampType_led">LED lamp</string>
+    <string name="quest_lampType_highPressureSodium">High-pressure sodium lamp</string>
+    <string name="quest_lampType_lowPressureSodium">Low-pressure sodium lamp</string>
+    <string name="quest_lampType_gaslight">Gaslight</string>
+    <string name="quest_lampType_fluorescent">Fluorescent lamp</string>
+    <string name="quest_lampType_incandescent">Incandescent lamp</string>
+    <string name="quest_lampType_metalHalide">Metal-halide lamp</string>
+    <string name="quest_lampType_mercury">Mercury-vapor lamp</string>
+    <string name="quest_lampType_halogen">Halogen lamp</string>
+
+    <!-- lamp type -->
+    <string name="quest_lampMount_title">How is this lamp mounted?</string>
+    <string name="quest_lampMount_disabled_msg">This quest is disabled by default because it might be spammy depending on the region.</string>
+    <string name="quest_lampMount_straightMast">Straight pole</string>
+    <string name="quest_lampMount_bentMast">Bent pole</string>
+    <string name="quest_lampMount_suspended">Suspended by a wire</string>
+    <string name="quest_lampMount_angledMast">Angled pole</string>
+    <string name="quest_lampMount_highMast">Tall pole (greater than 30m)</string>
+    <string name="quest_lampMount_bollard">Bollard</string>
+    <string name="quest_lampMount_wall">Wall</string>
+    <string name="quest_lampMount_ceiling">Ceiling</string>
+    <string name="quest_lampMount_transitShelter">Transit shelter</string>
+
+    <!-- post office -->
+    <string name="quest_postOffice_title">What type is this post office?</string>
+    <string name="quest_postOffice_bureau">Full (official) post office</string>
+    <string name="quest_postOffice_postAnnex">Post office (privatly owned, perhaps with restricted service)</string>
+    <string name="quest_postOffice_postPartner">Post relay point in shops or amenities (as a service)</string>
+
+    <!-- new overlays -->
+
+    <!-- custom overlay -->
+    <string name="custom_overlay_title">Custom overlay</string>
+    <string name="custom_overlay_filter_message">Click the link below to open information about the element selection syntax in a browser. Note that when selecting elements by age, the resurvey interval setting may influence the result.
+        \nThe checkboxes replace the \"nodes, ways with\" part.</string>
+    <string name="custom_overlay_color_message">Select key(s) to get color from. Accepts regex and uses matching tags to get a color. The color is derived from key and value of the all matching keys. In case a matching key contains :left/right/both, it will be used to color the respective sides of a way, but not the center line. If there is no match, the color is always red, indicating missing data. Knowledge on regular expressions is very helpful for this feature.
+        \nIf the expression is not a regex, prefix \'!\' to start with the value focused when editing tags.
+        \n\nExample:
+        \n\"surface\" shows surface=asphalt in the same color, and surface=concrete in a different color
+        \n\".*surface\" is similar, but also shows sidewalk:(left/right/both):surface=asphalt in one color, and cycleway:(left/right/both):surface=asphalt in another color</string>
+    <string name="custom_overlay_color_hint">Leave empty to show all in same color</string>
+    <string name="custom_overlay_highlight_missing">Highlight missing data</string>
+    <string name="custom_overlay_dash_filter_hint">Dashed element filter</string>
+    <string name="custom_overlay_color_info">Coloring details</string>
+    <string name="custom_overlay_filter_info">Filtering details</string>
+    <string name="custom_overlay_delete">Really delete %s?</string>
+    <!-- custom_overlay_add_button should be short, so the button can be displayed in same line with the cancel button -->
+    <string name="custom_overlay_add_button">New custom</string>
+
+    <!-- restriction overlay -->
+    <string name="restriction_overlay_title">Traffic restrictions</string>
+    <string name="restriction_overlay_exceptions">Exceptions: %s</string>
+    <string name="restriction_overlay_only_for">Only for: %s</string>
+    <string name="restriction_overlay_remove_conditional_restrictions">Remove conditional</string>
+    <string name="restriction_overlay_signed_switch">There is a sign or road marking</string>
+    <string name="restriction_overlay_show_details">Show relation details</string>
+    <string name="restriction_overlay_relation_incomplete">Restriction relation is incomplete, download of surrounding area required</string>
+    <string name="restriction_overlay_relation_unsupported">Unsupported relation type:\n%s</string>
+    <string name="restriction_overlay_select_way">Click the next way on the map. It needs an end node in common with the current way. Split if necessary.</string>
+    <string name="restriction_overlay_other_restrictions">Other restrictions on this way:</string>
+    <string name="restriction_overlay_direction_text">Applies to travel direction:</string>
+    <string name="restriction_overlay_sign_give_way">Give way</string>
+    <string name="restriction_overlay_sign_stop">Stop</string>
+    <string name="restriction_overlay_sign_stop_all_way">All-way stop</string>
+
+
+    <!-- other -->
+    <string name="hide_button">Hide</string>
+    <string name="tag_editor_last_edited">Last edited: %s</string>
+    <string name="tag_editor_duplicate_key">Ignoring change of duplicate key "%s"</string>
+    <string name="tutorial_info_fork_message"><b>SCEE</b>\n\n
+This is a modified version of StreetComplete. It is intended for experienced users with advanced knowledge about OSM. It gives you more control, but also more <i>responsibility</i>.\n
+This especially applies to the possibility of editing raw tags and deleting nodes, but also for modification of element selection for quests.
+Quests added in SCEE <i>may not be answerable</i> in all cases and are disabled by default. Please hide them in case you can’t answer them, and <i>do not spam notes</i>.\n\n
+Out of the box SCEE is configured to behave very similar to StreetComplete.</string>
+    <string name="fork_about_title_repository">SCEE project home</string>
+    <string name="ban_check_fails">Check for banned versions keeps failing. You might run an outdated version, please consider upgrading.</string>
+    <string name="enqueue_download">Start after current search is done</string>
+    <string name="create_poi">Add POI</string>
+    <string name="insert_node">Insert node into way</string>
+    <string name="insert_node_select_way">Select a position on a way</string>
+    <string name="quest_monitor_found">%d quests nearby, closest:</string>
+    <string name="quest_monitor_channel_name">Nearby Quest Monitor</string>
+    <string name="quest_monitor_channel_name_found">Nearby Quest Found</string>
+    <string name="quest_monitor_running">Monitoring location</string>
+    <string name="quest_monitor_error">Couldn’t start monitoring, possible permission issue</string>
+    <string name="create_custom_quest_button">Create custom quest</string>
+    <string name="create_custom_quest_title_message">Enter message to be shown</string>
+    <string name="general_warning">Warning</string>
+    <string name="move_node_with_geometry">Moving this node will modify geometry of following ways or multipolygon relations: %s.\n
+        Be aware that any changes will not be immediately visible on the background map.
+    </string>
+    <string name="move_node_of_other_relation">This node is part of following non-multipolygon relations: %s</string>
+    <string name="dialog_button_understood">Understood</string>
+    <string name="move_node_message_external_source_addition">Note that the position of this quest may not move with the node.</string>
+    <string name="close_note_checkbox">Close note (only do this if you actually solve the note!)</string>
+    <string name="closed_note_action_title">You closed it</string>
+    <string name="manage_access">Manage access…</string>
+    <string name="add_access">Add access…</string>
+    <string name="access_manager_message">Choose access tags. Remember to tag only signed access, and avoid generic \"access\" tag if possible</string>
+    <string name="access_manager_button_add">Add</string>
+    <string name="access_manager_button_add_conditional">Add conditional</string>
+    <string name="access_length_limit">Length</string>
+    <string name="access_weight_limit">Weight</string>
+    <string name="access_width_limit">Width</string>
+    <string name="access_time_limit">Time</string>
+    <string name="create_relation_action_description">You created a relation with …</string>
+    <string name="outside_downloaded_area_warning">This position is outside the downloaded area. Continue?</string>
+    <!-- actually there are still SC translations available, as only the main string has been removed from SC. -->
+    <string name="close">Close</string>
+    <string name="fixme_for_object">Another person added a fixme:</string>
+    <string name="quest_roofOrientation_along">Parallel to the building’s longer side</string>
+    <string name="quest_roofOrientation_across">Parallel to the building’s shorter side</string>
+    <string name="quest_roofOrientation_title">How is the roof ridge oriented?</string>
+
+    <!-- building material -->
+    <string name="quest_buildingMaterial_title">"What material is this building's facade made of?"</string>
+    <string name="quest_buildingPartMaterial_title">"What material is this building part's facade made of?"</string>
+    <string name="quest_material_cement_block">Cement block</string>
+    <string name="quest_material_plaster">Plaster</string>
+    <string name="quest_material_glass">Glass</string>
+    <string name="quest_material_mirror">Mirrored-glass</string>
+    <string name="quest_material_mud">Dried mud</string>
+    <string name="quest_material_timber_framing">Timber Framing</string>
+    <string name="quest_material_sandstone">Sandstone</string>
+    <string name="quest_material_clay">Clay</string>
+    <string name="quest_material_reed">Reed</string>
+    <string name="quest_material_loam">Loam</string>
+    <string name="quest_material_marble">Marble</string>
+    <string name="quest_material_slate">Slate</string>
+    <string name="quest_material_vinyl">Plastic vinyl strips</string>
+    <string name="quest_material_limestone">Limestone</string>
+    <string name="quest_material_tiles">Tiles</string>
+    <string name="quest_material_bamboo">Bamboo</string>
+    <string name="quest_material_adobe">Adobe</string>
+
+</resources>

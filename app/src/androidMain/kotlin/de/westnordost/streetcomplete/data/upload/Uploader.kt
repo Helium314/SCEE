@@ -1,0 +1,137 @@
+package de.westnordost.streetcomplete.data.upload
+
+import android.content.Context
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.russhwolf.settings.ObservableSettings
+import de.westnordost.streetcomplete.ApplicationConstants
+import de.westnordost.streetcomplete.BuildConfig
+import de.westnordost.streetcomplete.data.AuthorizationException
+import de.westnordost.streetcomplete.Prefs
+import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesController
+import de.westnordost.streetcomplete.data.download.tiles.enclosingTilePos
+import de.westnordost.streetcomplete.data.osm.edits.upload.ElementEditsUploader
+import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
+import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditsUploader
+import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
+import de.westnordost.streetcomplete.data.user.UserLoginController
+import de.westnordost.streetcomplete.data.user.UserLoginSource
+import de.westnordost.streetcomplete.util.Listeners
+import de.westnordost.streetcomplete.util.ktx.toast
+import de.westnordost.streetcomplete.util.logs.Log
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
+class Uploader(
+    private val noteEditsUploader: NoteEditsUploader,
+    private val elementEditsUploader: ElementEditsUploader,
+    private val downloadedTilesController: DownloadedTilesController,
+    private val userLoginSource: UserLoginSource,
+    private val versionIsBannedChecker: VersionIsBannedChecker,
+    private val userLoginController: UserLoginController,
+    private val mutex: Mutex,
+    private val externalSourceQuestController: ExternalSourceQuestController,
+    private val prefs: ObservableSettings,
+) : UploadProgressSource, KoinComponent {
+    private val context: Context by inject()
+
+    private val listeners = Listeners<UploadProgressSource.Listener>()
+
+    private lateinit var bannedInfo: BannedInfo
+
+    private val uploadedChangeRelay = object : OnUploadedChangeListener {
+        override fun onUploaded(editType: String, at: LatLon) {
+            listeners.forEach { it.onUploaded(editType, at) }
+        }
+
+        override fun onDiscarded(editType: String, at: LatLon) {
+            invalidateArea(at)
+            listeners.forEach { it.onDiscarded(editType, at) }
+        }
+    }
+
+    init {
+        noteEditsUploader.uploadedChangeListener = uploadedChangeRelay
+        elementEditsUploader.uploadedChangeListener = uploadedChangeRelay
+    }
+
+    override var isUploadInProgress: Boolean = false
+        private set
+
+    suspend fun upload() {
+        try {
+            isUploadInProgress = true
+            listeners.forEach { it.onStarted() }
+
+            if (!::bannedInfo.isInitialized) {
+                bannedInfo = versionIsBannedChecker.get()
+            }
+            val banned = bannedInfo
+            if (banned is BannedInfo.IsBanned) {
+                throw VersionBannedException(banned.reason)
+            } else if (banned is BannedInfo.UnknownIfBanned) {
+                val old = prefs.getInt(Prefs.BAN_CHECK_ERROR_COUNT, 0)
+                prefs.putInt(Prefs.BAN_CHECK_ERROR_COUNT, old + 1)
+            } else
+                prefs.putInt(Prefs.BAN_CHECK_ERROR_COUNT, 0)
+            if (prefs.getInt(Prefs.BAN_CHECK_ERROR_COUNT, 0) > 10) {
+                try {
+                    ContextCompat.getMainExecutor(context).execute {
+                        context.toast(R.string.ban_check_fails, Toast.LENGTH_LONG)
+                    }
+                } catch (_: Exception) { }
+            }
+
+            // let's fail early in case of no authorization
+            if (!userLoginSource.isLoggedIn && !BuildConfig.DEBUG) {
+                throw AuthorizationException("User is not authorized")
+            }
+
+            Log.i(TAG, "Starting upload")
+
+            mutex.withLock {
+                // element edit and note edit uploader must run in sequence because the notes may need
+                // to be updated if the element edit uploader creates new elements to which notes refer
+                elementEditsUploader.upload(this)
+                if (!userLoginSource.isLoggedIn) return@withLock // avoid the 2 below in debug apk
+                noteEditsUploader.upload()
+                externalSourceQuestController.upload()
+            }
+            Log.i(TAG, "Finished upload")
+        } catch (e: CancellationException) {
+            Log.i(TAG, "Upload cancelled")
+        } catch (e: Exception) {
+            Log.e(TAG, "Unable to upload", e)
+            if (e is AuthorizationException) {
+                userLoginController.logOut()
+            }
+            listeners.forEach { it.onError(e) }
+            throw e
+        } finally {
+            isUploadInProgress = false
+            listeners.forEach { it.onFinished() }
+        }
+    }
+
+    override fun addListener(listener: UploadProgressSource.Listener) {
+        listeners.add(listener)
+    }
+    override fun removeListener(listener: UploadProgressSource.Listener) {
+        listeners.remove(listener)
+    }
+
+    private fun invalidateArea(pos: LatLon) {
+        // called after a conflict. If there is a conflict, the user is not the only one in that
+        // area, so best invalidate all downloaded quests here and re-download on next occasion
+        val tile = pos.enclosingTilePos(ApplicationConstants.DOWNLOAD_TILE_ZOOM)
+        downloadedTilesController.invalidate(tile)
+    }
+
+    companion object {
+        const val TAG = "Upload"
+    }
+}

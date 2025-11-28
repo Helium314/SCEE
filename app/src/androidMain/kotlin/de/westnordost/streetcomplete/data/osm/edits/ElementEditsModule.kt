@@ -1,0 +1,32 @@
+package de.westnordost.streetcomplete.data.osm.edits
+
+import de.westnordost.streetcomplete.data.osm.edits.upload.ElementEditUploader
+import de.westnordost.streetcomplete.data.osm.edits.upload.ElementEditsUploader
+import de.westnordost.streetcomplete.data.osm.edits.upload.changesets.ChangesetAutoCloser
+import de.westnordost.streetcomplete.data.osm.edits.upload.changesets.ChangesetAutoCloserWorker
+import de.westnordost.streetcomplete.data.osm.edits.upload.changesets.OpenChangesetsDao
+import de.westnordost.streetcomplete.data.osm.edits.upload.changesets.OpenChangesetsManager
+import de.westnordost.streetcomplete.quests.tagEdit
+import de.westnordost.streetcomplete.screens.main.bottom_sheet.addNodeEdit
+import org.koin.androidx.workmanager.dsl.worker
+import org.koin.dsl.module
+
+val elementEditsModule = module {
+    factory { ChangesetAutoCloser(get()) }
+    factory { ElementEditUploader(get(), get(), get()) }
+
+    factory { ElementEditsDao(get(), get(), tagEdit, addNodeEdit) }
+    factory { ElementIdProviderDao(get()) }
+    factory { OpenChangesetsDao(get()) }
+    factory { EditElementsDao(get()) }
+
+    single { OpenChangesetsManager(get(), get(), get(), get()) }
+
+    single { ElementEditsUploader(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+
+    single<ElementEditsSource> { get<ElementEditsController>() }
+    single { ElementEditsController(get(), get(), get(), get()) }
+    single { MapDataWithEditsSource(get(), get(), get()) }
+
+    worker { ChangesetAutoCloserWorker(get(), get(), get()) }
+}

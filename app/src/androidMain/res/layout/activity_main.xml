@@ -1,0 +1,72 @@
+<de.westnordost.streetcomplete.view.RelativeLayoutFix xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.main.MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mapFragment"
+        android:name="de.westnordost.streetcomplete.screens.main.map.MainMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_map"
+        />
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/contextMenuView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:ignore="MissingConstraints" />
+
+    <!-- is a RelativeLayout so that the child layout can, if it is not matching parent, use layout_alignParent* -->
+    <RelativeLayout
+        android:id="@+id/map_bottom_sheet_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false" />
+
+    <ScrollView
+        android:id="@+id/otherQuestsScrollView"
+        android:visibility="gone"
+        android:layout_width="54dp"
+        android:layout_height="330dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="80dp"
+        android:layout_alignParentRight="true" >
+
+        <LinearLayout
+            android:id="@+id/otherQuestsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:paddingVertical="8dp"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/overlayScrollView"
+        android:layout_width="52dp"
+        android:layout_height="330dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="80dp"
+        android:layout_alignParentRight="true">
+
+        <LinearLayout
+            android:id="@+id/overlayLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:paddingVertical="8dp"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
+</de.westnordost.streetcomplete.view.RelativeLayoutFix >

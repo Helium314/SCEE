@@ -147,6 +147,7 @@ import de.westnordost.streetcomplete.quests.motorcycle_parking_cover.AddMotorcyc
 import de.westnordost.streetcomplete.quests.note_discussion.OsmNoteQuestType
 import de.westnordost.streetcomplete.quests.oneway.AddOneway
 import de.westnordost.streetcomplete.quests.oneway.AddOnewayAerialway
+import de.westnordost.streetcomplete.quests.oneway.AddOnewayBicycle
 import de.westnordost.streetcomplete.quests.opening_hours.AddOpeningHours
 import de.westnordost.streetcomplete.quests.opening_hours_signed.CheckOpeningHoursSigned
 import de.westnordost.streetcomplete.quests.orchard_produce.AddOrchardProduce
@@ -527,6 +528,7 @@ fun getQuestTypeList(
     95 to AddMaxPhysicalHeight(arSupportChecker), // same as above, best if it appears right after (if enabled)
     96 to AddRoadName(),
     97 to AddOneway(),
+    98 to AddOnewayBicycle(),
 
     99 to AddEntrance(),
     100 to AddEntranceReference(),

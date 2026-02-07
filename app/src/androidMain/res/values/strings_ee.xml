@@ -677,7 +677,7 @@
     <string name="quest_postOffice_postAnnex">Post office (privatly owned, perhaps with restricted service)</string>
     <string name="quest_postOffice_postPartner">Post relay point in shops or amenities (as a service)</string>
 
-    <!-- post office -->
+    <!-- bicycle oneway -->
     <string name="quest_onewayBicycle_title">Is this path one-way for bicycles? In which direction?</string>
 
     <!-- new overlays -->

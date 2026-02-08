@@ -6,7 +6,6 @@ import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpressio
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
-import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
@@ -25,15 +24,11 @@ class AddOnewayBicycle :
     private val elementFilter = """
     ways with
       (
-        (highway = cycleway and !oneway)
-        or
-        (
-          (highway ~ path|footway)
-          and bicycle ~ yes|designated
-          and !oneway
-          and !oneway:bicycle
-        )
+        highway = cycleway
+        or (highway ~ path|footway and bicycle ~ yes|designated)
       )
+      and !oneway
+      and !oneway:bicycle
       and area != yes
       and junction != roundabout
       and access !~ private|no
@@ -45,18 +40,6 @@ class AddOnewayBicycle :
             .toElementFilterExpression()
     }
 
-    /** broader filter for connectivity calculation */
-    private val allBikeWaysFilter by lazy {
-        """
-            ways with
-              (
-                highway = cycleway
-                or (highway ~ footway|path and bicycle ~ yes|designated)
-              )
-              and area != yes
-        """.trimIndent().toElementFilterExpression()
-    }
-
     override val changesetComment = "Specify whether bicycle ways are one-ways"
     override val wikiLink = "Key:oneway"
     override val icon = R.drawable.quest_bicycleway_oneway
@@ -64,9 +47,9 @@ class AddOnewayBicycle :
     override val achievements = listOf(EditTypeAchievement.BICYCLIST)
     override val hint = R.string.quest_arrow_tutorial
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_onewayBicycle_title
 
-    /* ---------- settings ---------- */
+    override fun getTitle(tags: Map<String, String>) =
+        R.string.quest_onewayBicycle_title
 
     override val hasQuestSettings: Boolean = true
 
@@ -81,33 +64,10 @@ class AddOnewayBicycle :
         )
     }
 
-    override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
-        val bikeWays = mapData.ways.filter {
-            allBikeWaysFilter.matches(it) && it.nodeIds.size >= 2
-        }
-
-        val connectionCountByNodeIds = mutableMapOf<Long, Int>()
-        val onewayCandidates = mutableListOf<Way>()
-
-        for (way in bikeWays) {
-            for (nodeId in way.nodeIds) {
-                connectionCountByNodeIds[nodeId] =
-                    (connectionCountByNodeIds[nodeId] ?: 0) + 1
-            }
-            if (filter.matches(way)) {
-                onewayCandidates.add(way)
-            }
-        }
-
-        // bicycle infrastructure: one connected end is sufficient
-        return onewayCandidates.filter { way ->
-            val firstConnected =
-                (connectionCountByNodeIds[way.nodeIds.first()] ?: 0) > 1
-            val lastConnected =
-                (connectionCountByNodeIds[way.nodeIds.last()] ?: 0) > 1
-            firstConnected || lastConnected
-        }
-    }
+    override fun getApplicableElements(
+        mapData: MapDataWithGeometry
+    ): Iterable<Element> =
+        mapData.ways.filter { filter.matches(it) }
 
     override fun isApplicableTo(element: Element): Boolean? =
         if (filter.matches(element)) null else false

@@ -16,6 +16,7 @@ import de.westnordost.streetcomplete.resources.building_material_marble
 import de.westnordost.streetcomplete.resources.building_material_metal
 import de.westnordost.streetcomplete.resources.building_material_mirror
 import de.westnordost.streetcomplete.resources.building_material_mud
+import de.westnordost.streetcomplete.resources.building_material_pebbledash
 import de.westnordost.streetcomplete.resources.building_material_plaster
 import de.westnordost.streetcomplete.resources.building_material_plastic
 import de.westnordost.streetcomplete.resources.building_material_reed
@@ -147,5 +148,10 @@ enum class BuildingMaterial(
         osmValue = "adobe",
         imageResId = Res.drawable.building_material_adobe,
         titleResId = R.string.quest_material_adobe
+    ),
+    PEBBLEDASH(
+        osmValue = "pebbledash",
+        imageResId = R.drawable.building_material_pebbledash,
+        titleResId = R.string.building_material_pebbledash
     )
 }

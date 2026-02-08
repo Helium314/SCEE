@@ -151,7 +151,7 @@ enum class BuildingMaterial(
     ),
     PEBBLEDASH(
         osmValue = "pebbledash",
-        imageResId = R.drawable.building_material_pebbledash,
-        titleResId = R.string.building_material_pebbledash
+        imageResId = Res.drawable.building_material_pebbledash,
+        titleResId = R.string.quest_material_pebbledash
     )
 }

@@ -783,6 +783,6 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_material_tiles">Tiles</string>
     <string name="quest_material_bamboo">Bamboo</string>
     <string name="quest_material_adobe">Adobe</string>
-    <string name="building_material_pebbledash">Pebbledash</string>
+    <string name="quest_material_pebbledash">Pebbledash</string>
 
 </resources>

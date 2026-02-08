@@ -528,7 +528,6 @@ fun getQuestTypeList(
     95 to AddMaxPhysicalHeight(arSupportChecker), // same as above, best if it appears right after (if enabled)
     96 to AddRoadName(),
     97 to AddOneway(),
-    98 to AddOnewayBicycle(),
 
     99 to AddEntrance(),
     100 to AddEntranceReference(),
@@ -694,6 +693,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 54 to AddLampType(),
     EE_QUEST_OFFSET + 55 to AddPostOfficeType(),
     EE_QUEST_OFFSET + 57 to AddLampMount(),
+    EE_QUEST_OFFSET + 58 to AddOnewayBicycle(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

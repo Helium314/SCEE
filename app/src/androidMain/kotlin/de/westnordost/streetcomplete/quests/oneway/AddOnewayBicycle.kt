@@ -28,7 +28,7 @@ class AddOnewayBicycle :
         (highway = cycleway and !oneway)
         or
         (
-          (highway = path or highway = footway)
+          (highway ~ path|footway)
           and bicycle ~ yes|designated
           and !oneway
           and !oneway:bicycle
@@ -51,8 +51,7 @@ class AddOnewayBicycle :
             ways with
               (
                 highway = cycleway
-                or (highway = path and bicycle ~ yes|designated)
-                or (highway = footway and bicycle ~ yes|designated)
+                or (highway ~ footway|path and bicycle ~ yes|designated)
               )
               and area != yes
         """.trimIndent().toElementFilterExpression()

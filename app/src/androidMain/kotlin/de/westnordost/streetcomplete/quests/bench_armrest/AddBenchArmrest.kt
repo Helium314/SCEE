@@ -26,7 +26,7 @@ class AddBenchArmrest : OsmFilterQuestType<BenchArmrestAnswer>() {
     """
     override val changesetComment = "Survey whether benches have armrests"
     override val wikiLink = "Tag:amenity=bench"
-    override val icon = R.drawable.ic_quest_bench_poi
+    override val icon = R.drawable.ic_quest_bench_armrest
     override val isDeleteElementEnabled = true
     override val achievements = listOf(PEDESTRIAN, OUTDOORS)
 

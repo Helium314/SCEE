@@ -102,6 +102,7 @@ import de.westnordost.streetcomplete.quests.diet_type.AddVegetarian
 import de.westnordost.streetcomplete.quests.drinking_water.AddDrinkingWater
 import de.westnordost.streetcomplete.quests.drinking_water_type.AddDrinkingWaterType
 import de.westnordost.streetcomplete.quests.existence.CheckExistence
+import de.westnordost.streetcomplete.quests.fence_material.AddFenceMaterial
 import de.westnordost.streetcomplete.quests.ferry.AddFerryAccessMotorVehicle
 import de.westnordost.streetcomplete.quests.ferry.AddFerryAccessPedestrian
 import de.westnordost.streetcomplete.quests.fire_hydrant.AddFireHydrantType
@@ -652,6 +653,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 0 to AddBenchMaterial(),
     EE_QUEST_OFFSET + 27 to AddBuildingColour(),
     EE_QUEST_OFFSET + 49 to AddBuildingMaterial(),
+    EE_QUEST_OFFSET + 60 to AddFenceMaterial(),
     EE_QUEST_OFFSET + 24 to AddRoofColour(),
     EE_QUEST_OFFSET + 56 to AddRoofOrientation(),
     EE_QUEST_OFFSET + 1 to AddContactPhone(),

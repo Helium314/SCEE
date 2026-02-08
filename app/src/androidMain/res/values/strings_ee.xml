@@ -787,4 +787,15 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_material_bamboo">Bamboo</string>
     <string name="quest_material_adobe">Adobe</string>
 
+    <!-- fence material -->
+    <string name="quest_fence_material_title">What material is this fence made of?</string>
+    <string name="quest_fence_material_wood">Wood</string>
+    <string name="quest_fence_material_metal">Metal</string>
+    <string name="quest_fence_material_concrete">Concrete</string>
+    <string name="quest_fence_material_stone">Stone</string>
+    <string name="quest_fence_material_brick">Brick</string>
+    <string name="quest_fence_material_plastic">Plastic</string>
+    <string name="quest_fence_material_wire">Wire</string>
+    <string name="quest_fence_material_glass">Glass</string>
+
 </resources>

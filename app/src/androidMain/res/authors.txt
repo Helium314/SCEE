@@ -111,6 +111,15 @@ drinking_water_type_disused... CC-BY-SA 4.0      crop of image by Kolforn (Wikim
 drinking_water_type_spring.jpg CC-BY-SA 4.0      crop of image by Dampftrain https://commons.wikimedia.org/wiki/File:Erdbachquelle.JPG
 drinking_water_type_water_wel… CC-BY-SA 3.0      crop of image by Honza Groh (Jagro) https://commons.wikimedia.org/wiki/File:Zmiennica,_studna.jpg
 
+fence_material_metal.jpg        CC-BY-SA 2.0      OSMLanduse https://wiki.openstreetmap.org/wiki/File:Metal_Fence_(27820851).jpg
+fence_material_plastic.jpg      CC-BY-SA 3.0      JiminyPeak https://wiki.openstreetmap.org/wiki/File:JiminyPicketVinylFence.jpg
+fence_material_glass.jpg        CC-BY-SA 4.0      Wing1990hk https://wiki.openstreetmap.org/wiki/File:HK_%E5%B0%87%E8%BB%8D%E6%BE%B3_TKO_%E6%97%A5%E5%87%BA%E5%BA%B7%E5%9F%8E_Lohas_Park_Malibu_FV_%E7%8F%BE%E5%A0%B4%E6%A8%93_%E7%A4%BA%E7%AF%84%E5%96%AE%E4%BD%8D_showflat_%E8%A4%87%E5%BC%8F%E6%A8%93_71st_Floor_with_%E5%85%A7%E7%BD%AE%E6%A8%93%E6%A2%AF_indoor_stairs_n_%E9%80%A3%E5%A4%A9%E5%8F%B0_roof_view_October_2020_SS2_30.jpg
+fence_material_wood.jpg         CC-BY-SA 2.0      GMan https://wiki.openstreetmap.org/wiki/File:Feb_2015_Fence_repair_project_shoring_up_weak_braces_adding_new_slats.JPG
+fence_material_concrete.jpg     CC-BY-SA 3.0      C.Stadler/Bwag https://wiki.openstreetmap.org/wiki/File:Seeboden_Kraut_Rumpler_2012_a.jpg
+fence_material_brick.jpg        CC-BY-SA 4.0      John Phelan https://commons.wikimedia.org/wiki/File:Fence_-_Arlington,_MA_-_11.jpg
+fence_material_stone.jpg        CC-BY-SA 4.0      Ontario Heritage Trust https://commons.wikimedia.org/wiki/File:Patullo-McDiarmid_Stone_Fence-_Town_of_Caledon-Ontario-_HPC15340-20210812.jpg
+fence_material_wire.jpg         CC-BY-SA 4.0      Richard Mortel https://wiki.openstreetmap.org/wiki/File:Spike_on_welded_wire_mesh_fence.jpg
+
 fire_hydrant_pillar.jpg        CC-BY-SA 3.0      Jwh https://commons.wikimedia.org/wiki/File:W%C3%ABntreng,_Hydrant.jpg
 fire_hydrant_pipe.jpg          CC-BY-SA 3.0      KeepOnTruckin https://commons.wikimedia.org/wiki/File:Dry_hydrant.jpg
 fire_hydrant_underground.jpg   CC-BY 3.0         Panek https://commons.wikimedia.org/wiki/File:Hydrant_MPWiK.jpg

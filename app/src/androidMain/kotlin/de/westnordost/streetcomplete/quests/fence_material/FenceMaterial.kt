@@ -14,47 +14,56 @@ import de.westnordost.streetcomplete.resources.fence_material_wood
 import org.jetbrains.compose.resources.DrawableResource
 
 enum class FenceMaterial(
-    val osmValue: String?,
+    val materialValue: String?,
+    val fenceTypeValue: String?,
     val imageResId: DrawableResource,
     @StringRes val titleResId: Int,
 ) {
     WOOD(
-        osmValue = "wood",
+        materialValue = "wood",
+        fenceTypeValue = null,
         imageResId = Res.drawable.fence_material_wood,
         titleResId = R.string.quest_material_wood
     ),
     METAL(
-        osmValue = "metal",
+        materialValue = "metal",
+        fenceTypeValue = null,
         imageResId = Res.drawable.fence_material_metal,
         titleResId = R.string.quest_material_metal
     ),
     CONCRETE(
-        osmValue = "concrete",
+        materialValue = "concrete",
+        fenceTypeValue = null,
         imageResId = Res.drawable.fence_material_concrete,
         titleResId = R.string.quest_material_concrete
     ),
     STONE(
-        osmValue = "stone",
+        materialValue = "stone",
+        fenceTypeValue = null,
         imageResId = Res.drawable.fence_material_stone,
         titleResId = R.string.quest_material_stone
     ),
     BRICK(
-        osmValue = "brick",
+        materialValue = "brick",
+        fenceTypeValue = null,
         imageResId = Res.drawable.fence_material_brick,
         titleResId = R.string.quest_material_brick
     ),
     PLASTIC(
-        osmValue = "plastic",
+        materialValue = "plastic",
+        fenceTypeValue = null,
         imageResId = Res.drawable.fence_material_plastic,
         titleResId = R.string.quest_material_plastic
     ),
     WIRE(
-        osmValue = null, // special case
+        materialValue = "metal",
+        fenceTypeValue = "wire",
         imageResId = Res.drawable.fence_material_wire,
         titleResId = R.string.quest_fence_material_wire
     ),
     GLASS(
-        osmValue = "glass",
+        materialValue = "glass",
+        fenceTypeValue = null,
         imageResId = Res.drawable.fence_material_glass,
         titleResId = R.string.quest_material_glass
     )

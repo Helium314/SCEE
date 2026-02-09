@@ -33,14 +33,7 @@ class AddFenceMaterial : OsmFilterQuestType<FenceMaterial>(), AndroidQuest {
         geometry: ElementGeometry,
         timestampEdited: Long,
     ) {
-        when (answer) {
-            FenceMaterial.WIRE -> {
-                tags["material"] = "metal"
-                tags["fence_type"] = "wire"
-            }
-            else -> {
-                tags["material"] = answer.osmValue!!
-            }
-        }
+        answer.materialValue?.let { tags["material"] = it }
+        answer.fenceTypeValue?.let { tags["fence_type"] = it }
     }
 }

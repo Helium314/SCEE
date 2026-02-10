@@ -18,6 +18,7 @@ class AddEvseId : OsmFilterQuestType<String>(), AndroidQuest {
         nodes, ways with
           (man_made = charge_point or amenity = charging_station)
           and !ref:EU:EVSE
+          and !ref:signed=no
           and access !~ private|no
     """
 

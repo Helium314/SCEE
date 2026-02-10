@@ -6,6 +6,7 @@ import android.widget.AutoCompleteTextView
 import android.text.InputFilter
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.quests.AMultiValueQuestForm
+import de.westnordost.streetcomplete.quests.AnswerItem
 
 class AddEvseIdForm : AMultiValueQuestForm<String>() {
 
@@ -16,6 +17,12 @@ class AddEvseIdForm : AMultiValueQuestForm<String>() {
 
     override val addAnotherValueResId =
         R.string.quest_evse_id_add_more
+
+    override val otherAnswers = listOf(
+        AnswerItem(R.string.quest_evse_id_not_visible) {
+            applyAnswer("ref:signed=no")
+        }
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

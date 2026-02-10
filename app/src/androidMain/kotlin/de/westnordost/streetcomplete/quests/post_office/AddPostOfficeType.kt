@@ -26,6 +26,8 @@ class AddPostOfficeType : OsmFilterQuestType<String>(), AndroidQuest {
     override val isReplacePlaceEnabled = true
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
 
+    override val hint = R.string.quest_postOffice_postPartner_hint
+
     override fun getTitle(tags: Map<String, String>) = R.string.quest_postOffice_title
 
     override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =

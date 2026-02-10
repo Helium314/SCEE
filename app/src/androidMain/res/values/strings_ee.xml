@@ -673,10 +673,11 @@
     <string name="quest_lampMount_transitShelter">Transit shelter</string>
 
     <!-- post office -->
-    <string name="quest_postOffice_title">What type is this post office?</string>
-    <string name="quest_postOffice_bureau">Full (official) post office</string>
-    <string name="quest_postOffice_postAnnex">Post office (privatly owned, perhaps with restricted service)</string>
-    <string name="quest_postOffice_postPartner">Post relay point in shops or amenities (as a service)</string>
+    <string name="quest_postOffice_title">What kind of postal service is this?</string>
+    <string name="quest_postOffice_bureau">Full-service (official) post office</string>
+    <string name="quest_postOffice_postAnnex">Privately operated post office (limited services)</string>
+    <string name="quest_postOffice_postPartner">Postal service counter with limited services (e.g. inside a shop)</string>
+    <string name="quest_postOffice_postPartner_hint">Note: Even when mapped as amenity=post_office, post_partner is commonly used to indicate the exact location of a postal service counter.</string>
 
     <!-- bicycle oneway -->
     <string name="quest_onewayBicycle_title">Is this path one-way for bicycles? In which direction?</string>

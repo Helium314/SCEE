@@ -1,0 +1,13 @@
+<svg id="vector" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128.0 128.0">
+  <path fill="#9bbe55" d="M128,64C128,99.35 99.35,128 64,128 28.65,128 0,99.35 0,64 0,28.65 28.65,0 64,0c35.35,0 64,28.65 64,64" stroke-width="0.2" id="path_0" />
+  <path fill="#000" d="M19.98,64 v-4h10v4h-2 v4h74 v-4h-4v-4h10v4h-2v4 h6v12 h-16 v16 h-8 v-16 h-48v16h-8v-16 h-16v-12 h6v-4z" fill-opacity="0.2" id="path_1" />
+  <path fill="#666" d="M31.98,68h8v24h-8z" id="path_2" />
+  <path fill="#666" d="M87.98,68h8v24h-8z" id="path_3" />
+  <path fill="#666" d="M21.98,60h6v8h-6z" id="path_4" />
+  <path fill="#666" d="M99.98,60h6v8h-6z" id="path_5" />
+  <path fill="#896847" d="M19.98,58h10v2h-10z" id="path_6" />
+  <path fill="#896847" d="M97.98,58h10v2h-10z" id="path_7" />
+  <path fill="#ae8862" d="M19.98,56h10v2h-10z" id="path_8" />
+  <path fill="#ae8862" d="M97.98,56h10v2h-10z" id="path_9" />
+  <path fill="#896847" d="M15.98,72h96v4h-96z" id="path_10" />
+  <path fill="#ae8862" d="M15.98,68h96v4h-96z" id="path_11" /></svg>

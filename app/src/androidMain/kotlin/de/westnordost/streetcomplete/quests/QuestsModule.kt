@@ -35,6 +35,7 @@ import de.westnordost.streetcomplete.quests.barrier_type.AddBarrierOnRoad
 import de.westnordost.streetcomplete.quests.barrier_type.AddBarrierType
 import de.westnordost.streetcomplete.quests.barrier_type.AddStileType
 import de.westnordost.streetcomplete.quests.bbq_fuel.AddBbqFuel
+import de.westnordost.streetcomplete.quests.bench_armrest.AddBenchArmrest
 import de.westnordost.streetcomplete.quests.bench_backrest.AddBenchBackrest
 import de.westnordost.streetcomplete.quests.bench_material.AddBenchMaterial
 import de.westnordost.streetcomplete.quests.bicycle_repair_station.AddBicycleRepairStationServices
@@ -650,6 +651,7 @@ fun getQuestTypeList(
     154 to AddWayLit(),
 
     // quests added in SCEE
+    EE_QUEST_OFFSET + 59 to AddBenchArmrest(),
     EE_QUEST_OFFSET + 0 to AddBenchMaterial(),
     EE_QUEST_OFFSET + 27 to AddBuildingColour(),
     EE_QUEST_OFFSET + 49 to AddBuildingMaterial(),

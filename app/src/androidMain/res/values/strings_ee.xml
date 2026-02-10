@@ -230,7 +230,6 @@
     <string name="quick_switch_preset">Switch preset</string>
 
 
-    <!-- new quests -->
 
     <!-- osmose quest -->
     <string name="quest_osmose_title">Osmose quest:</string>
@@ -267,6 +266,8 @@
     <string name="quest_material_concrete">Concrete</string>
     <string name="quest_material_stone">Stone</string>
     <string name="quest_material_brick">Bricks</string>
+    <!-- bench armrest -->
+    <string name="quest_bench_armrest_title">Does this bench have any armrest?</string>
 
     <!-- guidepost sports -->
     <string name="quest_guidepost_sports_title">For which sport is this guidepost intended?</string>
@@ -786,6 +787,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_material_tiles">Tiles</string>
     <string name="quest_material_bamboo">Bamboo</string>
     <string name="quest_material_adobe">Adobe</string>
+    <string name="quest_material_pebbledash">Pebbledash</string>
 
     <!-- fence material -->
     <string name="quest_fence_material_title">What material is this fence made of?</string>

@@ -15,23 +15,25 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.ui.common.ZoomInIcon
 import de.westnordost.streetcomplete.ui.common.ZoomOutIcon
+import androidx.compose.ui.tooling.preview.Preview
+import de.westnordost.streetcomplete.ui.ktx.pxToDp
 
 /** Combined control for zooming in and out */
 @Composable
 fun ZoomButtons(
     onZoomIn: () -> Unit,
     onZoomOut: () -> Unit,
-    zoom: (Float) -> Unit,
+    onZoomDrag: (Float) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(
         backgroundColor = MaterialTheme.colors.surface,
     ),
 ) {
+    val pxToDp = 1.pxToDp().value
     Surface(
         modifier = modifier,
         shape = CircleShape,
@@ -40,15 +42,14 @@ fun ZoomButtons(
         border = BorderStroke(1.dp, MaterialTheme.colors.onSurface.copy(alpha = 0.12f)),
         elevation = 4.dp
     ) {
-        Column(
-            Modifier
-                .width(IntrinsicSize.Min)
-                .pointerInput(Unit) {
-                    detectVerticalDragGestures { change, dragAmount ->
-                        change.consume()
-                        zoom(-dragAmount / 30)
-                    }
+        Column(Modifier
+            .width(IntrinsicSize.Min)
+            .pointerInput(Unit) {
+                detectVerticalDragGestures { change, dragAmount ->
+                    change.consume()
+                    onZoomDrag(-dragAmount * pxToDp) // dragAmount is pixels, we want dp
                 }
+            }
         ) {
             IconButton(onClick = onZoomIn, enabled = enabled) { ZoomInIcon() }
             Divider()
@@ -60,5 +61,5 @@ fun ZoomButtons(
 @Preview
 @Composable
 private fun PreviewZoomButtons() {
-    ZoomButtons(onZoomIn = {}, onZoomOut = {}, zoom = {})
+    ZoomButtons(onZoomIn = {}, onZoomOut = {}, onZoomDrag = {})
 }

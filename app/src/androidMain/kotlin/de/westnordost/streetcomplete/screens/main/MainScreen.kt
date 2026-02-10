@@ -105,7 +105,7 @@ fun MainScreen(
     editHistoryViewModel: EditHistoryViewModel,
     onClickZoomIn: () -> Unit,
     onClickZoomOut: () -> Unit,
-    onZoom: (Float) -> Unit,
+    onZoomDrag: (Float) -> Unit,
     onClickCompass: () -> Unit,
     onClickLocation: () -> Unit,
     onClickLocationPointer: () -> Unit,
@@ -337,7 +337,7 @@ fun MainScreen(
                             ZoomButtons(
                                 onZoomIn = onClickZoomIn,
                                 onZoomOut = onClickZoomOut,
-                                zoom = onZoom
+                                onZoomDrag = onZoomDrag
                             )
                         }
                         LocationStateButton(

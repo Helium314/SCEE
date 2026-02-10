@@ -43,7 +43,7 @@ abstract class AMultiValueQuestForm<T> : AbstractOsmQuestForm<T>() {
 
     private val values = mutableSetOf<String>()
 
-    private val value get() = binding.valueInput.text?.toString().orEmpty().trim()
+    protected val value get() = binding.valueInput.text?.toString().orEmpty().trim()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -24,7 +24,7 @@ class AddEvseId : OsmFilterQuestType<String>(), AndroidQuest {
 
     override val changesetComment = "Add EVSE ID (ref:EU:EVSE)"
     override val wikiLink = "Key:ref:EU:EVSE"
-    override val icon = R.drawable.quest_car_charger
+    override val icon = R.drawable.ic_quest_charger_ref
     override val enabledInCountries = NoCountriesExcept(
         "AT","BE","BG","CY","CZ","DE","DK","EE","ES","FI","FR","GR","HR",
         "HU","IE","IT","LT","LU","LV","MT","NL","PL","PT","RO","SE","SI","SK"

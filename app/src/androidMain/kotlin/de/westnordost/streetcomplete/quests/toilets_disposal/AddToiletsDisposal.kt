@@ -19,7 +19,7 @@ class AddToiletsDisposal : OsmFilterQuestType<ToiletsDisposalType>(), AndroidQue
 
     override val changesetComment = "Add toilets disposal type"
     override val wikiLink = "Key:toilets:disposal"
-    override val icon = R.drawable.quest_toilets
+    override val icon = R.drawable.quest_toilets_disposal
     override val achievements = listOf(CITIZEN)
 
     override fun getTitle(tags: Map<String, String>) =

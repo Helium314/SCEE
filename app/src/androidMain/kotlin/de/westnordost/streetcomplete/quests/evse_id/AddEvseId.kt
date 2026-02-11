@@ -26,7 +26,7 @@ class AddEvseId : OsmFilterQuestType<String>(), AndroidQuest {
     override val wikiLink = "Key:ref:EU:EVSE"
     override val icon = R.drawable.ic_quest_charger_ref
     override val enabledInCountries = NoCountriesExcept(
-        "AT","BE","BG","CY","CZ","DE","DK","EE","ES","FI","FR","GR","HR",
+        "AT","BE","BG","CH","CY","CZ","DE","DK","EE","ES","FI","FR","GR","HR",
         "HU","IE","IT","LT","LU","LV","MT","NL","PL","PT","RO","SE","SI","SK"
     )
     override val achievements = listOf(CITIZEN)

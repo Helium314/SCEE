@@ -169,49 +169,53 @@ class AccessManagerDialog(
     }
 }
 
-// Access keys and values are used in multiple places (dialogs, overlays)
+// Access keys and values are used in multiple places (dialogs, overlays) - Usage figures as of February 2026
 val accessKeys = arrayOf( // sorted by number of uses
-    "access", // 18m
-    "foot", // 7m
-    "bicycle", // 7m
-    "bus", // 3.5m
-    "motor_vehicle", // 2m
-    "horse", // 1.6m
-    "hgv", // 790k
-    "motorcar", // 590k
-    "motorcycle", // 580k
-    "vehicle", // 350k
-    "moped", // 235k
-    "mofa", // 200k
-    "golf_cart", // 158k
-    "psv", // 115k
-    "hazmat", // 87k
-    "dog", // 80k
+    "access", // 25m
+    "foot", // 13m
+    "bicycle", // 9m
+    "bus", // 4.8m
+    "motor_vehicle", // 2.6m
+    "horse", // 1.9m
+    "hgv", // 1.5m
+    "motorcycle", // 900k
+    "motorcar", // 800k
+    "vehicle", // 460k
+    "mofa", // 318k
+    "moped", // 317k
+    "golf_cart", // 229k
+    "hazmat", // 168k
+    "dog", // 156k
+    "psv", // 127k
+    "snowmobile", // 117k
+    "emergency", // 117k
+    "mtb", // 88k
+    "ski", // 70k
+    "ski", // 70k
     "bdouble", // 60k
-    "ski", // 60k
-    "goods", // 41k
-    "taxi", // 23k
-    "carriage", // 20k
+    "goods", // 53k
+    "taxi", // 30k
+    "carriage", // 22k
+    "disabled", // 21k
     "hov", // 20k
-    "disabled", // 13.5k
-    "tourist_bus", // 13k
-    "atv", // 12k
-    "hand_cart", // 6.8k
-    "inline_skates", // 5k
-    "speed_pedelec", // 3.7k
-    "motorhome", // 3.5k
-    "trailer", // 2.7k
-    "ohv", // 2.4k
-    "caravan", // 2k
-    "coach", // 1.7k
-    "carpool", // 1.5k
-    "hgv_articulated", // 1k
-    "small_electric_vehicle", // 800
-    "auto_rickshaw", // 625
-    "electric_bicycle", // 335
-    "cycle_rickshaw", // 78
-    "nev", // 62
-    "kick_scooter", // 60
+    "atv", // 19k
+    "tourist_bus", // 18k
+    "trailer", // 12k
+    "motorhome", // 10.9k
+    "ohv", // 9.9k
+    "hand_cart", // 7.6k
+    "speed_pedelec", // 7.2k
+    "inline_skates", // 6.8k
+    "small_electric_vehicle", // 4.6k
+    "coach", // 3.7k
+    "caravan", // 2.8k
+    "electric_bicycle", // 2k
+    "carpool", // 1.9k
+    "hgv_articulated", // 1.9k
+    "auto_rickshaw", // 1.2k
+    "kick_scooter", // 467
+    "cycle_rickshaw", // 237
+    "nev", // 66
 )
 
 val accessValues = arrayOf(
@@ -229,5 +233,6 @@ val accessValues = arrayOf(
     "agricultural",
     "forestry",
     "discouraged", // really required explicit sign
+    // "military", disputed tag
     //"variable", doesn't make sense without supporting access:lanes
 )

@@ -569,6 +569,8 @@
     <string name="quest_building_demolished">It’s demolished (traces visible)</string>
     <string name="quest_construction">It’s under construction until…</string>
     <string name="quest_construction_value">Set \"construction=…\", or leave empty if unknown</string>
+    <string name="quest_construction_unknown_end">End date unknown</string>
+    <string name="quest_construction_hint">If the end date is unknown but the construction will last long-term (min. 6 months), choose “End date unknown”.</string>
     <string name="quest_generic_answer_show_edit_tags">Show/edit tags</string>
     <string name="quest_building_entrance_parking">Parking entrance</string>
     <string name="quest_maxspeed_conditional">Depends on…</string>

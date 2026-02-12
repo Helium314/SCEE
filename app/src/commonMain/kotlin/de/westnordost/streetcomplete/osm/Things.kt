@@ -146,6 +146,7 @@ private val IS_THING_EXPRESSION by lazy {
             // "bus_stop", handled in filter below to skip some common bad tagging
             "cyclist_waiting_aid",
             "emergency_access_point",
+            "hitchhiking",
             "milestone",
             // "speed_camera", - while not directly a sign, it definitely belongs into the traffic
             //                   signals/controls category
@@ -161,6 +162,7 @@ private val IS_THING_EXPRESSION by lazy {
             "cannon",
             "locomotive",
             "milestone",
+            "millstone",
             "memorial",
             // "monument" - it's rather a structure. Small monuments are tagged as "memorial"
             "railway_car",
@@ -191,11 +193,12 @@ private val IS_THING_EXPRESSION by lazy {
         "man_made" to listOf(
             // larger structures are rather alike buildings, they shouldn't be editable here
             // e.g. "water_tower", "watermill", "windmill", "tower", "telescope", "stupa" ...
-            // "antenna" - I think those small-ish antennas for cellular network would be fine
-            //             but quite large structures also fall under this tag
+            "antenna",
             "beehive",
             "cairn",
             "carpet_hanger",
+            "charge_point",
+            "ceremonial_gate",
             "column",
             "compass_rose",
             "cross",
@@ -204,6 +207,7 @@ private val IS_THING_EXPRESSION by lazy {
             "flagpole",
             "insect_hotel",
             // "manhole", - too many of them, it's madness to waste your time mapping these
+            "mast",
             "maypole",
             "monitoring_station", // a little large, on the other hand, sizes vary
             "nesting_site",
@@ -216,6 +220,7 @@ private val IS_THING_EXPRESSION by lazy {
             // "survey_point" - this can be very very small -> verifiability issue
             //                  danger that mapper deletes it because he can't find it
             // "telephone_box" - it just describes the structure, but not its use
+            "tower",
             "utility_pole", // usually a vertex, but not necessarily
             "video_wall", // basically an advertising=*
             "water_tap",
@@ -239,11 +244,42 @@ private val IS_THING_EXPRESSION by lazy {
         "power" to listOf(
             "pole",
         ),
+        "power" to listOf(
+            "catenary_mast",
+            "substation",
+            "transformer",
+            "generator",
+            "pole",
+            "tower",
+        ),
+        "marker" to listOf(
+            "yes",
+            "post",
+            "aerial",
+            "pedestal",
+            "stone",
+            "plate",
+            "ground"
+        ),
+        "utility" to listOf(
+            "yes",
+            "gas",
+            "power",
+            "water",
+            "telecom"
+        ),
         "tourism" to listOf(
             "artwork",
             // "information", only if it is not an office, see below
             "viewpoint",
-        )
+        ),
+        "waterway" to listOf(
+            "fuel",                  // iD-Preset: waterway/fuel
+            "sanitary_dump_station",  // iD-Preset: waterway/sanitary_dump_station
+            "boatyard",
+            "dock",
+            "water_point",
+        ),
     )
     .map { it.key + " ~ " + it.value.joinToString("|") }
     .joinToString("\n    or ")
@@ -254,6 +290,9 @@ private val IS_THING_EXPRESSION by lazy {
         or advertising
         or amenity = recycling and recycling_type = container
         or attraction
+        or marker
+        or marker = utility
+        or (marker and utility)
         or boundary = marker
         or cemetery = grave
         or disc_golf
@@ -276,21 +315,19 @@ val POPULAR_THING_FEATURE_IDS = listOf(
     "highway/street_lamp",         // 4.3 M
     "amenity/bench",               // 2.6 M
     "emergency/fire_hydrant",      // 2.1 M
-
     "amenity/waste_basket",        // 0.9 M
     "amenity/bicycle_parking",     // 0.7 M
     "amenity/shelter",             // 0.5 M
-
+    "amenity/drinking_water",      // 0.4 M
     "amenity/recycling_container", // 0.4 M
     "amenity/toilets",             // 0.4 M
-
     "amenity/post_box",            // 0.4 M
+    "amenity/charging_station",    // 0.2 M
 
     // More:
 
     // mostly found in parks/plazas, i.e. specific places instead of ~everywhere
     // "historic/memorial",           // 0.4 M (if this is displayed in quick select, artwork should probably too)
-    // "amenity/drinking_water",      // 0.3 M
     // "leisure/picnic_table",        // 0.3 M
 
     // found most often on hiking routes where there are not that many "things" features anyway

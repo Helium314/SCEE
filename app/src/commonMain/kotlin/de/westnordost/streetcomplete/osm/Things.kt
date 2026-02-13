@@ -253,7 +253,6 @@ private val IS_THING_EXPRESSION by lazy {
             "tower",
         ),
         "marker" to listOf(
-            "yes",
             "post",
             "aerial",
             "pedestal",

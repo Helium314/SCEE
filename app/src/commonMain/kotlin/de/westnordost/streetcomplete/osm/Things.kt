@@ -261,7 +261,6 @@ private val IS_THING_EXPRESSION by lazy {
             "ground"
         ),
         "utility" to listOf(
-            "yes",
             "gas",
             "power",
             "water",

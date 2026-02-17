@@ -191,7 +191,6 @@ val accessKeys = arrayOf( // sorted by number of uses
     "emergency", // 117k
     "mtb", // 88k
     "ski", // 70k
-    "ski", // 70k
     "bdouble", // 60k
     "goods", // 53k
     "taxi", // 30k

@@ -16,7 +16,7 @@ import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
 
 class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest {
 
-    private val elementFilter = """
+    private val barrierLockedFilterExpression = """
         nodes, ways with
           barrier ~ bump_gate|chain|door|gate|swing_gate|sliding_gate|sliding_beam|wicket_gate
         and (
@@ -27,7 +27,7 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
     """
 
     // local filter expression derived from elementFilter (used by isApplicableTo)
-    private val filter by lazy { elementFilter.toElementFilterExpression() }
+    private val filter by lazy { barrierLockedFilterExpression.toElementFilterExpression() }
 
     override val changesetComment = "Add whether barriers are locked"
     override val wikiLink = "Key:locked"
@@ -51,7 +51,7 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
         // Start with all elements that match the configured filter string
-        val filteredElements = mapData.filter(elementFilter).asIterable()
+        val filteredElements = mapData.filter(barrierLockedFilterExpression).asIterable()
 
         // Build a lookup from node id to the ways that are connected to it
         val waysByNodeId = mutableMapOf<Long, MutableList<Way>>()

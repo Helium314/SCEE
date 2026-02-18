@@ -33,7 +33,7 @@ class AccessManagerDialog(
             showAddConditionalDialog(
                 context,
                 accessKeys.toList(),
-                listOf("yes", "no", "delivery", "destination"),
+                listOf("yes", "no", "delivery", "destination", "discouraged", "private"),
                 null
             ) { k, v ->
                 // ensure set exists

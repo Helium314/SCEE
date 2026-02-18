@@ -21,7 +21,7 @@ class AddBarrierLockedTest {
         )
 
         val privateWay = way(
-            1,
+            11,
             listOf(1, 2),
             mapOf(
                 "highway" to "service",
@@ -30,7 +30,7 @@ class AddBarrierLockedTest {
         )
 
         val publicWay = way(
-            2,
+            12,
             listOf(1, 3),
             mapOf(
                 "highway" to "service",
@@ -49,5 +49,39 @@ class AddBarrierLockedTest {
 
         val applicable = questType.getApplicableElements(mapData).toList()
         assertEquals(emptyList(), applicable)
+    }
+    @Test
+    fun `quest shown for barrier node with two unrestricted connected ways`() {
+        val barrierNode = node(
+            1,
+            tags = mapOf("barrier" to "gate")
+        )
+
+        val wayA = way(
+            11,
+            listOf(1, 2),
+            mapOf("highway" to "service")
+        )
+
+        val wayB = way(
+            12,
+            listOf(1, 3),
+            mapOf("highway" to "service")
+        )
+
+        val mapData = TestMapDataWithGeometry(
+            listOf(
+                barrierNode,
+                node(2),
+                node(3),
+                wayA,
+                wayB,
+            ),
+        )
+
+        val applicable = questType.getApplicableElements(mapData).toList()
+
+        assertEquals(1, applicable.size)
+        assertEquals(barrierNode, applicable.first())
     }
 }

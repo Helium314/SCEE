@@ -14,6 +14,7 @@ class AddFenceMaterial : OsmFilterQuestType<FenceMaterial>(), AndroidQuest {
         nodes, ways, relations with
           barrier = fence
           and !material
+          and fence_type != wire
     """
 
     override val changesetComment = "Specify fence material"

@@ -1,11 +1,11 @@
 package de.westnordost.streetcomplete.quests.fence_material
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import de.westnordost.streetcomplete.quests.AItemSelectQuestForm
 import de.westnordost.streetcomplete.ui.common.item_select.ImageWithLabel
 import kotlinx.serialization.serializer
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 class AddFenceMaterialForm :
     AItemSelectQuestForm<FenceMaterial, FenceMaterial>() {

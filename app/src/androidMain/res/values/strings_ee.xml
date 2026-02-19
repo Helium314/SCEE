@@ -766,6 +766,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_roofOrientation_along">Parallel to the building’s longer side</string>
     <string name="quest_roofOrientation_across">Parallel to the building’s shorter side</string>
     <string name="quest_roofOrientation_title">How is the roof ridge oriented?</string>
+    <string name="quest_pavingStonesMaterial_title">"What material are these paving stones made of?"</string>
 
     <!-- building material -->
     <string name="quest_buildingMaterial_title">"What material is this building's facade made of?"</string>

@@ -192,13 +192,14 @@ private val IS_THING_EXPRESSION by lazy {
         ),
         "man_made" to listOf(
             // larger structures are rather alike buildings, they shouldn't be editable here
-            // e.g. "water_tower", "watermill", "windmill", "tower", "telescope", "stupa" ...
-            "antenna",
+            // e.g. "water_tower", "watermill", "windmill", "tower", "telescope", "stupa", "mast"
+            // ...
+            // "antenna" - I think those small-ish antennas for cellular network would be fine
+            //             but quite large structures also fall under this tag
             "beehive",
             "cairn",
             "carpet_hanger",
             "charge_point",
-            "ceremonial_gate",
             "column",
             "compass_rose",
             "cross",
@@ -272,10 +273,7 @@ private val IS_THING_EXPRESSION by lazy {
             "viewpoint",
         ),
         "waterway" to listOf(
-            "fuel",                  // iD-Preset: waterway/fuel
-            "sanitary_dump_station",  // iD-Preset: waterway/sanitary_dump_station
-            "boatyard",
-            "dock",
+            "sanitary_dump_station",
             "water_point",
         ),
     )

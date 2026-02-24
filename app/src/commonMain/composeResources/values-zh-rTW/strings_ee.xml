@@ -36,7 +36,6 @@
     <string name="quest_material_brick">磚塊</string>
     <string name="quest_artwork_title">這是什麼類型的藝術品？</string>
     <string name="pref_way_direction_summary">在開啟任務時，於突出顯示的線條上顯示箭頭。此功能例如在新增單行道時非常有用。</string>
-    <string name="quest_artwork_painting">畫作</string>
     <string name="import_export_settings">其他的應用程式設定</string>
     <string name="pref_show_nearby_quests_title">顯示附近的任務</string>
     <string name="pref_read_log_save">將完整日誌儲存到檔案</string>
@@ -50,9 +49,6 @@
     <string name="pref_offset_fix_title2">移除白點的偏移位置</string>
     <string name="pref_gpx_track_loading_error">載入 GPX 軌跡檔案時發生錯誤</string>
     <string name="quest_shelter_type_title">這是什麼樣的遮蔽處？</string>
-    <string name="quest_artwork_fountain">噴水池</string>
-    <string name="quest_artwork_relief">浮雕</string>
-    <string name="quest_artwork_land_art">景觀藝術</string>
     <string name="quest_barrier_locked_title">這個障礙(通常)鎖著嗎？</string>
     <string name="quest_tree_genus_title">這棵樹的植物學分類是哪個屬或哪個種？</string>
     <string name="pref_disable_navigation_mode_summary">停用會傾斜並自動旋轉地圖的模式</string>
@@ -71,10 +67,6 @@
     <string name="import_error">匯入錯誤</string>
     <string name="quest_benchMaterial_title">這是什麼材質做成的？</string>
     <string name="quest_trail_visibility_title">這條路的步道能見度如何？</string>
-    <string name="quest_artwork_architecture">建築</string>
-    <string name="quest_artwork_installation">裝置藝術</string>
-    <string name="quest_artwork_bust">半身像</string>
-    <string name="quest_artwork_stone">石頭</string>
     <string name="default_disabled_msg_poi_bench">此『任務』會將長椅或野餐桌等興趣點（POI）顯示為棕色點。點擊該點即可查看詳情及其他答案。</string>
     <string name="default_disabled_msg_poi_business">此『任務』會將商店、餐廳、診所等類似興趣點（POI）顯示為橘色點。點擊該點即可查看詳情及其他答案。</string>
     <string name="default_disabled_msg_poi_traffic">此『任務』會將交通相關的興趣點（POI）顯示為淺藍色點。點擊該點即可查看詳情及其他答案。</string>
@@ -114,7 +106,6 @@
     <string name="quest_lampMount_ceiling">天花板</string>
     <string name="quest_lampMount_transitShelter">大眾運輸涼亭</string>
     <string name="default_disabled_msg_roof">這種任務類型預設是停用的，因為屋頂通常不容易從街道上看見。這種任務類型也相當耗時；在大多數情況下，在家裡使用航空影像來繪製更輕鬆有效率。</string>
-    <string name="quest_artwork_mosaic">馬賽克</string>
     <string name="pref_really_all_notes_title">"顯示所有的註記" 是指"所有的"註記</string>
     <string name="pref_really_all_notes_summary">在請求顯示所有備註時，也顯示由你自己建立（或評論）的備註</string>
     <string name="pref_create_custom_quest_summary">…作為留下註記的替代方法。這可以用作在地圖上可見的本地儲存註記。請注意，你需要啟用自訂任務。</string>
@@ -146,10 +137,6 @@
     <string name="pref_gpx_track_title">顯示來自檔案的 GPX 軌跡</string>
     <string name="advanced_resurvey_message_keys">如果沒有檢查日期的鍵值，請始終重新調查這些鍵值。回答相關任務時，檢查日期鍵值將會自動新增</string>
     <string name="quest_settings_sidewalk_distance_button">距離</string>
-    <string name="quest_artwork_sculpture">雕塑</string>
-    <string name="quest_artwork_statue">雕像</string>
-    <string name="quest_artwork_mural">壁畫</string>
-    <string name="quest_artwork_graffiti">塗鴉</string>
     <string name="pref_expert_mode_message">這將允許使用 SCEE 中新增的任務，以及對以下內容進行操作：\n<li> 編輯原始標籤（raw tags）</li>\n<li> 移動屬於路徑或關係的節點</li>\n<li> 刪除任意獨立節點</li>\n<li> 編輯應被備註所阻止的元素</li>\n<li>在任意位置新增獨立節點</li>\n<li> 變更任務的元素選擇條件</li>\n\n這些功能仍比大多數其他編輯器的允許範圍少，但不慎使用可能會對資料造成在 StreetComplete 中無法恢復的損害。請注意，啟用專家模式後，你對編輯內容需承擔更大責任。\n請僅在你具備StreetComplete以外的 OSM 編輯經驗，且確切了解自己在做什麼時，才啟用此設定。</string>
     <string name="pref_disable_navigation_mode_title">停用導航模式</string>
     <string name="pref_select_first_edit_title">開啟歷史記錄時選取第一筆編輯</string>
@@ -289,9 +276,6 @@
     <string name="quest_settings_building_levels_mandatory_roof">在大多數國家/地區要求輸入屋頂層數（預設）</string>
     <string name="quest_settings_building_levels_optional_roof">允許在任何地方省略屋頂層數</string>
     <string name="quest_settings_highlight_changes_button">突顯變更</string>
-    <string name="quest_settings_leaf_type_single_tree_message">是否也要詢問單棵樹的葉型？</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">是</string>
-    <string name="quest_settings_leaf_type_single_tree_no">僅限於路徑和區域</string>
     <string name="quest_order_normal">恢復正常任務順序</string>
     <string name="level_filter">層級篩選器</string>
     <string name="level_filter_title">選擇要檢查的鍵值</string>
@@ -460,4 +444,11 @@
     <string name="quest_monitor_error">無法開始監測，可能是權限問題</string>
     <string name="quest_traffic_stuff_raised">這是抬升式行人穿越道</string>
     <string name="quest_service_building_type_minor_substation">小型變電所</string>
+    <string name="quest_recycling_excrement_bag_dispenser">它有裝排泄物袋的分配器</string>
+    <string name="quest_material_pebbledash">卵石抹灰</string>
+    <string name="custom_overlay_title">自訂圖層</string>
+    <string name="custom_overlay_highlight_missing">突顯缺少的資料</string>
+    <string name="custom_overlay_add_button">新的圖層</string>
+    <string name="tag_editor_last_edited">上次編輯：%s</string>
+    <string name="create_custom_quest_button">新增自訂圖層</string>
 </resources>

@@ -68,8 +68,6 @@
     <string name="quest_street_cabinet_waste">Saneamento</string>
     <string name="quest_street_cabinet_television">Televisão</string>
     <string name="quest_street_cabinet_street_lighting">Iluminação de Rua</string>
-    <string name="quest_artwork_statue">Estátua</string>
-    <string name="quest_artwork_installation">Instalação</string>
     <string name="quest_buildingPartColour_title">Qual é a cor geral desta parte do edifício?</string>
     <string name="pref_gpx_track_title">Mostrar caminho GPX através dum ficheiro</string>
     <string name="pref_quest_geometries_title">Mostrar geometrias das missões</string>
@@ -88,14 +86,11 @@
     <string name="pref_main_menu_switch_presets_title">Mostrar botão de alterar conjunto de missões no menu principal</string>
     <string name="pref_disable_navigation_mode_title">Desativar modo de navegação</string>
     <string name="pref_quest_settings_preset_summary">Quando ativado, as definições de missões são apenas válidas para o conjunto de missões atual</string>
-    <string name="quest_artwork_mural">Mural</string>
     <string name="quest_material_stone">Pedra</string>
     <string name="quest_material_brick">Tijolo</string>
     <string name="quest_utility_telecom">Telecomunicações</string>
     <string name="quest_service_building_type_reservoir_description">Um grande tanque construído para armazenar água fresca</string>
     <string name="quest_service_building_type_pump">Estação de bombagem de água</string>
-    <string name="quest_artwork_stone">Pedra</string>
-    <string name="quest_artwork_painting">Pintura</string>
     <string name="quest_mapType_topo_title">Topográfico</string>
     <string name="quest_mapType_street_title">Ruas</string>
     <string name="quest_surface_value_stepping_stones">Poldras</string>
@@ -166,12 +161,6 @@
     <string name="quest_material_metal">Metal</string>
     <string name="quest_material_plastic">Plástico</string>
     <string name="quest_artwork_title">Que tipo de obra de arte é esta?</string>
-    <string name="quest_artwork_sculpture">Escultura</string>
-    <string name="quest_artwork_architecture">Arquitetura</string>
-    <string name="quest_artwork_relief">Relevo</string>
-    <string name="quest_artwork_fountain">Fonte</string>
-    <string name="quest_artwork_bust">Busto</string>
-    <string name="quest_artwork_mosaic">Mosaico</string>
     <string name="quest_mapSize_region">Uma área maior com, por exemplo, múltiplas aldeias</string>
     <string name="quest_healthcare_speciality_title">Que especialidades médicas são oferecidas neste local?</string>
     <string name="quest_healthcare_speciality_switch_ui">Alterar interface</string>
@@ -198,7 +187,6 @@
     <string name="quest_service_building_type_substation">Subestação eletétrica</string>
     <string name="quest_service_building_type_industrial_substation_description">Dedicada a servir atividades do setor industrial ou de tarefas pesadas</string>
     <string name="quest_service_building_type_traction_substation">Subestação de tração</string>
-    <string name="quest_artwork_graffiti">Grafíti</string>
     <string name="quest_mapType_title">Que tipo de mapa é este?</string>
     <string name="quest_mapType_toposcope_title">Toposcópio</string>
     <string name="quest_mapType_topo_description">Um mapa com desenho topográfico para, por exemplo, um mapa histórico ou de trilhos. O mapa contém linhas de contorno.</string>

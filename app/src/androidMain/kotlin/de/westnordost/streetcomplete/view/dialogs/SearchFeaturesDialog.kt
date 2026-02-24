@@ -89,7 +89,7 @@ class SearchFeaturesDialog(
                     dismiss()
                 }
                 // color is always black, fix it (same problem for default icons, but that's an upstream issue)
-                if (context.resources.getResourceEntryName(resId).contains("temaki"))
+                if (context.resources.getResourceEntryName(resId).startsWith("preset"))
                     colorFilter = PorterDuffColorFilter(ContextCompat.getColor(context, R.color.text), PorterDuff.Mode.SRC_ATOP)
             })
         }

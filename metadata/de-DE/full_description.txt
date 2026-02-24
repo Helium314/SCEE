@@ -1,0 +1,12 @@
+SCEE ist eine angepasste Version von StreetComplete und richtet sich an erfahrene OSM-Nutzer, die mit den eingeschränkten Bearbeitungsmöglichkeiten von StreetComplete nicht zufrieden sind.
+
+Bitte beachte, dass SCEE nicht für Personen geeignet ist, die es gewohnt sind, Warnmeldungen zu ignorieren, ohne sie zu lesen!
+Neuen OpenStreetMap-Nutzern wird empfohlen, StreetComplete zu verwenden: https://f-droid.org/en/packages/de.westnordost.streetcomplete/
+
+Die in SCEE hinzugefügten Funktionen sind deutlich weniger getestet als das, was du vielleicht von StreetComplete gewohnt bist, sodass es zu Fehlern oder unerwartetem Verhalten kommen kann. Wenn du auf solche Probleme stößt, melde sie bitte.
+Durch zusätzliche Funktionen kann sich SCEE im Vergleich zu StreetComplete stark verändert verhalten.
+
+Eine vollständige Liste der Unterschiede zu StreetComplete findest du unter https://github.com/Helium314/SCEE#differences-to-streetcomplete
+
+F-Droid-Anti-Feature: nicht freies Netzwerk,
+SCEE nutzt Hintergrundkartenkacheln von jawg und optional Luft-/Satellitenbilder von Esri.

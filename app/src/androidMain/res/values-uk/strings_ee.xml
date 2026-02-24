@@ -637,4 +637,12 @@
     <string name="manage_access">Керувати доступом…</string>
     <string name="access_manager_message">Виберіть теги доступу. Пам’ятайте, що тегом позначено лише підписаний доступ, і по можливості уникайте загального тегу «доступ»</string>
     <string name="quest_valves_regina">RV: Regina / Італійський</string>
+    <string name="quest_material_pebbledash">Галькова штукатурка</string>
+    <string name="quest_onewayBicycle_title">Це одностороння доріжка для велосипедистів? У якому напрямку?</string>
+    <string name="quest_bench_armrest_title">Чи є у цієї лавки підлокітники?</string>
+    <string name="quest_toilets_disposal_title">Який тип утилізації відходів тут використовується?</string>
+    <string name="quest_toilets_disposal_flush">Відходи змиваються водою</string>
+    <string name="quest_toilets_disposal_pit">Відходи збираються в ямі</string>
+    <string name="quest_toilets_disposal_chemical">Відходи збираються в хімічному резервуарі</string>
+    <string name="quest_pavingStonesMaterial_title">З якого матеріалу ця бруківка?</string>
 </resources>

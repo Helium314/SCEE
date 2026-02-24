@@ -53,7 +53,6 @@
     <string name="quest_settings_osmose_level_low">Laag</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">Alle</string>
     <string name="quest_settings_resurvey_all_opening_hours_no">Standaard</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Ja</string>
     <string name="quest_osmose_remove_checked">Verwijder</string>
     <string name="quest_material_wood">Hout</string>
     <string name="quest_material_plastic">Plastic</string>
@@ -71,17 +70,6 @@
     <string name="quest_street_cabinet_traffic">Verkeer</string>
     <string name="quest_street_cabinet_waste">Afval</string>
     <string name="quest_street_cabinet_television">Televisie</string>
-    <string name="quest_artwork_statue">Standbeeld</string>
-    <string name="quest_artwork_mural">Muurschildering</string>
-    <string name="quest_artwork_graffiti">Grafitti</string>
-    <string name="quest_artwork_installation">Installatie</string>
-    <string name="quest_artwork_bust">Borstbeeld</string>
-    <string name="quest_artwork_stone">Steen</string>
-    <string name="quest_artwork_painting">Schilderij</string>
-    <string name="quest_artwork_architecture">Architectuur</string>
-    <string name="quest_artwork_mosaic">Mozaïek</string>
-    <string name="quest_artwork_fountain">Fontein</string>
-    <string name="quest_artwork_land_art">Landschapskunst</string>
     <string name="import_presets_overlays_add">Toevoegen</string>
     <string name="pref_screen_ui">Gebruikersinterface</string>
     <string name="import_presets_overlays_replace">Vervangen</string>
@@ -91,7 +79,6 @@
     <string name="quest_material_metal">Metaal</string>
     <string name="import_presets_overlays_message">Geïmporteerde toevoegen, of bestaande vervangen? Als je vervangen kiest, zullen alle huidige willen verwijderd.</string>
     <string name="quest_settings_sidewalk_distance_button">Afstand</string>
-    <string name="quest_artwork_sculpture">Beeldhouwwerk</string>
     <string name="pref_select_first_edit_title">Selecteer eerste bewerking bij het openen van de geschiedenis</string>
     <string name="import_error_db_version">Fout bij importeren: onbekende versie</string>
     <string name="pref_show_next_quest_summary">Laat verdere vragen voor hetzelfde element meteen zien na het oplossen</string>

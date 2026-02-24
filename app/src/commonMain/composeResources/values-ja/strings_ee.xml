@@ -251,10 +251,6 @@
     <string name="quest_settings_level_title">このクエストを表示する対象:</string>
     <string name="quest_settings_level_default">ショッピングモール内の店舗および類似の施設(初期設定)</string>
     <string name="quest_settings_level_more">複数階建ての建物内部の医師や多量のノード</string>
-    <string name="quest_generic_surface_message">メモを必要とせずに一般的な地表の回答を許可しますか?</string>
-    <string name="quest_generic_surface_button">一般的な地表を回答</string>
-    <string name="quest_generic_surface_yes">メモなしで許可</string>
-    <string name="quest_generic_surface_no">メモ付きのみ(初期設定)</string>
     <string name="quest_settings_resurvey_all_opening_hours_title">全ての営業時間を再調査</string>
     <string name="quest_settings_resurvey_all_opening_hours_message">SCEEが理解していない値も含めて、全ての営業時間を再調査しますか?　タグエディタを使用して正しい値を入力する必要がある可能性があります。</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">全て</string>
@@ -262,8 +258,6 @@
     <string name="quest_settings_building_levels_mandatory_roof">ほとんどの国では屋根の階数を入力する必要があります(初期設定)</string>
     <string name="quest_settings_building_levels_optional_roof">どこでも、屋根の階数の省略を許可します</string>
     <string name="quest_settings_highlight_changes_button">変更を強調表示</string>
-    <string name="quest_settings_leaf_type_single_tree_message">一本の木の葉の種別についても尋ねますか?</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">はい</string>
     <string name="quest_order_reverse">クエストを逆順にする</string>
     <string name="quest_order_normal">クエストを通常の順に戻す</string>
     <string name="quest_osmose_false_positive">誤検知を報告</string>
@@ -271,7 +265,6 @@
     <string name="quest_osmose_hide_type">同じ問題を無視…</string>
     <string name="quest_custom_quest_osmose_not_found">項目が削除され、クエストが削除されています</string>
     <string name="quest_barrier_locked_title">この障害物は(通常)鍵が掛けられていますか?</string>
-    <string name="quest_settings_leaf_type_single_tree_no">ウェイと範囲のみ</string>
     <string name="quest_utility_telecom">電気通信</string>
     <string name="quest_shelter_type_gazebo">西洋風東屋/ガゼボ</string>
     <string name="quest_shelter_type_rock_shelter">岩の避難所</string>
@@ -393,17 +386,6 @@
     <string name="quest_street_cabinet_traffic_monitoring">交通監視</string>
     <string name="quest_street_cabinet_transport_management">(公共)交通機関管理</string>
     <string name="quest_street_cabinet_television">テレビ</string>
-    <string name="quest_artwork_sculpture">オブジェ/(像ではない)彫刻</string>
-    <string name="quest_artwork_statue">(胸像ではない)彫像・塑像</string>
-    <string name="quest_artwork_mural">壁画</string>
-    <string name="quest_artwork_graffiti">グラフィティ/エアロゾールアート</string>
-    <string name="quest_artwork_installation">場所や空間全体を作品として体験させる芸術</string>
-    <string name="quest_artwork_bust">胸像</string>
-    <string name="quest_artwork_stone">巨石</string>
-    <string name="quest_artwork_painting">絵画</string>
-    <string name="quest_artwork_mosaic">モザイク</string>
-    <string name="quest_artwork_relief">浮き彫り/レリーフ</string>
-    <string name="quest_artwork_land_art">ランド・アート/アースワーク</string>
     <string name="quest_brewery_title">ここではどんなブランドのビールが提供されますか?</string>
     <string name="quest_brewery_add_more">他の醸造所を追加</string>
     <string name="quest_brewery_is_various">ここでは多種のビールのブランドが提供されます</string>

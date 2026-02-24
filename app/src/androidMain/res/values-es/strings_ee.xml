@@ -179,7 +179,6 @@
     <string name="quest_seating_street">En una zona de la calle</string>
     <string name="quest_seating_sidewalk">En la acera</string>
     <string name="quest_outdoor_seating_name_title">¿Qué tipo de asientos al aire libre tiene este lugar\?</string>
-    <string name="quest_artwork_title">¿Qué clase de obra de arte es esta\?</string>
     <string name="quest_contact_website">¿Cuál es el sitio web de este lugar\?</string>
     <string name="quest_cuisine_title">¿Qué cocina tiene este lugar\? ¡Usa las etiquetas OSM sugeridas!</string>
     <string name="quest_cuisine_add_more">Añadir otra cocina</string>

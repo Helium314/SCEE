@@ -19,6 +19,7 @@ import de.westnordost.streetcomplete.quests.address.AddHousenumber
 import de.westnordost.streetcomplete.quests.aerialway.AddAerialwayBicycleAccess
 import de.westnordost.streetcomplete.quests.air_conditioning.AddAirConditioning
 import de.westnordost.streetcomplete.quests.air_pump.AddAirCompressor
+import de.westnordost.streetcomplete.quests.amenities.AddHotWater
 import de.westnordost.streetcomplete.quests.amenity_cover.AddAmenityCover
 import de.westnordost.streetcomplete.quests.amenity_indoor.AddIsAmenityIndoor
 import de.westnordost.streetcomplete.quests.artwork.AddArtworkType
@@ -104,6 +105,8 @@ import de.westnordost.streetcomplete.quests.drinking_water.AddDrinkingWater
 import de.westnordost.streetcomplete.quests.drinking_water_type.AddDrinkingWaterType
 import de.westnordost.streetcomplete.quests.existence.CheckExistence
 import de.westnordost.streetcomplete.quests.fence_material.AddFenceMaterial
+import de.westnordost.streetcomplete.quests.ferry.AddFerryAccessBicycle
+import de.westnordost.streetcomplete.quests.ferry.AddFerryAccessHgv
 import de.westnordost.streetcomplete.quests.ferry.AddFerryAccessMotorVehicle
 import de.westnordost.streetcomplete.quests.ferry.AddFerryAccessPedestrian
 import de.westnordost.streetcomplete.quests.fire_hydrant.AddFireHydrantType
@@ -165,6 +168,7 @@ import de.westnordost.streetcomplete.quests.parking_fee.AddMotorcycleParkingFee
 import de.westnordost.streetcomplete.quests.parking_fee.AddParkingFee
 import de.westnordost.streetcomplete.quests.parking_orientation.AddParkingOrientation
 import de.westnordost.streetcomplete.quests.parking_type.AddParkingType
+import de.westnordost.streetcomplete.quests.paving_stones_material.AddPavingStonesMaterial
 import de.westnordost.streetcomplete.quests.pharmacy.AddIsPharmacyDispensing
 import de.westnordost.streetcomplete.quests.piste_difficulty.AddPisteDifficulty
 import de.westnordost.streetcomplete.quests.piste_lit.AddPisteLit
@@ -223,6 +227,7 @@ import de.westnordost.streetcomplete.quests.steps_ramp.AddStepsRamp
 import de.westnordost.streetcomplete.quests.street_cabinet.AddStreetCabinetType
 import de.westnordost.streetcomplete.quests.summit.AddSummitCross
 import de.westnordost.streetcomplete.quests.summit.AddSummitRegister
+import de.westnordost.streetcomplete.quests.surface.AddBeachSurface
 import de.westnordost.streetcomplete.quests.surface.AddCyclewayPartSurface
 import de.westnordost.streetcomplete.quests.surface.AddFootwayPartSurface
 import de.westnordost.streetcomplete.quests.surface.AddPathSurface
@@ -247,6 +252,7 @@ import de.westnordost.streetcomplete.quests.tree.AddTreeGenus
 import de.westnordost.streetcomplete.quests.sac_scale.AddSacScale
 import de.westnordost.streetcomplete.quests.sauna_availability.AddSaunaAvailability
 import de.westnordost.streetcomplete.quests.swimming_pool_availability.AddSwimmingPoolAvailability
+import de.westnordost.streetcomplete.quests.toilets_disposal.AddToiletsDisposal
 import de.westnordost.streetcomplete.quests.valves.AddValves
 import de.westnordost.streetcomplete.quests.via_ferrata_scale.AddViaFerrataScale
 import de.westnordost.streetcomplete.quests.way_lit.AddWayLit
@@ -438,6 +444,8 @@ fun getQuestTypeList(
 
     47 to AddPlaygroundAccess(),
 
+    191 to AddBeachSurface(),
+
     /* pulled up in priority to be before CheckExistence because this is basically the check
        whether the postbox is still there in countries in which it is enabled */
     48 to AddPostboxCollectionTimes(),
@@ -541,6 +549,8 @@ fun getQuestTypeList(
     // ferry: usually visible from looking at the boat, but not always...
     101 to AddFerryAccessPedestrian(),
     102 to AddFerryAccessMotorVehicle(),
+    196 to AddFerryAccessBicycle(),
+    197 to AddFerryAccessHgv(),
 
     // aerial way: usually visible from looking at the aerial way, but not always...
     184 to AddAerialwayBicycleAccess(),
@@ -584,6 +594,8 @@ fun getQuestTypeList(
     116 to AddCampShower(),
     117 to AddCampPower(),
     162 to AddSanitaryDumpStation(),
+
+    192 to AddHotWater(),
 
     177 to AddShelterCapacity(),
 
@@ -691,6 +703,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 45 to AddParkingCapacity(),
     EE_QUEST_OFFSET + 46 to AddDisabledParkingCapacity(),
     EE_QUEST_OFFSET + 47 to AddParkingOrientation(),
+    EE_QUEST_OFFSET + 61 to AddPavingStonesMaterial(),
     EE_QUEST_OFFSET + 50 to AddCaravanSiteType(),
     EE_QUEST_OFFSET + 52 to AddSaunaAvailability(),
     EE_QUEST_OFFSET + 53 to AddSwimmingPoolAvailability(),
@@ -698,6 +711,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 55 to AddPostOfficeType(),
     EE_QUEST_OFFSET + 57 to AddLampMount(),
     EE_QUEST_OFFSET + 58 to AddOnewayBicycle(),
+    EE_QUEST_OFFSET + 62 to AddToiletsDisposal(),
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

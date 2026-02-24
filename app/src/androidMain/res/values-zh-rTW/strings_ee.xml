@@ -444,4 +444,11 @@
     <string name="quest_monitor_error">無法開始監測，可能是權限問題</string>
     <string name="quest_traffic_stuff_raised">這是抬升式行人穿越道</string>
     <string name="quest_service_building_type_minor_substation">小型變電所</string>
+    <string name="quest_recycling_excrement_bag_dispenser">它有裝排泄物袋的分配器</string>
+    <string name="quest_material_pebbledash">卵石抹灰</string>
+    <string name="custom_overlay_title">自訂圖層</string>
+    <string name="custom_overlay_highlight_missing">突顯缺少的資料</string>
+    <string name="custom_overlay_add_button">新的圖層</string>
+    <string name="tag_editor_last_edited">上次編輯：%s</string>
+    <string name="create_custom_quest_button">新增自訂圖層</string>
 </resources>

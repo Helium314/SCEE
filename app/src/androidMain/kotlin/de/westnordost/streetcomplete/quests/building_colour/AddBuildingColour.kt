@@ -17,6 +17,7 @@ class AddBuildingColour : OsmFilterQuestType<BuildingColour>(), AndroidQuest {
           and !building:colour
           and (!indoor or indoor = no)
           and wall !~ no
+          and location != underground
     """
     override val changesetComment = "Specify building colour"
     override val wikiLink = "Key:building:colour"

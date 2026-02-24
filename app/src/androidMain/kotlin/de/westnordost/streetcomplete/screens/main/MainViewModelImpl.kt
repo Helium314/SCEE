@@ -58,6 +58,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import kotlinx.coroutines.withContext
+import kotlin.reflect.KClass
 
 class MainViewModelImpl(
     private val crashReportExceptionHandler: CrashReportExceptionHandler,
@@ -173,6 +174,14 @@ class MainViewModelImpl(
         withContext(IO) { messagesSource.popNextMessage() }
 
     override val allQuestTypes: List<QuestType> get() = questTypeRegistry
+
+    override fun toggleDisableMessageType(messageType: KClass<out Message>, disable: Boolean) {
+        prefs.disabledMessageTypes = if (disable) {
+            prefs.disabledMessageTypes + messageType
+        } else {
+            prefs.disabledMessageTypes - messageType
+        }
+    }
 
     /* overlays */
 

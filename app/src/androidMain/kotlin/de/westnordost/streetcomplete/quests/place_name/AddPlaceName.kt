@@ -169,6 +169,15 @@ private val NAME_PLACES = mapOf(
         // name & wheelchair
         "rehabilitation", "hospice", "midwife", "birthing_centre"
     ),
+    "historic" to arrayOf(
+        // name only
+        "castle", "church", "farm", "fort", "manor", "monument", "mosque", "temple",
+        "ship",
+    ),
+    "waterway" to arrayOf(
+        // name & opening hours
+        "fuel",
+    ),
 ).map { it.key + " ~ " + it.value.joinToString("|") }.joinToString("\n  or ")
 
 private const val PREF_ELEMENTS = "qs_AddPlaceName_element_selection"

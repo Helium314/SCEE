@@ -69,10 +69,8 @@
     <string name="quest_settings_osmose_level_low">Bas</string>
     <string name="quest_settings_fixme_title">Sélectionner les valeurs fixme à ignorer</string>
     <string name="quest_settings_resurvey_all_opening_hours_title">Revérifier toutes les horaires d'ouverture</string>
-    <string name="quest_generic_surface_no">Seulement avec une note (par défaut)</string>
     <string name="quest_settings_resurvey_all_opening_hours_no">Par défaut</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">Tous</string>
-    <string name="quest_generic_surface_yes">Permettre sans note</string>
     <string name="level_filter">Filtre de niveau</string>
     <string name="quest_order_reverse">Inverser la priorité des quêtes</string>
     <string name="level_filter_enable">Activer le filtre de niveau</string>
@@ -90,13 +88,8 @@
     <string name="default_disabled_msg_poi_business">Cette "quête" montre les commerces, restaurants, docteurs,... avec des points orange. Cliquez sur le point pour afficher les détails et les autres réponses.</string>
     <string name="quest_poi_camera_title">POI : Caméra de surveillance</string>
     <string name="default_disabled_msg_poi_fixme">Cette "quête" affiche les éléments avec un tag fixme avec un point rouge (en dehors des valeurs 'yes' et 'continue'). Cliquez sur le point pour afficher les détails et les réponses possibles.</string>
-    <string name="quest_artwork_fountain">Fontaine</string>
-    <string name="quest_artwork_statue">Statue</string>
     <string name="quest_seating_street">Dans une zone de rue</string>
     <string name="quest_healthcare_speciality_add_more">Ajouter une autre spécialité</string>
-    <string name="quest_artwork_architecture">Architecture</string>
-    <string name="quest_artwork_mosaic">Mosaïque</string>
-    <string name="quest_artwork_sculpture">Sculpture</string>
     <string name="quest_service_building_type_pump">Station de pompage</string>
     <string name="quest_seating_pedestrian_zone">Dans une zone piétonne</string>
     <string name="quest_seating_sidewalk">Sur le trottoir</string>
@@ -105,15 +98,7 @@
     <string name="quest_seating_balcony">Sur un balcon (pas au rez-de-chaussée)</string>
     <string name="quest_seating_roof">Sur un toit</string>
     <string name="quest_seating_beach">À la plage</string>
-    <string name="quest_artwork_mural">Œuvre d'art murale</string>
-    <string name="quest_artwork_graffiti">Graffiti</string>
-    <string name="quest_artwork_installation">Installation artistique</string>
-    <string name="quest_artwork_bust">Buste</string>
-    <string name="quest_artwork_stone">Rocher</string>
-    <string name="quest_artwork_painting">Peinture</string>
-    <string name="quest_artwork_land_art">Land art</string>
     <string name="quest_artwork_title">De quel type d'œuvre d'art s'agit-il \?</string>
-    <string name="quest_artwork_relief">Bas-relief</string>
     <string name="quest_healthcare_speciality_title">Quelles spécialités médicales sont offertes dans cet établissement de santé \?</string>
     <string name="quest_railwayPlatformRef_title">Quel est le numéro du quai \?</string>
     <string name="quest_railwayPlatformRef_abc">ABC/123</string>
@@ -226,7 +211,6 @@
     <string name="quest_osmose_use_app_language_information">Cela risque de gêner les éléments qui sont ignorés par le sous-titre</string>
     <string name="quest_osmose_hide_type">Ignorer les erreurs avec le même…</string>
     <string name="quest_settings_level_default">Magasins et assimilés dans les centres commerciaux (par défaut)</string>
-    <string name="quest_generic_surface_message">Permettre des réponses génériques pour les surfaces sans exiger une note \?</string>
     <string name="quest_settings_osmose_level_title">Sélectionnez le(s) niveau(x) de gravité des erreurs à télécharger et à afficher</string>
     <string name="level_filter_title">Choisir les clés à utiliser</string>
     <string name="quest_settings_building_levels_optional_roof">Omettre les niveaux de toit partout</string>
@@ -389,7 +373,6 @@
     <string name="pref_disable_navigation_mode_title">Désactiver le mode navigation</string>
     <string name="quest_name_brand">Possède une marque…</string>
     <string name="restriction_overlay_relation_incomplete">La relation est incomplète, le téléchargement des environs est nécessaire</string>
-    <string name="quest_generic_surface_button">Réponses génériques de surfaces</string>
     <string name="quest_brewery_title">Quelles marques de bière sont servies ici \?</string>
     <string name="quest_brewery_is_not_available">Aucune bière n'est vendue ici</string>
     <string name="quest_brewery_is_various">De nombreuses marques de bière sont servies ici</string>
@@ -400,7 +383,6 @@
     <string name="quest_utility_water">Eau</string>
     <string name="quest_utility_sewerage">Eaux usées</string>
     <string name="quest_utility_gas">Gaz naturel</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Oui</string>
     <string name="quest_utility_power">Électricité</string>
     <string name="quest_guidepost_sports_mtb">VTT</string>
     <string name="quest_guidepost_sports_hiking">Randonnée</string>
@@ -408,7 +390,6 @@
     <string name="quest_guidepost_sports_nordic_walking">Marche Nordique</string>
     <string name="quest_guidepost_sports_ski">Ski</string>
     <string name="quest_guidepost_sports_running">Course à pied</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Uniquement pour les voies et zones</string>
     <string name="quest_barrier_locked_title">Cette barrière est-elle (habituellement) fermée ?</string>
     <string name="quest_service_building_heating">Chauffage</string>
     <string name="quest_guidepost_sports_title">À quel sport ce panneau s'adresse-t-il ?</string>
@@ -435,7 +416,6 @@
     <string name="quest_service_building_railway">Chemins de fer</string>
     <string name="quest_service_building_type_substation_description">Postes électrique liées aux réseaux de distribution régionaux</string>
     <string name="quest_service_building_type_minor_substation">Petit poste électrique</string>
-    <string name="quest_settings_leaf_type_single_tree_message">Demander également le type de feuille pour les arbres isolé ?</string>
     <string name="quest_trail_visibility_intermediate_description">Balisage le plus souvent visible. Sens de l'orientation nécessaire, se munir d'une carte.</string>
     <string name="quest_piste_lit_title">Cette piste est-elle éclairée ?</string>
     <string name="quest_service_building_gas_pumping_station_description">Installation comprenant des pompes pour pomper du gaz d'un endroit à l'autre</string>

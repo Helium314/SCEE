@@ -39,8 +39,6 @@
     <string name="quest_settings_level_title">Εμφάνισε αυτή την αποστολή για:</string>
     <string name="quest_settings_resurvey_all_opening_hours_no">Προεπιλογή</string>
     <string name="element_selection_button">Επιλογή στοιχείου</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Ναι</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Μόνο για γραμμές και περιοχές</string>
     <string name="quest_order_normal">Επιστροφή στη φυσιολογική σειρά αποστολών</string>
     <string name="level_filter">Φίλτρο επιπέδου</string>
     <string name="level_filter_title">Επιλογή κλειδιών για έλεγχο</string>
@@ -79,17 +77,6 @@
     <string name="quest_street_cabinet_television">Τηλεόρασης</string>
     <string name="quest_street_cabinet_street_lighting">Οδικού φωτισμού</string>
     <string name="quest_service_building_heating">Θέρμανση</string>
-    <string name="quest_artwork_sculpture">Γλυπτό</string>
-    <string name="quest_artwork_statue">Άγαλμα</string>
-    <string name="quest_artwork_mural">Τοιχογραφία</string>
-    <string name="quest_artwork_graffiti">Γκράφιτι</string>
-    <string name="quest_artwork_installation">Εγκατάσταση</string>
-    <string name="quest_artwork_bust">Προτομή</string>
-    <string name="quest_artwork_stone">Πέτρα</string>
-    <string name="quest_artwork_painting">Ζωγραφία</string>
-    <string name="quest_artwork_mosaic">Ψηφιδωτό</string>
-    <string name="quest_artwork_relief">Ανάγλυφο</string>
-    <string name="quest_artwork_land_art">Τέχνη εδάφους</string>
     <string name="quest_artwork_title">Τι είδους έργο τέχνης είναι αυτό;</string>
     <string name="quest_seating_garden">Σε κήπο</string>
     <string name="quest_seating_roof">Σε ταράτσα</string>
@@ -208,7 +195,6 @@
     <string name="quest_lampType_mercury">Λάμπα ατμών υδραργύρου</string>
     <string name="quest_mapType_title">Τι είδους χάρτης είναι αυτός;</string>
     <string name="quest_mapType_toposcope_title">Τοποσκοπικός</string>
-    <string name="quest_artwork_fountain">Συντριβάνι</string>
     <string name="quest_guidepost_sports_climbing">Αναρρίχηση</string>
     <string name="quest_seating_beach">Σε παραλία</string>
     <string name="quest_street_cabinet_transport_management">Διαχείρισης μεταφορών</string>
@@ -220,7 +206,6 @@
     <string name="quest_destination_all_lanes_button">Όλες τις\nλωρίδες</string>
     <string name="quest_brewery_is_various">Πόσες μάρκες μπύρας σερβίρονται εδώ</string>
     <string name="quest_material_stone">Πέτρα</string>
-    <string name="quest_artwork_architecture">Αρχιτεκτονική</string>
     <string name="quest_seating_sidewalk">Στο πεζοδρόμιο</string>
     <string name="quest_service_building_type_substation">Ηλεκτρικός υποσταθμός</string>
     <string name="pref_interval_summary">%d δευτερόλεπτα</string>

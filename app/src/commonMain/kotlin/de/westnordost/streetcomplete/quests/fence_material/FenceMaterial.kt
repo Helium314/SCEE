@@ -51,7 +51,7 @@ enum class FenceMaterial(
         materialValue = "metal",
         fenceTypeValue = "wire",
         imageResId = Res.drawable.fence_material_wire,
-        titleResId = Res.string.quest_fence_material_wire
+        titleResId = Res.string.quest_material_wire
     ),
     GLASS(
         materialValue = "glass",

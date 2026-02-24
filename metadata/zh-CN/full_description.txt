@@ -1,0 +1,12 @@
+SCEE 是 StreetComplete 的修改版，专为不满原版 StreetComplete 缺乏高级编辑功能的资深 OSM 用户打造。
+
+请注意，SCEE 不适合习惯舍弃警告信息而不阅读的用户！
+初次接触 OpenStreetMap 用户最好使用原版 StreetComplete：https://f-droid.org/zh_Hans/packages/de.westnordost.streetcomplete/
+
+SCEE 中新增功能测试程度远不及您在原版 StreetComplete 中使用的功能，因此可能会出现错误或意外行为。如果您遇到任何问题，请提交问题反馈。
+与 StreetComplete 相比，SCEE 的额外功能可能会导致其运行方式存在显著差异。
+
+如需查看与 StreetComplete 的完整差异列表，请访问 https://github.com/Helium314/SCEE#differences-to-streetcomplete
+
+F-Droid 反功能：非自由网络。
+SCEE 使用由 jawg 提供的底图瓦片，并可选配 Esri 提供的航空/卫星影像服务。

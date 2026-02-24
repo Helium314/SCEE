@@ -23,7 +23,6 @@
     <string name="quest_material_bamboo">Bambù</string>
     <string name="quest_benchMaterial_title">Di che materiale è fatta?</string>
     <string name="theme_dark_contrast">Scuro (contrasto elevato)</string>
-    <string name="quest_artwork_sculpture">Scultura</string>
     <string name="quest_seating_sidewalk">Sul marciapiede</string>
     <string name="pref_delete_old_data_after_summary">%d giorni</string>
     <string name="quest_brewery_title">Che marche di birra servono qui?</string>
@@ -37,7 +36,6 @@
     <string name="pref_export">Esporta impostazioni</string>
     <string name="pref_import">Importa impostazioni</string>
     <string name="import_presets_overlays_add">Aggiungi</string>
-    <string name="quest_artwork_mosaic">Mosaico</string>
     <string name="quest_material_glass">Vetro</string>
     <string name="quest_swimming_pool_indoor_and_outdoor">Sia all'interno che all'esterno</string>
     <string name="quest_saunaAvailability_title">C'è una sauna qui?</string>
@@ -64,9 +62,6 @@
     <string name="quest_parking_capacity_title">Quante automobili possono parcheggiare qui?</string>
     <string name="pref_interval_summary">%d secondi</string>
     <string name="quest_settings_sidewalk_distance_button">Distanza</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Sì</string>
-    <string name="quest_artwork_statue">Statua</string>
-    <string name="quest_artwork_fountain">Fontana</string>
     <string name="quest_trail_visibility_excellent">Eccellente</string>
     <string name="quest_artwork_title">Che tipo di opera d'arte è?</string>
     <string name="quest_mapSize_title">Che area è coperta da questa mappa?</string>

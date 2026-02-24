@@ -682,6 +682,12 @@
     <!-- bicycle oneway -->
     <string name="quest_onewayBicycle_title">Is this path one-way for bicycles? In which direction?</string>
 
+    <!-- toilets disposal quest -->
+    <string name="quest_toilets_disposal_title">What kind of toilet disposal is used here?</string>
+    <string name="quest_toilets_disposal_flush">The waste is flushed with water</string>
+    <string name="quest_toilets_disposal_pit">The waste is collected in a pit</string>
+    <string name="quest_toilets_disposal_chemical">The waste is collected in a chemical tank</string>
+
     <!-- new overlays -->
 
     <!-- custom overlay -->
@@ -767,6 +773,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_roofOrientation_along">Parallel to the building’s longer side</string>
     <string name="quest_roofOrientation_across">Parallel to the building’s shorter side</string>
     <string name="quest_roofOrientation_title">How is the roof ridge oriented?</string>
+    <string name="quest_pavingStonesMaterial_title">"What material are these paving stones made of?"</string>
 
     <!-- building material -->
     <string name="quest_buildingMaterial_title">"What material is this building's facade made of?"</string>

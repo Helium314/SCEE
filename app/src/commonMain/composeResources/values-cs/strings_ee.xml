@@ -129,12 +129,6 @@
     <string name="quest_buildingColour_title">Jakou má budova celkově barvu?</string>
     <string name="quest_buildingPartColour_title">Jakou má tato část budovy celkově barvu?</string>
     <string name="quest_artwork_title">Co je toto za umělecké dílo?</string>
-    <string name="quest_artwork_mural">Nástěnná malba</string>
-    <string name="quest_artwork_graffiti">Graffiti</string>
-    <string name="quest_artwork_painting">Malba</string>
-    <string name="quest_artwork_architecture">Architektura</string>
-    <string name="quest_artwork_mosaic">Mosaika</string>
-    <string name="quest_artwork_fountain">Fontána</string>
     <string name="quest_trail_visibility_excellent">Excelentní</string>
     <string name="quest_trail_visibility_excellent_description">Všude jednoznačná cesta nebo značky. Orientace bezproblémová, není třeba mapy.</string>
     <string name="quest_trail_visibility_good">Dobrá</string>
@@ -273,8 +267,6 @@
     <string name="pref_advanced_resurvey_title">Pokročilý opakovaný průzkum</string>
     <string name="quest_settings_sidewalk_distance_button">Vzdálenost</string>
     <string name="quest_settings_what_to_edit">Co nastavit?</string>
-    <string name="quest_generic_surface_button">Odpovědi s obecnými povrchy</string>
-    <string name="quest_generic_surface_message">Povolit odpovědi s obecnými povrchy bez vyžadování poznámky?</string>
     <string name="quest_settings_osmose_level_high">Vysoká</string>
     <string name="quest_settings_osmose_level_medium">Střední</string>
     <string name="quest_settings_osmose_level_low">Malá</string>
@@ -282,9 +274,7 @@
     <string name="element_selection_button">Výběr prvků</string>
     <string name="quest_settings_highlight_changes_button">Zvýraznit změny</string>
     <string name="quest_order_normal">Zpět na normální řazení úkolů</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Pouze u těch zaznačených cestou nebo oblastí</string>
     <string name="quest_order_reverse">Obrátit pořadí úkolů</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Ano</string>
     <string name="quick_switch_preset">Přepnout předvolbu</string>
     <string name="quest_osmose_false_positive">Nahlásit falešně pozitivní</string>
     <string name="quest_service_building_sewerage_description">Zařízení související se sběrem, přenosem nebo zpracováním odpadní vody</string>
@@ -306,14 +296,11 @@
     <string name="pref_recent_answers_first_min_lines_message">Přesunout nedávné odpovědi dopředu pokud formulář úkolu obsahuje více než tento počet řad obrázků</string>
     <string name="quest_monitor_permission_warning">Pro upozornění na okolní úkoly je vyžadováno oprávnění k poloze na pozadí</string>
     <string name="quest_monitor_search_radius_text">Nastavte vzdálenost ve které hledat úkoly v okolí. Mějte na vědomí že úkoly s lehce větší vzdálenosti mohou být také nalezeny. Lokace s horší přesností než je zadaná hodnota budou ignorovány.</string>
-    <string name="quest_settings_leaf_type_single_tree_message">Ptát se na typ list i u jednotlivých stromů?</string>
     <string name="quest_service_building_railway_ventilation_shaft">Železniční ventilace</string>
     <string name="advanced_resurvey_message_keys">Vždy prozkoumat tyto klíče, pokud není uvedeno datum poslední kontroly. Datum poslední kontroly bude vždy přidáno při zodpovězení souvisejících úkolů</string>
     <string name="quest_settings_osmose_level_title">Vyberte úroveň závažnosti problému, které se budou stahovat a zobrazovat</string>
     <string name="quest_settings_per_preset_rescan">Pro správné aplikování všech změněných nastavení úkolů je třeba znovu vyžádat úkoly.</string>
     <string name="quest_service_building_railway_wash">Myčka železničních vozů</string>
-    <string name="quest_generic_surface_yes">Povolit bez vyžadování poznámky</string>
-    <string name="quest_generic_surface_no">Pouze s poznámkou (základní)</string>
     <string name="advanced_resurvey_message_date">Namísto použití intervalů budou úkoly zobrazeny pokud jsou jejich data kontroly starší než:</string>
     <string name="pref_quest_settings_preset_title">Nastavení úkolu zvlášť pro každou předvolbu</string>
     <string name="quest_mapSize_site">Nějaké místo, např. park nebo zoo</string>
@@ -331,9 +318,6 @@
     <string name="quest_tree_genus_title">Jakého biologického rodu nebo druhu je tento strom?</string>
     <string name="quest_valves_title">Jaké druhy ventilů jsou zde dostupné?</string>
     <string name="quest_mapSize_region">Větší oblast s např. několika vesnicema</string>
-    <string name="quest_artwork_statue">Socha člověka nebo zvířete</string>
-    <string name="quest_artwork_sculpture">Jiná socha</string>
-    <string name="quest_artwork_bust">Busta (bysta)</string>
     <string name="quest_destination_title">Jaké destinace jsou uvedené na značce pro tuto silnici?</string>
     <string name="quest_destination_add_more">Přidat další destinaci</string>
     <string name="quest_destination_all_lanes_button">Všechny

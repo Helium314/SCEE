@@ -193,6 +193,9 @@ location_nyan.png              fair use          see https://en.wikipedia.org/wi
 car_nyan.png                   fair use          see https://en.wikipedia.org/wiki/Nyan_Cat for context
 
 
+paving_stones_brick.jpg        CC0               https://wiki.openstreetmap.org/wiki/File:Lincoln,_Nebraska_Wendover_E_of_Bradfield_pavement_2.JPG
+paving_stones_concrete.jpg     CC0               https://wiki.openstreetmap.org/wiki/File:Mix_of_paving_stones_IMG_20200910_163455.jpg
+paving_stones_stone.jpg        CC0               https://wiki.openstreetmap.org/wiki/File:Pretty_natural_stone_used_for_paving.jpg
 
 parking_type_lane.jpg          CC0               https://wiki.openstreetmap.org/wiki/File:20201001-parking-streetside_01.jpg
 parking_type_multistorey.jpg   CC-BY-SA 3.0      https://commons.wikimedia.org/wiki/File:Hradec_Kr%C3%A1lov%C3%A9,_Resslova,_parkovac%C3%AD_d%C5%AFm.jpg

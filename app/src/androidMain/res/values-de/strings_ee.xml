@@ -274,7 +274,6 @@
     <string name="quest_poi_business_title">POI: Unternehmen</string>
     <string name="quick_switch_preset">Voreinstellung wechseln</string>
     <string name="pref_screen_ui">Oberfläche</string>
-    <string name="quest_artwork_title">Was für eine Art von Kunstwerk ist das\?</string>
     <string name="quest_osmose_message_for_element">Artikeltyp %1$s: %2$s</string>
     <string name="restriction_overlay_relation_unsupported">Nicht unterstützter Relationstyp:
 \n%s</string>
@@ -621,7 +620,7 @@
     <string name="quest_material_glass">Glas</string>
     <string name="quest_material_mirror">Spiegelglas</string>
     <string name="quest_material_sandstone">Sandstein</string>
-    <string name="quest_material_reed">Reed</string>
+    <string name="quest_material_reed">Reet</string>
     <string name="quest_material_loam">Lehm</string>
     <string name="quest_material_marble">Marmor</string>
     <string name="quest_material_slate">Schiefer</string>
@@ -629,9 +628,9 @@
     <string name="quest_material_limestone">Kalkstein</string>
     <string name="quest_material_tiles">Fliesen</string>
     <string name="quest_material_bamboo">Bambus</string>
-    <string name="quest_material_adobe">Adobeziegel</string>
-    <string name="quest_material_plaster">Putz-Fassade</string>
-    <string name="quest_material_mud">getrockneter Schlamm</string>
+    <string name="quest_material_adobe">Lehmziegel</string>
+    <string name="quest_material_plaster">Putz</string>
+    <string name="quest_material_mud">Getrockneter Schlamm</string>
     <string name="quest_material_clay">Ton</string>
     <string name="quest_material_timber_framing">Fachwerk</string>
     <string name="quest_disused">Es ist stillgelegt</string>
@@ -646,4 +645,7 @@
     <string name="quest_lampMount_straightMast">Gerader Pfahl</string>
     <string name="quest_lampMount_bentMast">Gebogener Pfahl</string>
     <string name="quest_lampMount_suspended">An einem Draht aufgehängt</string>
+    <string name="quest_bench_armrest_title">Hat diese Bank Armlehnen?</string>
+    <string name="quest_onewayBicycle_title">Ist dieser Weg für Fahrräder nur in eine Richtung befahrbar? In welche Richtung?</string>
+    <string name="quest_material_pebbledash">Kieselputz</string>
 </resources>

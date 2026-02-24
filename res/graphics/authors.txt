@@ -425,6 +425,7 @@ quest/
     surveillance_camera.svg
     swimming_pool.svg               modified by mcliquid based on Kocio CC0 1.0 from https://wiki.openstreetmap.org/wiki/File:Swimming-16.svg
     tent.svg
+    thermometer.svg
     toilets.svg
     toilet_fee.svg
     toilets_wheelchair.svg

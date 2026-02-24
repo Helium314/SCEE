@@ -146,6 +146,7 @@ private val IS_THING_EXPRESSION by lazy {
             // "bus_stop", handled in filter below to skip some common bad tagging
             "cyclist_waiting_aid",
             "emergency_access_point",
+            "hitchhiking",
             "milestone",
             // "speed_camera", - while not directly a sign, it definitely belongs into the traffic
             //                   signals/controls category
@@ -161,6 +162,7 @@ private val IS_THING_EXPRESSION by lazy {
             "cannon",
             "locomotive",
             "milestone",
+            "millstone",
             "memorial",
             // "monument" - it's rather a structure. Small monuments are tagged as "memorial"
             "railway_car",
@@ -190,12 +192,14 @@ private val IS_THING_EXPRESSION by lazy {
         ),
         "man_made" to listOf(
             // larger structures are rather alike buildings, they shouldn't be editable here
-            // e.g. "water_tower", "watermill", "windmill", "tower", "telescope", "stupa" ...
+            // e.g. "water_tower", "watermill", "windmill", "tower", "telescope", "stupa", "mast"
+            // ...
             // "antenna" - I think those small-ish antennas for cellular network would be fine
             //             but quite large structures also fall under this tag
             "beehive",
             "cairn",
             "carpet_hanger",
+            "charge_point",
             "column",
             "compass_rose",
             "cross",
@@ -243,7 +247,11 @@ private val IS_THING_EXPRESSION by lazy {
             "artwork",
             // "information", only if it is not an office, see below
             "viewpoint",
-        )
+        ),
+        "waterway" to listOf(
+            "sanitary_dump_station",
+            "water_point",
+        ),
     )
     .map { it.key + " ~ " + it.value.joinToString("|") }
     .joinToString("\n    or ")

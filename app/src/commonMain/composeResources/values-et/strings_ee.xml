@@ -8,9 +8,6 @@
     <string name="quest_settings_reset">Lähtesta</string>
     <string name="quest_custom_quest_remove">Eemalda loendist</string>
     <string name="quest_custom_quest_add_node">Lisa sõlm</string>
-    <string name="quest_settings_leaf_type_single_tree_message">Kas küsime ka üksikute puude lehtestiku tüüpi?</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Jah</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Vaid teede ja alade puhul</string>
     <string name="quest_order_reverse">Pööra ülesannete järjekord teistpidi</string>
     <string name="quest_order_normal">Tagasi tavalise ülesannete järjekorra juurde</string>
     <string name="quest_barrier_locked_title">Kas see barjäär on (tavaliselt) lukus?</string>

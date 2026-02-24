@@ -282,7 +282,6 @@
     <string name="quest_shelter_type_sun_shelter">Læ for solen</string>
     <string name="quest_shelter_type_field_shelter">Læskur (til dyr)</string>
     <string name="quest_shelter_type_rock_shelter">Hulelignende læ i klippe</string>
-    <string name="quest_artwork_title">Hvilken slags kunstværk er det her?</string>
     <string name="quest_trail_visibility_horrible">Forfærdelig</string>
     <string name="quest_trail_visibility_no">Ingen synlighed</string>
     <string name="quest_trail_visibility_no_description">Mest uden stier, ingen markører. Fremragende orienteringsevner er påkrævet.</string>
@@ -647,4 +646,7 @@
     <string name="quest_lampMount_transitShelter">Venteskur</string>
     <string name="quest_lampMount_title">Hvordan er denne lampe monteret?</string>
     <string name="quest_disused">Er ikke i brug</string>
+    <string name="quest_bench_armrest_title">Har denne bænk nogen armlæn?</string>
+    <string name="quest_onewayBicycle_title">Er denne sti ensrettet for cykler? I hvilken retning?</string>
+    <string name="quest_material_pebbledash">Stenpuds</string>
 </resources>

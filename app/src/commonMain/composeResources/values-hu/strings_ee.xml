@@ -114,8 +114,6 @@
     <string name="pref_interval_message">Frissítési időköz másodpercben</string>
     <string name="quest_settings_element_selection">Állítsd be a kérdéshez tartozó elemeket. <a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection">Kattints ide</a> az elemkiválasztási szintaxis megnyitásához böngészőben.</string>
     <string name="quest_settings_eligible_highways">Állítsd be kérdéshez tartozó utakat vesszővel elválasztva</string>
-    <string name="quest_generic_surface_yes">Engedélyezés jegyzet nélkül</string>
-    <string name="quest_generic_surface_message">Engedélyezed az általános felület válaszokat jegyzet nélkül?</string>
     <string name="quest_settings_what_to_edit">Mi legyen beállítva?</string>
     <string name="quest_settings_sidewalk_distance_button">Távolság</string>
     <string name="quest_settings_max_steps_length">A lépcső maximális hossza, amihez kérdés jelenik meg</string>
@@ -131,9 +129,6 @@
     <string name="element_selection_button">Elemkiválasztás</string>
     <string name="quest_settings_building_levels_mandatory_roof">A legtöbb országban meg kell adni a tetőszinteket (alapértelmezett)</string>
     <string name="quest_settings_highlight_changes_button">Módosítások kiemelése</string>
-    <string name="quest_settings_leaf_type_single_tree_message">Az egyes fák esetében is kérdezze meg a levélzet típusát?</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Igen</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Csak vonalakhoz és területekhez</string>
     <string name="quest_order_reverse">Kérdések sorrendjének megfordítása</string>
     <string name="quest_order_normal">Visszatérés a normál kérdéssorrendhez</string>
     <string name="level_filter">Szintszűrő</string>
@@ -211,13 +206,11 @@
     <string name="restriction_overlay_only_for">Csak számukra: %s</string>
     <string name="custom_overlay_add_button">Új egyéni</string>
     <string name="custom_overlay_dash_filter_hint">Szaggatott elem szűrés</string>
-    <string name="quest_generic_surface_button">Általános felület válaszok</string>
     <string name="quest_settings_osmose_level_title">Válaszd ki a letöltendő és megjelenítendő problémák súlyossági szintjét</string>
     <string name="custom_overlay_highlight_missing">Hiányzó adatok kiemelése</string>
     <string name="quest_buildingType_stable">Istálló</string>
     <string name="restore_dialog_hint">A visszavonás gomb hosszú lenyomásával manuálisan is kiválaszthatod, hogy mely kérdéseket szeretnéd visszaállítani.</string>
     <string name="quest_crossing_type_signals_controlled_zebra">Közlekedési lámpa és zebra</string>
-    <string name="quest_generic_surface_no">Csak jegyzettel (alapértelmezett)</string>
     <string name="quest_settings_building_levels_optional_roof">A tetőszintek elhagyásának engedélyezése mindenhol</string>
     <string name="quest_settings_max_roof_levels">(épületszintek) maximális értéke mínusz (tetőszintek), amihez a kérdés megjelenik</string>
     <string name="quest_settings_dot_labels_message">Beállítja, hogy mely címkéket kell használni a felirathoz és milyen sorrendben. Az üres karakterlánc soha nem jelenít meg semmilyen feliratot, a „label” az alapértelmezett StreetComplete nevet jeleníti meg a name, brand, ref, local_ref és operator használatával.</string>
@@ -346,17 +339,6 @@
     <string name="quest_valves_schrader">AV: Schrader / autó szelep</string>
     <string name="quest_valves_regina">RV: Regina / olasz</string>
     <string name="quest_artwork_title">Milyen típusú műalkotás ez?</string>
-    <string name="quest_artwork_statue">Szobor</string>
-    <string name="quest_artwork_sculpture">Absztrakt szobor</string>
-    <string name="quest_artwork_mural">Falfestmény</string>
-    <string name="quest_artwork_graffiti">Graffiti</string>
-    <string name="quest_artwork_installation">Installáció</string>
-    <string name="quest_artwork_bust">Mellszobor</string>
-    <string name="quest_artwork_stone">Kő</string>
-    <string name="quest_artwork_architecture">Építészeti</string>
-    <string name="quest_artwork_mosaic">Mozaik</string>
-    <string name="quest_artwork_relief">Dombormű</string>
-    <string name="quest_artwork_fountain">Szökőkút</string>
     <string name="quest_trail_visibility_title">Milyen az ösvény láthatósága?</string>
     <string name="quest_trail_visibility_excellent">Kiváló</string>
     <string name="quest_trail_visibility_excellent_description">Egyértelműen látható ösvény vagy jelzések mindenhol. A tájékozódás problémamentes, nincs szükség térképre.</string>
@@ -490,7 +472,6 @@
     <string name="quest_outdoor_seating_name_title">Milyen szabadtéri ülőhelyek vannak ezen a helyen?</string>
     <string name="quest_shelter_type_disabled_msg">Ez a kérdés alapértelmezés szerint ki van kapcsolva, mert nem könnyű megválaszolni. A menedék típusát a javaslatok közül kell kiválasztani, amelyek a leggyakrabban használt értékekből származnak, és ezeket gyakran nem könnyű megkülönböztetni egymástól.</string>
     <string name="quest_shelter_type_is_weather_shelter">Ez egy általános esőbeálló</string>
-    <string name="quest_artwork_land_art">Land art</string>
     <string name="quest_service_building_type_well_description">A felszín alatti vízhez való hozzáférésre szolgáló, ásással vagy fúrással létrehozott létesítmény</string>
     <string name="quest_service_building_type_reservoir_description">Nagy mesterséges tartály édesvíz tárolására</string>
     <string name="quest_service_building_oil_pumping_station_description">Az olaj egyik helyről a másikra történő szivattyúzására szolgáló, a szivattyúkat is tartalmazó berendezés</string>
@@ -505,7 +486,6 @@
     <string name="quest_trail_visibility_horrible_description">Gyakran úttalan, nincsenek jelzések. Fejlett tájékozódási készség szükséges.</string>
     <string name="quest_valves_title">Milyen fajta szelepekkel használható?</string>
     <string name="quest_valves_disabled_msg">Ez a kérdés alapértelmezés szerint le van tiltva, mivel a rendelkezésre álló szelepek alapos, közeli vizsgálatát igényli.</string>
-    <string name="quest_artwork_painting">Festmény</string>
     <string name="default_disabled_msg_trail_visibility">Ez a kérdéstípus alapértelmezés szerint ki van kapcsolva, mivel az ösvények láthatóságának értékelése erősen szubjektív, és az osztályozási rendszer alapos ismeretét igényli.</string>
     <string name="quest_trail_visibility_good_description">Az ösvény vagy a következő jelzés mindig látható, de néha keresni kell. Alapvető irányérzék szükséges, térkép ajánlott.</string>
     <string name="quest_trail_visibility_bad_description">Az ösvény néha nem látható, részben úttalan útvonalon vezet, nincsenek jelzések. Alapvető tájékozódási készség szükséges.</string>

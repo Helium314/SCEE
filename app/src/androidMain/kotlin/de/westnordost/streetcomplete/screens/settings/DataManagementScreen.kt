@@ -283,7 +283,7 @@ private const val BACKUP_PRESETS_QUEST_SETTINGS = "quest_settings"
 
 private const val TAG = "DataManagementSettings"
 
-const val LAST_KNOWN_DB_VERSION = 19L
+const val LAST_KNOWN_DB_VERSION = 20L
 
 val renamedQuests = mapOf(
     "ExternalQuest" to CustomQuest::class.simpleName!!,

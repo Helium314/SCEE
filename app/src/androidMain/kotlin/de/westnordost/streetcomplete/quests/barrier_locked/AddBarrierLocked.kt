@@ -16,6 +16,7 @@ import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
 
 class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest {
 
+    // We keep nodes and ways because many barriers are mapped as ways in OSM.
     private val barrierLockedFilterExpression = """
         nodes, ways with
           barrier ~ bump_gate|chain|door|gate|swing_gate|sliding_gate|sliding_beam|wicket_gate
@@ -39,13 +40,10 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
     override fun createForm() = AddBarrierLockedForm()
 
     override fun isApplicableTo(element: Element): Boolean? {
-        // Only barrier nodes are relevant
-        if (element !is Node) return false
-
-        // Apply the element filter for quick exclusion
         if (!filter.matches(element)) return false
 
-        // Need surrounding map data to decide
+        // Element matches the base filter -> we need surrounding map data to decide precisely.
+        // Return null so getApplicableElements(mapData) is used for the final decision.
         return null
     }
 
@@ -56,13 +54,13 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
         // Build a lookup from node id to the ways that are connected to it
         val waysByNodeId = mutableMapOf<Long, MutableList<Way>>()
         for (way in mapData.ways) {
+            if (way.tags["highway"] == null) continue // restrict to highway ways for relevance
             for (nodeId in way.nodeIds) {
                 waysByNodeId.getOrPut(nodeId) { mutableListOf() }.add(way)
             }
         }
 
-        return filteredElements
-            // Only nodes are relevant here; barrier ways are intentionally ignored
+        val nodeResults = filteredElements
             .filterIsInstance<Node>()
             .filter { node ->
                 val connectedWays = waysByNodeId[node.id].orEmpty()
@@ -86,6 +84,12 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
                 // and exactly one connected way has no access tag.
                 !(restrictedCount == 1 && noAccessTagCount == 1)
             }
+
+        val wayResults = filteredElements
+            .filterIsInstance<Way>()
+
+        // Combine results: nodes + ways that passed the checks
+        return nodeResults + wayResults
     }
 
     override fun applyAnswerTo(answer: BarrierLockedAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {

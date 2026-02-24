@@ -1,5 +1,6 @@
 package de.westnordost.streetcomplete.osm
 
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 
@@ -8,7 +9,8 @@ fun Element.isThingOrDisusedThing(): Boolean =
     isThing() || isDisusedThing()
 
 fun Element.isThing(): Boolean =
-    IS_THING_EXPRESSION.matches(this)
+    IS_THING_EXPRESSION.matches(this) ||
+        (Prefs.preferences.expertMode && IS_SCEE_THING_EXPRESSION.matches(this))
 
 fun Element.isDisusedThing(): Boolean =
     this.asIfItWasnt("disused")?.let { IS_THING_EXPRESSION.matches(it) } == true
@@ -208,7 +210,6 @@ private val IS_THING_EXPRESSION by lazy {
             "flagpole",
             "insect_hotel",
             // "manhole", - too many of them, it's madness to waste your time mapping these
-            "mast",
             "maypole",
             "monitoring_station", // a little large, on the other hand, sizes vary
             "nesting_site",
@@ -221,7 +222,6 @@ private val IS_THING_EXPRESSION by lazy {
             // "survey_point" - this can be very very small -> verifiability issue
             //                  danger that mapper deletes it because he can't find it
             // "telephone_box" - it just describes the structure, but not its use
-            "tower",
             "utility_pole", // usually a vertex, but not necessarily
             "video_wall", // basically an advertising=*
             "water_tap",
@@ -245,28 +245,6 @@ private val IS_THING_EXPRESSION by lazy {
         "power" to listOf(
             "pole",
         ),
-        "power" to listOf(
-            "catenary_mast",
-            "substation",
-            "transformer",
-            "generator",
-            "pole",
-            "tower",
-        ),
-        "marker" to listOf(
-            "post",
-            "aerial",
-            "pedestal",
-            "stone",
-            "plate",
-            "ground"
-        ),
-        "utility" to listOf(
-            "gas",
-            "power",
-            "water",
-            "telecom"
-        ),
         "tourism" to listOf(
             "artwork",
             // "information", only if it is not an office, see below
@@ -286,9 +264,6 @@ private val IS_THING_EXPRESSION by lazy {
         or advertising
         or amenity = recycling and recycling_type = container
         or attraction
-        or marker
-        or marker = utility
-        or (marker and utility)
         or boundary = marker
         or cemetery = grave
         or disc_golf
@@ -303,6 +278,47 @@ private val IS_THING_EXPRESSION by lazy {
         )
         or highway = bus_stop and public_transport != stop_position
         or tourism = information and information !~ office|visitor_centre
+    """.toElementFilterExpression()
+}
+
+private val IS_SCEE_THING_EXPRESSION by lazy {
+    val sceeTags = mapOf(
+        "man_made" to listOf(
+            "mast",
+            "tower"
+        ),
+        "power" to listOf(
+            "catenary_mast",
+            "substation",
+            "transformer",
+            "generator",
+            "tower"
+        ),
+        "marker" to listOf(
+            "post",
+            "aerial",
+            "pedestal",
+            "stone",
+            "plate",
+            "ground",
+            "utility"
+        ),
+        "utility" to listOf(
+            "gas",
+            "power",
+            "water",
+            "telecom"
+        )
+    )
+        .map { it.key + " ~ " + it.value.joinToString("|") }
+        .joinToString("\n    or ")
+
+    """
+        nodes, ways, relations with
+        $sceeTags
+        or marker
+        or marker = utility
+        or (marker and utility)
     """.toElementFilterExpression()
 }
 

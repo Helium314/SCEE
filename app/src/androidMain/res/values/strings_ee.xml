@@ -677,7 +677,7 @@
     <string name="quest_postOffice_bureau">Full-service (official) post office</string>
     <string name="quest_postOffice_postAnnex">Privately operated post office (limited services)</string>
     <string name="quest_postOffice_postPartner">Postal service counter with limited services (e.g. inside a shop)</string>
-    <string name="quest_postOffice_postPartner_hint">Note: Even when mapped as amenity=post_office, post_partner is commonly used to indicate the exact location of a postal service counter.</string>
+    <string name="quest_postOffice_postPartner_hint">Even when mapped as amenity=post_office, post_partner is commonly used to indicate the exact location of a postal service counter.</string>
 
     <!-- bicycle oneway -->
     <string name="quest_onewayBicycle_title">Is this path one-way for bicycles? In which direction?</string>

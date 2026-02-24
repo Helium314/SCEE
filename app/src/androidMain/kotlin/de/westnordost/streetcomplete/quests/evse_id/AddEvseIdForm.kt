@@ -19,7 +19,7 @@ class AddEvseIdForm : AMultiValueQuestForm<String>() {
         R.string.quest_evse_id_add_more
 
     override val otherAnswers = listOf(
-        AnswerItem(R.string.quest_evse_id_not_visible) {
+        AnswerItem(R.string.quest_generic_answer_noSign) {
             applyAnswer("ref:signed=no")
         }
     )

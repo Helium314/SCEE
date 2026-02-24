@@ -5,6 +5,7 @@ import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpressio
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
@@ -41,24 +42,25 @@ class AddEvseId :
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
 
+        val chargePoints = mapData
+            .filter("nodes with man_made = charge_point")
+            .toList()
+
         val candidates = mapData.filter(baseFilter)
 
         return candidates.filter { element ->
 
-            if (element.tags["amenity"] == "charging_station") {
+            if (element is Way && element.tags["amenity"] == "charging_station") {
 
-                val geometry =
-                    mapData.getGeometry(element.type, element.id) ?: return@filter true
+                val geometry = mapData.getGeometry(element.type, element.id)
+                    ?: return@filter true
 
                 val bounds = geometry.bounds
 
-                val hasChargePointsInside = mapData
-                    .filter("nodes with man_made = charge_point")
-                    .any { cp ->
-                        val cpGeom =
-                            mapData.getGeometry(cp.type, cp.id) ?: return@any false
-                        bounds.contains(cpGeom.center)
-                    }
+                val hasChargePointsInside = chargePoints.any { cp ->
+                    val cpGeom = mapData.getGeometry(cp.type, cp.id) ?: return@any false
+                    bounds.contains(cpGeom.center)
+                }
 
                 if (hasChargePointsInside) return@filter false
             }
@@ -70,11 +72,6 @@ class AddEvseId :
     // Geometry-dependent → return null to trigger surrounding-data re-check
     override fun isApplicableTo(element: Element): Boolean? =
         if (baseFilter.matches(element)) null else false
-
-    override fun getHighlightedElements(
-        element: Element,
-        getMapData: () -> MapDataWithGeometry
-    ): Sequence<Element> = sequenceOf(element)
 
     override fun createForm(): AddEvseIdForm = AddEvseIdForm()
 

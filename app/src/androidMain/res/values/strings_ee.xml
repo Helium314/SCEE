@@ -690,7 +690,6 @@
     <!-- evse id for charging stations -->
     <string name="quest_evse_id_title">What is the EVSE ID of this charging station?</string>
     <string name="quest_evse_id_add_more">Add another EVSE ID</string>
-    <string name="quest_evse_id_not_visible">ID not visible / signed</string>
     <string name="quest_evse_id_hint">e.g. DE*GCE*E1234567</string>
 
     <!-- new overlays -->

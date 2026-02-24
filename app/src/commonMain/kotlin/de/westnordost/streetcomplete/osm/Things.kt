@@ -285,7 +285,7 @@ private val IS_SCEE_THING_EXPRESSION by lazy {
     val sceeTags = mapOf(
         "man_made" to listOf(
             "mast",
-            "tower"
+            // "tower"
         ),
         "power" to listOf(
             "catenary_mast",
@@ -316,9 +316,6 @@ private val IS_SCEE_THING_EXPRESSION by lazy {
     """
         nodes, ways, relations with
         $sceeTags
-        or marker
-        or marker = utility
-        or (marker and utility)
     """.toElementFilterExpression()
 }
 

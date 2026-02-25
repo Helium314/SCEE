@@ -1,23 +1,20 @@
 package de.westnordost.streetcomplete.quests.barrier_locked
 
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
-import de.westnordost.streetcomplete.data.osm.mapdata.filter
-import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.osm.Tags
-import de.westnordost.streetcomplete.resources.Res
-import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.*
 
-class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest {
+class AddBarrierLocked : OsmFilterQuestType<BarrierLockedAnswer>(), AndroidQuest {
 
     // We keep nodes and ways because many barriers are mapped as ways in OSM.
-    private val barrierLockedFilterExpression = """
+    override val elementFilter = """
         nodes, ways with
           barrier ~ bump_gate|chain|door|gate|swing_gate|sliding_gate|sliding_beam|wicket_gate
         and (
@@ -26,9 +23,6 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
           or locked older today -10 years
         )
     """
-
-    // local filter expression derived from elementFilter (used by isApplicableTo)
-    private val filter by lazy { barrierLockedFilterExpression.toElementFilterExpression() }
 
     override val changesetComment = "Add whether barriers are locked"
     override val wikiLink = "Key:locked"
@@ -39,17 +33,8 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
 
     override fun createForm() = AddBarrierLockedForm()
 
-    override fun isApplicableTo(element: Element): Boolean? {
-        if (!filter.matches(element)) return false
-
-        // Element matches the base filter -> we need surrounding map data to decide precisely.
-        // Return null so getApplicableElements(mapData) is used for the final decision.
-        return null
-    }
-
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
-        // Start with all elements that match the configured filter string
-        val filteredElements = mapData.filter(barrierLockedFilterExpression).asIterable()
+        val base = super.getApplicableElements(mapData)
 
         // Build a lookup from node id to the ways that are connected to it
         val waysByNodeId = mutableMapOf<Long, MutableList<Way>>()
@@ -60,7 +45,7 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
             }
         }
 
-        val nodeResults = filteredElements
+        return base
             .filterIsInstance<Node>()
             .filter { node ->
                 val connectedWays = waysByNodeId[node.id].orEmpty()
@@ -76,7 +61,6 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
                     when (access) {
                         null -> noAccessTagCount++
                         "private", "no" -> restrictedCount++
-                        else -> { /* ignore other access values */ }
                     }
                 }
 
@@ -84,12 +68,6 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer>, AndroidQuest 
                 // and exactly one connected way has no access tag.
                 !(restrictedCount == 1 && noAccessTagCount == 1)
             }
-
-        val wayResults = filteredElements
-            .filterIsInstance<Way>()
-
-        // Combine results: nodes + ways that passed the checks
-        return nodeResults + wayResults
     }
 
     override fun applyAnswerTo(answer: BarrierLockedAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {

@@ -300,8 +300,9 @@ private fun showRasterUrlDialog(context: Context, prefs: SharedPreferences) {
         doAfterTextChanged {
             val t = it.toString()
             d?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled =
-                (t.contains("{x}") && t.contains("{y}") && t.contains("{z}")) ||
-                    t.contains("{bbox-epsg-3857}")
+                (t.contains("{x}") && t.contains("{y}") && (t.contains("{z}") || t.contains("{zoom}")))
+                    || t.contains("{bbox-epsg-3857}")
+                    || (t.contains("{bbox}") && t.contains("{proj}"))
         }
     }
     val hideLabelsSwitch = SwitchCompat(context).apply {

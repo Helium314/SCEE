@@ -8,7 +8,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_difficult_and_time_consuming
 
-class AddPavingStonesMaterial : OsmFilterQuestType<PavingStonesMaterial>(), AndroidQuest {
+class AddPavingStonesMaterial : OsmFilterQuestType<PavingStonesMaterialAnswer>(), AndroidQuest {
 
     override val elementFilter = """
         ways with
@@ -26,11 +26,17 @@ class AddPavingStonesMaterial : OsmFilterQuestType<PavingStonesMaterial>(), Andr
     override fun createForm() = AddPavingStonesMaterialForm()
 
     override fun applyAnswerTo(
-        answer: PavingStonesMaterial,
+        answer: PavingStonesMaterialAnswer,
         tags: Tags,
         geometry: ElementGeometry,
         timestampEdited: Long,
     ) {
-        tags["paving_stones:material"] = answer.osmValue
+        when (answer) {
+            is PavingStonesMaterial -> tags["paving_stones:material"] = answer.osmValue
+            SurfaceIsNotPavingStones -> {
+                tags.remove("surface")
+                tags.remove("paving_stones:material")
+            }
+        }
     }
 }

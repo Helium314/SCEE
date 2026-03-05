@@ -35,7 +35,6 @@ class AddPavingStonesMaterial : OsmFilterQuestType<PavingStonesMaterialAnswer>()
             is PavingStonesMaterial -> tags["paving_stones:material"] = answer.osmValue
             SurfaceIsNotPavingStones -> {
                 tags.remove("surface")
-                tags.remove("paving_stones:material")
             }
         }
     }

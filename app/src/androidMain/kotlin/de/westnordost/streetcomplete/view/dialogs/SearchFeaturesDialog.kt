@@ -227,4 +227,5 @@ private val iconOnlyFeatures = mapOf(
     "entrance" to R.drawable.quest_door,
     "highway/stop" to R.drawable.preset_temaki_stop,
     "highway/give_way" to R.drawable.preset_temaki_yield,
+    "highway/bus_stop" to R.drawable.preset_temaki_bus,
 )

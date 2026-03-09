@@ -4,7 +4,9 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.osm.Tags
+import de.westnordost.streetcomplete.osm.surface.getKeysAssociatedWithSurface
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
+import de.westnordost.streetcomplete.osm.removeCheckDatesForKey
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_difficult_and_time_consuming
 
@@ -35,7 +37,8 @@ class AddPavingStonesMaterial : OsmFilterQuestType<PavingStonesMaterialAnswer>()
             is PavingStonesMaterial -> tags["paving_stones:material"] = answer.osmValue
             SurfaceIsNotPavingStones -> {
                 tags.remove("surface")
-                tags.remove("smoothness")
+                tags.removeCheckDatesForKey("surface")
+                getKeysAssociatedWithSurface().forEach { tags.remove(it) }
             }
         }
     }

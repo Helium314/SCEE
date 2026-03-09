@@ -112,6 +112,7 @@ fun getKeysAssociatedWithSurface(prefix: String = ""): Set<String> =
         "${prefix}paving_stones:pattern",
         "${prefix}paving_stones:length",
         "${prefix}paving_stones:width",
+        "${prefix}paving_stones:material",
     ) +
         getLastCheckDateKeys("${prefix}surface") +
         getLastCheckDateKeys("${prefix}smoothness")

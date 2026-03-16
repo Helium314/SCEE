@@ -1,6 +1,5 @@
 package de.westnordost.streetcomplete.overlays
 
-import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.PointF
@@ -10,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.runtime.MutableFloatState
@@ -21,6 +23,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.doOnLayout
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
+import androidx.core.view.isNotEmpty
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
@@ -49,7 +52,6 @@ import de.westnordost.streetcomplete.data.osm.mapdata.ElementKey
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
-import de.westnordost.streetcomplete.data.osm.mapdata.key
 import de.westnordost.streetcomplete.data.overlays.Overlay
 import de.westnordost.streetcomplete.data.overlays.OverlayRegistry
 import de.westnordost.streetcomplete.data.preferences.Preferences
@@ -65,8 +67,8 @@ import de.westnordost.streetcomplete.screens.main.bottom_sheet.IsMapOrientationA
 import de.westnordost.streetcomplete.util.AccessManagerDialog
 import de.westnordost.streetcomplete.util.FragmentViewBindingPropertyDelegate
 import de.westnordost.streetcomplete.util.accessKeys
-import de.westnordost.streetcomplete.util.getNameAndLocationSpanned
 import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
+import de.westnordost.streetcomplete.util.getNameAndLocationSpanned
 import de.westnordost.streetcomplete.util.ktx.containsAnyKey
 import de.westnordost.streetcomplete.util.ktx.isArea
 import de.westnordost.streetcomplete.util.ktx.isSplittable
@@ -74,19 +76,21 @@ import de.westnordost.streetcomplete.util.ktx.popIn
 import de.westnordost.streetcomplete.util.ktx.popOut
 import de.westnordost.streetcomplete.util.ktx.setMargins
 import de.westnordost.streetcomplete.util.ktx.systemTimeNow
+import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.ktx.toInstant
 import de.westnordost.streetcomplete.util.ktx.toLocalDate
-import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.getOrientationAtCenterLineInDegrees
+import de.westnordost.streetcomplete.view.add
 import de.westnordost.streetcomplete.view.CharSequenceText
+import de.westnordost.streetcomplete.view.confirmIsSurvey
+import de.westnordost.streetcomplete.view.insets_animation.respectSystemInsets
 import de.westnordost.streetcomplete.view.ResText
 import de.westnordost.streetcomplete.view.RoundRectOutlineProvider
 import de.westnordost.streetcomplete.view.Text
-import de.westnordost.streetcomplete.view.add
-import de.westnordost.streetcomplete.view.confirmIsSurvey
-import de.westnordost.streetcomplete.view.insets_animation.respectSystemInsets
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -97,8 +101,6 @@ import kotlinx.datetime.toJavaLocalDate
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 /** Abstract base class for any form displayed for an overlay */
 abstract class AbstractOverlayForm :
@@ -342,7 +344,7 @@ abstract class AbstractOverlayForm :
 
     /** Inflate given layout resource id into the content view and return the inflated view */
     protected fun setContentView(resourceId: Int): View {
-        if (binding.content.childCount > 0) {
+        if (binding.content.isNotEmpty()) {
             binding.content.removeAllViews()
         }
         binding.content.visibility = View.VISIBLE
@@ -502,45 +504,95 @@ abstract class AbstractOverlayForm :
             || !element.tags.containsKey("highway")
             || element.tags["highway"] == "construction"
         ) return null
+
         return AnswerItem(R.string.quest_construction) {
             val tomorrow = systemTimeNow().toLocalDate().plus(1, DateTimeUnit.DAY)
-            val p = DatePickerDialog(requireContext(), { _, y, m, d ->
-                val finishDate = LocalDate(y, m + 1, d)
-                val today = systemTimeNow().toLocalDate()
-                val builder = StringMapChangesBuilder(element.tags)
-                val diff = finishDate.toEpochDays() - today.toEpochDays()
-                if (diff <= 0) return@DatePickerDialog // don't even bother to tell the user if they are trying to enter wrong data
+            val today = systemTimeNow().toLocalDate()
+            val horizontal = resources.getDimensionPixelSize(R.dimen.quest_form_horizontal_padding)
+            val vertical = resources.getDimensionPixelSize(R.dimen.quest_form_vertical_padding)
 
-                // for short construction up to a few months it's better to use conditional access
-                // as per https://wiki.openstreetmap.org/wiki/Tag:highway%3Dconstruction
-                if (diff < 200) { // we arbitrarily set the few months to 200 days
-                    val f = DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.US)
-                    builder["access:conditional"] =
-                        "no @ (${f.format(today.toJavaLocalDate())}-${f.format(finishDate.toJavaLocalDate())})"
-                    viewLifecycleScope.launch { solve(UpdateElementTagsAction(element, builder.create()), geometry, true) }
-                } else {
-                    // if we actually change the highway to construction, we let the user set a construction value
-                    val t = EditText(requireContext()).apply {
-                        setText(element.tags["highway"])
-                    }
-                    val f = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
-                    builder["opening_date"] = f.format(finishDate.toJavaLocalDate())
-                    builder["highway"] = "construction"
-                    AlertDialog.Builder(requireContext())
-                        .setTitle(R.string.quest_construction_value)
-                        .setViewWithDefaultPadding(t)
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .setPositiveButton(android.R.string.ok) { _, _ ->
-                            t.text.toString().takeIf { it.isNotBlank() }
-                                ?.let { builder["construction"] = it }
-                            viewLifecycleScope.launch { solve(UpdateElementTagsAction(element, builder.create()), geometry, true) }
+            val datePicker = DatePicker(requireContext()).apply {
+                minDate = tomorrow.toInstant().toEpochMilliseconds()
+                updateDate(tomorrow.year, tomorrow.monthNumber - 1, tomorrow.dayOfMonth)
+            }
+
+            val container = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(horizontal, vertical, horizontal, 0)
+            }
+
+            val hint = TextView(requireContext()).apply {
+                text = getString(R.string.quest_construction_hint)
+                textSize = 14f
+                setTextColor(requireContext().getColor(R.color.text))
+                setPadding(0, 0, 0, resources.getDimensionPixelSize(R.dimen.quest_form_vertical_padding))
+                setLineSpacing(0f, 1.2f)
+                setPadding(0, vertical, 0, 0)
+            }
+
+            container.addView(datePicker)
+            container.addView(hint)
+
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.quest_construction)
+                .setView(container)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    val finishDate = LocalDate(
+                        datePicker.year,
+                        datePicker.month + 1,
+                        datePicker.dayOfMonth
+                    )
+
+                    val builder = StringMapChangesBuilder(element.tags)
+                    val diff = finishDate.toEpochDays() - today.toEpochDays()
+                    if (diff <= 0) return@setPositiveButton // don't even bother to tell the user if they are trying to enter wrong data
+
+                    // for short construction up to a few months it's better to use conditional access
+                    // as per https://wiki.openstreetmap.org/wiki/Tag:highway%3Dconstruction
+                    if (diff < 200) {
+                        val f = DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.US)
+                        builder["access:conditional"] =
+                            "no @ (${f.format(today.toJavaLocalDate())}-${f.format(finishDate.toJavaLocalDate())})"
+
+                        viewLifecycleScope.launch {
+                            solve(UpdateElementTagsAction(element, builder.create()), geometry, true)
                         }
-                        .show()
+                    } else {
+                        // if we actually change the highway to construction, we let the user set a construction value
+                        setConstructionHighway(builder, element)
+                    }
                 }
-            }, tomorrow.year, tomorrow.monthNumber - 1, tomorrow.dayOfMonth)
-            p.datePicker.minDate = tomorrow.toInstant().toEpochMilliseconds()
-            p.show()
+                .setNeutralButton(R.string.quest_construction_unknown_end) { _, _ ->
+                    val builder = StringMapChangesBuilder(element.tags)
+                    setConstructionHighway(builder, element)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
         }
+    }
+
+    private fun setConstructionHighway(
+        builder: StringMapChangesBuilder,
+        element: Element
+    ) {
+        val t = EditText(requireContext()).apply {
+            setText(element.tags["highway"])
+        }
+
+        builder["highway"] = "construction"
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.quest_construction_value)
+            .setViewWithDefaultPadding(t)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                t.text.toString().takeIf { it.isNotBlank() }
+                    ?.let { builder["construction"] = it }
+                viewLifecycleScope.launch {
+                    solve(UpdateElementTagsAction(element, builder.create()), geometry, true)
+                }
+            }
+            .show()
     }
 
     private fun createItsDemolishedAnswer(): AnswerItem? {

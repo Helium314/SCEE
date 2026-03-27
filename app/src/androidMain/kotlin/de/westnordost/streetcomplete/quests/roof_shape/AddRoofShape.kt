@@ -13,6 +13,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.BUILDING
 import de.westnordost.streetcomplete.osm.BUILDINGS_WITH_LEVELS
 import de.westnordost.streetcomplete.osm.Tags
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.quests.NumberSelectionDialog
 import de.westnordost.streetcomplete.quests.questPrefix
 import de.westnordost.streetcomplete.resources.Res
@@ -35,10 +36,9 @@ class AddRoofShape(
     override val changesetComment = "Specify roof shapes"
     override val wikiLink = "Key:roof:shape"
     override val icon = R.drawable.quest_roof_shape
+    override val title = Res.string.quest_roofShape_title
     override val achievements = listOf(BUILDING)
     override val defaultDisabledMessage = Res.string.default_disabled_msg_roofShape
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_roofShape_title
 
     override fun createForm() = AddRoofShapeForm()
 

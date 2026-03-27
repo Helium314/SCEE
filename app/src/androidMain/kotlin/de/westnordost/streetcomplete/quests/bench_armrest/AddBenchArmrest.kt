@@ -13,6 +13,8 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.quests.bench_armrest.BenchArmrestAnswer.NO
 import de.westnordost.streetcomplete.quests.bench_armrest.BenchArmrestAnswer.PICNIC_TABLE
 import de.westnordost.streetcomplete.quests.bench_armrest.BenchArmrestAnswer.YES
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.quest_bench_armrest_title
 
 class AddBenchArmrest : OsmFilterQuestType<BenchArmrestAnswer>(), AndroidQuest {
 
@@ -28,13 +30,12 @@ class AddBenchArmrest : OsmFilterQuestType<BenchArmrestAnswer>(), AndroidQuest {
     override val changesetComment = "Survey whether benches have armrests"
     override val wikiLink = "Tag:amenity=bench"
     override val icon = R.drawable.ic_quest_bench_armrest
+    override val title = Res.string.quest_bench_armrest_title
     override val isDeleteElementEnabled = true
     override val achievements = listOf(PEDESTRIAN, OUTDOORS)
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_bench_armrest_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes, ways with amenity = bench or leisure = picnic_table or amenity = lounger")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes, ways with amenity = bench or leisure = picnic_table or amenity = lounger")
 
     override fun createForm() = AddBenchArmrestForm()
 

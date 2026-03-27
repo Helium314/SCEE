@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.updateWithCheckDate
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_swimmingPoolAvailability_title
 
 class AddSwimmingPoolAvailability : OsmFilterQuestType<SwimmingPoolAvailability>(), AndroidQuest {
 
@@ -25,14 +26,13 @@ class AddSwimmingPoolAvailability : OsmFilterQuestType<SwimmingPoolAvailability>
     """
     override val changesetComment = "Survey whether places have a swimming pool"
     override val wikiLink = "Key:swimming_pool"
+    override val title = Res.string.quest_swimmingPoolAvailability_title
     override val icon = R.drawable.ic_quest_swimming_pool
     override val isReplacePlaceEnabled = true
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_swimmingPoolAvailability_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("""
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("""
                 nodes, ways with
                 (
                    leisure ~ resort|swimming_pool

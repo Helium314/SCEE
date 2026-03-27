@@ -8,6 +8,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_mapType_title
 
 class AddMapType : OsmFilterQuestType<MapType>(), AndroidQuest {
 
@@ -21,9 +22,8 @@ class AddMapType : OsmFilterQuestType<MapType>(), AndroidQuest {
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
     override val wikiLink = "Key:map_type"
     override val icon = R.drawable.ic_quest_map_type
+    override val title = Res.string.quest_mapType_title
     override val achievements = listOf(EditTypeAchievement.OUTDOORS)
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_mapType_title
 
     override fun applyAnswerTo(answer: MapType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         tags["map_type"] = answer.osmValue

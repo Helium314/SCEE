@@ -19,6 +19,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.FullElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_piste_lit_title
 
 class AddPisteLit : OsmElementQuestType<Boolean>, AndroidQuest {
 
@@ -34,6 +35,7 @@ class AddPisteLit : OsmElementQuestType<Boolean>, AndroidQuest {
 
     override val changesetComment = "Specify whether pistes are lit"
     override val wikiLink = "Key:piste:lit"
+    override val title = Res.string.quest_piste_lit_title
     override val icon = R.drawable.ic_quest_piste_lit
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
@@ -47,8 +49,6 @@ class AddPisteLit : OsmElementQuestType<Boolean>, AndroidQuest {
     }
 
     override fun isApplicableTo(element: Element) = if (filter.matches(element)) null else false
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_piste_lit_title
 
     override fun createForm() = YesNoQuestForm()
 

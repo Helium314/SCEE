@@ -1,23 +1,25 @@
 package de.westnordost.streetcomplete.quests.healthcare_speciality
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.RadioButton
+import androidx.compose.material.Surface
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.databinding.ViewShopTypeBinding
+import de.westnordost.streetcomplete.databinding.ComposeViewBinding
 import de.westnordost.streetcomplete.quests.AMultiValueQuestForm
 import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
 import de.westnordost.streetcomplete.quests.TagEditor
+import de.westnordost.streetcomplete.quests.shop_type.ShopTypeForm
+import de.westnordost.streetcomplete.quests.shop_type.ShopTypeFormOption
+import de.westnordost.streetcomplete.ui.util.content
 import de.westnordost.streetcomplete.util.ktx.geometryType
 import de.westnordost.streetcomplete.util.ktx.hideKeyboard
 import de.westnordost.streetcomplete.util.takeFavorites
-import de.westnordost.streetcomplete.view.controller.FeatureViewController
-import de.westnordost.streetcomplete.view.dialogs.SearchFeaturesDialog
 
 class AddHealthcareSpecialityForm : AMultiValueQuestForm<String>() {
 
@@ -56,12 +58,11 @@ class AddHealthcareSpecialityForm : AMultiValueQuestForm<String>() {
 
 class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
 
-    override val contentLayoutResId = R.layout.view_shop_type // TODO?
-    private val binding by contentViewBinding(ViewShopTypeBinding::bind)
+    override val contentLayoutResId = R.layout.compose_view
+    private val binding by contentViewBinding(ComposeViewBinding::bind)
 
-    private lateinit var radioButtons: List<RadioButton>
-    private var selectedRadioButtonId: Int = 0
-    private lateinit var featureCtrl: FeatureViewController
+    private val feature: MutableState<Feature?> = mutableStateOf(null)
+    private val option: MutableState<ShopTypeFormOption?> = mutableStateOf(null)
 
     // the hacky UI switch breaks when using tag editor...
     override val otherAnswers = if (TagEditor.showingTagEditor) emptyList() else listOf(AnswerItem(R.string.quest_healthcare_speciality_switch_ui) {
@@ -82,38 +83,28 @@ class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
         prefs.getLastPicked<String>(javaClass.simpleName).takeFavorites(12, 50, 1)
     }
 
-    override fun onAttach(ctx: Context) {
-        super.onAttach(ctx)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        radioButtons = listOf(binding.vacantRadioButton, binding.replaceRadioButton, binding.leaveNoteRadioButton)
-        for (radioButton in radioButtons) {
-            radioButton.setOnClickListener { selectRadioButton(it) }
-        }
-
-        featureCtrl = FeatureViewController(featureDictionary, binding.featureView.textView, binding.featureView.iconView)
-        featureCtrl.countryOrSubdivisionCode = countryOrSubdivisionCode
-
-        binding.featureView.root.background = null
-        binding.featureContainer.setOnClickListener {
-            selectRadioButton(binding.replaceRadioButton)
-
-            SearchFeaturesDialog(
-                requireContext(),
-                featureDictionary,
-                element.geometryType,
-                countryOrSubdivisionCode,
-                featureCtrl.feature?.name,
-                ::filterOnlySpecialitiesOfMedicalDoctors,
-                ::onSelectedFeature,
-                getSuggestions(),
-                false,
-                geometry.center
-            ).show()
-        }
+        binding.composeViewBase.content { Surface {
+            ShopTypeForm(
+                feature = feature.value,
+                option = option.value,
+                onSelectedFeature = {
+                    feature.value = it
+                    checkIsFormComplete()
+                },
+                onSelectedOption = {
+                    option.value = it
+                    checkIsFormComplete()
+                },
+                featureDictionary = featureDictionary,
+                geometryType = element.geometryType,
+                countryCode = countryOrSubdivisionCode,
+                filterFn = ::filterOnlySpecialitiesOfMedicalDoctors,
+                codesOfDefaultFeatures = getSuggestions()
+            )
+        } }
     }
 
     private fun filterOnlySpecialitiesOfMedicalDoctors(feature: Feature): Boolean {
@@ -123,35 +114,23 @@ class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
         return feature.tags["amenity"] == "doctors"
     }
 
-    private fun onSelectedFeature(feature: Feature) {
-        featureCtrl.feature = feature
-        checkIsFormComplete()
-    }
-
     override fun onClickOk() {
-        when (selectedRadioButtonId) {
-            R.id.vacantRadioButton    -> composeNote()
-            R.id.leaveNoteRadioButton -> composeNote()
-            R.id.replaceRadioButton   -> {
-                applyAnswer(featureCtrl.feature!!.addTags["healthcare:speciality"]!!)
-                prefs.addLastPicked(javaClass.simpleName, featureCtrl.feature!!.id)
+        when (option.value) {
+            ShopTypeFormOption.FEATURE -> {
+                val feature = feature.value!!
+                applyAnswer(feature.addTags["healthcare:speciality"]!!)
+                prefs.addLastPicked(javaClass.simpleName, feature.id)
             }
+            ShopTypeFormOption.VACANT -> composeNote()
+            ShopTypeFormOption.LEAVE_NOTE -> composeNote()
+            null -> { }
         }
     }
 
-    override fun isFormComplete() = when (selectedRadioButtonId) {
-        R.id.vacantRadioButton,
-        R.id.leaveNoteRadioButton -> true
-        R.id.replaceRadioButton   -> featureCtrl.feature != null
-        else                      -> false
-    }
-
-    private fun selectRadioButton(radioButton: View) {
-        selectedRadioButtonId = radioButton.id
-        for (b in radioButtons) {
-            b.isChecked = selectedRadioButtonId == b.id
-        }
-        checkIsFormComplete()
+    override fun isFormComplete() = when (option.value) {
+        null -> false
+        ShopTypeFormOption.FEATURE -> feature.value != null
+        else -> true
     }
 
     private fun getSuggestions(): List<String> {

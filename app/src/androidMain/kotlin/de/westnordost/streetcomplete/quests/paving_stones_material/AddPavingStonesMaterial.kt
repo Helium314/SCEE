@@ -9,6 +9,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.osm.removeCheckDatesForKey
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_difficult_and_time_consuming
+import de.westnordost.streetcomplete.resources.quest_pavingStonesMaterial_title
 
 class AddPavingStonesMaterial : OsmFilterQuestType<PavingStonesMaterialAnswer>(), AndroidQuest {
 
@@ -20,10 +21,8 @@ class AddPavingStonesMaterial : OsmFilterQuestType<PavingStonesMaterialAnswer>()
     override val changesetComment = "Specify paving stones material"
     override val wikiLink = "Key:paving_stones:material"
     override val icon = R.drawable.quest_paving_stones_material
-
+    override val title = Res.string.quest_pavingStonesMaterial_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_difficult_and_time_consuming
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_pavingStonesMaterial_title
 
     override fun createForm() = AddPavingStonesMaterialForm()
 

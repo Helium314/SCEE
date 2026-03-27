@@ -20,6 +20,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.util.ktx.showKeyboard
+import de.westnordost.streetcomplete.util.setViewWithDefaultPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

@@ -32,6 +32,7 @@ import java.io.File
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_tree_disabled_msg
+import de.westnordost.streetcomplete.resources.quest_tree_genus_title
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 
 class AddTreeGenus : OsmFilterQuestType<TreeAnswer>(), AndroidQuest {
@@ -46,11 +47,10 @@ class AddTreeGenus : OsmFilterQuestType<TreeAnswer>(), AndroidQuest {
     override val defaultDisabledMessage = Res.string.quest_tree_disabled_msg
     override val wikiLink = "Key:genus"
     override val icon = R.drawable.quest_tree
+    override val title = Res.string.quest_tree_genus_title
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_tree_genus_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with natural = tree")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes with natural = tree")
 
     override fun createForm() = AddTreeGenusForm()
 

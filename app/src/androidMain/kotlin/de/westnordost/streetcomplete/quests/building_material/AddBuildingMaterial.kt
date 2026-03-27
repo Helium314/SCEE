@@ -7,6 +7,8 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_difficult_and_time_consuming
+import de.westnordost.streetcomplete.resources.quest_buildingMaterial_title
+import de.westnordost.streetcomplete.resources.quest_buildingPartMaterial_title
 
 class AddBuildingMaterial : OsmFilterQuestType<BuildingMaterial>(), AndroidQuest {
 
@@ -21,12 +23,12 @@ class AddBuildingMaterial : OsmFilterQuestType<BuildingMaterial>(), AndroidQuest
     override val changesetComment = "Specify building material"
     override val wikiLink = "Key:building:material"
     override val icon = R.drawable.ic_quest_building_material
-
+    override val title = Res.string.quest_buildingMaterial_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_difficult_and_time_consuming
 
     override fun getTitle(tags: Map<String, String>) = when {
-        tags.containsKey("building:part") -> R.string.quest_buildingPartMaterial_title
-        else -> R.string.quest_buildingMaterial_title
+        tags.containsKey("building:part") -> Res.string.quest_buildingPartMaterial_title
+        else -> Res.string.quest_buildingMaterial_title
     }
 
     override fun createForm() = AddBuildingMaterialForm()

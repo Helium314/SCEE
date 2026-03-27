@@ -24,6 +24,7 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestType
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_custom_quest_message
+import de.westnordost.streetcomplete.resources.quest_custom_quest_title
 import de.westnordost.streetcomplete.util.ktx.getActivity
 import kotlinx.io.IOException
 import org.koin.compose.koinInject
@@ -34,9 +35,8 @@ class CustomQuest(private val customQuestList: CustomQuestList) : ExternalSource
     override val changesetComment = "Edit user-defined list of elements"
     override val wikiLink = "Tags"
     override val icon = R.drawable.ic_quest_custom
+    override val title = Res.string.quest_custom_quest_title
     override val defaultDisabledMessage = Res.string.quest_custom_quest_message
-
-    override fun getTitle(tags: Map<String, String>): Int = R.string.quest_custom_quest_title
 
     override val source: String = "custom"
 

@@ -10,6 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.annotation.UiThread
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.graphics.Insets
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnLayout
@@ -35,6 +49,11 @@ import de.westnordost.streetcomplete.data.visiblequests.LevelFilter
 import de.westnordost.streetcomplete.databinding.FragmentInsertNodeBinding
 import de.westnordost.streetcomplete.databinding.RowInsertNodeElementBinding
 import de.westnordost.streetcomplete.overlays.AbstractOverlayForm
+import de.westnordost.streetcomplete.quests.shop_type.ShopTypeForm
+import de.westnordost.streetcomplete.quests.shop_type.ShopTypeFormOption
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.close
+import de.westnordost.streetcomplete.resources.ok
 import de.westnordost.streetcomplete.screens.main.MainActivity
 import de.westnordost.streetcomplete.screens.main.map.MainMapFragment
 import de.westnordost.streetcomplete.screens.main.map.Marker
@@ -42,7 +61,9 @@ import de.westnordost.streetcomplete.screens.main.map.ShowsGeometryMarkers
 import de.westnordost.streetcomplete.screens.main.map.getIcon
 import de.westnordost.streetcomplete.screens.main.map.getTitle
 import de.westnordost.streetcomplete.screens.main.map.maplibre.toPadding
-import de.westnordost.streetcomplete.util.getNameAndLocationSpanned
+import de.westnordost.streetcomplete.ui.common.feature.FeatureSearchDialog
+import de.westnordost.streetcomplete.ui.theme.AppTheme
+import de.westnordost.streetcomplete.util.getNameAndLocationLabel
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.popIn
 import de.westnordost.streetcomplete.util.ktx.popOut
@@ -57,10 +78,11 @@ import de.westnordost.streetcomplete.util.math.contains
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import de.westnordost.streetcomplete.util.math.getPositionOnWaysForInsertNodeFragment
 import de.westnordost.streetcomplete.view.RoundRectOutlineProvider
-import de.westnordost.streetcomplete.view.dialogs.SearchFeaturesDialog
 import de.westnordost.streetcomplete.view.insets_animation.respectSystemInsets
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.getSystemResourceEnvironment
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
@@ -107,6 +129,7 @@ class InsertNodeFragment :
             if (!sameExceptForPosition) // no need to set texts to same values and highlight the same elements again
                 onSelectedWays()
         }
+    private val showDialog = mutableStateOf(false)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentInsertNodeBinding.inflate(inflater, container, false)
@@ -124,7 +147,7 @@ class InsertNodeFragment :
         binding.createMarker.doOnLayout { setMarkerPosition(null) }
         binding.bottomSheetContainer.respectSystemInsets(View::setMargins)
 
-        binding.okButton.setOnClickListener { onClickOk() }
+        binding.okButton.setOnClickListener { showDialog.value = true }
         binding.cancelButton.setOnClickListener { activity?.onBackPressed() }
 
         binding.undoButton.isInvisible = true
@@ -157,6 +180,29 @@ class InsertNodeFragment :
             position = pos
             padding = insets.toPadding()
         }
+
+        // also allow adding empty node somehow?
+        binding.composeViewForDialog.setContent {
+            if (showDialog.value) {
+                val pow = positionOnWay ?: return@setContent
+                val fd = featureDictionary.value
+                val country = countryBoundaries.value.getIds(pow.position.longitude, pow.position.latitude).firstOrNull()
+                val defaultFeatureIds = prefs.getString(Prefs.INSERT_NODE_RECENT_FEATURE_IDS, "")
+                    .split("§").filter { it.isNotBlank() }
+                    .ifEmpty { listOf("amenity/post_box", "barrier/gate", "highway/crossing/unmarked", "highway/crossing/uncontrolled", "highway/traffic_signals", "barrier/bollard", "traffic_calming/table") }
+                AppTheme { // why is the theme necessary?
+                    FeatureSearchDialog(
+                        onDismissRequest = { showDialog.value = false },
+                        onSelectedFeature = { restoreBackground(); onSelectedFeature(it, pow) },
+                        featureDictionary = fd,
+                        geometryType = GeometryType.VERTEX,
+                        countryCode = country,
+                        filterFn = { true },
+                        codesOfDefaultFeatures = defaultFeatureIds.reversed()
+                    )
+                }
+            }
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -165,30 +211,6 @@ class InsertNodeFragment :
         resources.updateConfiguration(newConfig, resources.displayMetrics)
 
         binding.bottomSheetContainer.updateLayoutParams { width = resources.getDimensionPixelSize(R.dimen.quest_form_width) }
-    }
-
-    private fun onClickOk() {
-        val pow = positionOnWay ?: return
-        val fd = featureDictionary.value
-        val country = countryBoundaries.value.getIds(pow.position.longitude, pow.position.latitude).firstOrNull()
-        val defaultFeatureIds = prefs.getString(Prefs.INSERT_NODE_RECENT_FEATURE_IDS, "")
-            .split("§").filter { it.isNotBlank() }
-            .ifEmpty { listOf("amenity/post_box", "barrier/gate", "highway/crossing/unmarked", "highway/crossing/uncontrolled", "highway/traffic_signals", "barrier/bollard", "traffic_calming/table") }
-
-        // also allow empty somehow?
-        SearchFeaturesDialog(
-            requireContext(),
-            fd,
-            GeometryType.VERTEX,
-            country,
-            null, // pre-filled search text
-            { true }, // filter, but we want everything
-            { onSelectedFeature(it, pow) },
-            defaultFeatureIds.reversed(),
-            false,
-            pow.position,
-        ).show()
-        restoreBackground()
     }
 
     private fun onSelectedFeature(feature: Feature, positionOnWay: PositionOnWay) {
@@ -355,7 +377,9 @@ class InsertNodeFragment :
     }
 
     private fun getElementText(element: Element): CharSequence {
-        val title = getNameAndLocationSpanned(element, resources, featureDictionary.value, false)
+        val title = runBlocking {
+            getNameAndLocationLabel(getSystemResourceEnvironment(), LayoutDirection.Ltr, element, featureDictionary.value, false)
+        }
         return title ?: "${element.type} ${element.id}"
     }
 

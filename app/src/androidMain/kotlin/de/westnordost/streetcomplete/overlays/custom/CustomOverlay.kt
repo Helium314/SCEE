@@ -17,14 +17,16 @@ import de.westnordost.streetcomplete.data.overlays.Overlay
 import de.westnordost.streetcomplete.data.overlays.OverlayColor
 import de.westnordost.streetcomplete.data.overlays.OverlayStyle
 import de.westnordost.streetcomplete.data.elementfilter.ParseException
-import de.westnordost.streetcomplete.data.preferences.Preferences
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.custom_overlay_title
+import de.westnordost.streetcomplete.util.getCurrentCustomOverlayPref
 import de.westnordost.streetcomplete.util.getNameLabel
 import de.westnordost.streetcomplete.util.ktx.isArea
 import kotlin.math.abs
 
 class CustomOverlay(val prefs: ObservableSettings) : Overlay, AndroidOverlay {
 
-    override val title = R.string.custom_overlay_title
+    override val title = Res.string.custom_overlay_title
     override val icon = R.drawable.ic_custom_overlay
     override val changesetComment = "Edit user-defined element selection"
     override val wikiLink: String = "Tags"
@@ -130,10 +132,3 @@ private fun createColorFromString(string: String): String {
         else -> createColorFromString("${c}1") // the 1 is there to avoid very similar colors for numbers
     }
 }
-
-fun getIndexedCustomOverlayPref(pref: String, index: Int) = pref.replace("idx", index.toString())
-fun getCurrentCustomOverlayPref(pref: String, prefs: ObservableSettings) = getIndexedCustomOverlayPref(pref, prefs.getInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, 0))
-fun getCustomOverlayIndices(prefs: SharedPreferences) = prefs.getString(Prefs.CUSTOM_OVERLAY_INDICES, "0")!!
-    .split(",").mapNotNull { it.toIntOrNull() }
-fun getCustomOverlayIndices(prefs: Preferences) = prefs.getString(Prefs.CUSTOM_OVERLAY_INDICES, "0")
-    .split(",").mapNotNull { it.toIntOrNull() }

@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
 import de.westnordost.streetcomplete.resources.default_disabled_msg_no_ar
+import de.westnordost.streetcomplete.resources.quest_footway_width_title
 
 class AddFootwayWidth(
     private val checkArSupport: ArSupportChecker
@@ -42,11 +43,10 @@ class AddFootwayWidth(
     override val changesetComment = "Specify footway width"
     override val wikiLink = "Key:width"
     override val icon = R.drawable.ic_quest_footway_width
+    override val title = Res.string.quest_footway_width_title
     override val achievements = listOf(PEDESTRIAN)
     override val defaultDisabledMessage
         get() = if (!checkArSupport()) Res.string.default_disabled_msg_no_ar else Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_footway_width_title
 
     override fun createForm() = AddWidthForm()
 

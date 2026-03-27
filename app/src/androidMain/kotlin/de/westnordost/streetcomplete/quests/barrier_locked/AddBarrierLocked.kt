@@ -27,9 +27,8 @@ class AddBarrierLocked : OsmFilterQuestType<BarrierLockedAnswer>(), AndroidQuest
     override val changesetComment = "Add whether barriers are locked"
     override val wikiLink = "Key:locked"
     override val icon = R.drawable.ic_quest_barrier_locked
+    override val title = Res.string.quest_barrier_locked_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_barrier_locked_title
 
     override fun createForm() = AddBarrierLockedForm()
 

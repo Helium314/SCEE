@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
@@ -33,8 +32,10 @@ import de.westnordost.streetcomplete.data.overlays.Overlay
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.overlays.custom.CustomOverlay
+import de.westnordost.streetcomplete.util.fakeStringResource
 import de.westnordost.streetcomplete.util.showOverlayCustomizer
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 @Composable
@@ -67,11 +68,11 @@ fun OverlayQuickSelector(
             Box(modifier) {
                 Image(
                     painter = painterResource(it.icon),
-                    contentDescription = if (it.title == 0) it.wikiLink else stringResource(it.title),
+                    contentDescription = if (it.title == fakeStringResource) it.wikiLink else stringResource(it.title),
                     modifier = Modifier.size(48.dp).combinedClickable(
                         onClick = { onOverlaySelected(if (selected) null else it) },
                         onLongClick = {
-                            if (it.title != 0) return@combinedClickable // only for custom overlays
+                            if (it.title != fakeStringResource) return@combinedClickable // only for custom overlays
                             val index = it.wikiLink?.toIntOrNull() ?: return@combinedClickable
                             showOverlayCustomizer(
                                 index,

@@ -29,6 +29,7 @@ import de.westnordost.streetcomplete.quests.getPrefixedFullElementSelectionPref
 import de.westnordost.streetcomplete.quests.questPrefix
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_sacScale
+import de.westnordost.streetcomplete.resources.quest_sacScale_title
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 
 class AddSacScale : OsmElementQuestType<SacScale>, AndroidQuest {
@@ -47,9 +48,8 @@ class AddSacScale : OsmElementQuestType<SacScale>, AndroidQuest {
     override val changesetComment = "Specify SAC Scale"
     override val wikiLink = "Key:sac_scale"
     override val icon = R.drawable.ic_quest_sac_scale
+    override val title = Res.string.quest_sacScale_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_sacScale
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_sacScale_title
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
         if (isSacScaleWithoutRelation) {
@@ -67,8 +67,8 @@ class AddSacScale : OsmElementQuestType<SacScale>, AndroidQuest {
 
     override fun isApplicableTo(element: Element) = null
 
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("ways with highway and sac_scale")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("ways with highway and sac_scale")
 
     override fun createForm() = AddSacScaleForm()
 

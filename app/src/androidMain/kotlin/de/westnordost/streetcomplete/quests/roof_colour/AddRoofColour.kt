@@ -8,6 +8,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_roof
+import de.westnordost.streetcomplete.resources.quest_roofColour_title
 
 class AddRoofColour : OsmFilterQuestType<RoofColour>(), AndroidQuest {
 
@@ -24,10 +25,9 @@ class AddRoofColour : OsmFilterQuestType<RoofColour>(), AndroidQuest {
     override val changesetComment = "Specify roof colour"
     override val wikiLink = "Key:roof:colour"
     override val icon = R.drawable.ic_quest_roof_colour
+    override val title = Res.string.quest_roofColour_title
     override val achievements = listOf(BUILDING)
     override val defaultDisabledMessage = Res.string.default_disabled_msg_roof
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_roofColour_title
 
     override fun createForm() = AddRoofColourForm()
 

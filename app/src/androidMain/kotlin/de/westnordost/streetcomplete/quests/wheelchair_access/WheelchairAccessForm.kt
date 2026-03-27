@@ -13,7 +13,7 @@ import de.westnordost.streetcomplete.quests.AnswerItem
 import de.westnordost.streetcomplete.quests.wheelchair_access.WheelchairAccess.LIMITED
 import de.westnordost.streetcomplete.quests.wheelchair_access.WheelchairAccess.NO
 import de.westnordost.streetcomplete.quests.wheelchair_access.WheelchairAccess.YES
-import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
+import de.westnordost.streetcomplete.util.setViewWithDefaultPadding
 
 open class WheelchairAccessForm : AbstractOsmQuestForm<WheelchairAccess>() {
 

@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_street_cabinet_type_title
 
 class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType>(), AndroidQuest {
 
@@ -22,12 +23,11 @@ class AddStreetCabinetType : OsmFilterQuestType<StreetCabinetType>(), AndroidQue
     override val changesetComment = "Add street cabinet type"
     override val wikiLink = "Tag:man_made=street_cabinet"
     override val icon = R.drawable.ic_quest_street_cabinet
+    override val title = Res.string.quest_street_cabinet_type_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_street_cabinet_type_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("""
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("""
             nodes, ways with
              (
                  man_made = street_cabinet

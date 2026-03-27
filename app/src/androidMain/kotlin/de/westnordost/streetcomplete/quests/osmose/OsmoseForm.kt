@@ -19,7 +19,7 @@ import de.westnordost.streetcomplete.screens.main.MainActivity
 import de.westnordost.streetcomplete.screens.main.map.MainMapFragment
 import de.westnordost.streetcomplete.screens.main.map.Marker
 import de.westnordost.streetcomplete.screens.main.map.ShowsGeometryMarkers
-import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
+import de.westnordost.streetcomplete.util.setViewWithDefaultPadding
 import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import kotlinx.coroutines.launch
@@ -98,12 +98,13 @@ class OsmoseForm : AbstractExternalSourceQuestForm() {
             questController.delete(questKey as ExternalSourceQuestKey)
             return
         }
-        setTitle(resources.getString(R.string.quest_osmose_title) + " ${issue.title}")
         binding.description.text = resources.getString(R.string.quest_osmose_message_for_element, "${issue.item}/${issue.itemClass}", issue.subtitle)
 
         if (issue.elements.size > 1) viewLifecycleScope.launch { highlightElements() }
         updateButtonPanel()
     }
+
+    override fun getTitleString() = resources.getString(R.string.quest_osmose_title) + " ${issue?.title}"
 
     private fun highlightElements() {
         val issue = issue ?: return

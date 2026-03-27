@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_parking_capacity_disabled_default_disabled_msg
+import de.westnordost.streetcomplete.resources.quest_parking_capacity_disabled_title
 
 class AddDisabledParkingCapacity : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -24,13 +25,12 @@ class AddDisabledParkingCapacity : OsmFilterQuestType<String>(), AndroidQuest {
     override val changesetComment = "Specify disabled parking capacities"
     override val wikiLink = "Key:capacity:disabled"
     override val icon = R.drawable.ic_quest_parking_capacity_disabled
+    override val title = Res.string.quest_parking_capacity_disabled_title
     override val achievements = listOf(WHEELCHAIR)
     override val defaultDisabledMessage = Res.string.quest_parking_capacity_disabled_default_disabled_msg
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_parking_capacity_disabled_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes, ways with amenity = parking")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes, ways with amenity = parking")
 
     override fun createForm() = AddDisabledParkingCapacityForm()
 

@@ -24,6 +24,7 @@ import de.westnordost.streetcomplete.quests.questPrefix
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_difficult_and_time_consuming
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
+import de.westnordost.streetcomplete.resources.*
 
 class AddBuildingLevels : OsmFilterQuestType<BuildingLevels>(), AndroidQuest {
 
@@ -46,15 +47,17 @@ class AddBuildingLevels : OsmFilterQuestType<BuildingLevels>(), AndroidQuest {
     override val changesetComment = "Specify building and roof levels"
     override val wikiLink = "Key:building:levels"
     override val icon = R.drawable.quest_building_levels
+    override val title = Res.string.quest_buildingLevels_title2
     override val achievements = listOf(BUILDING)
     override val defaultDisabledMessage = Res.string.default_disabled_msg_difficult_and_time_consuming
+    override val hint = Res.string.quest_buildingLevels_hint
 
-    override val hint = R.string.quest_buildingLevels_hint
-
-    override fun getTitle(tags: Map<String, String>) = when {
-        tags.containsKey("building:part") -> R.string.quest_buildingLevels_title_buildingPart2
-        else -> R.string.quest_buildingLevels_title2
-    }
+    override fun getTitle(tags: Map<String, String>) =
+        if (tags.containsKey("building:part")) {
+            Res.string.quest_buildingLevels_title_buildingPart2
+        } else {
+            Res.string.quest_buildingLevels_title2
+        }
 
     override fun createForm() = AddBuildingLevelsForm()
 

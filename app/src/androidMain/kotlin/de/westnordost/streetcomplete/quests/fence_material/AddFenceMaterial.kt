@@ -7,6 +7,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_fence_material_title
 
 class AddFenceMaterial : OsmFilterQuestType<FenceMaterial>(), AndroidQuest {
 
@@ -19,12 +20,10 @@ class AddFenceMaterial : OsmFilterQuestType<FenceMaterial>(), AndroidQuest {
 
     override val changesetComment = "Specify fence material"
     override val wikiLink = "Key:material"
+    override val title = Res.string.quest_fence_material_title
     override val icon = R.drawable.ic_quest_fence_material
 
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>) =
-        R.string.quest_fence_material_title
 
     override fun createForm() = AddFenceMaterialForm()
 

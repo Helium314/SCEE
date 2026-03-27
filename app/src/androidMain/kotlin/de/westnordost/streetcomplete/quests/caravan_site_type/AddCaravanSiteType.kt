@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_caravanSiteType
+import de.westnordost.streetcomplete.resources.quest_caravanSiteType_title
 
 class AddCaravanSiteType : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -24,12 +25,11 @@ class AddCaravanSiteType : OsmFilterQuestType<String>(), AndroidQuest {
     override val defaultDisabledMessage = Res.string.default_disabled_msg_caravanSiteType
     override val wikiLink = "Key:caravan_site:type"
     override val icon = R.drawable.ic_quest_caravan_site
+    override val title = Res.string.quest_caravanSiteType_title
     override val achievements = listOf(OUTDOORS)
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_caravanSiteType_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes, ways, relations with tourism ~ caravan_site|camp_site")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes, ways, relations with tourism ~ caravan_site|camp_site")
 
     override fun createForm() = AddCaravanSiteTypeForm()
 

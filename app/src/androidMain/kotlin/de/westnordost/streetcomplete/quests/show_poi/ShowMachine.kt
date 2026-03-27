@@ -13,6 +13,9 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.LabelOrElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_poi_machine
+import de.westnordost.streetcomplete.resources.quest_poi_has_atm_title
+import de.westnordost.streetcomplete.resources.quest_poi_machine_title
+import de.westnordost.streetcomplete.resources.quest_poi_vending_title
 
 class ShowMachine : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val elementFilter = """
@@ -23,22 +26,23 @@ class ShowMachine : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val changesetComment = "Adjust vending machine or similar"
     override val wikiLink = "Tag:amenity=vending_machine"
     override val icon = R.drawable.ic_quest_poi_machine
+    override val title = Res.string.quest_poi_machine_title
     override val dotColor = "blue"
     override val defaultDisabledMessage = Res.string.default_disabled_msg_poi_machine
     override val dotLabelSources = getLabelSources("vending", this, prefs)
 
     override fun getTitle(tags: Map<String, String>) =
         if (!tags["atm"].isNullOrEmpty() && tags["atm"] != "no")
-            R.string.quest_poi_has_atm_title
+            Res.string.quest_poi_has_atm_title
         else if (tags["amenity"].equals("vending_machine"))
-            R.string.quest_poi_vending_title
+            Res.string.quest_poi_vending_title
         else
-            R.string.quest_poi_machine_title
+            Res.string.quest_poi_machine_title
 
     override fun createForm() = ShowMachineAnswerForm()
 
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter(filter)
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter(filter)
 
     override fun applyAnswerTo(answer: Boolean, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {}
 

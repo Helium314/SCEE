@@ -11,6 +11,8 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_postOffice_postPartner_hint
+import de.westnordost.streetcomplete.resources.quest_postOffice_title
 
 class AddPostOfficeType : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -23,15 +25,14 @@ class AddPostOfficeType : OsmFilterQuestType<String>(), AndroidQuest {
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
     override val wikiLink = "Key:post_office"
     override val icon = R.drawable.ic_quest_post_office
+    override val title = Res.string.quest_postOffice_title
     override val isReplacePlaceEnabled = true
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
 
-    override val hint = R.string.quest_postOffice_postPartner_hint
+    override val hint = Res.string.quest_postOffice_postPartner_hint
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_postOffice_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with amenity = post_office or post_office")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes with amenity = post_office or post_office")
 
     override fun createForm() = AddPostOfficeTypeForm()
 

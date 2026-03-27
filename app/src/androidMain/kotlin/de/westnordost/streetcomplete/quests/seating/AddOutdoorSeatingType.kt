@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_seasonal
+import de.westnordost.streetcomplete.resources.quest_outdoor_seating_name_title
 
 class AddOutdoorSeatingType : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -22,13 +23,12 @@ class AddOutdoorSeatingType : OsmFilterQuestType<String>(), AndroidQuest {
     override val defaultDisabledMessage = Res.string.default_disabled_msg_seasonal
     override val wikiLink = "Key:outdoor_seating"
     override val icon = R.drawable.ic_quest_seating_type
+    override val title = Res.string.quest_outdoor_seating_name_title
     override val isReplacePlaceEnabled = true
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_outdoor_seating_name_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlace() }
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.asSequence().filter { it.isPlace() }
 
     override fun createForm() = AddOutdoorSeatingTypeForm()
 

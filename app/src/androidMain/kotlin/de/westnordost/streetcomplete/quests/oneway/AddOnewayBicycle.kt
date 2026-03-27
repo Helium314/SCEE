@@ -15,6 +15,8 @@ import de.westnordost.streetcomplete.quests.getPrefixedFullElementSelectionPref
 import de.westnordost.streetcomplete.quests.oneway.OnewayAnswer.*
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_arrow_tutorial
+import de.westnordost.streetcomplete.resources.quest_onewayBicycle_title
 
 class AddOnewayBicycle :
     OsmElementQuestType<OnewayAnswer>,
@@ -43,13 +45,11 @@ class AddOnewayBicycle :
     override val changesetComment = "Specify whether bicycle ways are one-ways"
     override val wikiLink = "Key:oneway"
     override val icon = R.drawable.quest_bicycleway_oneway
+    override val title = Res.string.quest_onewayBicycle_title
     override val hasMarkersAtEnds = true
     override val achievements = listOf(EditTypeAchievement.BICYCLIST)
-    override val hint = R.string.quest_arrow_tutorial
+    override val hint = Res.string.quest_arrow_tutorial
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>) =
-        R.string.quest_onewayBicycle_title
 
     override val hasQuestSettings: Boolean = true
 

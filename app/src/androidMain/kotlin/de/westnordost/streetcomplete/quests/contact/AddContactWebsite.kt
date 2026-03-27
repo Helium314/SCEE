@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_contact_website
 
 class AddContactWebsite : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -24,12 +25,11 @@ class AddContactWebsite : OsmFilterQuestType<String>(), AndroidQuest {
     override val changesetComment = "Add website"
     override val wikiLink = "Key:website"
     override val icon = R.drawable.ic_quest_website
+    override val title = Res.string.quest_contact_website
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_contact_website
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlace() }
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.asSequence().filter { it.isPlace() }
 
     override fun createForm() = AddContactWebsiteForm()
 

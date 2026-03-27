@@ -10,12 +10,12 @@ import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.overlays.custom.CustomOverlay
-import de.westnordost.streetcomplete.overlays.custom.getIndexedCustomOverlayPref
 import de.westnordost.streetcomplete.data.overlays.Overlay
 import de.westnordost.streetcomplete.ui.common.OverlaysIcon
 import org.koin.compose.koinInject
 import androidx.compose.ui.platform.LocalResources
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.util.getIndexedCustomOverlayPref
 
 /** Overlay selection button that shows the icon of the currently selected overlay */
 @Composable

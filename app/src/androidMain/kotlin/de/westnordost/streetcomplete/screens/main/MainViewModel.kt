@@ -5,7 +5,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import de.westnordost.streetcomplete.data.messages.Message
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
+import de.westnordost.streetcomplete.data.osm.mapdata.ElementKey
 import de.westnordost.streetcomplete.data.overlays.Overlay
+import de.westnordost.streetcomplete.data.quest.Quest
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.urlconfig.UrlConfig
 import de.westnordost.streetcomplete.screens.main.controls.LocationState
@@ -99,6 +101,7 @@ abstract class MainViewModel : ViewModel() {
     abstract val reverseQuestOrder: MutableStateFlow<Boolean>
     abstract val showMainMenuDialog: MutableState<Boolean>
     abstract val showingBottomSheet: MutableStateFlow<Boolean>
+    abstract val nearbyQuests: MutableStateFlow<Collection<Pair<Int, List<Quest>>>?>
 }
 
 data class ShownUrlConfig(val urlConfig: UrlConfig, val alreadyExists: Boolean)

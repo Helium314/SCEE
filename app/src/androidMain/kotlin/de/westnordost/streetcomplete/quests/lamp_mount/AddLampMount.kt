@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_lampMount_disabled_msg
+import de.westnordost.streetcomplete.resources.quest_lampMount_title
 
 class AddLampMount : OsmFilterQuestType<LampMountAnswer>(), AndroidQuest {
 
@@ -24,13 +25,12 @@ class AddLampMount : OsmFilterQuestType<LampMountAnswer>(), AndroidQuest {
     override val defaultDisabledMessage = Res.string.quest_lampMount_disabled_msg
     override val wikiLink = "Key:lamp_mount"
     override val icon = R.drawable.ic_quest_lamp_mount
+    override val title = Res.string.quest_lampMount_title
     override val isReplacePlaceEnabled = true
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_lampMount_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with highway = street_lamp")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes with highway = street_lamp")
 
     override fun createForm() = AddLampMountForm()
 

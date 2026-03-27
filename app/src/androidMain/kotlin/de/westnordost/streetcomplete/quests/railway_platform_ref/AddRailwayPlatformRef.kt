@@ -22,6 +22,7 @@ import de.westnordost.streetcomplete.util.math.distanceTo
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_disabled_msg_railway_platform_ref
+import de.westnordost.streetcomplete.resources.quest_railwayPlatformRef_title
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 
 class AddRailwayPlatformRef : OsmElementQuestType<String>, AndroidQuest {
@@ -85,11 +86,10 @@ class AddRailwayPlatformRef : OsmElementQuestType<String>, AndroidQuest {
     override val changesetComment = "Specify railway platform refs"
     override val wikiLink = "Tag:railway=platform"
     override val icon = R.drawable.ic_quest_railway_platform_ref
+    override val title = Res.string.quest_railwayPlatformRef_title
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
     override val enabledInCountries = NoCountriesExcept("DE", "FR", "CH", "AT")
     override val defaultDisabledMessage = Res.string.quest_disabled_msg_railway_platform_ref
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_railwayPlatformRef_title
 
     override fun createForm() = AddRailwayPlatformRefForm()
 

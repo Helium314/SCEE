@@ -19,7 +19,6 @@ import de.westnordost.streetcomplete.data.visiblequests.QuestTypeOrderController
 import de.westnordost.streetcomplete.data.visiblequests.QuestTypeOrderSource
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeController
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeSource
-import de.westnordost.streetcomplete.util.ResourceProvider
 import de.westnordost.streetcomplete.util.ktx.containsAll
 import de.westnordost.streetcomplete.util.ktx.containsAny
 import de.westnordost.streetcomplete.util.ktx.getIds
@@ -32,6 +31,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import org.jetbrains.compose.resources.getString
 
 @Stable
 abstract class QuestSelectionViewModel : ViewModel() {
@@ -50,7 +50,6 @@ abstract class QuestSelectionViewModel : ViewModel() {
 
 @Stable
 class QuestSelectionViewModelImpl(
-    private val resourceProvider: ResourceProvider,
     private val questTypeRegistry: QuestTypeRegistry,
     private val editTypePresetsSource: EditTypePresetsSource,
     private val visibleEditTypeController: VisibleEditTypeController,
@@ -144,8 +143,7 @@ class QuestSelectionViewModelImpl(
         // are not reloaded automatically since there is no listenable callback from the
         // system for when the language changes
         launch(Default) {
-            questTitles.value = questTypeRegistry
-                .associate { it.name to resourceProvider.getString(it.title) }
+            questTitles.value = questTypeRegistry.associate { it.name to getString(it.title) }
         }
     }
 

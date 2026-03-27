@@ -13,6 +13,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.LabelOrElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_poi_bike
+import de.westnordost.streetcomplete.resources.quest_poi_cycling_title
 
 class ShowBicycleStuff : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val elementFilter = """
@@ -22,16 +23,14 @@ class ShowBicycleStuff : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val changesetComment = "Adjust bicycle related elements"
     override val wikiLink = "Tag:amenity=bicycle_parking"
     override val icon = R.drawable.ic_quest_poi_bicycle
+    override val title = Res.string.quest_poi_cycling_title
     override val dotColor = "mediumorchid"
     override val defaultDisabledMessage = Res.string.default_disabled_msg_poi_bike
 
-    override fun getTitle(tags: Map<String, String>) =
-        R.string.quest_poi_cycling_title
-
     override fun createForm() = NoAnswerFragment()
 
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter(filter)
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter(filter)
 
     override fun applyAnswerTo(answer: Boolean, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {}
 

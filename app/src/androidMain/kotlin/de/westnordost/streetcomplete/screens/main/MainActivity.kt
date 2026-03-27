@@ -11,9 +11,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.PointF
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.LayerDrawable
 import android.location.Location
 import android.os.Bundle
 import android.os.IBinder
@@ -24,7 +21,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.OvershootInterpolator
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -36,7 +32,8 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.core.content.ContextCompat
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.graphics.ColorUtils
 import androidx.compose.ui.geometry.Offset
 import androidx.core.graphics.Insets
@@ -68,6 +65,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.ElementKey
 import de.westnordost.streetcomplete.data.osm.mapdata.ElementType
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
+import de.westnordost.streetcomplete.data.osm.mapdata.LazyMapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.MutableMapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
@@ -141,6 +139,7 @@ import de.westnordost.streetcomplete.screens.main.map.maplibre.toPadding
 import de.westnordost.streetcomplete.ui.util.content
 import de.westnordost.streetcomplete.screens.settings.custom_geometry_changed
 import de.westnordost.streetcomplete.screens.settings.gpx_track_changed
+import de.westnordost.streetcomplete.ui.common.feature.FeatureSearchDialog
 import de.westnordost.streetcomplete.util.SoundFx
 import de.westnordost.streetcomplete.util.buildGeoUri
 import de.westnordost.streetcomplete.util.getSystemLocales
@@ -161,7 +160,6 @@ import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.area
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import de.westnordost.streetcomplete.util.math.enlargedBy
-import de.westnordost.streetcomplete.view.dialogs.SearchFeaturesDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -225,10 +223,7 @@ class MainActivity :
     private val soundFx: SoundFx by inject()
     private val levelFilter: LevelFilter by inject()
     private val countryBoundaries: Lazy<CountryBoundaries> by inject(named("CountryBoundariesLazy"))
-    private val questTypeRegistry: QuestTypeRegistry by inject()
-    private val overlayRegistry: OverlayRegistry by inject()
     private val osmQuestController: OsmQuestController by inject()
-    private val selectedOverlaySource: SelectedOverlayController by inject()
     private val customQuestList: CustomQuestList by inject()
 
     private lateinit var locationManager: FineLocationManager
@@ -249,6 +244,7 @@ class MainActivity :
         supportFragmentManager.findFragmentByTag(BOTTOM_SHEET)
 
     private var questMonitorJob: Job? = null
+    private var addPoiAt: MutableState<LatLon?> = mutableStateOf(null)
 
     /* +++++++++++++++++++++++++++++++++++++++ CALLBACKS ++++++++++++++++++++++++++++++++++++++++ */
 
@@ -332,7 +328,24 @@ class MainActivity :
                     onClickCreate = ::onClickCreateButton,
                     onClickStopTrackRecording = ::onClickTracksStop,
                     onClickDownload = ::onClickDownload,
-                    onExplainedNeedForLocationPermission = ::requestLocation
+                    onExplainedNeedForLocationPermission = ::requestLocation,
+                    showQuestDetails = { lifecycleScope.launch { showQuestDetails(it) } }
+                )
+            }
+            if (addPoiAt.value != null) {
+                val pos = addPoiAt.value ?: return@content
+                val country = countryBoundaries.value.getIds(pos.longitude, pos.latitude).firstOrNull()
+                val defaultFeatureIds: List<String> = prefs.getString(Prefs.CREATE_POI_RECENT_FEATURE_IDS, "")
+                    .split("§").filter { it.isNotBlank() && it != "shop" }
+                    .ifEmpty { POPULAR_PLACE_FEATURE_IDS }
+                FeatureSearchDialog(
+                    onDismissRequest = { addPoiAt.value = null },
+                    onSelectedFeature = { addPoi(pos, it) },
+                    featureDictionary = featureDictionary.value,
+                    geometryType = GeometryType.POINT,
+                    countryCode = country,
+                    filterFn = { true },
+                    codesOfDefaultFeatures = defaultFeatureIds.reversed()
                 )
             }
         }
@@ -608,7 +621,7 @@ class MainActivity :
         if (f.arguments == null) f.arguments = bundleOf()
         val args = TagEditor.createArguments(element, geometry, mapFragment?.cameraPosition?.rotation, mapFragment?.cameraPosition?.tilt, questKey, editTypeName)
         f.requireArguments().putAll(args)
-        binding.otherQuestsScrollView.visibility = View.GONE
+        viewModel.nearbyQuests.value = null
         supportFragmentManager.commit(true) {
             replace(R.id.map_bottom_sheet_container, f, BOTTOM_SHEET)
             addToBackStack(BOTTOM_SHEET)
@@ -1018,28 +1031,8 @@ class MainActivity :
         }
 
         val f = bottomSheetFragment
-        if (f is IsCloseableBottomSheet) f.onClickClose { selectPoiType(pos) }
-        else selectPoiType(pos)
-    }
-
-    private fun selectPoiType(pos: LatLon) {
-        val country = countryBoundaries.value.getIds(pos.longitude, pos.latitude).firstOrNull()
-        val defaultFeatureIds: List<String> = prefs.getString(Prefs.CREATE_POI_RECENT_FEATURE_IDS, "")
-            .split("§").filter { it.isNotBlank() && it != "shop" }
-            .ifEmpty { POPULAR_PLACE_FEATURE_IDS }
-
-        SearchFeaturesDialog(
-            this,
-            featureDictionary.value,
-            GeometryType.POINT,
-            country,
-            null, // pre-filled search text
-            { true }, // filter, but we want everything
-            { addPoi(pos, it) },
-            defaultFeatureIds.reversed(),
-            false,
-            pos,
-        ).show()
+        if (f is IsCloseableBottomSheet) f.onClickClose { addPoiAt.value = pos }
+        else addPoiAt.value = pos
     }
 
     private fun addPoi(pos: LatLon, feature: Feature) {
@@ -1097,8 +1090,7 @@ class MainActivity :
         currentFocus?.hideKeyboard()
         if (bottomSheetFragment != null) {
             supportFragmentManager.popBackStack(BOTTOM_SHEET, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            binding.otherQuestsLayout.removeAllViews()
-            binding.otherQuestsScrollView.visibility = View.GONE
+            viewModel.nearbyQuests.value = null
         }
         viewModel.showingBottomSheet.value = false
         clearHighlighting()
@@ -1252,7 +1244,7 @@ class MainActivity :
             e
         } ?: return
             else null
-        val highlightedElementMarkers = lifecycleScope.async(Dispatchers.IO) { getHighlightedElements(quest, element) }
+        val highlightedElementMarkers = lifecycleScope.async(Dispatchers.IO) { showHighlightedElements(quest, element) }
         val otherQuestMarkers = lifecycleScope.async(Dispatchers.IO) { showOtherQuests(quest) }
         if (quest is OsmQuest) {
             val osmArgs = AbstractOsmQuestForm.createArguments(element!!)
@@ -1289,7 +1281,7 @@ class MainActivity :
         return m.values.toList()
     }
 
-    private fun getHighlightedElements(quest: Quest, element: Element? = null): List<Marker> {
+    private fun showHighlightedElements(quest: Quest, element: Element? = null): List<Marker> {
         val bbox = when (quest) {
             is OsmQuest -> quest.geometry.bounds.enlargedBy(quest.type.highlightedElementsRadius)
             is ExternalSourceQuest -> quest.geometry.bounds.enlargedBy(quest.type.highlightedElementsRadius)
@@ -1311,7 +1303,7 @@ class MainActivity :
 
         val elements =
             when (quest) {
-                is OsmQuest -> element?.let { quest.type.getHighlightedElements(it, ::getMapData) } ?: emptySequence()
+                is OsmQuest -> element?.let { quest.type.getHighlightedElements(it, mapData ?: getMapData()) } ?: emptySequence()
                 is ExternalSourceQuest -> quest.type.getHighlightedElements(::getMapData)
                 else -> emptySequence()
             }
@@ -1362,35 +1354,7 @@ class MainActivity :
                 Pair(color, mutableListOf())
             }.second.add(it)
         }
-
-        val params = ViewGroup.LayoutParams(resources.dpToPx(54).toInt(), resources.dpToPx(54).toInt())
-        runOnUiThread {
-            questsAndColorByElement.values.forEach {
-                val color = it.first
-                it.second.forEach { q ->
-                    val questView = ImageView(this).apply {
-                        layoutParams = params
-                        scaleX = 0.95f
-                        scaleY = 0.95f
-                        setOnClickListener {
-                            binding.otherQuestsLayout.removeAllViews()
-                            lifecycleScope.launch { showQuestDetails(q) }
-                        }
-
-                        // create layerDrawable from quest icon and ring
-                        val ring = ContextCompat.getDrawable(context, R.drawable.pin_selection_ring)!! // thanks google for not providing documentation WHEN this can be null... is it instead of resourceNotFoundException?
-                        ring.colorFilter = if (color == Color.WHITE) null
-                            else PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
-                        val icon = ContextCompat.getDrawable(context, q.type.icon)!!
-                        icon.colorFilter = PorterDuffColorFilter(ColorUtils.blendARGB(color, Color.WHITE, 0.8f), PorterDuff.Mode.MULTIPLY)
-                        setImageDrawable(LayerDrawable(arrayOf(icon, ring)))
-                    }
-                    binding.otherQuestsLayout.addView(questView)
-                }
-            }
-            binding.otherQuestsScrollView.fullScroll(View.FOCUS_UP) // scroll up when the quest changes
-            binding.otherQuestsScrollView.visibility = View.VISIBLE
-        }
+        viewModel.nearbyQuests.value = questsAndColorByElement.values
         return markers
     }
 

@@ -272,23 +272,20 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val questsModule = module {
-//    factory { NameSuggestionsSource(get()) }
     single { CustomQuestList(androidContext()) }
     single { OsmoseDao(get(), get()) }
 
     single {
+        val countryInfos = get<CountryInfos>()
+        val countryBoundariesLazy = get<Lazy<CountryBoundaries>>(named("CountryBoundariesLazy"))
+        val featureDictionaryLazy = get<Lazy<FeatureDictionary>>(named("FeatureDictionaryLazy"))
         questTypeRegistry(
             get(),
-            { location ->
-                val countryInfos = get<CountryInfos>()
-                val countryBoundaries = get<Lazy<CountryBoundaries>>(named("CountryBoundariesLazy")).value
-                countryInfos.getByLocation(countryBoundaries, location.longitude, location.latitude)
-            },
-            { element ->
-                get<Lazy<FeatureDictionary>>(named("FeatureDictionaryLazy")).value.getFeature(element)
-            },
+            { countryInfos.getByLocation(countryBoundariesLazy.value, it.longitude, it.latitude) },
+            { countryBoundariesLazy.value.getIds(it.longitude, it.latitude).firstOrNull() },
+            { featureDictionaryLazy.value.getFeature(it) },
             get(),
-            get(),
+            get()
         )
     }
 }
@@ -296,12 +293,14 @@ val questsModule = module {
 fun questTypeRegistry(
     arSupportChecker: ArSupportChecker,
     getCountryInfoByLocation: (LatLon) -> CountryInfo,
+    getCountryOrSubdivisionCode: (LatLon) -> String?,
     getFeature: (Element) -> Feature?,
     osmoseDao: OsmoseDao,
     customQuestList: CustomQuestList,
 ) = QuestTypeRegistry({ getQuestTypeList(
     arSupportChecker,
     getCountryInfoByLocation,
+    getCountryOrSubdivisionCode,
     getFeature,
     osmoseDao,
     customQuestList,
@@ -310,6 +309,7 @@ fun questTypeRegistry(
 fun getQuestTypeList(
     arSupportChecker: ArSupportChecker,
     getCountryInfoByLocation: (location: LatLon) -> CountryInfo,
+    getCountryOrSubdivisionCode: (LatLon) -> String?,
     getFeature: (Element) -> Feature?,
     osmoseDao: OsmoseDao,
     customQuestList: CustomQuestList,
@@ -651,7 +651,7 @@ fun getQuestTypeList(
 
     /* should best be after road surface because it excludes unpaved roads, also, need to search
      * for the sign which is one reason why it is disabled by default */
-    149 to AddMaxSpeed(),
+    149 to AddMaxSpeed(getCountryOrSubdivisionCode),
 
     // buildings
     150 to AddBuildingType(),

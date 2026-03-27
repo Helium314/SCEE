@@ -12,8 +12,8 @@ import de.westnordost.streetcomplete.quests.AnswerItem
 import de.westnordost.streetcomplete.view.localized_name.confirmNoName
 import de.westnordost.streetcomplete.view.localized_name.showKeyboardInfo
 import de.westnordost.streetcomplete.util.SearchAdapter
-import de.westnordost.streetcomplete.util.getLanguagesForFeatureDictionary
 import de.westnordost.streetcomplete.util.ktx.showKeyboard
+import de.westnordost.streetcomplete.util.locale.getLanguagesForFeatureDictionary
 
 class AddPlaceNameForm : AAddLocalizedNameForm<PlaceNameAnswer>() {
 
@@ -32,7 +32,7 @@ class AddPlaceNameForm : AAddLocalizedNameForm<PlaceNameAnswer>() {
         if (!element.tags.containsKey("shop") && !element.tags.containsKey("amenity")
             && !element.tags.containsKey("leisure") && !element.tags.containsKey("tourism")) return null
         return AnswerItem(R.string.quest_name_brand) {
-            val languages = getLanguagesForFeatureDictionary(ctx.resources.configuration)
+            val languages = getLanguagesForFeatureDictionary()
             val searchAdapter = SearchAdapter(ctx, { search ->
                 featureDictionary.getByTerm(
                     search = search,

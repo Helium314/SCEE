@@ -12,6 +12,8 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.data.quest.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.CITIZEN
 import de.westnordost.streetcomplete.osm.Tags
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.quest_evse_id_title
 import de.westnordost.streetcomplete.util.math.contains
 import java.util.Locale
 
@@ -20,6 +22,7 @@ class AddEvseId :
     AndroidQuest {
 
     override val icon = R.drawable.ic_quest_charger_ref
+    override val title = Res.string.quest_evse_id_title
     override val wikiLink = "Key:ref:EU:EVSE"
     override val changesetComment = "Add EVSE ID (ref:EU:EVSE)"
     override val enabledInCountries = NoCountriesExcept(
@@ -36,9 +39,6 @@ class AddEvseId :
           and (ref:signed != no or !ref:signed)
           and access !~ private|no
     """.toElementFilterExpression()
-
-    override fun getTitle(tags: Map<String, String>) =
-        R.string.quest_evse_id_title
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
 

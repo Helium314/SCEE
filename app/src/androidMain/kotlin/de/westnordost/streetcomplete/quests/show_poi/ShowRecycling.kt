@@ -13,6 +13,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.LabelOrElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_poi_recycling
+import de.westnordost.streetcomplete.resources.quest_poi_recycling_title
 
 class ShowRecycling : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val elementFilter = """
@@ -22,17 +23,15 @@ class ShowRecycling : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val changesetComment = "Adjust recycling related elements"
     override val wikiLink = "Key:amenity=recycling"
     override val icon = R.drawable.ic_quest_poi_recycling
+    override val title = Res.string.quest_poi_recycling_title
     override val dotColor = "green"
     override val defaultDisabledMessage = Res.string.default_disabled_msg_poi_recycling
     override val dotLabelSources = getLabelSources( "", this, prefs)
 
-    override fun getTitle(tags: Map<String, String>) =
-        R.string.quest_poi_recycling_title
-
     override fun createForm() = ShowRecyclingAnswerForm()
 
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter(filter)
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter(filter)
 
     override fun applyAnswerTo(answer: Boolean, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         if (answer) {

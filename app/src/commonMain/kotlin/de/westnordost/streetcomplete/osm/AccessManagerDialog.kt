@@ -364,9 +364,9 @@ val accessValues = listOf(
     "destination",
     "delivery",
     "customers",
-    "designated",
-    "use_sidepath",
-    "dismount",
+    "designated", // not for access
+    "use_sidepath", // usually for foot / bicycle
+    "dismount", // bicycle
     "agricultural",
     "forestry",
     "discouraged", // really required explicit sign

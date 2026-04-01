@@ -15,6 +15,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.FullElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_piste_difficulty_title
 
 class AddPisteDifficulty : OsmElementQuestType<PisteDifficulty>, AndroidQuest {
 
@@ -27,6 +28,7 @@ class AddPisteDifficulty : OsmElementQuestType<PisteDifficulty>, AndroidQuest {
 
     override val changesetComment = "Add piste difficulty"
     override val wikiLink = "Key:piste:difficulty"
+    override val title = Res.string.quest_piste_difficulty_title
     override val icon = R.drawable.ic_quest_piste_difficulty
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
@@ -37,10 +39,7 @@ class AddPisteDifficulty : OsmElementQuestType<PisteDifficulty>, AndroidQuest {
 
     override fun isApplicableTo(element: Element) = if (filter.matches(element)) null else false
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_piste_difficulty_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry): Sequence<Element> {
-        val mapData = getMapData()
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry): Sequence<Element> {
         return mapData.filter("ways, relations with piste:type")
     }
 

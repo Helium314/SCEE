@@ -124,7 +124,7 @@
     <string name="pref_tile_source_hide_labels">Скрыть надписи</string>
     <string name="pref_screen_quests">Квесты</string>
     <string name="pref_advanced_resurvey_title">Расширенное повторное обследование</string>
-    <string name="advanced_resurvey_title">Настройка даты и ключей доя обследования</string>
+    <string name="advanced_resurvey_title">Настройка даты и ключей для обследования</string>
     <string name="advanced_resurvey_message_date">Вместо интервального повтора, обследовать указанные теги, если дата проверки старше чем:</string>
     <string name="advanced_resurvey_hint_keys">ключи отделяются запятой</string>
     <string name="advanced_resurvey_hint_date">В формате: ГГГГ-ММ-ДД</string>
@@ -248,7 +248,7 @@
     <string name="pref_recent_answers_first_min_lines_message">Передвигать недавние варианты в начало, когда форма ответа для квеста содержит строк с картинками больше, чем</string>
     <string name="show_nearby_quests_even_hidden">Показывать квесты всех типов, включая скрытые</string>
     <string name="pref_search_more_languages_summary">Поиск объектов покажет результаты как на местном, так и на языке, заданном в системе</string>
-    <string name="pref_tile_source_message">Адрес должен содержать {x}, {y} и {z}</string>
+    <string name="pref_tile_source_message">Адрес должен содержать {x}, {y} и либо {z}, либо {zoom}. Источник WMS должен поддерживать EPSG:3857, а URL должен содержать либо {bbox-epsg-3857}, либо {bbox} и {proj} одновременно.</string>
     <string name="pref_advanced_resurvey_summary">Принудительно обследовать указанные теги</string>
     <string name="advanced_resurvey_message_keys">Всегда повторно обследовать по этим ключам если нет ключа с датой проверки. Она будет добавлена к ответу на такой квест</string>
     <string name="day_night_priority">Увеличивать приоритет квестов, соответствующих времени суток</string>
@@ -569,10 +569,6 @@
     <string name="quest_guidepostRef_hint">Справочный номер этой карты или указателя, а не справочный номер обозначенных маршрутов.</string>
     <string name="quest_guidepostName_hint">Подпись с названием этой карты или указателя. Не вводите здесь справочный номер.</string>
     <string name="quest_guidepost_disabled_msg">этот квест по умолчанию отключен, потому что надписи сильно различаются в зависимости от региона и обслуживающей организации. Возможно, вам потребуется уточнить элементы применительно к вашему региону (например, добавить или удалить карты, выбрать только элементы с hiking=yes и т. д.)</string>
-    <string name="quest_maxheight_answer_noSign_question">Достаточно ли места для проезда даже самых высоких грузовиков (≥4,5 метров / 15 футов)?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Высокие грузовики могут проехать</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Высокие грузовики не проедут</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Неясно</string>
     <string name="pref_quest_pedestrian_crossing_markings_extended">Расширение «Есть ли на этом переходе разметка?» позволяет определить стиль разметки перехода</string>
     <string name="quest_crossing_marking_value_no">Нет</string>
     <string name="quest_crossing_marking_value_ladder_skewed">Лестница перекошена</string>
@@ -654,4 +650,6 @@
     <string name="quest_valves_dunlop">DV/NV: Тип Dunlop / Woods</string>
     <string name="quest_valves_schrader">AV: Обычный автониппель, большинство велосипедов</string>
     <string name="quest_valves_regina">RV: Тип Regina / Italian</string>
+    <string name="action_all_quests">Показать все квесты</string>
+    <string name="quest_bench_armrest_title">Есть ли у этой скамейки подлокотники?</string>
 </resources>

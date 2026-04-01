@@ -1,0 +1,12 @@
+- add pebbledash to building:material quest
+- add bench armrests quest
+- add oneway-bicycle quest
+- add toilet disposal quest
+- add level filter switch to quick settings
+- use 'location' tag in level filter (>0 or <0)
+- reduce minium move distance when moving nodes
+- allow entering 'addr:unit' in address overlay & housenumber quest
+- show direction of nodes when highlighting nearby elements
+- bug fixes and minor improvements
+
+Some functionality is currently disabled due to SC changes

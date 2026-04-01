@@ -11,6 +11,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import de.westnordost.osmfeatures.Feature
@@ -43,18 +48,23 @@ import de.westnordost.streetcomplete.data.quest.QuestKey
 import de.westnordost.streetcomplete.data.visiblequests.HideQuestController
 import de.westnordost.streetcomplete.data.visiblequests.QuestsHiddenController
 import de.westnordost.streetcomplete.osm.applyReplacePlaceTo
+import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.osm.isPlaceOrDisusedPlace
 import de.westnordost.streetcomplete.osm.ALL_PATHS
 import de.westnordost.streetcomplete.osm.ALL_ROADS
 import de.westnordost.streetcomplete.quests.custom.CustomQuestList
+import de.westnordost.streetcomplete.osm.toElement
+import de.westnordost.streetcomplete.osm.toPrefixedFeature
 import de.westnordost.streetcomplete.quests.shop_type.ShopGoneDialog
 import de.westnordost.streetcomplete.quests.show_poi.ShowFixme
-import de.westnordost.streetcomplete.util.AccessManagerDialog
-import de.westnordost.streetcomplete.util.getNameAndLocationSpanned
+import de.westnordost.streetcomplete.quests.shop_type.ShopType
+import de.westnordost.streetcomplete.quests.shop_type.ShopTypeAnswer
 import de.westnordost.streetcomplete.util.accessKeys
-import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
+import de.westnordost.streetcomplete.util.setViewWithDefaultPadding
 import de.westnordost.streetcomplete.util.ktx.containsAnyKey
 import de.westnordost.streetcomplete.util.ktx.isArea
+import de.westnordost.streetcomplete.util.getNameAndLocationLabel
+import de.westnordost.streetcomplete.util.ktx.geometryType
 import de.westnordost.streetcomplete.util.ktx.isSplittable
 import de.westnordost.streetcomplete.util.ktx.popIn
 import de.westnordost.streetcomplete.util.ktx.systemTimeNow
@@ -62,6 +72,8 @@ import de.westnordost.streetcomplete.util.ktx.toInstant
 import de.westnordost.streetcomplete.util.ktx.toLocalDate
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import de.westnordost.streetcomplete.util.logs.Log
+import de.westnordost.streetcomplete.util.locale.getLanguagesForFeatureDictionary
+import de.westnordost.streetcomplete.util.nameAndLocationLabel
 import de.westnordost.streetcomplete.view.add
 import de.westnordost.streetcomplete.view.confirmIsSurvey
 import kotlinx.coroutines.Dispatchers
@@ -72,6 +84,8 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getSystemResourceEnvironment
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import java.time.format.DateTimeFormatter
@@ -100,17 +114,12 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
     private val osmElementQuestType: OsmElementQuestType<T> get() = questType as OsmElementQuestType<T>
     protected lateinit var element: Element private set
 
-    private val englishResources: Resources
-        get() {
-            val conf = Configuration(resources.configuration)
-            conf.setLocale(Locale.ENGLISH)
-            val localizedContext = super.requireContext().createConfigurationContext(conf)
-            return localizedContext.resources
-        }
-
     // overridable by child classes
     open val otherAnswers = listOf<IAnswerItem>()
     open val buttonPanelAnswers = listOf<IAnswerItem>()
+
+    private val showReplacePlaceDialog: MutableState<Boolean> = mutableStateOf(false)
+    private val showAccessManagerDialog: MutableState<Boolean> = mutableStateOf(false)
 
     interface Listener { // this is also used in AbstractOtherQuestForm for convenience
         /** The GPS position at which the user is displayed at */
@@ -145,9 +154,6 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setTitle(getString(osmElementQuestType.getTitle(element.tags)))
-        setTitleHintLabel(getNameAndLocationSpanned(element, resources, featureDictionary))
         setObjNote(element.tags["note"], element.tags["fixme"] ?: element.tags["FIXME"])
 
         if (!TagEditor.showingTagEditor && prefs.getBoolean(Prefs.SHOW_HIDE_BUTTON, false)) {
@@ -161,6 +167,40 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
             }
         }
     }
+
+    @Composable
+    override fun DialogContainer() {
+        if (showReplacePlaceDialog.value) {
+            ShopGoneDialog(
+                onDismissRequest = { showReplacePlaceDialog.value = false },
+                onSelectAnswer = { answer ->
+                    when (answer) {
+                        is ShopType -> onShopReplacementSelected(answer.feature)
+                        ShopTypeAnswer.IsShopVacant -> onShopDisusedSelected()
+                        ShopTypeAnswer.LeaveNote -> composeNote()
+                    }
+                },
+                featureDictionary = featureDictionary,
+                geometryType = element.geometryType,
+                countryCode = countryOrSubdivisionCode,
+
+            )
+        }
+        if (showAccessManagerDialog.value) {
+            de.westnordost.streetcomplete.osm.AccessManagerDialog(
+                onDismissRequest = { showAccessManagerDialog.value = false },
+                tags = element.tags,
+                countryInfo = countryInfo
+            ) { viewLifecycleScope.launch { solve(UpdateElementTagsAction(element, it.create()), true) } }
+        }
+    }
+
+    override protected fun getTitle(): StringResource =
+        osmElementQuestType.getTitle(element.tags) ?: questType.title
+
+    @Composable
+    override protected fun getSubtitle(): AnnotatedString? =
+        nameAndLocationLabel(element, featureDictionary)
 
     override fun onStart() {
         super.onStart()
@@ -309,17 +349,20 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
     }
 
     protected fun composeNote() {
-
-        var questTitle = englishResources.getString(osmElementQuestType.getTitle(element.tags))
-        if (osmElementQuestType is ShowFixme)
-            questTitle += " ${element.tags["fixme"] ?: element.tags["FIXME"]}"
-        val hintLabel = getNameAndLocationSpanned(element, englishResources, featureDictionary)
-        val leaveNoteContext = if (hintLabel.isNullOrBlank()) {
-            "Unable to answer \"$questTitle\""
-        } else {
-            "Unable to answer \"$questTitle\" – $hintLabel"
+        viewLifecycleScope.launch {
+            val questTitleResource = osmElementQuestType.getTitle(element.tags) ?: questType.title
+            val resourceEnvironment = getSystemResourceEnvironment()
+            var questTitle = org.jetbrains.compose.resources.getString(resourceEnvironment, questTitleResource)
+            if (osmElementQuestType is ShowFixme)
+                questTitle += " ${element.tags["fixme"] ?: element.tags["FIXME"]}"
+            val hintLabel = getNameAndLocationLabel(resourceEnvironment, LayoutDirection.Ltr, element, featureDictionary)
+            val leaveNoteContext = if (hintLabel.isNullOrBlank()) {
+                "Unable to answer \"$questTitle\""
+            } else {
+                "Unable to answer \"$questTitle\" – $hintLabel"
+            }
+            listener?.onComposeNote(osmElementQuestType, element, geometry, leaveNoteContext)
         }
-        listener?.onComposeNote(osmElementQuestType, element, geometry, leaveNoteContext)
     }
 
     protected fun tempHideQuest() {
@@ -338,18 +381,20 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
 
     protected fun replacePlace(extra: Boolean = true) {
         if (element.isPlaceOrDisusedPlace()) {
-            ShopGoneDialog(
-                requireContext(),
-                element,
-                countryOrSubdivisionCode,
-                featureDictionary,
-                onSelectedFeatureFn = { onShopReplacementSelected(it, extra) },
-                onLeaveNoteFn = this::composeNote,
-                geometry.center
-            ).show()
+            showReplacePlaceDialog.value = true
         } else {
             composeNote()
         }
+    }
+
+    private fun onShopDisusedSelected() {
+        val languages = getLanguagesForFeatureDictionary()
+        val vacantShop = featureDictionary
+            .getByTags(element.tags)
+            .firstOrNull { it.toElement().isPlace() }
+            ?.toPrefixedFeature("disused")
+            ?: featureDictionary.getById("shop/vacant", languages)!!
+        onShopReplacementSelected(vacantShop)
     }
 
     private fun onShopReplacementSelected(feature: Feature, extra: Boolean = true) {
@@ -391,11 +436,7 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
         val title = if (element.tags.containsAnyKey(*accessKeys))
                 R.string.manage_access
             else R.string.add_access
-        return AnswerItem(title) {
-            AccessManagerDialog(requireContext(), element.tags) {
-                viewLifecycleScope.launch { solve(UpdateElementTagsAction(element, it.create()), true) }
-            }.show()
-        }
+        return AnswerItem(title) { showAccessManagerDialog.value = true }
     }
 
     private fun createConstructionAnswer(): AnswerItem? {
@@ -489,7 +530,8 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
         val l = listener // form is closed after adding the edit, so the listener may already be null when called
         withContext(Dispatchers.IO) {
             if (action is UpdateElementTagsAction && !action.changes.isValid()) {
-                val questTitle = englishResources.getString(osmElementQuestType.getTitle(element.tags))
+                val questTitleResource = osmElementQuestType.getTitle(element.tags) ?: questType.title
+                val questTitle = org.jetbrains.compose.resources.getString(getSystemResourceEnvironment(), questTitleResource)
                 val text = createNoteTextForTooLongTags(questTitle, element.type, element.id, action.changes.changes)
                 noteEditsController.add(0, NoteEditAction.CREATE, geometry.center, text)
             } else {
@@ -498,6 +540,20 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
         }
         l?.onEdited(osmElementQuestType, geometry)
     }
+
+
+    /* Unfortunately, ResourceEnviornment's constructor is internal, so we cannot use this
+       see https://youtrack.jetbrains.com/issue/CMP-9959/Access-resources-in-specific-language-outside-of-composition
+
+    /** get English resource environment */
+    @OptIn(InternalResourceApi::class)
+    fun getEnglishResourceEnvironment() = ResourceEnvironment(
+        language = LanguageQualifier("en"),
+        region = RegionQualifier(""),
+        theme = ThemeQualifier.LIGHT,
+        density = DensityQualifier.MDPI,
+    )
+    */
 
     companion object {
         private const val ARG_ELEMENT = "element"

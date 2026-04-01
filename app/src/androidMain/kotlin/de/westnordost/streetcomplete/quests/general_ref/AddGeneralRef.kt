@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_generalRef_disabled_msg
+import de.westnordost.streetcomplete.resources.quest_genericRef_title
 
 class AddGeneralRef : OsmFilterQuestType<GeneralRefAnswer>(), AndroidQuest {
 
@@ -32,14 +33,13 @@ class AddGeneralRef : OsmFilterQuestType<GeneralRefAnswer>(), AndroidQuest {
     override val changesetComment = "Specify refs"
     override val wikiLink = "Key:ref"
     override val icon = R.drawable.ic_quest_general_ref
+    override val title = Res.string.quest_genericRef_title
     override val isDeleteElementEnabled = true
     override val achievements = listOf(OUTDOORS)
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_genericRef_title
-
     // substation buildings are not highlighted because those are usually far apart
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("""
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("""
             nodes with
               information ~ guidepost|map
               or railway = subway_entrance

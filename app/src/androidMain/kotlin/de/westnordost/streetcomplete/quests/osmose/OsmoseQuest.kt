@@ -32,13 +32,14 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.ResetCancelOk
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_osmose_message
+import de.westnordost.streetcomplete.resources.quest_osmose_title
 import de.westnordost.streetcomplete.ui.common.dialogs.ConfirmationDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
 
 class OsmoseQuest(private val osmoseDao: OsmoseDao) : ExternalSourceQuestType, AndroidQuest {
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_osmose_title
+    override val title = Res.string.quest_osmose_title
 
     override suspend fun download(bbox: BoundingBox) = osmoseDao.download(bbox)
 

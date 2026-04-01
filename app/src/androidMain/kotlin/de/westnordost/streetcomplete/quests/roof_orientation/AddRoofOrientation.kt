@@ -17,6 +17,7 @@ import kotlin.math.max
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_roof
+import de.westnordost.streetcomplete.resources.quest_roofOrientation_title
 
 class AddRoofOrientation : OsmElementQuestType<String>, AndroidQuest {
 
@@ -34,10 +35,9 @@ class AddRoofOrientation : OsmElementQuestType<String>, AndroidQuest {
     override val changesetComment = "Add roof orientation"
     override val wikiLink = "Key:roof:orientation"
     override val icon = R.drawable.ic_quest_roof_orientation
+    override val title = Res.string.quest_roofOrientation_title
     override val achievements = listOf(BUILDING)
     override val defaultDisabledMessage = Res.string.default_disabled_msg_roof
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_roofOrientation_title
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
         mapData.ways.filter { way ->

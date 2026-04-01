@@ -23,7 +23,6 @@
     <string name="quest_material_bamboo">Bambù</string>
     <string name="quest_benchMaterial_title">Di che materiale è fatta?</string>
     <string name="theme_dark_contrast">Scuro (contrasto elevato)</string>
-    <string name="quest_artwork_sculpture">Scultura</string>
     <string name="quest_seating_sidewalk">Sul marciapiede</string>
     <string name="pref_delete_old_data_after_summary">%d giorni</string>
     <string name="quest_brewery_title">Che marche di birra servono qui?</string>
@@ -37,7 +36,6 @@
     <string name="pref_export">Esporta impostazioni</string>
     <string name="pref_import">Importa impostazioni</string>
     <string name="import_presets_overlays_add">Aggiungi</string>
-    <string name="quest_artwork_mosaic">Mosaico</string>
     <string name="quest_material_glass">Vetro</string>
     <string name="quest_swimming_pool_indoor_and_outdoor">Sia all'interno che all'esterno</string>
     <string name="quest_saunaAvailability_title">C'è una sauna qui?</string>
@@ -64,9 +62,6 @@
     <string name="quest_parking_capacity_title">Quante automobili possono parcheggiare qui?</string>
     <string name="pref_interval_summary">%d secondi</string>
     <string name="quest_settings_sidewalk_distance_button">Distanza</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Sì</string>
-    <string name="quest_artwork_statue">Statua</string>
-    <string name="quest_artwork_fountain">Fontana</string>
     <string name="quest_trail_visibility_excellent">Eccellente</string>
     <string name="quest_artwork_title">Che tipo di opera d'arte è?</string>
     <string name="quest_mapSize_title">Che area è coperta da questa mappa?</string>
@@ -129,4 +124,15 @@
     <string name="pref_save_photos_title">Salva foto utilizzate per le note</string>
     <string name="pref_save_photos_summary">Salva le foto utilizzate per le note nella qualità originale, senza eliminare i dati EXIF</string>
     <string name="pref_way_direction">Mostra direzione dei percorsi</string>
+    <string name="pref_hide_keyboard_title">Nascondi la tastiera dopo aver creato la nota</string>
+    <string name="pref_way_direction_summary">Mostra delle frecce nelle linee selezionate quando apri una domanda. Utile per le strade a senso unico</string>
+    <string name="pref_quest_geometries_title">Mostra la geometria della missione</string>
+    <string name="pref_quest_geometries_summary">Evidenzia strade e aree che hanno missioni</string>
+    <string name="pref_show_solved_animation">Mostra l'animazione dopo aver risolto una missione</string>
+    <string name="pref_gpx_track_title">Mostra traccia GPX da un file</string>
+    <string name="pref_gpx_track_provide">Seleziona traccia GPX</string>
+    <string name="pref_gpx_track_loading_error">Errore durante il caricamento della traccia GPX</string>
+    <string name="pref_gpx_track_enable">Mostra traccia GPX</string>
+    <string name="pref_gpx_track_download">Scarica l'area coperta dalla traccia GPX</string>
+    <string name="pref_custom_geometry_title">Mostra caratteristiche della mappa da un file GeoJson</string>
 </resources>

@@ -87,7 +87,6 @@
     <string name="pref_dynamic_quest_creation_title">Crear missions dinàmicament</string>
     <string name="pref_dynamic_quest_creation_summary">Les missions es creen en carregar l'àrea actual. És una mica lent, però aplica immediatament canvis en la configuració de missions.</string>
     <string name="pref_quest_monitor_title">Notificar sobre missions properes</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Sols per vies i àrees</string>
     <string name="quest_order_reverse">Regirar ordre de missions</string>
     <string name="quest_order_normal">Tornar a l'ordre de missions normal</string>
     <string name="level_filter">Filtre de nivell</string>
@@ -119,10 +118,6 @@
     <string name="quest_settings_sidewalk_distance_button">Distància</string>
     <string name="quest_settings_level_title">Mostrar aquesta missió per a:</string>
     <string name="quest_settings_level_default">Botigues i establiments similars en centres comercials (per defecte)</string>
-    <string name="quest_generic_surface_message">Permetre respostes de superfícies genèriques sense requerir nota?</string>
-    <string name="quest_generic_surface_button">Respostes genèriques de superfícies</string>
-    <string name="quest_generic_surface_yes">Permetre'n sense nota</string>
-    <string name="quest_generic_surface_no">Sols amb nota (per defecte)</string>
     <string name="quest_settings_osmose_level_high">Alt</string>
     <string name="quest_settings_osmose_level_medium">Intermig</string>
     <string name="quest_settings_osmose_level_low">Baix</string>
@@ -153,8 +148,6 @@
     <string name="pref_disable_navigation_mode_summary">Desactiva el mode que inclina i gira el mapa automàticament segons tuna orientació</string>
     <string name="pref_quest_monitor_download">Descarregar dades si és necessari? Això pot consumir dades mòbils i bateria, podria no funcionar depèn de quina configuració d'estalvi de bateria per a Android tinguis.</string>
     <string name="quest_settings_resurvey_all_opening_hours_message">Repreguntar tots els horaris d'oberta, inclosos valors que SCEE no entén? És possible que hagis d'usar l'editor d'etiquetes per introduir els valors correctes.</string>
-    <string name="quest_settings_leaf_type_single_tree_message">Preguntar també pel tipus de fulla dels arbres individuals?</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Si</string>
     <string name="quest_osmose_message">Aquestes missions són descarregades des del servei d'Osmose i indiquen potencials problemes amb dades d'OSM. Sols és descarregen i es mostren si, com a mínim, un nivell de severitat és seleccionat en la configuració dol missió.
 \n El missatge d'Osmose es mostra amb la missió, qualsevol modificació en l'element marca el problema com a resolt.
 \n També pots marcar el problema com un fals positiu; aquesta acció no es pot desfer.</string>
@@ -195,13 +188,6 @@
     <string name="quest_seating_roof">En un terrat</string>
     <string name="quest_seating_garden">En un jardí</string>
     <string name="quest_seating_beach">A la platja</string>
-    <string name="quest_artwork_stone">Pedra</string>
-    <string name="quest_artwork_painting">Pintura</string>
-    <string name="quest_artwork_architecture">Arquitectura</string>
-    <string name="quest_artwork_mosaic">Mosaic</string>
-    <string name="quest_artwork_relief">Relleu</string>
-    <string name="quest_artwork_fountain">Font</string>
-    <string name="quest_artwork_land_art">Art de terra</string>
     <string name="quest_trail_visibility_excellent">Excel·lent</string>
     <string name="quest_trail_visibility_excellent_description">Camí clar, fàcil i ben definit a tot arreu i/o amb moltes marques orientatives clares i fàcils de guipar. Un s'hi pot orientar sense problemes i no requereix de mapa.</string>
     <string name="quest_trail_visibility_good">Bo</string>
@@ -443,12 +429,6 @@
     <string name="quest_valves_schrader">AV: Schrader / Vàlvula de cotxe</string>
     <string name="quest_valves_regina">RV: Regina / Vàlvula d'estil italià</string>
     <string name="quest_artwork_title">Quina classe d'obra d'art és aquesta?</string>
-    <string name="quest_artwork_sculpture">Escultura</string>
-    <string name="quest_artwork_statue">Estàtua</string>
-    <string name="quest_artwork_mural">Mural</string>
-    <string name="quest_artwork_graffiti">Grafiti</string>
-    <string name="quest_artwork_installation">Instal·lació</string>
-    <string name="quest_artwork_bust">Bust</string>
     <string name="quest_trail_visibility_title">Quina és la visibilitat del sender d'aquest camí?</string>
     <string name="quest_sacScale_four">T4 - Senderisme alpí</string>
     <string name="quest_sacScale_four_description">Terreny ja força expòs, incloent-hi pendents costeruts d'herba, vessants de talús, camps de neu fàcils i/o travesseres per glaceres sense neu.</string>

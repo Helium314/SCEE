@@ -3,7 +3,6 @@ package de.westnordost.streetcomplete.util.dialogs
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.InputType
-import android.text.format.DateFormat
 import android.util.TypedValue
 import android.view.View
 import android.widget.AdapterView
@@ -15,11 +14,10 @@ import android.widget.LinearLayout.LayoutParams
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.SwitchCompat
-import androidx.compose.ui.text.intl.Locale
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.util.ktx.showKeyboard
+import de.westnordost.streetcomplete.util.setViewWithDefaultPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

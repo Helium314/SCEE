@@ -13,6 +13,7 @@ import de.westnordost.streetcomplete.osm.surface.INVALID_SURFACES_FOR_TRACKTYPES
 import de.westnordost.streetcomplete.osm.surface.Surface
 import de.westnordost.streetcomplete.osm.surface.UNPAVED_SURFACES
 import de.westnordost.streetcomplete.osm.surface.applyTo
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.quests.FullElementSelectionDialog
 import de.westnordost.streetcomplete.quests.questPrefix
 
@@ -43,13 +44,14 @@ class AddRoadSurface : OsmFilterQuestType<Surface>(), AndroidQuest {
     override val changesetComment = "Specify road surfaces"
     override val wikiLink = "Key:surface"
     override val icon = R.drawable.quest_street_surface
+    override val title = Res.string.quest_streetSurface_title
     override val achievements = listOf(CAR, BICYCLIST)
 
     override fun getTitle(tags: Map<String, String>) =
         if (tags["area"] == "yes") {
-            R.string.quest_streetSurface_square_title
+            Res.string.quest_streetSurface_square_title
         } else {
-            R.string.quest_streetSurface_title
+            Res.string.quest_streetSurface_title
         }
 
     override fun createForm() = AddRoadSurfaceForm()

@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_contact_phone
 
 class AddContactPhone : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -27,12 +28,11 @@ class AddContactPhone : OsmFilterQuestType<String>(), AndroidQuest {
     override val changesetComment = "Add phone number"
     override val wikiLink = "Key:phone"
     override val icon = R.drawable.quest_phone
+    override val title = Res.string.quest_contact_phone
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_contact_phone
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlace() }
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.asSequence().filter { it.isPlace() }
 
     override fun createForm() = AddContactPhoneForm()
 

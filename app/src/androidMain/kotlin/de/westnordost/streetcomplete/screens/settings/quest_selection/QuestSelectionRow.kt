@@ -41,12 +41,8 @@ import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.quests.questPrefix
 import de.westnordost.streetcomplete.quests.surface.AddRoadSurface
+import de.westnordost.streetcomplete.resources.*
 import org.koin.compose.koinInject
-import de.westnordost.streetcomplete.resources.Res
-import de.westnordost.streetcomplete.resources.ic_drag_vertical_24
-import de.westnordost.streetcomplete.resources.ic_settings_48
-import de.westnordost.streetcomplete.resources.questList_disabled_by_default
-import de.westnordost.streetcomplete.resources.questList_disabled_in_country
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview

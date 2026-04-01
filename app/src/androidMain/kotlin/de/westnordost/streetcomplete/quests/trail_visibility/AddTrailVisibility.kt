@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_trail_visibility
+import de.westnordost.streetcomplete.resources.quest_trail_visibility_title
 
 class AddTrailVisibility : OsmFilterQuestType<TrailVisibility>(), AndroidQuest {
 
@@ -24,13 +25,12 @@ class AddTrailVisibility : OsmFilterQuestType<TrailVisibility>(), AndroidQuest {
     """
     override val changesetComment = "Specify Trail Visibility"
     override val wikiLink = "Key:trail_visibility"
+    override val title = Res.string.quest_trail_visibility_title
     override val icon = R.drawable.ic_quest_trail_visibility
     override val defaultDisabledMessage = Res.string.default_disabled_msg_trail_visibility
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_trail_visibility_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("ways with highway and trail_visibility")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("ways with highway and trail_visibility")
 
     override fun createForm() = AddTrailVisibilityForm()
 

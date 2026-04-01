@@ -56,7 +56,6 @@
     <string name="quest_settings_per_preset_rescan">Damit alle geänderten Aufgabeneinstellungen korrekt übernommen werden können, ist ein erneutes Scannen nach Aufgaben erforderlich.</string>
     <string name="quest_seating_street">In einem Straßenbereich</string>
     <string name="quest_custom_quest_message">Verwende es, um spezifische vordefinierte Elemente oder Standorte zu überprüfen. Du kannst auch Tags spezifizieren und einen Knoten damit hinzufügen. Um es zu verwenden, lade eine Datei im Hauptmenü der Einstellungen, die entweder Typ, ID, Nachricht (z. B. NODE,1234,Position überprüfen) oder Breitengrad, Längengrad, Nachricht enthält. Für das Hinzufügen von Knoten gib die Tags in der Nachricht nach „addNode“ an, z. B. addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
-    <string name="quest_artwork_mural">Wandgemälde</string>
     <string name="pref_recent_answers_first_min_lines_message">Verschiebe aktuelle Antworten nach vorne, wenn das Antwortformular der Aufgabe mehr als so viele Zeilen mit Bildern enthält</string>
     <string name="pref_network_interval_title">Aktualisierungsintervall für den Netzwerkstandort</string>
     <string name="pref_custom_title">Benutzerdefinierte Aufgabendatei laden</string>
@@ -77,7 +76,7 @@
     <string name="quest_settings_osmose_level_title">Wähle den Schweregrad des Problems zum Herunterladen und Anzeigen</string>
     <string name="quest_settings_eligible_highways">Lege die für diese Aufgabe berechtigten Straßen fest, durch Kommas getrennt</string>
     <string name="pref_read_log_title">Fehlerprotokoll</string>
-    <string name="pref_tile_source_message">Kachel-URL muss {x}, {y} und {z} enthalten</string>
+    <string name="pref_tile_source_message">Die URL für die Kachelquelle muss {x}, {y} und entweder {z} oder {zoom} enthalten. Die WMS-Quelle muss EPSG:3857 unterstützen und die URL muss entweder {bbox-epsg-3857} oder sowohl {bbox} als auch {proj} enthalten.</string>
     <string name="pref_recent_answers_first_min_lines_summary">Wenn das Formular mehr als %d Zeile(n) hat</string>
     <string name="pref_main_menu_grid">Alle Hauptmenüpunkte als Raster anzeigen</string>
     <string name="quest_settings_sidewalk_cycleway_distance_message">Lege den Mindestabstand zwischen den einzelnen Pfaden fest, bei Unterschreitung wird die Aufgabe nicht angezeigt</string>
@@ -86,7 +85,6 @@
     <string name="quest_railwayPlatformRef_message">Welches Tag soll für Tracks verwendet werden, die von dieser Plattform aus zugänglich sind\? Laut OSM-Wiki könnte local_ref vorzuziehen sein, aber die tatsächliche Verwendung ist meist ref.</string>
     <string name="pref_trees_title">Baumaufgabendatei laden</string>
     <string name="pref_save_gpx">GPX-Hinweise und angehängte Fotos und Tracks aufrufen</string>
-    <string name="quest_artwork_relief">Relief</string>
     <string name="move_node_of_other_relation">Dieser Knoten ist Teil der folgenden Relationen, die keine Multipolygone sind: %s</string>
     <string name="level_filter">Level-Filter</string>
     <string name="quest_contact_phone">Wie lautet die Telefonnummer dieses Ortes\?</string>
@@ -113,7 +111,6 @@
     <string name="default_disabled_msg_poi_recycling">Diese „Aufgabe“ zeigt POIs zum Thema Recycling und Müll als grüne Punkte an. Ein Klick auf den Punkt zeigt Details und weitere Antworten an.</string>
     <string name="default_disabled_msg_ee">In SCEE hinzugefügte Aufgaben sind standardmäßig immer deaktiviert, da sie nicht immer beantwortet werden können und möglicherweise Kenntnisse des Themas und der Kennzeichnung erfordern.</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">Alle</string>
-    <string name="quest_artwork_graffiti">Graffiti</string>
     <string name="quest_healthcare_speciality_add_more">Weitere Spezialität hinzufügen</string>
     <string name="pref_delete_old_data_after">Löschen von alten Daten nach</string>
     <string name="quest_crossing_type_signals_controlled_zebra">Ampel und Zebrastreifen</string>
@@ -126,7 +123,6 @@
     <string name="theme_dark_contrast">Dunkel (erhöhter Kontrast)</string>
     <string name="quest_poi_machine_title">POI: Gerät</string>
     <string name="quest_osmose_use_app_language">Probleme beim Herunterladen in der Anwendungssprache</string>
-    <string name="quest_artwork_installation">Installation</string>
     <string name="import_error">Fehler beim Importieren</string>
     <string name="import_export_presets">Vorlagen</string>
     <string name="quest_destination_title">Welche Richtungen sind für diese Straße ausgeschildert\?</string>
@@ -141,7 +137,6 @@
     <string name="import_export_hidden_quests">Versteckte Aufgaben</string>
     <string name="advanced_resurvey_title">Datum und Schlüssel der Neuerhebung festlegen</string>
     <string name="quest_tree_disabled_msg">Diese Aufgabe ist standardmäßig deaktiviert, weil sie nicht leicht zu beantworten ist. Arten/Gattungen müssen aus Vorschlägen ausgewählt werden, die aus den am häufigsten verwendeten Werten übernommen werden. Du kannst Vorschläge aus deiner eigenen Liste von Arten mit durchsuchbaren Namen machen, indem du eine Datei im Einstellungsmenü der Datenverwaltung bereitstellst, die &lt;species&gt; (&lt;name&gt;) enthalten.</string>
-    <string name="quest_artwork_statue">Statue</string>
     <string name="show_nearby_quests_distance">Aufgaben in dieser Entfernung anzeigen (begrenzt auf 10 Meter)</string>
     <string name="insert_node_select_way">Wähle eine Position auf einem Weg</string>
     <string name="pref_quest_monitor_summary">Überwacht den Standort, wenn sich die Anwendung im Hintergrund befindet, außer wenn sie mit der Schaltfläche „Zurück“ in den Hintergrund gestellt wird</string>
@@ -198,10 +193,8 @@
     <string name="pref_dynamic_quest_creation_title">Aufgaben dynamisch erstellen</string>
     <string name="quest_settings_building_levels_optional_roof">Erlaubt überall das Weglassen von Dachebenen</string>
     <string name="hide_button">Ausblenden</string>
-    <string name="quest_artwork_stone">Stein</string>
     <string name="advanced_resurvey_message_keys">Ermittle diese Parameter immer neu, wenn es keinen Parameter für das Prüfdatum gibt. Das Prüfdatum wird immer hinzugefügt, wenn du die entsprechenden Aufgaben löst</string>
     <string name="pref_gpx_track_loading_error">Fehler beim Laden einer GPX-Trackdatei</string>
-    <string name="quest_artwork_bust">Büste</string>
     <string name="pref_show_quick_settings_title">Schaltfläche „Schnelleinstellungen“ anzeigen</string>
     <string name="quest_monitor_running">Überwachungsstandort</string>
     <string name="quest_material_stone">Stein</string>
@@ -218,7 +211,6 @@
     <string name="quest_surface_value_stepping_stones">Trittsteine</string>
     <string name="quest_poi_vacant_title">POI: leer stehender Ort</string>
     <string name="quest_settings_what_to_edit">Was soll eingestellt werden\?</string>
-    <string name="quest_artwork_fountain">Springbrunnen</string>
     <string name="quest_buildingType_transit_shelter">Transitunterstand</string>
     <string name="pref_show_next_quest_title">Nächste Aufgabe sofort anzeigen</string>
     <string name="quest_settings_building_levels_mandatory_roof">In den meisten Ländern ist die Eingabe von Dachebenen erforderlich (Standard)</string>
@@ -226,7 +218,6 @@
     <string name="quest_seating_terrace">Auf einer Terrasse (nicht überdacht, nicht im Innenhof)</string>
     <string name="quest_poi_misc_title">POI: Sonstiges</string>
     <string name="quest_poi_vending_title">POI: Verkaufsautomaten</string>
-    <string name="quest_artwork_architecture">Architektur</string>
     <string name="restriction_overlay_sign_give_way">Vorfahrt gewähren</string>
     <string name="pref_volume_zoom_title">Lautstärkeregler-Zoom</string>
     <string name="pref_tile_source_hide_labels">Labels ausblenden</string>
@@ -237,7 +228,6 @@
     <string name="outside_downloaded_area_warning">Diese Stelle befindet sich außerhalb des heruntergeladenen Bereichs. Fortfahren\?</string>
     <string name="quest_settings_level_more">Ärzte und viele weitere Knoten in mehrstöckigen Gebäuden</string>
     <string name="restriction_overlay_show_details">Relationsdetails anzeigen</string>
-    <string name="quest_generic_surface_no">Nur mit Hinweis (Standard)</string>
     <string name="access_length_limit">Länge</string>
     <string name="quest_seating_garden">In einer Gartenanlage</string>
     <string name="pref_get_photos_title">Fotos in voller Größe anzeigen</string>
@@ -270,7 +260,6 @@
     <string name="default_disabled_msg_poi_fixme">Diese „Aufgabe“ zeigt FixMes als rote Punkte an (mit den Standardausnahmen „ja“ und „weiter“). Ein Klick auf den Punkt zeigt Details und andere Antworten an.</string>
     <string name="quest_monitor_channel_name">Monitor für nahe gelegene Aufgaben</string>
     <string name="show_nearby_quests_all_types">Alle Aufgabentypen anzeigen</string>
-    <string name="quest_artwork_land_art">Kunst am Boden</string>
     <string name="access_weight_limit">Gewicht</string>
     <string name="import_export_presets_select">Wähle Vorlagen zum Exportieren</string>
     <string name="pref_gps_interval_title">Aktualisierungsintervall für den GPS-Standort</string>
@@ -285,7 +274,6 @@
     <string name="quest_poi_business_title">POI: Unternehmen</string>
     <string name="quick_switch_preset">Voreinstellung wechseln</string>
     <string name="pref_screen_ui">Oberfläche</string>
-    <string name="quest_artwork_title">Was für eine Art von Kunstwerk ist das\?</string>
     <string name="quest_osmose_message_for_element">Artikeltyp %1$s: %2$s</string>
     <string name="restriction_overlay_relation_unsupported">Nicht unterstützter Relationstyp:
 \n%s</string>
@@ -312,13 +300,10 @@
     <string name="resurvey_intervals_even_less_often">Noch seltener fragen</string>
     <string name="advanced_resurvey_hint_keys">Mehrere Schlüssel durch Komma trennen</string>
     <string name="default_disabled_msg_poi_business">Diese „Aufgabe“ zeigt Geschäfte, Restaurants, Ärzte und ähnliche POIs als orangefarbene Punkte an. Ein Klick auf den Punkt zeigt Details und weitere Antworten an.</string>
-    <string name="quest_artwork_painting">Gemälde</string>
     <string name="access_width_limit">Breite</string>
     <string name="quest_material_brick">Ziegel</string>
     <string name="default_disabled_msg_poi_vacant">Diese „Aufgabe“ zeigt leer stehende Geschäfte als graue Punkte an. Ein Klick auf den Punkt zeigt Details und andere Antworten an.</string>
-    <string name="quest_generic_surface_yes">Ohne Hinweis zulassen</string>
     <string name="quest_recycling_excrement_bag_dispenser">Es hat einen Kotbeutelspender</string>
-    <string name="quest_generic_surface_message">Generische Oberflächen als Antwort zulassen, ohne eine Beschreibung zu verlangen?</string>
     <string name="quest_buildingType_riding_hall">Reithalle</string>
     <string name="pref_search_more_languages_title">Suchfunktionen in mehreren Sprachen</string>
     <string name="time_limited_from">Von</string>
@@ -348,11 +333,10 @@
     <string name="pref_hide_button_title">Schaltfläche „Ausblenden“ anzeigen</string>
     <string name="default_disabled_msg_roof">Dieser Aufgabentyp ist standardmäßig deaktiviert, da Dächer von der Straße aus oft nicht gut sichtbar sind. Dieser Aufgabentyp ist auch recht zeitaufwändig; in den meisten Fällen ist es einfacher und effizienter, diese aus Luftbildern zu Hause zu kartieren.</string>
     <string name="tree_custom_quest_export">Abrufen</string>
-    <string name="quest_artwork_mosaic">Mosaik</string>
     <string name="import_export_custom_overlays">Benutzerdefinierte Overlays</string>
     <string name="quest_roofColour_title">Welche Farbe hat dieses Gebäudedach\?</string>
     <string name="advanced_resurvey_hint_date">Format verwenden: YYYY-MM-DD</string>
-    <string name="pref_tile_source_title">Kachelquelle für Satelliten-/Luftbilder</string>
+    <string name="pref_tile_source_title">Quelle für Satelliten-/Luftbilder</string>
     <string name="quest_seating_pedestrian_zone">In einer Fußgängerzone</string>
     <string name="quest_seating_balcony">Auf einem Balkon (nicht im Erdgeschoss)</string>
     <string name="tag_editor_duplicate_key">Änderung des Zweitschlüssels %s ignorieren</string>
@@ -367,7 +351,6 @@
     <string name="pref_screen_display">Anzeige</string>
     <string name="quest_settings_level_default">Geschäfte und ähnliche Einrichtungen in Einkaufszentren (Standard)</string>
     <string name="quest_buildingType_presbytery">Pfarramt</string>
-    <string name="quest_artwork_sculpture">Skulptur</string>
     <string name="custom_overlay_delete">Wirklich %s löschen\?</string>
     <string name="quest_tree_genus_title">Welche Gattung oder Art hat dieser Baum\?</string>
     <string name="enqueue_download">Start nach Abschluss der aktuellen Suche</string>
@@ -380,10 +363,6 @@
     <string name="pref_search_more_languages_summary">Merkmalsuche zeigt Ergebnisse in allen System- und Landessprachen</string>
     <string name="restriction_overlay_relation_incomplete">Einschränkungsrelation ist unvollständig, Download der Umgebung erforderlich</string>
     <string name="ban_check_fails">Die Prüfung auf verbotene Versionen schlägt immer wieder fehl. Möglicherweise wird eine veraltete Version ausgeführt, bitte erwäge ein Upgrade.</string>
-    <string name="quest_generic_surface_button">Generische Oberflächenantworten</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Nur für Wege und Flächen</string>
-    <string name="quest_settings_leaf_type_single_tree_message">Auch die Blattform für einzelne Bäume abfragen?</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Ja</string>
     <string name="quest_footway_width_title">Wie breit ist der Fußweg hier\?</string>
     <string name="quest_service_building_gas_pumping_station_description">Anlage mit Pumpen zur Förderung von Gas von einem Ort zum anderen</string>
     <string name="quest_service_building_type_substation_description">Umspannwerke, die hauptsächlich an das regionale Verteilungsnetz angeschlossen sind</string>
@@ -537,8 +516,6 @@
     <string name="quest_parking_capacity_hint">Dazu gehören auch spezielle Plätze für Menschen mit Behinderung, Familien oder zum Aufladen von Elektrofahrzeugen. Blende diese Aufgabe aus, wenn die Parkplätze nicht markiert sind und daher nicht gezählt werden können</string>
     <string name="quest_parking_capacity_title">Wie viele Autos können hier parken?</string>
     <string name="quest_parking_capacity_disabled_default_disabled_msg">In SCEE hinzugefügte Aufgaben sind standardmäßig immer deaktiviert, da sie nicht immer beantwortet werden können und möglicherweise Wissen über das Thema und die Kennzeichnung erfordern.\nDiese Aufgabe wird nicht gestellt, wenn capacity:disabled=yes gesetzt ist. Wenn du sie auch angeben möchtest, ändere die Elementauswahl von „and !capacity:disabled“ in „and (!capacity:disabled or capacity:disabled=yes)“</string>
-    <string name="quest_subwayEntranceRef_hint">Referenznummer für diesen Eingang:</string>
-    <string name="quest_subwayEntranceRef_disabled_msg">Dieser Quest ist standardmäßig deaktiviert, da die Beschilderung je nach Region und Betreiber sehr unterschiedlich ist.</string>
     <string name="quest_generalRef_hint">Referenznummer</string>
     <string name="quest_generalRef_disabled_msg">Diese Aufgabe ist standardmäßig deaktiviert, da die Beschilderung je nach Region und Betreiber sehr unterschiedlich ist. Möglicherweise musst du die Auswahl der Elemente für dein Gebiet verfeinern (z. B. Straßenlaternen entfernen, Karten hinzufügen, nur Wegweiser mit hiking=yes auswählen usw.)</string>
     <string name="close">Schließen</string>
@@ -635,15 +612,15 @@
     <string name="pref_rotate_angle_threshold_title">Schwellenwert für die Rotationsgeste</string>
     <string name="quest_postOffice_title">Welche Art von Postamt ist das?</string>
     <string name="quest_postOffice_bureau">Vollständiges (offizielles) Postamt</string>
-    <string name="quest_postOffice_postAnnex">Postamt (in privater Hand, möglicherweise mit eingeschränktem Service)</string>
-    <string name="quest_postOffice_postPartner">Post-Service in Geschäften oder Einrichtungen (als Dienstleistung)</string>
+    <string name="quest_postOffice_postAnnex">Privat betriebene Poststelle (eingeschränkter Service)</string>
+    <string name="quest_postOffice_postPartner">Postschalter mit eingeschränktem Service (z. B. in einem Laden)</string>
     <string name="quest_buildingMaterial_title">Aus welchem Material ist die Fassade dieses Gebäudes gemacht?</string>
     <string name="quest_buildingPartMaterial_title">Aus welchem Material ist die Fassade dieses Gebäudeteils gemacht?</string>
     <string name="quest_material_cement_block">Betonstein</string>
     <string name="quest_material_glass">Glas</string>
     <string name="quest_material_mirror">Spiegelglas</string>
     <string name="quest_material_sandstone">Sandstein</string>
-    <string name="quest_material_reed">Reed</string>
+    <string name="quest_material_reed">Reet</string>
     <string name="quest_material_loam">Lehm</string>
     <string name="quest_material_marble">Marmor</string>
     <string name="quest_material_slate">Schiefer</string>
@@ -651,9 +628,9 @@
     <string name="quest_material_limestone">Kalkstein</string>
     <string name="quest_material_tiles">Fliesen</string>
     <string name="quest_material_bamboo">Bambus</string>
-    <string name="quest_material_adobe">Adobeziegel</string>
-    <string name="quest_material_plaster">Putz-Fassade</string>
-    <string name="quest_material_mud">getrockneter Schlamm</string>
+    <string name="quest_material_adobe">Lehmziegel</string>
+    <string name="quest_material_plaster">Putz</string>
+    <string name="quest_material_mud">Getrockneter Schlamm</string>
     <string name="quest_material_clay">Ton</string>
     <string name="quest_material_timber_framing">Fachwerk</string>
     <string name="quest_disused">Es ist stillgelegt</string>
@@ -668,4 +645,18 @@
     <string name="quest_lampMount_straightMast">Gerader Pfahl</string>
     <string name="quest_lampMount_bentMast">Gebogener Pfahl</string>
     <string name="quest_lampMount_suspended">An einem Draht aufgehängt</string>
+    <string name="quest_bench_armrest_title">Hat diese Bank Armlehnen?</string>
+    <string name="quest_onewayBicycle_title">Ist dieser Weg für Fahrräder nur in eine Richtung befahrbar? In welche Richtung?</string>
+    <string name="quest_material_pebbledash">Kieselputz</string>
+    <string name="quest_postOffice_postPartner_hint">Auch wenn es als amenity=post_office gekennzeichnet ist, wird post_partner oft benutzt, um den genauen Standort eines Postschalters anzugeben.</string>
+    <string name="quest_toilets_disposal_title">Was für eine Art Toilettenentsorgung wird hier benutzt?</string>
+    <string name="quest_toilets_disposal_flush">Das Abwasser wird mit Wasser gespült</string>
+    <string name="quest_toilets_disposal_pit">Das Abwasser wird in einer Grube gesammelt</string>
+    <string name="quest_toilets_disposal_chemical">Das Abwasser wird in einem Chemietank gesammelt</string>
+    <string name="quest_evse_id_title">Wie lautet die EVSE-ID dieser Ladestation?</string>
+    <string name="quest_evse_id_add_more">Füge eine weitere EVSE-ID hinzu</string>
+    <string name="quest_evse_id_hint">z. B. DE*GCE*E1234567</string>
+    <string name="quest_pavingStonesMaterial_title">Aus welchem Material sind diese Pflastersteine?</string>
+    <string name="quest_fence_material_title">Aus welchem Material ist dieser Zaun?</string>
+    <string name="quest_material_wire">Draht</string>
 </resources>

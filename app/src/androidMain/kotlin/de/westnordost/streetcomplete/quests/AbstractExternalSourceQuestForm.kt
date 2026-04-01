@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.view.children
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.Prefs
@@ -25,14 +28,16 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestType
 import de.westnordost.streetcomplete.data.location.SurveyChecker
 import de.westnordost.streetcomplete.data.quest.ExternalSourceQuestKey
 import de.westnordost.streetcomplete.data.visiblequests.QuestsHiddenController
-import de.westnordost.streetcomplete.util.getNameAndLocationSpanned
+import de.westnordost.streetcomplete.util.getNameAndLocationLabel
 import de.westnordost.streetcomplete.util.ktx.isSplittable
 import de.westnordost.streetcomplete.util.ktx.popIn
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
+import de.westnordost.streetcomplete.util.nameAndLocationLabel
 import de.westnordost.streetcomplete.view.confirmIsSurvey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.getSystemResourceEnvironment
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
@@ -71,8 +76,10 @@ abstract class AbstractExternalSourceQuestForm : AbstractQuestForm(), IsShowingQ
             element = mapDataSource.get(key.type, key.id)
         }
         setObjNote(element?.tags?.get("note"), element?.tags?.get("fixme") ?: element?.tags?.get("FIXME"))
-        element?.let { setTitleHintLabel(getNameAndLocationSpanned(it, resources, featureDictionary.value)) }
     }
+
+    @Composable
+    override fun getSubtitle(): AnnotatedString? = element?.let { nameAndLocationLabel(it, featureDictionary.value) }
 
     override fun onStart() {
         super.onStart()
@@ -171,12 +178,17 @@ abstract class AbstractExternalSourceQuestForm : AbstractQuestForm(), IsShowingQ
     }
 
     protected fun composeNote() {
-        val questTitle = resources.getString(externalQuestType.title)
-        val actualTitle = getCurrentTitle()
-        val show = if (actualTitle.startsWith(questTitle)) actualTitle
-            else "$questTitle / $actualTitle" // both may contain relevant information
-        val leaveNoteContext = "Unable to answer \"$show\""
-        listener?.onComposeNote(externalQuestType, element ?: dummyElement, geometry, leaveNoteContext)
+        viewLifecycleScope.launch {
+            val resourceEnvironment = getSystemResourceEnvironment()
+            val questTitle = org.jetbrains.compose.resources.getString(resourceEnvironment, questType.title)
+            val hintLabel = getNameAndLocationLabel(resourceEnvironment, LayoutDirection.Ltr, element ?: dummyElement, featureDictionary.value)
+            val leaveNoteContext = if (hintLabel.isNullOrBlank()) {
+                "Unable to answer \"$questTitle\""
+            } else {
+                "Unable to answer \"$questTitle\" – $hintLabel"
+            }
+            listener?.onComposeNote(externalQuestType, element ?: dummyElement, geometry, leaveNoteContext)
+        }
     }
 
     protected fun tempHideQuest() {

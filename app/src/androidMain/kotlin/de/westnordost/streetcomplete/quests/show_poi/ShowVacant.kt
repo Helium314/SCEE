@@ -11,7 +11,6 @@ import de.westnordost.streetcomplete.osm.applyReplacePlaceTo
 import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.osm.updateCheckDate
 import de.westnordost.streetcomplete.quests.getLabelSources
-import de.westnordost.streetcomplete.quests.shop_type.IsShopVacant
 import de.westnordost.streetcomplete.quests.shop_type.ShopType
 import de.westnordost.streetcomplete.quests.shop_type.ShopTypeAnswer
 import de.westnordost.streetcomplete.quests.shop_type.ShopTypeForm
@@ -19,6 +18,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.LabelOrElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_poi_vacant
+import de.westnordost.streetcomplete.resources.quest_poi_vacant_title
 
 class ShowVacant : OsmFilterQuestType<ShopTypeAnswer>(), AndroidQuest {
     override val elementFilter = """
@@ -31,22 +31,21 @@ class ShowVacant : OsmFilterQuestType<ShopTypeAnswer>(), AndroidQuest {
     override val changesetComment = "Adjust vacant places"
     override val wikiLink = "Key:disused:"
     override val icon = R.drawable.ic_quest_poi_vacant
+    override val title = Res.string.quest_poi_vacant_title
     override val dotColor = "grey"
     override val defaultDisabledMessage = Res.string.default_disabled_msg_poi_vacant
     override val dotLabelSources = getLabelSources("label", this, prefs)
 
-    override fun getTitle(tags: Map<String, String>) =
-        R.string.quest_poi_vacant_title
-
     override fun createForm() = ShopTypeForm()
 
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlace() }
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.asSequence().filter { it.isPlace() }
 
     override fun applyAnswerTo(answer: ShopTypeAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         when (answer) {
-            is IsShopVacant -> tags.updateCheckDate()
+            is ShopTypeAnswer.IsShopVacant -> tags.updateCheckDate()
             is ShopType -> answer.feature.applyReplacePlaceTo(tags)
+            is ShopTypeAnswer.LeaveNote -> {} // can this happen?
         }
     }
 

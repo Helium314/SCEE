@@ -30,19 +30,6 @@
     <string name="quest_material_concrete">Betonista</string>
     <string name="quest_material_stone">Kivestä</string>
     <string name="quest_material_brick">Tiilistä</string>
-    <string name="quest_artwork_title">Minkälainen taideteos tämä on?</string>
-    <string name="quest_artwork_sculpture">Veistos</string>
-    <string name="quest_artwork_statue">Patsas</string>
-    <string name="quest_artwork_mural">Seinämaalaus</string>
-    <string name="quest_artwork_installation">Installaatio</string>
-    <string name="quest_artwork_bust">Rintakuva</string>
-    <string name="quest_artwork_stone">Kivi</string>
-    <string name="quest_artwork_painting">Maalaus</string>
-    <string name="quest_artwork_architecture">Arkkitehtuuri</string>
-    <string name="quest_artwork_mosaic">Mosaiikki</string>
-    <string name="quest_artwork_relief">Kohokuva</string>
-    <string name="quest_artwork_fountain">Suihkulähde</string>
-    <string name="quest_artwork_land_art">Maataide</string>
     <string name="quest_brewery_title">Mitä olutmerkkejä täällä tarjoillaan?</string>
     <string name="quest_brewery_add_more">Lisää panimo</string>
     <string name="quest_brewery_is_various">Täällä tarjotaan useita olutmerkkejä</string>
@@ -53,7 +40,6 @@
     <string name="tag_editor_last_edited">Viimeksi muokattu: %s</string>
     <string name="pref_3d_buildings_title">Näytä 3D-rakennukset</string>
     <string name="pref_recent_answers_first_min_lines_message">Siirrä viimeaikaiset vastaukset etummaisiksi, jos vastauslomakkeessa on kuvarivejä enemmän kuin tämä määrä</string>
-    <string name="quest_artwork_graffiti">Graffiti</string>
     <string name="quest_benchMaterial_title">Mistä tämä on tehty?</string>
     <string name="pref_quest_geometries_summary">Korosta viivat ja alueet, joilla on tehtäviä</string>
     <string name="pref_screen_quests">Tehtävät</string>

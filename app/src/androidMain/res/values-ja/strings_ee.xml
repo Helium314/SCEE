@@ -406,10 +406,6 @@
     <string name="quest_building_demolished">破壊または取り壊された(輪郭線は見えている)</string>
     <string name="quest_private">非公開です</string>
     <string name="quest_name_brand">ブランド名があります…</string>
-    <string name="quest_maxheight_answer_noSign_question">この場所には高いトラック(少なくとも4.5メートル / 15フィート)が通る余裕がありますか?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">大型トラックが通れる</string>
-    <string name="quest_maxheight_answer_noSign_question_no">大型トラックは大きさが合わない</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">不明瞭</string>
     <string name="quest_generalRef_disabled_msg">これは、地域または管理者によって何を示すか大きく異なるため、初期設定では無効化されています。当該領域で要素選択から抽出してください(例: 街灯を除去、地図を追加、 hiking=yes が付いている道標だけ選択、など。)</string>
     <string name="quest_generalRef_hint">参照番号またはコード</string>
     <string name="custom_overlay_title">任意オーバーレイ</string>

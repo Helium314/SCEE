@@ -38,7 +38,7 @@
     <string name="pref_custom_title">Indlæs brugerdefineret opgave-fil</string>
     <string name="pref_show_next_quest_summary">Vis yderligere opgaver for samme element straks efter løsning</string>
     <string name="pref_gpx_track_download">Download område dækket af GPX-spor</string>
-    <string name="pref_tile_source_message">Flise-URL skal indeholder {x}, {y} og {z}</string>
+    <string name="pref_tile_source_message">Flisekilde-URL skal indeholder {x}, {y} og enten {z} eller {zoom}. WMS-kilden skal understøtte EPSG:3857, og URL'en skal indeholde enten {bbox-epsg-3857} eller både {bbox} og {proj}.</string>
     <string name="pref_recent_answers_first_min_lines_summary">Hvis formularen har mere end %d linje(r)</string>
     <string name="pref_main_menu_grid">Vis alle hovedmenupunkter som gitter</string>
     <string name="import_presets_overlays_add">Tilføj</string>
@@ -93,7 +93,7 @@
     <string name="pref_hide_button_title">Vis skjul-knap</string>
     <string name="tree_custom_quest_export">Hent</string>
     <string name="import_export_custom_overlays">Egne overlejringer</string>
-    <string name="pref_tile_source_title">Flisekilde til satellit- og luftbilleder</string>
+    <string name="pref_tile_source_title">Kilde til satellit- og luftbilleder</string>
     <string name="pref_update_local_statistics_summary">Deaktivering accelererer upload og stopper præstationsbeskeder</string>
     <string name="pref_create_node_show_keyboard_title">Vis automatisk tastatur, når du tilføjer et punkt</string>
     <string name="pref_disable_navigation_mode_title">Deaktivér navigationstilstand</string>
@@ -168,10 +168,6 @@
     <string name="quest_service_building_ventilation">Ventilationsskakt</string>
     <string name="quest_seating_pedestrian_zone">I et fodgængerområde</string>
     <string name="quest_seating_veranda">På en veranda (under tag, kan være en smule hævet over jorden)</string>
-    <string name="quest_artwork_bust">Buste</string>
-    <string name="quest_artwork_stone">Sten</string>
-    <string name="quest_artwork_fountain">Fontæne</string>
-    <string name="quest_artwork_land_art">Landkunst</string>
     <string name="quest_trail_visibility_good_description">Stien eller den næste markør er altid synlig, men nogle gange skal man lede efter den. Grundlæggende retningssans nødvendig, kort anbefales.</string>
     <string name="quest_trail_visibility_intermediate_description">Stien er for det meste synlig, ingen markører. God retningssans nødvendig, kort påkrævet.</string>
     <string name="quest_trail_visibility_intermediate">Nogenlunde</string>
@@ -286,14 +282,6 @@
     <string name="quest_shelter_type_sun_shelter">Læ for solen</string>
     <string name="quest_shelter_type_field_shelter">Læskur (til dyr)</string>
     <string name="quest_shelter_type_rock_shelter">Hulelignende læ i klippe</string>
-    <string name="quest_artwork_title">Hvilken slags kunstværk er det her?</string>
-    <string name="quest_artwork_statue">Statue</string>
-    <string name="quest_artwork_graffiti">Graffiti</string>
-    <string name="quest_artwork_installation">Installation</string>
-    <string name="quest_artwork_painting">Maleri</string>
-    <string name="quest_artwork_architecture">Arkitektur</string>
-    <string name="quest_artwork_mosaic">Mosaik</string>
-    <string name="quest_artwork_relief">Relief</string>
     <string name="quest_trail_visibility_horrible">Forfærdelig</string>
     <string name="quest_trail_visibility_no">Ingen synlighed</string>
     <string name="quest_trail_visibility_no_description">Mest uden stier, ingen markører. Fremragende orienteringsevner er påkrævet.</string>
@@ -368,7 +356,6 @@
     <string name="restriction_overlay_other_restrictions">Andre restriktioner på denne linjestreng:</string>
     <string name="quest_utility_water">Vand</string>
     <string name="quest_utility_power">Elektricitet</string>
-    <string name="quest_artwork_mural">Vægmaleri</string>
     <string name="outside_downloaded_area_warning">Denne position er uden for det downloadede område. Vil du fortsætte?</string>
     <string name="access_time_limit">Tidspunkt</string>
     <string name="create_relation_action_description">Du oprettede en relation med …</string>
@@ -381,8 +368,6 @@
     <string name="quest_viaFerrataScale_one">Grad 1/K1/A - meget let</string>
     <string name="quest_viaFerrataScale_zero_description">Lav sværhedsgrad; terrænet varierer fra fladt til stejlt; nogle udsatte sektioner. Sikret med kabler, kæder eller korte stiger. Kræver godt fodfæste; fint for de usportslige. Ferrata-sæt er valgfrit for de fleste.</string>
     <string name="quest_viaFerrataScale_title">Hvad er Via Ferrata-skalaen for denne ferrata?</string>
-    <string name="quest_generic_surface_button">Generisk overflade-svar</string>
-    <string name="quest_generic_surface_yes">Tillad uden bemærkning</string>
     <string name="level_filter">Etage-filter</string>
     <string name="quest_settings_osmose_level_title">Vælg alvorlighedsniveauer for problemer, der skal downloades og vises</string>
     <string name="quest_settings_osmose_level_high">Højt</string>
@@ -395,9 +380,6 @@
     <string name="element_selection_button">Valg af element</string>
     <string name="quest_settings_building_levels_mandatory_roof">Kræv angivelse af tagetager i de fleste lande (standard)</string>
     <string name="quest_settings_highlight_changes_button">Fremhæv ændringer</string>
-    <string name="quest_settings_leaf_type_single_tree_message">Spørg også om bladtype for enkeltstående træer?</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Ja</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Kun for linjestrenge og områder</string>
     <string name="quest_order_reverse">Omvendt rækkefølge af opgaver</string>
     <string name="quest_order_normal">Tilbage til normal opgave-rækkefølge</string>
     <string name="quest_custom_quest_title">Brugerdefineret opgave:</string>
@@ -416,8 +398,6 @@
     <string name="level_filter_message">Indtast etageværdi, eller filtrer ved hjælp af &gt; og &lt;. Brug * til at matche alle elementer, der indeholder en tilladt etagenøgle</string>
     <string name="quest_mapSize_title">Hvilket område er dækket af dette kort?</string>
     <string name="restriction_overlay_relation_incomplete">Begrænsningsrelationen er ufuldstændig, download af det omkringliggende område er påkrævet</string>
-    <string name="quest_generic_surface_message">Tillad generiske overfladesvar uden at kræve en bemærkning?</string>
-    <string name="quest_generic_surface_no">Kun med bemærkning (standard)</string>
     <string name="quest_trail_visibility_excellent">Fremragende</string>
     <string name="quest_trail_visibility_excellent_description">Tydelig sti eller markører overalt. Uproblematisk at orientere sig, intet kort nødvendigt.</string>
     <string name="quest_trail_visibility_good">God</string>
@@ -516,7 +496,6 @@
     <string name="quest_railwayPlatformRef_message">Hvilket tag skal man bruge til spor, der er tilgængelige fra denne platform? Ifølge OSM-wiki kan local_ref være at foretrække, men den faktiske brug er for det meste ref.</string>
     <string name="quest_street_cabinet_traffic_monitoring">Trafikovervågning</string>
     <string name="quest_seating_parklet">Ved kantstenen, eller hvor der plejede at være parkering</string>
-    <string name="quest_artwork_sculpture">Skulptur</string>
     <string name="default_disabled_msg_roof">Denne opgavetype er som standard deaktiveret, fordi tage ofte ikke er let synlige fra gaden. Denne opgavetype er også ret tidskrævende; i de fleste tilfælde er det nemmere og mere effektivt at kortlægge dette ud fra luftfotos derhjemme.</string>
     <string name="quest_viaFerrataScale_two_description">Stejle eller lodrette passager er udstyret med stiger eller jerntrin. Stålkabler og kæder sikrer klatreren, selv i mindre vanskeligt terræn. Ferrata-sæt anbefales på det kraftigste.</string>
     <string name="quest_tree_disabled_msg">Denne opgave er deaktiveret som standard, fordi den ikke er let at besvare. Art/slægt skal vælges fra forslag, som er taget fra de mest brugte værdier. Du kan give forslag fra din egen liste over arter med søgbare navne ved at angive en fil i menuen for datahåndteringsindstillinger, der indeholder &lt;species&gt; (&lt;name&gt;).</string>
@@ -629,10 +608,10 @@
     <string name="fixme_for_object">En anden person tilføjede et fixme:</string>
     <string name="pref_rotate_while_zooming_title">Tillad rotation, mens der zoomes</string>
     <string name="pref_rotate_angle_threshold_title">Tærskel for rotationsbevægelse</string>
-    <string name="quest_postOffice_title">Hvilken type postkontor er dette?</string>
-    <string name="quest_postOffice_bureau">Fuldt (officielt) posthus</string>
-    <string name="quest_postOffice_postAnnex">Postkontor (privatejet, måske med begrænset service)</string>
-    <string name="quest_postOffice_postPartner">Postafhentning og aflevering i butikker eller faciliteter (som en service)</string>
+    <string name="quest_postOffice_title">Hvilken type posttjeneste er dette?</string>
+    <string name="quest_postOffice_bureau">Fuldservice (officielt) posthus</string>
+    <string name="quest_postOffice_postAnnex">Privatdrevet posthus (begrænsede tjenester)</string>
+    <string name="quest_postOffice_postPartner">Postekspedition med begrænset service (f.eks. skranke inde i en butik)</string>
     <string name="quest_roofOrientation_across">Parallelt med bygningens korte side</string>
     <string name="quest_roofOrientation_along">Parallelt med bygningens lange side</string>
     <string name="quest_roofOrientation_title">Hvordan er tagryggen orienteret?</string>
@@ -667,4 +646,18 @@
     <string name="quest_lampMount_transitShelter">Venteskur</string>
     <string name="quest_lampMount_title">Hvordan er denne lampe monteret?</string>
     <string name="quest_disused">Er ikke i brug</string>
+    <string name="quest_bench_armrest_title">Har denne bænk nogen armlæn?</string>
+    <string name="quest_onewayBicycle_title">Er denne sti ensrettet for cykler? I hvilken retning?</string>
+    <string name="quest_material_pebbledash">Stenpuds</string>
+    <string name="quest_postOffice_postPartner_hint">Selv når det kortlægges som amenity=post_office, bruges post_partner ofte til at angive den nøjagtige placering af en posttjenestes skranke.</string>
+    <string name="quest_toilets_disposal_title">Hvilken type toiletbortskaffelse bruges her?</string>
+    <string name="quest_toilets_disposal_flush">Affaldet skylles væk med vand</string>
+    <string name="quest_toilets_disposal_pit">Affaldet opsamles i et hul</string>
+    <string name="quest_toilets_disposal_chemical">Affaldet opsamles i en kemikalietank</string>
+    <string name="quest_evse_id_title">Hvilket EVSE-ID har denne ladestation?</string>
+    <string name="quest_evse_id_add_more">Tilføj endnu et EVSE-ID</string>
+    <string name="quest_evse_id_hint">f.eks. DE*GCE*E1234567</string>
+    <string name="quest_pavingStonesMaterial_title">Hvilket materiale er disse belægningssten lavet af?</string>
+    <string name="quest_fence_material_title">Hvilket materiale er dette hegn lavet af?</string>
+    <string name="quest_material_wire">Wire</string>
 </resources>

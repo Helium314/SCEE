@@ -30,7 +30,6 @@
     <string name="quest_material_concrete">Betonista</string>
     <string name="quest_material_stone">Kivestä</string>
     <string name="quest_material_brick">Tiilistä</string>
-    <string name="quest_artwork_title">Minkälainen taideteos tämä on?</string>
     <string name="quest_brewery_title">Mitä olutmerkkejä täällä tarjoillaan?</string>
     <string name="quest_brewery_add_more">Lisää panimo</string>
     <string name="quest_brewery_is_various">Täällä tarjotaan useita olutmerkkejä</string>

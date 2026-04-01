@@ -110,14 +110,11 @@
     <string name="quest_settings_eligible_highways">Establecer carreteras elegibles para esta tarea, separadas por comas</string>
     <string name="quest_settings_max_steps_length">Longitud máxima de pasos en metros para que se muestre la tarea</string>
     <string name="quest_settings_level_title">Mostrar esta tarea para:</string>
-    <string name="quest_generic_surface_yes">Permitir sin nota</string>
-    <string name="quest_generic_surface_no">Solo con nota (predeterminado)</string>
     <string name="quest_settings_osmose_level_title">Seleccione los niveles de gravedad del problema para descargar y mostrar</string>
     <string name="quest_settings_resurvey_all_opening_hours_title">Repregunta todos los horarios de apertura</string>
     <string name="quest_settings_building_levels_mandatory_roof">Requiere ingresar niveles de techo en la mayoría de los países (predeterminado)</string>
     <string name="quest_settings_building_levels_optional_roof">Permitir omitir niveles de techo en todas partes</string>
     <string name="quest_settings_level_default">Tiendas y similares en centros comerciales (predeterminado)</string>
-    <string name="quest_generic_surface_message">¿Permitir respuestas de superficies genéricas sin necesidad de una nota\?</string>
     <string name="resurvey_intervals_even_less_often">Pregunte incluso con menos frecuencia</string>
     <string name="quest_settings_sidewalk_cycleway_distance_message">Establezca la distancia mínima desde caminos separados, si es más baja, no se mostrará la misión</string>
     <string name="quest_settings_max_roof_levels">Valor máximo para (niveles de construcción) mínimo (niveles de techo) para que se muestre la misión</string>
@@ -165,15 +162,6 @@
     <string name="quest_seating_garden">En una zona ajardinada</string>
     <string name="quest_seating_beach">En la playa</string>
     <string name="quest_service_building_type_substation">Subestación eléctrica</string>
-    <string name="quest_artwork_sculpture">Escultura</string>
-    <string name="quest_artwork_statue">Estatua</string>
-    <string name="quest_artwork_mural">Mural</string>
-    <string name="quest_artwork_bust">Busto</string>
-    <string name="quest_artwork_stone">Piedra</string>
-    <string name="quest_artwork_painting">Cuadro</string>
-    <string name="quest_artwork_architecture">Arquitectura</string>
-    <string name="quest_artwork_mosaic">Mosaico</string>
-    <string name="quest_artwork_fountain">Fuente</string>
     <string name="quest_poi_misc_title">POI: Variados</string>
     <string name="default_disabled_msg_poi_other">Esta "tarea" muestra varios PDI como hidrantes, miradores o baños como puntos amarillos. Haga clic en el punto para mostrar detalles y otras respuestas.</string>
     <string name="quest_poi_recycling_title">POI: Reciclaje</string>
@@ -191,10 +179,6 @@
     <string name="quest_seating_street">En una zona de la calle</string>
     <string name="quest_seating_sidewalk">En la acera</string>
     <string name="quest_outdoor_seating_name_title">¿Qué tipo de asientos al aire libre tiene este lugar\?</string>
-    <string name="quest_artwork_title">¿Qué clase de obra de arte es esta\?</string>
-    <string name="quest_artwork_graffiti">Grafiti</string>
-    <string name="quest_artwork_relief">Relieve</string>
-    <string name="quest_artwork_land_art">Arte de la tierra</string>
     <string name="quest_contact_website">¿Cuál es el sitio web de este lugar\?</string>
     <string name="quest_cuisine_title">¿Qué cocina tiene este lugar\? ¡Usa las etiquetas OSM sugeridas!</string>
     <string name="quest_cuisine_add_more">Añadir otra cocina</string>
@@ -204,7 +188,6 @@
     <string name="default_disabled_msg_ee">Las tareas agregadas en SCEE siempre están deshabilitadas de forma predeterminada, ya que es posible que no siempre se puedan responder y pueden requerir conocimiento del tema y etiquetado.</string>
     <string name="quest_railwayPlatformRef_title">¿Qué número de pista está aquí\?</string>
     <string name="quest_roofColour_title">¿Qué color general tiene el tejado de este edificio\?</string>
-    <string name="default_disabled_msg_roofColour">Este tipo de tarea está deshabilitado de forma predeterminada porque los tejados a menudo no son fácilmente visibles desde la calle. Este tipo de tarea también requiere bastante tiempo; en la mayoría de los casos, es más fácil y eficiente mapear esto a partir de imágenes aéreas en casa.</string>
     <string name="quest_healthcare_speciality_switch_ui">Cambiar interfaz de usuario</string>
     <string name="quest_healthcare_speciality_disabled_message">Esta tarea requiere conocimiento sobre las etiquetas de healthcare:speciality. Sin este conocimiento, la tarea puede ser muy difícil de responder.</string>
     <string name="quest_buildingType_elevator">Ascensor</string>
@@ -295,7 +278,6 @@
     <string name="pref_delete_old_data_after">Eliminar datos antiguos después de</string>
     <string name="pref_advanced_resurvey_title">Repregunta avanzada</string>
     <string name="pref_dynamic_quest_creation_title">Crear tareas dinámicas</string>
-    <string name="quest_artwork_installation">Instalación</string>
     <string name="quest_buildingType_cowshed">Establo</string>
     <string name="quest_surface_value_metal_grid">Rejilla metálica</string>
     <string name="quest_contact_phone">¿Cuál es el número de teléfono de este lugar\?</string>
@@ -383,14 +365,10 @@
     <string name="pref_hide_overlay_quests">Ocultar las funciones específicas de la superposición</string>
     <string name="pref_main_menu_switch_presets_title">Cambiar el botón preestablecido en el menú principal</string>
     <string name="outside_downloaded_area_warning">Este lugar está fuera de la zona cargada. ¿Continuar\?</string>
-    <string name="quest_generic_surface_button">Respuestas genéricas de superficiales</string>
     <string name="pref_disable_navigation_mode_title">Deshabilitar el modo navegador</string>
     <string name="pref_disable_navigation_mode_summary">Desactiva el modo en que se inclina y gira automáticamente el mapa</string>
     <string name="quest_name_brand">Tiene una marca…</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Sólo para caminos y zonas</string>
     <string name="quest_footway_width_title">¿Qué anchura tiene el sendero\?</string>
-    <string name="quest_settings_leaf_type_single_tree_message">¿Preguntar también por el tipo de hoja de los árboles individuales\?</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Sí</string>
     <string name="quest_service_building_gas_pumping_station_description">Instalación que incluye bombas para bombear gas de un lugar a otro</string>
     <string name="quest_service_building_type_substation_description">Subestaciones relacionadas principalmente con las redes regionales de distribución</string>
     <string name="quest_utility_telecom">Telecomunicaciones</string>
@@ -613,4 +591,6 @@
     <string name="quest_sacScale_strolling_description">Sendero liso y llano, sin obstáculos, apto para todo tipo de calzado, cochecitos o muletas, y que no requiere habilidades de orientación.</string>
     <string name="file_provide">Seleccionar archivo</string>
     <string name="file_loading_error">Error al cargar el archivo</string>
+    <string name="pref_really_all_notes_title">"Mostrar todas las notas" significa TODAS</string>
+    <string name="pref_really_all_notes_summary">Cuando solicite mostrar todas las anotaciones, incluso aquellas que usted creó (o comentó), hágalo</string>
 </resources>

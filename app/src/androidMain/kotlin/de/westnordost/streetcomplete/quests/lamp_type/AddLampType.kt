@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_lampType_disabled_msg
+import de.westnordost.streetcomplete.resources.quest_lampType_title
 
 class AddLampType : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -23,14 +24,13 @@ class AddLampType : OsmFilterQuestType<String>(), AndroidQuest {
     override val changesetComment = "Add lamp type"
     override val defaultDisabledMessage = Res.string.quest_lampType_disabled_msg
     override val wikiLink = "Key:lamp_type"
+    override val title = Res.string.quest_lampType_title
     override val icon = R.drawable.ic_quest_lamp_type
     override val isReplacePlaceEnabled = true
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_lampType_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with highway = street_lamp")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes with highway = street_lamp")
 
     override fun createForm() = AddLampTypeForm()
 

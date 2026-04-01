@@ -84,7 +84,6 @@
     <string name="time_limited_to">Till</string>
     <string name="restriction_overlay_exceptions">Undantag: %s</string>
     <string name="quest_monitor_found">%d uppdrag i närheten, närmast:</string>
-    <string name="quest_artwork_title">Vilken typ av konstverk är detta?</string>
     <string name="quest_mapType_topo_description">En karta med topografisk bakgrund för t.ex. en historisk karta eller vandringskarta. Kartan innehåller konturlinjer.</string>
     <string name="quest_parking_capacity_disabled_title">Hur många parkeringsplatser för handikappade finns här?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">Det finns, men oklart antal</string>
@@ -406,9 +405,6 @@
     <string name="quest_caravanSiteType_restaurant">Restaurang - vid en restaurang eller ett kafé, ofta på parkeringsplatsen.</string>
     <string name="quest_caravanSiteType_beach">Strand - vid en strand eller vid havet.</string>
     <string name="quest_caravanSiteType_supermarket">Stormarknad - på parkeringsplatsen vid en stormarknad.</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Höga lastbilar kan köra igenom</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Höga lastbilar får inte plats</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Oklart</string>
     <string name="quest_crossing_marking_value_no">Inga</string>
     <string name="quest_crossing_marking_value_zebra">Zebra</string>
     <string name="quest_lampType_led">LED-lampa</string>
@@ -467,7 +463,6 @@
     <string name="quest_saunaAvailability_title">Finns det en bastu här?</string>
     <string name="quest_valves_disabled_msg">Detta uppdrag är inaktiverat som standard, eftersom det kräver en mycket noggrann inspektion av de tillgängliga ventilerna.</string>
     <string name="quest_custom_quest_add_node_text">Du kan lägga till en nod med: %s</string>
-    <string name="quest_maxheight_answer_noSign_question">Finns det uppenbart tillräckligt mycket plats för även de högsta lastbilarna (åtminstone 4,5 meter / 15 fot) att köra igenom?</string>
     <string name="quest_material_limestone">Kalksten</string>
     <string name="pref_rotate_angle_threshold_title">Tröskel för rotationsgest</string>
     <string name="quest_lampType_title">Vilken typ av lampa är detta?</string>

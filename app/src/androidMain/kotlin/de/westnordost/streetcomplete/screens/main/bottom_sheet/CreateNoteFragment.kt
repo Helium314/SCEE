@@ -13,6 +13,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.BounceInterpolator
 import android.view.animation.TranslateAnimation
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.Text
 import androidx.core.graphics.toPointF
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
@@ -27,6 +30,9 @@ import de.westnordost.streetcomplete.data.osmtracks.Trackpoint
 import de.westnordost.streetcomplete.databinding.FormLeaveNoteBinding
 import de.westnordost.streetcomplete.databinding.FragmentCreateNoteBinding
 import de.westnordost.streetcomplete.quests.note_discussion.AttachPhotoFragment
+import de.westnordost.streetcomplete.resources.*
+import de.westnordost.streetcomplete.ui.theme.titleLarge
+import de.westnordost.streetcomplete.ui.util.content
 import de.westnordost.streetcomplete.util.ktx.childFragmentManagerOrNull
 import de.westnordost.streetcomplete.util.ktx.getLocationInWindow
 import de.westnordost.streetcomplete.util.ktx.hideKeyboard
@@ -37,6 +43,7 @@ import de.westnordost.streetcomplete.util.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.stringResource
 import org.koin.android.ext.android.inject
 
 /** Bottom sheet fragment with which the user can create a new note, including moving the note */
@@ -108,7 +115,11 @@ class CreateNoteFragment : AbstractCreateNoteFragment() {
             binding.markerCreateLayout.markerLayoutContainer.startAnimation(createFallDownAnimation())
         }
 
-        bottomSheetBinding.titleLabel.text = getString(R.string.map_btn_create_note)
+        bottomSheetBinding.questHeader.content {
+            ProvideTextStyle(MaterialTheme.typography.titleLarge) {
+                Text(stringResource(Res.string.map_btn_create_note))
+            }
+        }
         contentBinding.descriptionLabel.text = getString(R.string.create_new_note_description)
         if (prefs.getBoolean(Prefs.GPX_BUTTON, false)) {
             bottomSheetBinding.okButton.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0) // removes check drawable

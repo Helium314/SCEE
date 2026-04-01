@@ -95,8 +95,8 @@
     <string name="pref_delete_old_data_after_message">Видаліть завантажені дані OSM, якщо вони старіші за вказану кількість днів</string>
     <string name="pref_delete_old_data_after_summary">%d днів</string>
     <string name="pref_custom_title">Завантажити файл власного завдання</string>
-    <string name="pref_tile_source_title">Джерело тайлів для супутникових / аерофотознімків</string>
-    <string name="pref_tile_source_message">URL-адреса тайлу повинна містити {x}, {y} та {z}</string>
+    <string name="pref_tile_source_title">Джерело супутникових / аерофотознімків</string>
+    <string name="pref_tile_source_message">URL-адреса джерела плиток повинна містити {x}, {y} та або {z}, або {zoom}. Джерело WMS повинно підтримувати EPSG:3857, а URL-адреса повинна містити або {bbox-epsg-3857}, або {bbox} і {proj}.</string>
     <string name="pref_screen_quests">Завдання</string>
     <string name="pref_day_night_title">Фільтр денних завдань</string>
     <string name="pref_advanced_resurvey_summary">Примусове повторне опитування для вибраних тегів</string>
@@ -357,10 +357,6 @@
     <string name="close">Закрити</string>
     <string name="quest_guidepostEle_title">Яка тут висота над рівнем моря?</string>
     <string name="quest_guidepostEle_hint">Не використовуйте дані про висоту за GPS, оскільки вони, як правило, занадто неточні і не надаються в правильній системі відліку висоти.</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Високі вантажівки можуть проїхати</string>
-    <string name="quest_maxheight_answer_noSign_question">Чи достатньо місця для проїзду навіть найвищих вантажівок (від 4,5 метрів / 15 футів заввишки)?</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Невідомо</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Високі вантажівки не проїдуть</string>
     <string name="action_all_quests">Показати всі квести</string>
     <string name="quest_outdoor_seating_name_title">Які місця на вулиці є в цьому закладі?</string>
     <string name="quest_saunaAvailability_title">Чи є тут сауна?</string>
@@ -617,10 +613,10 @@
     <string name="quest_lampMount_angledMast">Кутовий стовп</string>
     <string name="quest_lampMount_highMast">Високий стовп (більше 30 м)</string>
     <string name="quest_lampMount_transitShelter">Автобусна зупинка</string>
-    <string name="quest_postOffice_title">Який тип цього поштового відділення?</string>
-    <string name="quest_postOffice_bureau">Повне (офіційне) поштове відділення</string>
-    <string name="quest_postOffice_postAnnex">Поштове відділення (приватне, можливо, з обмеженим обслуговуванням)</string>
-    <string name="quest_postOffice_postPartner">Поштовий пункт у магазинах або закладах громадського харчування (як послуга)</string>
+    <string name="quest_postOffice_title">Що це за поштова служба?</string>
+    <string name="quest_postOffice_bureau">Офіційне поштове відділення з повним набором послуг</string>
+    <string name="quest_postOffice_postAnnex">Приватне поштове відділення (обмежені послуги)</string>
+    <string name="quest_postOffice_postPartner">Стійка поштової служби з обмеженим набором послуг (наприклад, у магазині)</string>
     <string name="custom_overlay_filter_message">Натисніть посилання нижче, щоб відкрити інформацію про синтаксис вибору елементів у браузері. Зверніть увагу, що під час вибору елементів за віком налаштування інтервалу повторного опитування може впливати на результат.\nПрапорці замінюють частину «вузли, шляхи з».</string>
     <string name="custom_overlay_color_message">Виберіть ключі, з яких потрібно отримати колір. Приймає регулярний вираз та використовує відповідні теги для отримання кольору. Колір визначається ключем та значенням усіх відповідних ключів. Якщо відповідний ключ містить :left/right/both, він буде використаний для забарвлення відповідних сторін лінії, але не центральної лінії. Якщо збігу немає, колір завжди червоний, що вказує на відсутність даних. Знання регулярних виразів дуже корисне для цієї функції.\nЯкщо вираз не є регулярним, додайте префікс \'!\', щоб почати зі значення, на яке орієнтовано під час редагування тегів.\n\nПриклад:\n\"surface\" показує surface=asphalt тим самим кольором, а surface=concrete — іншим кольором.\n\".*surface\" схожий, але також показує sidewalk:(left/right/both):surface=asphalt одним кольором, а cycleway:(left/right/both):surface=asphalt — іншим кольором</string>
     <string name="custom_overlay_color_hint">Залиште порожнім, щоб відобразити все одним кольором</string>
@@ -637,4 +633,18 @@
     <string name="manage_access">Керувати доступом…</string>
     <string name="access_manager_message">Виберіть теги доступу. Пам’ятайте, що тегом позначено лише підписаний доступ, і по можливості уникайте загального тегу «доступ»</string>
     <string name="quest_valves_regina">RV: Regina / Італійський</string>
+    <string name="quest_material_pebbledash">Галькова штукатурка</string>
+    <string name="quest_onewayBicycle_title">Це одностороння доріжка для велосипедистів? У якому напрямку?</string>
+    <string name="quest_bench_armrest_title">Чи є у цієї лавки підлокітники?</string>
+    <string name="quest_toilets_disposal_title">Який тип утилізації відходів тут використовується?</string>
+    <string name="quest_toilets_disposal_flush">Відходи змиваються водою</string>
+    <string name="quest_toilets_disposal_pit">Відходи збираються в ямі</string>
+    <string name="quest_toilets_disposal_chemical">Відходи збираються в хімічному резервуарі</string>
+    <string name="quest_pavingStonesMaterial_title">З якого матеріалу ця бруківка?</string>
+    <string name="quest_material_wire">Дріт</string>
+    <string name="quest_fence_material_title">З якого матеріалу ця огорожа?</string>
+    <string name="quest_postOffice_postPartner_hint">Навіть якщо позначено amenity=post_office, для вказання точного розташування стійки поштової служби використовується post_partner.</string>
+    <string name="quest_evse_id_hint">наприклад, DE*GCE*E1234567</string>
+    <string name="quest_evse_id_title">Який EVSE ID цієї зарядної станції?</string>
+    <string name="quest_evse_id_add_more">Додати ще один EVSE ID</string>
 </resources>

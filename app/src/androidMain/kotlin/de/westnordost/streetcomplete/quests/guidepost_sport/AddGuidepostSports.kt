@@ -10,6 +10,8 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_guidepost_sports_note
+import de.westnordost.streetcomplete.resources.quest_guidepost_sports_title
 
 class AddGuidepostSports : OsmFilterQuestType<Set<GuidepostSportsAnswer>>(), AndroidQuest {
 
@@ -26,16 +28,15 @@ class AddGuidepostSports : OsmFilterQuestType<Set<GuidepostSportsAnswer>>(), And
     override val changesetComment = "Specify what kind of guidepost"
     override val wikiLink = "Tag:information=guidepost"
     override val icon = R.drawable.ic_quest_guidepost_sport
+    override val title = Res.string.quest_guidepost_sports_title
     override val isDeleteElementEnabled = true
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-
-    override val hint = R.string.quest_guidepost_sports_note
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_guidepost_sports_title
+    override val hint = Res.string.quest_guidepost_sports_note
 
     override fun createForm() = AddGuidepostSportsForm()
 
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with tourism = information and information ~ guidepost|route_marker")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes with tourism = information and information ~ guidepost|route_marker")
 
     override fun applyAnswerTo(answer: Set<GuidepostSportsAnswer>, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         answer.forEach {

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This ( app/src/main/res/values/strings.xml ) is the source file for the app's strings in en-US.
-     All other strings.xml are imported from POEditor crowd translation platform.
+<!-- This ( app/src/androidMain/res/values/strings.xml ) is the source file for the app's strings in en-US.
+     All other strings.xml are imported from Codeberg's Weblate crowd translation platform.
 
      The strings are sorted into categories to
      - avoid merge conflicts (people tend to append strings at the end of the file)
-     - better organize the strings to make it easier for translators (strings are presented in
-       POEditor in the same order as in this file)
+     - better organize the strings to make it easier for translators
      -->
 <resources>
 
@@ -137,8 +136,8 @@
     <string name="tree_custom_quest_import_export_message">Get currently used file or provide a new one? Check the corresponding quest enable message for details.</string>
     <string name="tree_custom_quest_import">Provide</string>
     <string name="tree_custom_quest_export">Get</string>
-    <string name="pref_tile_source_title">Tile source for satellite / aerial images</string>
-    <string name="pref_tile_source_message">Tile URL must contain {x}, {y} and {z}</string>
+    <string name="pref_tile_source_title">Source for satellite / aerial images</string>
+    <string name="pref_tile_source_message">Tile source the URL must contain {x}, {y} and either {z} or {zoom}. WMS source needs to support EPSG:3857 and URL must contain either {bbox-epsg-3857} or both {bbox} and {proj}.</string>
     <string name="pref_tile_source_hide_labels">Hide labels</string>
     <string name="pref_tile_maxzoom">Max supported zoom</string>
     <string name="pref_tree_custom_quest_summary">See message when enabling quest for details</string>
@@ -582,11 +581,6 @@
     <string name="quest_guidepostRef_hint">Reference number of this map or guidepost, not the reference number of signed routes.</string>
     <string name="quest_guidepostName_hint">Signed (location) name of this map or guidepost. Do not enter a reference number here.</string>
     <string name="quest_guidepost_disabled_msg">This quest is disabled by default because what is signed strongly varies by region and operator. You may need to refine the element selection for your area (e.g. add or remove maps, only select elements with hiking=yes, etc.)</string>
-    <!-- maxheight_answer_noSign strings removed in SC, could take existing translations from https://github.com/streetcomplete/StreetComplete/blob/312dd4135ad75beff9f13c446040d1c3afbc9a80/app/src/main/res/values/strings.xml -->
-    <string name="quest_maxheight_answer_noSign_question">Is there easily enough space for even the tallest trucks (at least about 4.5 meters / 15 feet) to pass through?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Tall trucks can pass through</string>
-    <string name="quest_maxheight_answer_noSign_question_no">"Tall trucks don’t fit"</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">"Unclear"</string>
     <!-- quest crossing marking -->
     <string name="pref_quest_pedestrian_crossing_markings_extended">Enable extension of \"Does this crossing have markings on the ground?\", allows you to define the style of crossing markings</string>
     <string name="quest_crossing_marking_value_no">No</string>
@@ -673,13 +667,25 @@
     <string name="quest_lampMount_transitShelter">Transit shelter</string>
 
     <!-- post office -->
-    <string name="quest_postOffice_title">What type is this post office?</string>
-    <string name="quest_postOffice_bureau">Full (official) post office</string>
-    <string name="quest_postOffice_postAnnex">Post office (privatly owned, perhaps with restricted service)</string>
-    <string name="quest_postOffice_postPartner">Post relay point in shops or amenities (as a service)</string>
+    <string name="quest_postOffice_title">What kind of postal service is this?</string>
+    <string name="quest_postOffice_bureau">Full-service (official) post office</string>
+    <string name="quest_postOffice_postAnnex">Privately operated post office (limited services)</string>
+    <string name="quest_postOffice_postPartner">Postal service counter with limited services (e.g. inside a shop)</string>
+    <string name="quest_postOffice_postPartner_hint">Even when mapped as amenity=post_office, post_partner is commonly used to indicate the exact location of a postal service counter.</string>
 
     <!-- bicycle oneway -->
     <string name="quest_onewayBicycle_title">Is this path one-way for bicycles? In which direction?</string>
+
+    <!-- toilets disposal quest -->
+    <string name="quest_toilets_disposal_title">What kind of toilet disposal is used here?</string>
+    <string name="quest_toilets_disposal_flush">The waste is flushed with water</string>
+    <string name="quest_toilets_disposal_pit">The waste is collected in a pit</string>
+    <string name="quest_toilets_disposal_chemical">The waste is collected in a chemical tank</string>
+
+    <!-- evse id for charging stations -->
+    <string name="quest_evse_id_title">What is the EVSE ID of this charging station?</string>
+    <string name="quest_evse_id_add_more">Add another EVSE ID</string>
+    <string name="quest_evse_id_hint">e.g. DE*GCE*E1234567</string>
 
     <!-- new overlays -->
 
@@ -766,6 +772,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_roofOrientation_along">Parallel to the building’s longer side</string>
     <string name="quest_roofOrientation_across">Parallel to the building’s shorter side</string>
     <string name="quest_roofOrientation_title">How is the roof ridge oriented?</string>
+    <string name="quest_pavingStonesMaterial_title">"What material are these paving stones made of?"</string>
 
     <!-- building material -->
     <string name="quest_buildingMaterial_title">"What material is this building's facade made of?"</string>
@@ -788,5 +795,9 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_material_bamboo">Bamboo</string>
     <string name="quest_material_adobe">Adobe</string>
     <string name="quest_material_pebbledash">Pebbledash</string>
+
+    <!-- fence material -->
+    <string name="quest_fence_material_title">What material is this fence made of?</string>
+    <string name="quest_material_wire">Wire</string>
 
 </resources>

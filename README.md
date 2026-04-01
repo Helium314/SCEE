@@ -188,7 +188,7 @@ Furthermore SCEE adds new answers leading to such a changeset comment:
   * All quest types related to roads / paths may adjust access tags
   * Quests types asking about about benches, picnic tables, recycling containers, bicycle parkings and sports tracks/pitches may tag `access=private`
   * All quest types related to buildings may change `building` to `demolished:building`
-* SCEE contains some additional [quests (scroll to bottom)](app/src/main/java/de/westnordost/streetcomplete/quests/QuestsModule.kt) and [overlays](app/src/main/java/de/westnordost/streetcomplete/overlays/OverlaysModule.kt), recognizable in the files by `EE_QUEST_OFFSET`
+* SCEE contains some additional [quests (scroll to bottom)](app/src/androidMain/kotlin/de/westnordost/streetcomplete/quests/QuestsModule.kt) and [overlays](app/src/main/java/de/westnordost/streetcomplete/overlays/OverlaysModule.kt), recognizable in the files by `EE_QUEST_OFFSET`
   * They usually do not fulfill the requirements for StreetComplete, and need to be enabled by the user first
 * There are further "quest types" (though neither quests nor overlays, they are identified in `StreetComplete:quest_type` changeset tag)
   * _TagEdit_: may modify any tag

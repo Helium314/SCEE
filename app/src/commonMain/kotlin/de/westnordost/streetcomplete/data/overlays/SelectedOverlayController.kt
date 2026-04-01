@@ -3,8 +3,8 @@ package de.westnordost.streetcomplete.data.overlays
 import com.russhwolf.settings.SettingsListener
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.preferences.Preferences
-//import de.westnordost.streetcomplete.overlays.custom.CustomOverlay
 import de.westnordost.streetcomplete.util.Listeners
+import de.westnordost.streetcomplete.util.fakeStringResource
 
 class SelectedOverlayController(
     private val prefs: Preferences,
@@ -20,7 +20,7 @@ class SelectedOverlayController(
 
     override var selectedOverlay: Overlay?
         set(value) {
-            if (value?.title == 0) {
+            if (value?.title == fakeStringResource) {
                 value.wikiLink?.toIntOrNull()?.let { prefs.putInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, it) }
                 if (prefs.selectedOverlayName == /*CustomOverlay::class.simpleName*/ "CustomOverlay") { // todo, but later...
                     listeners.forEach { it.onSelectedOverlayChanged() }

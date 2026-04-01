@@ -15,6 +15,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.FullElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_piste_ref_title
 
 class AddPisteRef : OsmElementQuestType<PisteRefAnswer>, AndroidQuest {
 
@@ -29,6 +30,7 @@ class AddPisteRef : OsmElementQuestType<PisteRefAnswer>, AndroidQuest {
     override val changesetComment = "Survey piste ref"
     override val wikiLink = "Key:piste:ref"
     override val icon = R.drawable.ic_quest_piste_ref
+    override val title = Res.string.quest_piste_ref_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
@@ -38,10 +40,8 @@ class AddPisteRef : OsmElementQuestType<PisteRefAnswer>, AndroidQuest {
 
     override fun isApplicableTo(element: Element) = if (filter.matches(element)) null else false
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_piste_ref_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("ways, relations with piste:type = downhill")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("ways, relations with piste:type = downhill")
 
     override fun createForm() = AddPisteRefForm()
 

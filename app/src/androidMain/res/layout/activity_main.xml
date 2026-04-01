@@ -13,25 +13,6 @@
         tools:layout="@layout/fragment_map"
         />
 
-    <ScrollView
-        android:id="@+id/otherQuestsScrollView"
-        android:visibility="gone"
-        android:layout_width="54dp"
-        android:layout_height="330dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginTop="80dp"
-        android:layout_alignParentRight="true" >
-
-        <LinearLayout
-            android:id="@+id/otherQuestsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:paddingVertical="8dp"
-            android:orientation="vertical" />
-
-    </ScrollView>
-
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/controls"
         android:layout_width="match_parent"

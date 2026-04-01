@@ -425,6 +425,7 @@ quest/
     surveillance_camera.svg
     swimming_pool.svg               modified by mcliquid based on Kocio CC0 1.0 from https://wiki.openstreetmap.org/wiki/File:Swimming-16.svg
     tent.svg
+    thermometer.svg
     toilets.svg
     toilet_fee.svg
     toilets_wheelchair.svg
@@ -724,7 +725,7 @@ overlay.svg
     hai_phong_street.jpg
     mandalay_market.jpg
 
-../../app/src/main/res/drawable/
+../../app/src/commonMain/composeResources/drawable-*dpi
    map_type_topo.jpg                           modified from https://wiki.openstreetmap.org/wiki/File:Tule_Lake_USGS_topo_map.png, License: Public Domain
    map_type_street.jpg                         Map style: MapOSMatic printable style (c) MapOSMatic developers, Data source: (c) 2023 OpenStreetMap.org and contributors (http://osm.org/copyright)
    map_type_scheme.jpg                         modified from https://wiki.openstreetmap.org/wiki/File:Tadapani-28-Wanderkarte-2013-gje.jpg, License: CC-BY-SA 4.0

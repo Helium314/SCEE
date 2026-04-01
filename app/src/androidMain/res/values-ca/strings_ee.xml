@@ -227,8 +227,6 @@
     <string name="quest_crossing_marking_value_zebra_paired">Zebra en línies per parelles</string>
     <string name="quest_parking_capacity_title">Quants cotxes poden aparcar aquí?</string>
     <string name="quest_parking_capacity_hint">Això també inclou places per a persones discapacitades, per a famílies, per a càrrega i descarrega, etc. Amaga aquesta missió si els espais d\'aparcament no estan marcats i, per tant, no és possible contar-los</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Els camions i vehicles més alts no hi passen</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">No està del tot clar</string>
     <string name="pref_quest_pedestrian_crossing_markings_extended">Vols activar l\'extensió dol missió \"Aquest encreuament té marques a terra\"? Això et permetrà definir l\'estil dols marques de l\'encreuament</string>
     <string name="quest_crossing_marking_value_no">No</string>
     <string name="quest_crossing_marking_value_zebra">Zebra</string>
@@ -300,8 +298,6 @@
     <string name="quest_guidepostName_title">Quin és el nom?</string>
     <string name="quest_guidepostRef_hint">Número de referència per a aquest mapa o aquesta senyalització; no ho confonguis amb el número de referència dols rutes o les destinacions senyalitzades.</string>
     <string name="quest_guidepostName_hint">Ubicació (segons com està escrit) d\'aquest mapa o aquest senyal. No introdueixis aquí sun número de referència.</string>
-    <string name="quest_maxheight_answer_noSign_question">Hi ha espai de sobra perquè inclús els camions i vehicles més alts (com a mínim 4.5m / 15ft. d\'alçada) hi puguin passar per aquí?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Els camions i vehicles més alts hi poden passar</string>
     <string name="quest_caravanSiteType_restaurant">Ubicat prop d\'una cafeteria o d\'un restaurant, sovint en sun aparcament.</string>
     <string name="quest_cuisine_title">Quin tipus de cuina/estil de menjar té aquest lloc? Usa etiquetes d\'OSM suggerides!</string>
     <string name="quest_guidepost_sports_winter_hiking">Senderisme hivernal</string>

@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.quest_guidepostEle_title
 import de.westnordost.streetcomplete.resources.quest_guidepost_disabled_msg
 
 class AddGuidepostEle : OsmFilterQuestType<String>(), AndroidQuest {
@@ -23,13 +24,12 @@ class AddGuidepostEle : OsmFilterQuestType<String>(), AndroidQuest {
     override val changesetComment = "Specify guidepost elevation"
     override val wikiLink = "Tag:information=guidepost"
     override val icon = R.drawable.ic_quest_guidepost_ele
+    override val title = Res.string.quest_guidepostEle_title
     override val isDeleteElementEnabled = true
     override val achievements = listOf(OUTDOORS)
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_guidepostEle_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes with information = guidepost")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes with information = guidepost")
 
     override val highlightedElementsRadius: Double get() = 200.0
     override val defaultDisabledMessage = Res.string.quest_guidepost_disabled_msg

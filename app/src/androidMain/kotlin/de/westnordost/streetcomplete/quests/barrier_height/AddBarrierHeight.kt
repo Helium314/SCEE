@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
 import de.westnordost.streetcomplete.resources.default_disabled_msg_no_ar
+import de.westnordost.streetcomplete.resources.quest_barrier_height_title
 
 class AddBarrierHeight(
     private val checkArSupport: ArSupportChecker
@@ -24,13 +25,10 @@ class AddBarrierHeight(
     override val changesetComment = "Specify barrier heights"
     override val wikiLink = "Key:height"
     override val icon = R.drawable.ic_quest_barrier_height
+    override val title = Res.string.quest_barrier_height_title
     override val achievements = listOf(EditTypeAchievement.PEDESTRIAN)
     override val defaultDisabledMessage
         get() = if (!checkArSupport()) Res.string.default_disabled_msg_no_ar else Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>): Int {
-        return R.string.quest_barrier_height_title
-    }
 
     override fun createForm() = AddBarrierHeightForm()
 

@@ -15,6 +15,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.quests.BooleanQuestSettingsDialog
 import de.westnordost.streetcomplete.quests.questPrefix
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.util.math.contains
 import de.westnordost.streetcomplete.util.math.isInMultipolygon
 
@@ -42,14 +43,13 @@ class AddLevel : OsmElementQuestType<String>, AndroidQuest {
     override val changesetComment = "Determine on which level shops are in a building"
     override val wikiLink = "Key:level"
     override val icon = R.drawable.quest_level
+    override val title = Res.string.quest_level_title2
     /* disabled because in a mall with multiple levels, if there are nodes with no level defined,
      * it really makes no sense to tag something as vacant if the level is not known. Instead, if
      * the user cannot find the place on any level in the mall, delete the element completely. */
     override val isReplacePlaceEnabled = false
     override val isDeleteElementEnabled = true
     override val achievements = listOf(CITIZEN)
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_level_title2
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
         if (prefs.getBoolean(questPrefix(prefs) + PREF_MORE_LEVELS, false))

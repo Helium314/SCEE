@@ -124,7 +124,7 @@
     <string name="pref_tile_source_hide_labels">Скрыть надписи</string>
     <string name="pref_screen_quests">Квесты</string>
     <string name="pref_advanced_resurvey_title">Расширенное повторное обследование</string>
-    <string name="advanced_resurvey_title">Настройка даты и ключей доя обследования</string>
+    <string name="advanced_resurvey_title">Настройка даты и ключей для обследования</string>
     <string name="advanced_resurvey_message_date">Вместо интервального повтора, обследовать указанные теги, если дата проверки старше чем:</string>
     <string name="advanced_resurvey_hint_keys">ключи отделяются запятой</string>
     <string name="advanced_resurvey_hint_date">В формате: ГГГГ-ММ-ДД</string>
@@ -145,8 +145,6 @@
     <string name="quest_monitor_active_request">Принудительный опрос местоположения увеличит расход заряда. Без него, будет использоваться местоположение, определённое другими приложениями.</string>
     <string name="quest_settings_what_to_edit">Что задавать\?</string>
     <string name="quest_settings_sidewalk_distance_button">Расстояние</string>
-    <string name="quest_generic_surface_yes">Разрешить без заметки</string>
-    <string name="quest_generic_surface_no">Только с заметкой (по умолчанию)</string>
     <string name="quest_settings_osmose_level_medium">Средняя</string>
     <string name="quest_settings_osmose_level_low">Низкая</string>
     <string name="quest_settings_fixme_title">Выберите какие значения тега fixme пропускать</string>
@@ -197,9 +195,6 @@
     <string name="quest_service_building_type_reservoir">Ёмкость</string>
     <string name="quest_service_building_type_pump">Насосная станция (НС)</string>
     <string name="quest_seating_pedestrian_zone">В пешеходной зоне</string>
-    <string name="quest_artwork_bust">Бюст</string>
-    <string name="quest_artwork_stone">Камень</string>
-    <string name="quest_artwork_mosaic">Мозаика</string>
     <string name="quest_cuisine_add_more">Добавить другую кухню</string>
     <string name="quest_healthcare_speciality_disabled_message">Этот квест требет знаний о тегах healthcare:speciality. В противном случае, правильно ответить на данный квест крайне сложно.</string>
     <string name="quest_tree_genus_title">К какому роду или виду относится это дерево\?</string>
@@ -215,9 +210,6 @@
     <string name="quest_seating_beach">На пляже</string>
     <string name="quest_contact_phone">Какой номер телефона у этого места\?</string>
     <string name="quest_contact_website">Какой адрес сайта у этого места\?</string>
-    <string name="quest_artwork_painting">Рисунок</string>
-    <string name="quest_artwork_statue">Статуя</string>
-    <string name="quest_artwork_sculpture">Скульптура</string>
     <string name="insert_node_select_way">Укажите место на линии</string>
     <string name="custom_overlay_title">Собственное наложение</string>
     <string name="hide_button">Скрыть</string>
@@ -256,14 +248,13 @@
     <string name="pref_recent_answers_first_min_lines_message">Передвигать недавние варианты в начало, когда форма ответа для квеста содержит строк с картинками больше, чем</string>
     <string name="show_nearby_quests_even_hidden">Показывать квесты всех типов, включая скрытые</string>
     <string name="pref_search_more_languages_summary">Поиск объектов покажет результаты как на местном, так и на языке, заданном в системе</string>
-    <string name="pref_tile_source_message">Адрес должен содержать {x}, {y} и {z}</string>
+    <string name="pref_tile_source_message">Адрес должен содержать {x}, {y} и либо {z}, либо {zoom}. Источник WMS должен поддерживать EPSG:3857, а URL должен содержать либо {bbox-epsg-3857}, либо {bbox} и {proj} одновременно.</string>
     <string name="pref_advanced_resurvey_summary">Принудительно обследовать указанные теги</string>
     <string name="advanced_resurvey_message_keys">Всегда повторно обследовать по этим ключам если нет ключа с датой проверки. Она будет добавлена к ответу на такой квест</string>
     <string name="day_night_priority">Увеличивать приоритет квестов, соответствующих времени суток</string>
     <string name="pref_quest_settings_preset_summary">При вкючении, настройки квестов меняются отдельно для каждой предустановки</string>
     <string name="quest_settings_per_preset_rescan">Для того, чтобы изменённые настройки квестов применились полностью, нужно повторно поискать квесты.</string>
     <string name="restore_dialog_hint">Долгим удержанием кнопки Отмена можно вручную указать какие из квестов восстановить.</string>
-    <string name="quest_artwork_fountain">Фонтан</string>
     <string name="quest_fixme_remove">Снять тег fixme</string>
     <string name="quest_service_building_type_title">Какого типа эта служебная постройка\?</string>
     <string name="default_disabled_msg_poi_fixme">Этот "квест" покажет теги Исправить красными кружками (кроме значений "yes" и "continue" по умолчанию). Нажатие на кружок покажет подробности и другие ответы.</string>
@@ -272,7 +263,6 @@
     <string name="quest_monitor_search_radius_text">Укажите радиус поиска квестов неподалёку. Знайте, что могут быть найдены и квесты чуть дальше. Местоположения с погрешностью позиционирования больше этого значения отбрасываются.</string>
     <string name="pref_quest_monitor_download">Подгружать данные по необходимости\? Значительно повысит расход трафика и заряда, и может не работать из-за политик энергосбережения в Android.</string>
     <string name="quest_settings_element_selection">Укажите подходящие для этого квеста элементы. <a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection"> Нажмите</a>, чтобы открыть сведения о правилах выбора элементов в браузере.</string>
-    <string name="quest_generic_surface_message">Не требовать заметку для ответов о покрытии без конкретики\?</string>
     <string name="quest_settings_osmose_level_title">Выберите степень критичности для скачивания и показа</string>
     <string name="quest_order_normal">Нормальный порядок квестов</string>
     <string name="quest_osmose_message">Эти квесты скачиваются из сервиса Osmose и указывают на возможные проблемы в данных OSM. Скачивание происходит если в настройках квеста выбрана хотя бы одна из степеней важности.
@@ -299,7 +289,6 @@
     <string name="level_filter_message">Введите число этажей или выражения &gt; и &lt;. Используйте * для выбора всех элементов, содержащих допустимый ключ level</string>
     <string name="quest_settings_eligible_highways">Укажите дороги, подходящие для этого квеста, через запятую</string>
     <string name="quest_traffic_stuff_raised">Это возвышенный переход</string>
-    <string name="quest_artwork_architecture">Архитектура</string>
     <string name="quest_railwayPlatformRef_message">Какой тег использовать для треков, доступных с этой платформы? Согласно вики OSM, local_ref может быть предпочтительнее, но фактическое использование в основном ref.</string>
     <string name="quest_disabled_msg_railway_platform_ref">Обратите внимание, что вики не даёт однозначного ответа какой тег предпочесть, поэтому выбор остается за пользователем. Выберите либо «ref» (по умолчанию) либо «local_ref» в настройках квеста.
 \nЕсли вдоль платформы идут два пути, используйте значения, разделенные точкой с запятой, например, 2;3</string>
@@ -311,8 +300,6 @@
     <string name="quest_osmose_use_app_language">Загружать проблемы на языке приложения</string>
     <string name="quest_settings_level_default">Магазины и подобное в торговых центрах (по умолчанию)</string>
     <string name="quest_artwork_title">Что это за произведение\?</string>
-    <string name="quest_artwork_mural">Фреска</string>
-    <string name="quest_artwork_graffiti">Граффити</string>
     <string name="quest_healthcare_speciality_add_more">Добавить еще одну специальность</string>
     <string name="quest_buildingType_cowshed">Коровник</string>
     <string name="quest_buildingType_sty">Свинарник</string>
@@ -358,9 +345,6 @@
     <string name="quest_osmose_hide_type">Пропускать такие проблемы…</string>
     <string name="quest_recycling_excrement_bag_dispenser">С держателем пакетов для сбора экскрементов</string>
     <string name="custom_overlay_dash_filter_hint">Отбор штриховых элементов</string>
-    <string name="quest_artwork_installation">Инсталляция</string>
-    <string name="quest_artwork_relief">Рельеф</string>
-    <string name="quest_artwork_land_art">Ленд-арт</string>
     <string name="quest_buildingType_riding_hall">Конный манеж</string>
     <string name="quest_buildingType_digester">Реактор (биореактор)</string>
     <string name="quest_buildingType_transit_shelter">Остановка общественного транспорта</string>
@@ -385,9 +369,6 @@
     <string name="quest_service_building_railway_wash">Железнодорожная мойка</string>
     <string name="quest_service_building_railway_ventilation_shaft_description">Конструкция, обеспечивающая вентиляцию в железнодорожных подземных тоннелях</string>
     <string name="quest_trail_visibility_no">Неразличима</string>
-    <string name="quest_settings_leaf_type_single_tree_no">Только для путей и областей</string>
-    <string name="quest_settings_leaf_type_single_tree_message">Также спросить тип листьев у одиночных деревьев?</string>
-    <string name="quest_settings_leaf_type_single_tree_yes">Да</string>
     <string name="restriction_overlay_sign_stop_all_way">Полная остановка</string>
     <string name="quest_piste_ref_connection">Это соединение с трассой</string>
     <string name="quest_service_building_type_traction_substation">Тяговая подстанция</string>
@@ -673,4 +654,6 @@
     <string name="quest_valves_dunlop">DV/NV: Тип Dunlop / Woods</string>
     <string name="quest_valves_schrader">AV: Обычный автониппель, большинство велосипедов</string>
     <string name="quest_valves_regina">RV: Тип Regina / Italian</string>
+    <string name="action_all_quests">Показать все квесты</string>
+    <string name="quest_bench_armrest_title">Есть ли у этой скамейки подлокотники?</string>
 </resources>

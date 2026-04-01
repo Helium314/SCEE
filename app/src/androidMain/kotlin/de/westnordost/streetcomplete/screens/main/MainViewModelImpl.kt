@@ -27,6 +27,7 @@ import de.westnordost.streetcomplete.data.overlays.SelectedOverlaySource
 import de.westnordost.streetcomplete.data.preferences.Autosync
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.presets.EditTypePresetsSource
+import de.westnordost.streetcomplete.data.quest.Quest
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.data.upload.UploadController
@@ -58,6 +59,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import kotlinx.coroutines.withContext
+import kotlin.reflect.KClass
 
 class MainViewModelImpl(
     private val crashReportExceptionHandler: CrashReportExceptionHandler,
@@ -173,6 +175,14 @@ class MainViewModelImpl(
         withContext(IO) { messagesSource.popNextMessage() }
 
     override val allQuestTypes: List<QuestType> get() = questTypeRegistry
+
+    override fun toggleDisableMessageType(messageType: KClass<out Message>, disable: Boolean) {
+        prefs.disabledMessageTypes = if (disable) {
+            prefs.disabledMessageTypes + messageType
+        } else {
+            prefs.disabledMessageTypes - messageType
+        }
+    }
 
     /* overlays */
 
@@ -450,6 +460,7 @@ class MainViewModelImpl(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, prefs.showOverlaySelector)
     override val reverseQuestOrder = MutableStateFlow(false)
     override val showMainMenuDialog = mutableStateOf(false)
+    override val nearbyQuests = MutableStateFlow<Collection< Pair<Int, List<Quest>>>?>(null)
 
     // ---------------------------------------------------------------------------------------
 

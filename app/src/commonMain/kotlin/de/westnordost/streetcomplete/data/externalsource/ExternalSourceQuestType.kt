@@ -22,9 +22,6 @@ import de.westnordost.streetcomplete.quests.questPrefix
 // do it very similar to OsmElementQuestType
 // for cleanup, each quest type should override deleteMetadataOlderThan, or old data will remain
 interface ExternalSourceQuestType : QuestType, ElementEditType {
-    // like for OsmQuestType
-    override val title: Int get() = getTitle(emptyMap())
-    fun getTitle(tags: Map<String, String>): Int
     val highlightedElementsRadius: Double get() = 30.0
     fun getHighlightedElements(getMapData: () -> MapDataWithGeometry): Sequence<Element> = emptySequence()
     val enabledInCountries: Countries get() = AllCountries

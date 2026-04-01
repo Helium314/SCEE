@@ -32,7 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -57,8 +56,6 @@ import de.westnordost.streetcomplete.data.urlconfig.UrlConfigController
 import de.westnordost.streetcomplete.data.visiblequests.QuestTypeOrderTable
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeController
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeTable
-import de.westnordost.streetcomplete.overlays.custom.getCustomOverlayIndices
-import de.westnordost.streetcomplete.overlays.custom.getIndexedCustomOverlayPref
 import de.westnordost.streetcomplete.quests.amenity_cover.AddAmenityCover
 import de.westnordost.streetcomplete.quests.custom.CustomQuest
 import de.westnordost.streetcomplete.quests.osmose.OsmoseDao
@@ -67,8 +64,10 @@ import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.WheelPickerDialog
 import de.westnordost.streetcomplete.ui.common.settings.Preference
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
-import de.westnordost.streetcomplete.util.dialogs.setViewWithDefaultPadding
+import de.westnordost.streetcomplete.util.setViewWithDefaultPadding
+import de.westnordost.streetcomplete.util.getCustomOverlayIndices
 import de.westnordost.streetcomplete.util.getFakeCustomOverlays
+import de.westnordost.streetcomplete.util.getIndexedCustomOverlayPref
 import de.westnordost.streetcomplete.util.ktx.getActivity
 import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.logs.Log
@@ -283,7 +282,7 @@ private const val BACKUP_PRESETS_QUEST_SETTINGS = "quest_settings"
 
 private const val TAG = "DataManagementSettings"
 
-const val LAST_KNOWN_DB_VERSION = 19L
+const val LAST_KNOWN_DB_VERSION = 20L
 
 val renamedQuests = mapOf(
     "ExternalQuest" to CustomQuest::class.simpleName!!,
@@ -299,7 +298,10 @@ private fun showRasterUrlDialog(context: Context, prefs: SharedPreferences) {
         setText(currentUrl)
         doAfterTextChanged {
             val t = it.toString()
-            d?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = t.contains("{x}") && t.contains("{y}") && t.contains("{z}")
+            d?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled =
+                (t.contains("{x}") && t.contains("{y}") && (t.contains("{z}") || t.contains("{zoom}")))
+                    || t.contains("{bbox-epsg-3857}")
+                    || (t.contains("{bbox}") && t.contains("{proj}"))
         }
     }
     val hideLabelsSwitch = SwitchCompat(context).apply {

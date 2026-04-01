@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.osm.isPlace
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_go_inside
+import de.westnordost.streetcomplete.resources.quest_cuisine_title
 
 class AddCuisine : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -24,13 +25,12 @@ class AddCuisine : OsmFilterQuestType<String>(), AndroidQuest {
     override val changesetComment = "Add cuisine"
     override val wikiLink = "Key:cuisine"
     override val icon = R.drawable.quest_restaurant
+    override val title = Res.string.quest_cuisine_title
     override val isReplacePlaceEnabled = true
     override val defaultDisabledMessage = Res.string.default_disabled_msg_go_inside
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_cuisine_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlace() }
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.asSequence().filter { it.isPlace() }
 
     override fun createForm() = AddCuisineForm()
 

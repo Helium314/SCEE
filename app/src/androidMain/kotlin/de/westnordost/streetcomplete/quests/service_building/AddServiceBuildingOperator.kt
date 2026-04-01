@@ -7,6 +7,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_service_building_operator_title
 
 class AddServiceBuildingOperator : OsmFilterQuestType<ServiceBuildingOperatorAnswer>(), AndroidQuest {
 
@@ -21,9 +22,8 @@ class AddServiceBuildingOperator : OsmFilterQuestType<ServiceBuildingOperatorAns
     override val changesetComment = "Add service building operator"
     override val wikiLink = "Tag:building=service"
     override val icon = R.drawable.ic_quest_service_building
+    override val title = Res.string.quest_service_building_operator_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_service_building_operator_title
 
     override fun createForm() = AddServiceBuildingOperatorForm()
 

@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_benchMaterial_title
 
 class AddBenchMaterial : OsmFilterQuestType<BenchMaterial>(), AndroidQuest {
 
@@ -24,14 +25,13 @@ class AddBenchMaterial : OsmFilterQuestType<BenchMaterial>(), AndroidQuest {
     override val changesetComment = "Add material information to benches"
     override val wikiLink = "Tag:amenity=bench"
     override val icon = R.drawable.ic_quest_bench_material
+    override val title = Res.string.quest_benchMaterial_title
     override val isDeleteElementEnabled = true
     override val achievements = listOf(EditTypeAchievement.PEDESTRIAN, EditTypeAchievement.OUTDOORS)
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_benchMaterial_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes, ways with amenity = bench or leisure = picnic_table or amenity = lounger")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes, ways with amenity = bench or leisure = picnic_table or amenity = lounger")
 
     override fun createForm() = AddBenchMaterialForm()
 

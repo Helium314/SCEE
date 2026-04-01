@@ -8,6 +8,7 @@ import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.databinding.FragmentOverlayCustomBinding
 import de.westnordost.streetcomplete.overlays.AbstractOverlayForm
+import de.westnordost.streetcomplete.util.getCurrentCustomOverlayPref
 import org.koin.android.ext.android.inject
 
 class CustomOverlayForm : AbstractOverlayForm() {

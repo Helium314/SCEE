@@ -10,6 +10,3 @@ val EditText.intOrNull: Int? get() =
 
 val EditText.nonBlankTextOrNull: String? get() =
     text.toString().trim().ifBlank { null }
-
-val EditText.nonBlankHintOrNull: String? get() =
-    hint?.trim()?.toString()?.ifBlank { null }

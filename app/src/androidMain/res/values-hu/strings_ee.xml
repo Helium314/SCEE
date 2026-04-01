@@ -412,9 +412,6 @@
     <string name="quest_guidepostEle_title">Milyen magasság szerepel itt?</string>
     <string name="quest_guidepostRef_hint">A térkép vagy útjelző tábla azonosító száma, és nem a jelzett útvonalak azonosítója.</string>
     <string name="quest_guidepostName_hint">A térkép vagy útjelző tábla kiírt (hely)neve. Ne írd ide az azonosító számát.</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Magas teherautók átférnek</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Magas teherautók nem férnek át</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Bizonytalan</string>
     <string name="quest_crossing_marking_value_no">Nem</string>
     <string name="quest_crossing_marking_value_zebra">Zebra</string>
     <string name="quest_crossing_marking_value_ladder">Létra</string>
@@ -504,7 +501,6 @@
     <string name="quest_tree_disabled_msg">Ez a kérdés alapértelmezés szerint ki van kapcsolva, mert nem könnyű megválaszolni. A fajokat/nemzetségeket a javaslatok közül kell kiválasztani, amelyek a leggyakrabban használt értékekből származnak. Megadhatsz saját fajlista javaslatokat kereshető névvel, ha az adatbeállítások menüben megadsz egy &lt;faj&gt; (&lt;név&gt;) formátumú fájlt.</string>
     <string name="quest_railwayPlatformRef_message">Melyik címkét használjuk a peronról elérhető vágányokhoz? Az OSM wiki szerint a local_ref a javasolt, de a gyakorlatban a ref a gyakrabban használt.</string>
     <string name="quest_disabled_msg_railway_platform_ref">Megjegyzendő, hogy a wikiben nem teljesen egyértelmű, hogy melyik címkét érdemes használni, ezért ez a felhasználóra van bízva.\nVálassz a \'ref\' (alapértelmezett) és a \'local_ref\' között a kérdés beállításaiban. Ha egy peron mentén két vágány van, pontosvesszővel válaszd el az értékeket, pl. 2;3</string>
-    <string name="quest_maxheight_answer_noSign_question">Van elég hely, hogy még a legmagasabb teherautók (legalább 4,5 méter) is könnyen áthaladjanak?</string>
     <string name="quest_crossing_marking_value_dots">Pontozott vonalak</string>
     <string name="quest_building_demolished">Lebontották (láthatóak a nyomai)</string>
     <string name="quest_name_brand">Van márkaneve…</string>

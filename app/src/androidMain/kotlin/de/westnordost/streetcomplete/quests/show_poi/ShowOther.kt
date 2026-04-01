@@ -13,6 +13,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.LabelOrElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_poi_other
+import de.westnordost.streetcomplete.resources.quest_poi_misc_title
 
 class ShowOther : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val elementFilter = """
@@ -58,15 +59,14 @@ class ShowOther : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val changesetComment = "Adjust public POIs and similar"
     override val wikiLink = "nope"
     override val icon = R.drawable.ic_quest_poi_other
+    override val title = Res.string.quest_poi_misc_title
     override val dotColor = "gold"
     override val defaultDisabledMessage = Res.string.default_disabled_msg_poi_other
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_poi_misc_title
-
     override fun createForm() = NoAnswerFragment()
 
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter(filter)
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter(filter)
 
     override fun applyAnswerTo(answer: Boolean, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {}
 

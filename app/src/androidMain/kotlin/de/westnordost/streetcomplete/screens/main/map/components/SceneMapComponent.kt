@@ -53,7 +53,7 @@ class SceneMapComponent(
         }
         val styleJsonString = when {
             prefs.prefs.getString(Prefs.THEME_BACKGROUND, "MAP") != "MAP" ->
-                createMapStyle("StreetComplete-Raster", token, emptyList(), rasterBackground(prefs.prefs.getBoolean(Prefs.NO_SATELLITE_LABEL, false)), prefs.prefs.getString(Prefs.RASTER_TILE_URL, ApplicationConstants.RASTER_DEFAULT_URL), prefs.prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, ApplicationConstants.RASTER_DEFAULT_MAXZOOM))
+                createMapStyle("StreetComplete-Raster", token, emptyList(), rasterBackground(prefs.prefs.getBoolean(Prefs.NO_SATELLITE_LABEL, false)), getRasterTileUrl(), prefs.prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, ApplicationConstants.RASTER_DEFAULT_MAXZOOM))
             prefs.theme == Theme.DARK_CONTRAST -> createMapStyle("StreetComplete-Dark_Contrast", token, emptyList(), themeDarkContrast)
             isNightMode -> context.resources.assets.open("map_theme/streetcomplete-night.json").bufferedReader().use { it.readText() }
             else -> context.resources.assets.open("map_theme/streetcomplete.json").bufferedReader().use { it.readText() }
@@ -63,6 +63,15 @@ class SceneMapComponent(
         val style = map.awaitSetStyle(styleBuilder)
         withContext(Dispatchers.Main) { updateStyle() }
         return style
+    }
+
+    private fun getRasterTileUrl(): String {
+        val url = prefs.prefs.getString(Prefs.RASTER_TILE_URL, ApplicationConstants.RASTER_DEFAULT_URL)
+        return url.replace("{zoom}", "{z}")
+            .replace("{bbox}", "{bbox-epsg-3857}")
+            .replace("{width}", "256")
+            .replace("{height}", "256")
+            .replace("{proj}", "EPSG:3857")
     }
 
     /** Updates part of the style depending on the user settings:

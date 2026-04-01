@@ -41,6 +41,9 @@ import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.distanceTo
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
+import kotlinx.coroutines.runBlocking
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getSystemResourceEnvironment
 import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 import kotlin.math.max
@@ -62,10 +65,12 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
         NotificationCompat.Builder(this, FOUND_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_notification)
             .setContentTitle(getString(R.string.quest_monitor_found, size))
-            .setContentText(resources.getString(closest.type.title))
+            .setContentText(getRes(closest.type.title))
             .setContentIntent(intent(closest.position))
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .build()
+
+    private fun getRes(res: StringResource) = runBlocking { org.jetbrains.compose.resources.getString(getSystemResourceEnvironment(), res) }
 
     private fun intent(position: LatLon): PendingIntent? {
         val intent = Intent(this, MainActivity::class.java)

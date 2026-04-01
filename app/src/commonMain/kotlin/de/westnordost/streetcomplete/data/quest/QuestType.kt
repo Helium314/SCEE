@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.osm.edits.EditType
 import de.westnordost.streetcomplete.data.preferences.Preferences
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 
 /** A quest type appears as a pin with an icon on the map and when opened, the quest type's
  *  question is displayed along with a UI to answer that quest.
@@ -17,12 +19,12 @@ interface QuestType : EditType {
     val prefs: Preferences get() = Prefs.preferences
 
     /** Hint text to be shown when the user taps on the ℹ️ button */
-    val hint: Int? get() = null
+    val hint: StringResource? get() = null
 
     /** Hint pictures to be shown when the user taps on the ℹ️ button */
-    val hintImages: List<Int> get() = emptyList()
+    val hintImages: List<DrawableResource> get() = emptyList()
 
-    /** The quest type can clean it's metadata that is older than the given timestamp here, if any  */
+    /** The quest type can clean its metadata that is older than the given timestamp here, if any  */
     fun deleteMetadataOlderThan(timestamp: Long) {}
 
     /** if the quest should only be shown during day-light os night-time hours */

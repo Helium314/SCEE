@@ -9,6 +9,7 @@ import de.westnordost.streetcomplete.osm.street_parking.ParkingOrientation
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_parking_orientation_title
 
 class AddParkingOrientation : OsmFilterQuestType<ParkingOrientation>(), AndroidQuest {
 
@@ -21,9 +22,8 @@ class AddParkingOrientation : OsmFilterQuestType<ParkingOrientation>(), AndroidQ
     override val changesetComment = "Specify parking orientation"
     override val wikiLink = "Key:orientation"
     override val icon = R.drawable.ic_quest_parking_orientation
+    override val title = Res.string.quest_parking_orientation_title
     override val achievements = listOf(CAR)
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_parking_orientation_title
 
     override fun createForm() = AddParkingOrientationForm()
 

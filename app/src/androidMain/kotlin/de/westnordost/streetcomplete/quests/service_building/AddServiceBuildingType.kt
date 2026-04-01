@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_service_building_type_title
 
 class AddServiceBuildingType : OsmFilterQuestType<ServiceBuildingType>(), AndroidQuest {
 
@@ -28,14 +29,13 @@ class AddServiceBuildingType : OsmFilterQuestType<ServiceBuildingType>(), Androi
     override val changesetComment = "Add service building type"
     override val wikiLink = "Tag:building=service"
     override val icon = R.drawable.ic_quest_service_building
+    override val title = Res.string.quest_service_building_type_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_service_building_type_title
 
     override fun createForm() = AddServiceBuildingTypeForm()
 
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("ways, relations with building ~ service|transformer_tower or power")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("ways, relations with building ~ service|transformer_tower or power")
 
     override fun applyAnswerTo(answer: ServiceBuildingType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         answer.tags.forEach { tags[it.first] = it.second }

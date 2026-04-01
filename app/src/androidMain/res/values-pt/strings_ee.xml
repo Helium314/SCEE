@@ -175,10 +175,6 @@
     <string name="restriction_overlay_title">Restrições de tráfego</string>
     <string name="restriction_overlay_exceptions">Exceções: %s</string>
     <string name="restriction_overlay_only_for">Apenas para: %s</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Camiões altos conseguem passar</string>
-    <string name="quest_maxheight_answer_noSign_question">Existe espaço suficiente para os camiões mais altos (pelo menos 4.5 metros / 15 pés) passarem?</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Camiões altos não cabem</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Não é claro</string>
     <string name="restriction_overlay_direction_text">Aplica-se à seguinte direção de viagem:</string>
     <string name="quest_parking_capacity_title">Quantos carros podem estacionar aqui?</string>
     <string name="restriction_overlay_sign_give_way">Cedência de prioridade</string>

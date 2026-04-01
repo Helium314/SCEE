@@ -124,4 +124,15 @@
     <string name="pref_save_photos_title">Salva foto utilizzate per le note</string>
     <string name="pref_save_photos_summary">Salva le foto utilizzate per le note nella qualità originale, senza eliminare i dati EXIF</string>
     <string name="pref_way_direction">Mostra direzione dei percorsi</string>
+    <string name="pref_hide_keyboard_title">Nascondi la tastiera dopo aver creato la nota</string>
+    <string name="pref_way_direction_summary">Mostra delle frecce nelle linee selezionate quando apri una domanda. Utile per le strade a senso unico</string>
+    <string name="pref_quest_geometries_title">Mostra la geometria della missione</string>
+    <string name="pref_quest_geometries_summary">Evidenzia strade e aree che hanno missioni</string>
+    <string name="pref_show_solved_animation">Mostra l\'animazione dopo aver risolto una missione</string>
+    <string name="pref_gpx_track_title">Mostra traccia GPX da un file</string>
+    <string name="pref_gpx_track_provide">Seleziona traccia GPX</string>
+    <string name="pref_gpx_track_loading_error">Errore durante il caricamento della traccia GPX</string>
+    <string name="pref_gpx_track_enable">Mostra traccia GPX</string>
+    <string name="pref_gpx_track_download">Scarica l\'area coperta dalla traccia GPX</string>
+    <string name="pref_custom_geometry_title">Mostra caratteristiche della mappa da un file GeoJson</string>
 </resources>

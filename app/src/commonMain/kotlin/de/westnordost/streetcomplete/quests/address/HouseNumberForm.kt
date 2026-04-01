@@ -1,7 +1,9 @@
 package de.westnordost.streetcomplete.quests.address
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.runtime.Composable
@@ -26,9 +28,9 @@ fun HouseNumberForm(
             HouseNumberInput(
                 value = value.houseNumber,
                 onValueChange = { onValueChange(HouseNumber(it, value.unit)) },
-                modifier = modifier.width(192.dp),
+                modifier = modifier.weight(1f).widthIn(max = 256.dp),
                 suggestion = suggestion?.houseNumber,
-                ""
+                label = ""
             )
             if (prefs.expertMode)
                 HouseNumberInput(
@@ -37,9 +39,9 @@ fun HouseNumberForm(
                         val houseNumber = value.houseNumber.ifEmpty { suggestion?.houseNumber.orEmpty() }
                         onValueChange(HouseNumber(houseNumber, it.takeIf { it.isNotBlank() }))
                     },
-                    modifier = modifier.width(192.dp),
+                    modifier = modifier.weight(1f).widthIn(max = 256.dp),
                     suggestion = suggestion?.unit,
-                    "unit"
+                    label = "unit"
                 )
         }
     }

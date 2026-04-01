@@ -13,6 +13,7 @@ import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.quests.LabelOrElementSelectionDialog
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_poi_traffic
+import de.westnordost.streetcomplete.resources.quest_poi_traffic_title
 
 class ShowTrafficStuff : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val elementFilter = """
@@ -30,14 +31,13 @@ class ShowTrafficStuff : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val changesetComment = "Adjust traffic related elements"
     override val wikiLink = "Key:traffic_calming"
     override val icon = R.drawable.ic_quest_poi_traffic
+    override val title = Res.string.quest_poi_traffic_title
     override val dotColor = "deepskyblue"
     override val defaultDisabledMessage = Res.string.default_disabled_msg_poi_traffic
     override val dotLabelSources = getLabelSources( "", this, prefs)
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_poi_traffic_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter(filter)
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter(filter)
 
     override fun createForm() = ShowTrafficStuffAnswerForm()
 

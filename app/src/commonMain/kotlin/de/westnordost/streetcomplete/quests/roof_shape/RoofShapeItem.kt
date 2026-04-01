@@ -1,30 +1,7 @@
 package de.westnordost.streetcomplete.quests.roof_shape
 
 import de.westnordost.streetcomplete.quests.roof_shape.RoofShape.*
-import de.westnordost.streetcomplete.resources.Res
-import de.westnordost.streetcomplete.resources.empty_96
-import de.westnordost.streetcomplete.resources.roof_cone
-import de.westnordost.streetcomplete.resources.roof_dome
-import de.westnordost.streetcomplete.resources.roof_double_saltbox
-import de.westnordost.streetcomplete.resources.roof_flat
-import de.westnordost.streetcomplete.resources.roof_gabled
-import de.westnordost.streetcomplete.resources.roof_gambrel
-import de.westnordost.streetcomplete.resources.roof_half_hipped
-import de.westnordost.streetcomplete.resources.roof_hipped
-import de.westnordost.streetcomplete.resources.roof_mansard
-import de.westnordost.streetcomplete.resources.roof_onion
-import de.westnordost.streetcomplete.resources.roof_pyramidal
-import de.westnordost.streetcomplete.resources.roof_quadruple_saltbox
-import de.westnordost.streetcomplete.resources.roof_round
-import de.westnordost.streetcomplete.resources.roof_round_gabled
-import de.westnordost.streetcomplete.resources.roof_saltbox
-import de.westnordost.streetcomplete.resources.roof_skillion
-import de.westnordost.streetcomplete.resources.ic_roof_sawtooth
-import de.westnordost.streetcomplete.resources.ic_roof_side_hipped
-import de.westnordost.streetcomplete.resources.ic_roof_side_half_hipped
-import de.westnordost.streetcomplete.resources.ic_roof_crosspitched
-import de.westnordost.streetcomplete.resources.ic_roof_hip_and_gable
-import de.westnordost.streetcomplete.resources.ic_roof_gabled_height_moved
+import de.westnordost.streetcomplete.resources.*
 import org.jetbrains.compose.resources.DrawableResource
 
 val RoofShape.icon: DrawableResource get() = when (this) {

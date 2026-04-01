@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_shelter_type_disabled_msg
+import de.westnordost.streetcomplete.resources.quest_shelter_type_title
 
 class AddShelterType : OsmFilterQuestType<ShelterType>(), AndroidQuest {
 
@@ -22,14 +23,13 @@ class AddShelterType : OsmFilterQuestType<ShelterType>(), AndroidQuest {
     override val changesetComment = "Specify shelter types"
     override val wikiLink = "Key:shelter_type"
     override val icon = R.drawable.ic_quest_shelter_type
+    override val title = Res.string.quest_shelter_type_title
     override val isDeleteElementEnabled = true
     override val achievements = listOf(EditTypeAchievement.OUTDOORS)
     override val defaultDisabledMessage = Res.string.quest_shelter_type_disabled_msg
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_shelter_type_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().filter("nodes, ways with amenity = shelter")
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.filter("nodes, ways with amenity = shelter")
 
     override fun createForm() = AddShelterTypeForm()
 

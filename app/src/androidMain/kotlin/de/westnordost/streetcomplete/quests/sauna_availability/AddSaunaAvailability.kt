@@ -9,6 +9,7 @@ import de.westnordost.streetcomplete.util.ktx.toYesNo
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_saunaAvailability_title
 
 class AddSaunaAvailability : OsmFilterQuestType<Boolean>(), AndroidQuest {
 
@@ -23,10 +24,9 @@ class AddSaunaAvailability : OsmFilterQuestType<Boolean>(), AndroidQuest {
     """
     override val changesetComment = "Survey sauna availabilities"
     override val wikiLink = "Key:sauna"
+    override val title = Res.string.quest_saunaAvailability_title
     override val icon = R.drawable.ic_quest_sauna
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_saunaAvailability_title
 
     override fun createForm() = YesNoQuestForm()
 

@@ -15,6 +15,7 @@ import de.westnordost.streetcomplete.util.ktx.toYesNo
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_go_inside_regional_warning
+import de.westnordost.streetcomplete.resources.quest_is_pharmacy_dispensing_title
 
 class AddIsPharmacyDispensing : OsmFilterQuestType<Boolean>(), AndroidQuest {
 
@@ -29,14 +30,13 @@ class AddIsPharmacyDispensing : OsmFilterQuestType<Boolean>(), AndroidQuest {
     override val changesetComment = "Determine whether pharmacies are dispensing prescription drugs"
     override val wikiLink = "Key:dispensing"
     override val icon = R.drawable.ic_quest_pharmacy
+    override val title = Res.string.quest_is_pharmacy_dispensing_title
     override val achievements = listOf(CITIZEN)
     override val defaultDisabledMessage = Res.string.default_disabled_msg_go_inside_regional_warning
     override val enabledInCountries = AllCountriesExcept("AT", "DE", "FR", "PL")
 
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_is_pharmacy_dispensing_title
-
-    override fun getHighlightedElements(element: Element, getMapData: () -> MapDataWithGeometry) =
-        getMapData().asSequence().filter { it.isPlace() }
+    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry) =
+        mapData.asSequence().filter { it.isPlace() }
 
     override fun createForm() = YesNoQuestForm()
 

@@ -179,7 +179,6 @@
     <string name="quest_seating_street">En una zona de la calle</string>
     <string name="quest_seating_sidewalk">En la acera</string>
     <string name="quest_outdoor_seating_name_title">¿Qué tipo de asientos al aire libre tiene este lugar\?</string>
-    <string name="quest_artwork_title">¿Qué clase de obra de arte es esta\?</string>
     <string name="quest_contact_website">¿Cuál es el sitio web de este lugar\?</string>
     <string name="quest_cuisine_title">¿Qué cocina tiene este lugar\? ¡Usa las etiquetas OSM sugeridas!</string>
     <string name="quest_cuisine_add_more">Añadir otra cocina</string>
@@ -526,10 +525,6 @@
     <string name="quest_generalRef_hint">Número o código de referencia</string>
     <string name="quest_generalRef_disabled_msg">Esta búsqueda está desactivada por defecto porque lo que se señaliza varía mucho según la región y el operador. Puede que necesites refinar la selección de elementos para tu zona (por ejemplo :añadir mapas, seleccionar sólo postes guía con hiking=yes, etc.)</string>
     <string name="close">Cerrar</string>
-    <string name="quest_maxheight_answer_noSign_question">¿Hay suficiente espacio para que pasen incluso los camiones más altos (al menos unos 4,5 metros / 15 pies)?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Los camiones altos pueden pasar</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Los camiones altos no caben</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">No está claro</string>
     <string name="action_all_quests">Ver todas las tareas</string>
     <string name="pref_quest_sac_scale_without_relation">Busca en todos las rutas, incluso en las que no están relacionados con el senderismo</string>
     <string name="quest_sacScale_title">¿Cuál es la escala SAC de este camino?</string>
@@ -592,4 +587,6 @@
     <string name="quest_sacScale_strolling_description">Sendero liso y llano, sin obstáculos, apto para todo tipo de calzado, cochecitos o muletas, y que no requiere habilidades de orientación.</string>
     <string name="file_provide">Seleccionar archivo</string>
     <string name="file_loading_error">Error al cargar el archivo</string>
+    <string name="pref_really_all_notes_title">\"Mostrar todas las notas\" significa TODAS</string>
+    <string name="pref_really_all_notes_summary">Cuando solicite mostrar todas las anotaciones, incluso aquellas que usted creó (o comentó), hágalo</string>
 </resources>

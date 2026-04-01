@@ -21,7 +21,6 @@ import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.data.overlays.Overlay
 import de.westnordost.streetcomplete.overlays.custom.CustomOverlay
-import de.westnordost.streetcomplete.overlays.custom.getCustomOverlayIndices
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.overlay_none
 import de.westnordost.streetcomplete.ui.common.DropdownMenuItem
@@ -31,6 +30,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.painterResource
 import de.westnordost.streetcomplete.resources.ic_settings_48
 import de.westnordost.streetcomplete.resources.ic_add_24
+import de.westnordost.streetcomplete.util.fakeStringResource
+import de.westnordost.streetcomplete.util.getCustomOverlayIndices
 
 /** Dropdown menu for selecting an overlay */
 @Composable
@@ -68,10 +69,10 @@ fun OverlaySelectionDropdownMenu(
                         modifier = Modifier.size(36.dp)
                     )
                     Text(
-                        text = if (overlay.title != 0) stringResource(overlay.title) else overlay.changesetComment,
+                        text = if (overlay.title != fakeStringResource) stringResource(overlay.title) else overlay.changesetComment,
                         modifier = Modifier.weight(1f)
                     )
-                    if (overlay.title == 0) {
+                    if (overlay.title == fakeStringResource) {
                         Icon(
                             painter = painterResource(Res.drawable.ic_settings_48),
                             contentDescription = null,

@@ -7,6 +7,7 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_healthcare_speciality_disabled_message
+import de.westnordost.streetcomplete.resources.quest_healthcare_speciality_title
 
 class AddHealthcareSpeciality : OsmFilterQuestType<String>(), AndroidQuest {
 
@@ -18,9 +19,8 @@ class AddHealthcareSpeciality : OsmFilterQuestType<String>(), AndroidQuest {
     override val changesetComment = "Add healthcare specialities"
     override val wikiLink = "Key:healthcare:speciality"
     override val icon = R.drawable.ic_quest_healthcare_speciality
+    override val title = Res.string.quest_healthcare_speciality_title
     override val defaultDisabledMessage = Res.string.quest_healthcare_speciality_disabled_message
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_healthcare_speciality_title
 
     override fun createForm() = MedicalSpecialityTypeForm()
 

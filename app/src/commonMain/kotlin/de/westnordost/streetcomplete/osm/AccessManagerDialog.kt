@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Divider
@@ -39,6 +38,7 @@ import de.westnordost.streetcomplete.resources.cancel
 import de.westnordost.streetcomplete.resources.delete_confirmation
 import de.westnordost.streetcomplete.resources.ic_delete_24
 import de.westnordost.streetcomplete.resources.ok
+import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -73,14 +73,106 @@ fun AccessManagerDialog(
 
     val sortedEntries = newAccessTags.toSortedMap().entries.map { it.key to it.value.sorted() }
 
-    AlertDialog(
+    ScrollableAlertDialog(
         onDismissRequest = onDismissRequest,
-        dismissButton = {
+        content = {
+            Column(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 420.dp),
+                    verticalArrangement = Arrangement.spacedBy(0.dp)
+                ) {
+                    item {
+                        Text(
+                            text = stringResource(Res.string.access_manager_message),
+                            style = MaterialTheme.typography.body1,
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
+                    }
+
+                    itemsIndexed(sortedEntries) { index, (key, values) ->
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 2.dp),
+                            verticalArrangement = Arrangement.spacedBy(2.dp)
+                        ) {
+                            Text(
+                                text = key,
+                                style = MaterialTheme.typography.subtitle1,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(bottom = 4.dp)
+                            )
+
+                            values.forEach { value ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = 12.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = value,
+                                        style = MaterialTheme.typography.body1,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    IconButton(
+                                        onClick = {
+                                            val updated = newAccessTags[key]?.toMutableSet() ?: mutableSetOf()
+                                            updated.remove(value)
+                                            if (updated.isEmpty()) {
+                                                newAccessTags.remove(key)
+                                            } else {
+                                                newAccessTags[key] = updated
+                                            }
+                                        }
+                                    ) {
+                                        Icon(
+                                            painterResource(Res.drawable.ic_delete_24),
+                                            stringResource(Res.string.delete_confirmation)
+                                        )
+                                    }
+                                }
+                            }
+
+                            if (index != sortedEntries.lastIndex) {
+                                Divider(modifier = Modifier.padding(vertical = 8.dp))
+                            }
+                        }
+                    }
+
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 12.dp),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            Button(
+                                onClick = { showAddDialog = true },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(stringResource(Res.string.access_manager_button_add))
+                            }
+
+                            Button(
+                                onClick = { showAddConditionalDialog = true },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(stringResource(Res.string.access_manager_button_add_conditional))
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        buttons = {
             TextButton(onClick = onDismissRequest) {
                 Text(stringResource(Res.string.cancel))
             }
-        },
-        confirmButton = {
             TextButton(
                 onClick = {
                     val builder = StringMapChangesBuilder(tags)
@@ -104,96 +196,6 @@ fun AccessManagerDialog(
                 enabled = hasChanges
             ) {
                 Text(stringResource(Res.string.ok))
-            }
-        },
-        text = {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 420.dp),
-                verticalArrangement = Arrangement.spacedBy(0.dp)
-            ) {
-                item {
-                    Text(
-                        text = stringResource(Res.string.access_manager_message),
-                        style = MaterialTheme.typography.body1,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-                }
-
-                itemsIndexed(sortedEntries) { index, (key, values) ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 2.dp),
-                        verticalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
-                        Text(
-                            text = key,
-                            style = MaterialTheme.typography.subtitle1,
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier.padding(bottom = 4.dp)
-                        )
-
-                        values.forEach { value ->
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(start = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = value,
-                                    style = MaterialTheme.typography.body1,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                IconButton(
-                                    onClick = {
-                                        val updated = newAccessTags[key]?.toMutableSet() ?: mutableSetOf()
-                                        updated.remove(value)
-                                        if (updated.isEmpty()) {
-                                            newAccessTags.remove(key)
-                                        } else {
-                                            newAccessTags[key] = updated
-                                        }
-                                    }
-                                ) {
-                                    Icon(
-                                        painterResource(Res.drawable.ic_delete_24),
-                                        stringResource(Res.string.delete_confirmation)
-                                    )
-                                }
-                            }
-                        }
-
-                        if (index != sortedEntries.lastIndex) {
-                            Divider(modifier = Modifier.padding(vertical = 8.dp))
-                        }
-                    }
-                }
-
-                item {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 12.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        Button(
-                            onClick = { showAddDialog = true },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(stringResource(Res.string.access_manager_button_add))
-                        }
-
-                        Button(
-                            onClick = { showAddConditionalDialog = true },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(stringResource(Res.string.access_manager_button_add_conditional))
-                        }
-                    }
-                }
             }
         }
     )
@@ -258,7 +260,7 @@ private fun AccessValuesDialog(
         }
     }
 
-    AlertDialog(
+    ScrollableAlertDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(
@@ -267,12 +269,49 @@ private fun AccessValuesDialog(
                 fontWeight = FontWeight.SemiBold
             )
         },
-        dismissButton = {
+        content = {
+            Column(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 360.dp),
+                    verticalArrangement = Arrangement.spacedBy(0.dp)
+                ) {
+                    items(values) { value ->
+                        val checked = selectedStates[value] == true
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .toggleable(
+                                    value = checked,
+                                    onValueChange = { isChecked ->
+                                        selectedStates[value] = isChecked
+                                    }
+                                )
+                        ) {
+                            Checkbox(
+                                checked = checked,
+                                onCheckedChange = { isChecked ->
+                                    selectedStates[value] = isChecked
+                                }
+                            )
+                            Text(
+                                text = value,
+                                style = MaterialTheme.typography.body1,
+                                modifier = Modifier.padding(start = 6.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        buttons = {
             TextButton(onClick = onDismissRequest) {
                 Text(stringResource(Res.string.cancel))
             }
-        },
-        confirmButton = {
             TextButton(
                 onClick = {
                     val selected = selectedStates
@@ -283,41 +322,6 @@ private fun AccessValuesDialog(
                 }
             ) {
                 Text(stringResource(Res.string.ok))
-            }
-        },
-        text = {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 360.dp),
-                verticalArrangement = Arrangement.spacedBy(0.dp)
-            ) {
-                items(values) { value ->
-                    val checked = selectedStates[value] == true
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .toggleable(
-                                value = checked,
-                                onValueChange = { isChecked ->
-                                    selectedStates[value] = isChecked
-                                }
-                            )
-                    ) {
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = { isChecked ->
-                                selectedStates[value] = isChecked
-                            }
-                        )
-                        Text(
-                            text = value,
-                            style = MaterialTheme.typography.body1,
-                            modifier = Modifier.padding(start = 6.dp)
-                        )
-                    }
-                }
             }
         }
     )

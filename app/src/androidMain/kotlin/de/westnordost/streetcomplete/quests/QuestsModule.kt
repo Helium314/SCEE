@@ -132,6 +132,7 @@ import de.westnordost.streetcomplete.quests.incline_direction.AddBicycleIncline
 import de.westnordost.streetcomplete.quests.incline_direction.AddStepsIncline
 import de.westnordost.streetcomplete.quests.internet_access.AddInternetAccess
 import de.westnordost.streetcomplete.quests.kerb_height.AddKerbHeight
+import de.westnordost.streetcomplete.quests.kerb_type.AddKerbType
 import de.westnordost.streetcomplete.quests.lamp_type.AddLampType
 import de.westnordost.streetcomplete.quests.lamp_mount.AddLampMount
 import de.westnordost.streetcomplete.quests.lane_markings.AddLaneMarkings
@@ -418,6 +419,7 @@ fun getQuestTypeList(
 
     // kerbs
     36 to AddKerbHeight(),
+    198 to AddKerbType(),
     /*
         AddKerbHeight is deliberately before AddTactilePavingKerb:
         - Also should be visible while waiting to cross

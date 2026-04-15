@@ -137,6 +137,7 @@ private fun Note.shouldShowAsQuest(
     blockedIds: Collection<Long>,
     blockedNames: Collection<String>,
 ): Boolean {
+    if (isClosed) return false
     // don't show notes created by specific users
     comments.firstOrNull()?.let {
         if (blockedIds.contains(it.user?.id)) return false

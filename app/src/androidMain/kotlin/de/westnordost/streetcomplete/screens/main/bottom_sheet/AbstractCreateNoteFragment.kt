@@ -2,32 +2,41 @@ package de.westnordost.streetcomplete.screens.main.bottom_sheet
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import androidx.core.widget.doAfterTextChanged
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.fragment.app.commit
 import de.westnordost.streetcomplete.Prefs
-import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.quests.note_discussion.AttachPhotoFragment
-import de.westnordost.streetcomplete.util.ktx.nonBlankTextOrNull
 import de.westnordost.streetcomplete.util.ktx.popIn
 import de.westnordost.streetcomplete.util.ktx.popOut
+import de.westnordost.streetcomplete.util.photo.TakePhotoFragment
+import kotlinx.io.files.FileSystem
+import kotlinx.io.files.Path
+import org.koin.android.ext.android.inject
+import kotlin.getValue
 
 /** Abstract base class for a bottom sheet that lets the user create a note */
-abstract class AbstractCreateNoteFragment : AbstractBottomSheetFragment() {
+abstract class AbstractCreateNoteFragment :
+    AbstractBottomSheetFragment(), TakePhotoFragment.Listener {
 
-    protected abstract val noteInput: EditText
+    private val fileSystem: FileSystem by inject()
+
     protected abstract val okButtonContainer: View
     protected abstract val okButton: View
     protected abstract val gpxButton: View
 
-    private val attachPhotoFragment: AttachPhotoFragment?
-        get() = childFragmentManager.findFragmentById(R.id.attachPhotoFragment) as AttachPhotoFragment?
+    protected var noteText: MutableState<String> = mutableStateOf("")
+    protected var noteImagePaths: MutableState<List<String>> = mutableStateOf(emptyList())
 
-    private val noteText get() = noteInput.nonBlankTextOrNull
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (childFragmentManager.findFragmentByTag(TAG_TAKE_PHOTO) == null) {
+            childFragmentManager.commit { add(TakePhotoFragment(), TAG_TAKE_PHOTO) }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        noteInput.doAfterTextChanged { updateOkButtonEnablement() }
         okButton.setOnClickListener { onClickOk(false) }
         gpxButton.setOnClickListener { onClickOk(true) }
 
@@ -35,18 +44,20 @@ abstract class AbstractCreateNoteFragment : AbstractBottomSheetFragment() {
     }
 
     private fun onClickOk(isGpxNote: Boolean) {
-        onComposedNote(noteText!!, attachPhotoFragment?.imagePaths.orEmpty(), isGpxNote)
+        onComposedNote(noteText.value, noteImagePaths.value, isGpxNote)
     }
 
     override fun onDiscard() {
-        attachPhotoFragment?.deleteImages()
+        for (path in noteImagePaths.value) {
+            fileSystem.delete(Path(path), mustExist = false)
+        }
     }
 
     override fun isRejectingClose() =
-        noteText != null || attachPhotoFragment?.imagePaths?.isNotEmpty() == true
+        noteText.value.isNotBlank() || noteImagePaths.value.isNotEmpty()
 
-    private fun updateOkButtonEnablement() {
-        if (noteText != null) {
+    protected fun updateOkButtonEnablement() {
+        if (noteText.value.isNotBlank()) {
             okButtonContainer.popIn()
             if (prefs.getBoolean(Prefs.GPX_BUTTON, false))
                 floatingBottomView2?.popIn()
@@ -58,4 +69,21 @@ abstract class AbstractCreateNoteFragment : AbstractBottomSheetFragment() {
     }
 
     protected abstract fun onComposedNote(text: String, imagePaths: List<String>, isGpxNote: Boolean)
+
+    protected fun takePhoto() {
+        (childFragmentManager.findFragmentByTag(TAG_TAKE_PHOTO) as? TakePhotoFragment)?.takePhoto()
+    }
+
+    override fun onTookPhoto(path: String) {
+        noteImagePaths.value += path
+    }
+
+    protected fun deleteImage(path: String) {
+        fileSystem.delete(Path(path), mustExist = false)
+        noteImagePaths.value = noteImagePaths.value.filter { it != path }
+    }
+
+    companion object {
+        private const val TAG_TAKE_PHOTO = "TakePhotoFragment"
+    }
 }

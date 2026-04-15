@@ -1,6 +1,7 @@
 package de.westnordost.streetcomplete.screens.main.bottom_sheet
 
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager.FEATURE_CAMERA_ANY
 import android.content.res.Configuration
 import android.graphics.PointF
 import android.os.Bundle
@@ -13,9 +14,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.BounceInterpolator
 import android.view.animation.TranslateAnimation
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Text
+import androidx.compose.material.Surface
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.core.graphics.toPointF
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
@@ -27,22 +28,19 @@ import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditAction
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditsController
 import de.westnordost.streetcomplete.data.osmtracks.Trackpoint
-import de.westnordost.streetcomplete.databinding.FormLeaveNoteBinding
 import de.westnordost.streetcomplete.databinding.FragmentCreateNoteBinding
-import de.westnordost.streetcomplete.quests.note_discussion.AttachPhotoFragment
+import de.westnordost.streetcomplete.quests.QuestHeader
+import de.westnordost.streetcomplete.quests.note_comments.NoteForm
 import de.westnordost.streetcomplete.resources.*
-import de.westnordost.streetcomplete.ui.theme.titleLarge
 import de.westnordost.streetcomplete.ui.util.content
-import de.westnordost.streetcomplete.util.ktx.childFragmentManagerOrNull
 import de.westnordost.streetcomplete.util.ktx.getLocationInWindow
-import de.westnordost.streetcomplete.util.ktx.hideKeyboard
-import de.westnordost.streetcomplete.util.ktx.isKeyboardOpen
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import de.westnordost.streetcomplete.util.dialogs.showOutsideDownloadedAreaDialog
 import de.westnordost.streetcomplete.util.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.io.files.FileSystem
 import org.jetbrains.compose.resources.stringResource
 import org.koin.android.ext.android.inject
 
@@ -50,6 +48,7 @@ import org.koin.android.ext.android.inject
 class CreateNoteFragment : AbstractCreateNoteFragment() {
 
     private val noteEditsController: NoteEditsController by inject()
+    private val fileSystem: FileSystem by inject()
     private val downloadedTilesSource: DownloadedTilesSource by inject()
 
     private var _binding: FragmentCreateNoteBinding? = null
@@ -65,6 +64,8 @@ class CreateNoteFragment : AbstractCreateNoteFragment() {
     override val floatingBottomView get() = bottomSheetBinding.okButton
     override val floatingBottomView2 get() = bottomSheetBinding.hideButton
     override val okButtonContainer get() = bottomSheetBinding.okButtonContainer
+    private lateinit var content: ComposeView
+
     override val gpxButton get() = if (prefs.getBoolean(Prefs.SWAP_GPX_NOTE_BUTTONS, false) && prefs.getBoolean(Prefs.GPX_BUTTON, false))
             bottomSheetBinding.okButton
         else
@@ -73,10 +74,6 @@ class CreateNoteFragment : AbstractCreateNoteFragment() {
             bottomSheetBinding.hideButton
         else
             bottomSheetBinding.okButton
-
-    private val contentBinding by viewBinding(FormLeaveNoteBinding::bind, R.id.content)
-
-    override val noteInput get() = contentBinding.noteInput
 
     private var hasGpxAttached: Boolean = false
 
@@ -91,17 +88,12 @@ class CreateNoteFragment : AbstractCreateNoteFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hasGpxAttached = arguments?.getBoolean(ARG_HAS_GPX_ATTACHED) ?: false
-
-        childFragmentManagerOrNull?.addFragmentOnAttachListener { _, fragment ->
-            if (fragment is AttachPhotoFragment) {
-                fragment.hasGpxAttached = hasGpxAttached
-            }
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentCreateNoteBinding.inflate(inflater, container, false)
-        inflater.inflate(R.layout.form_leave_note, bottomSheetBinding.content)
+        content = ComposeView(inflater.context)
+        bottomSheetBinding.content.addView(content)
         return binding.root
     }
 
@@ -109,18 +101,42 @@ class CreateNoteFragment : AbstractCreateNoteFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val addImagesEnabled = requireContext().packageManager.hasSystemFeature(FEATURE_CAMERA_ANY)
+
         bottomSheetBinding.buttonPanel.isGone = true
 
         if (savedInstanceState == null) {
             binding.markerCreateLayout.markerLayoutContainer.startAnimation(createFallDownAnimation())
         }
 
-        bottomSheetBinding.questHeader.content {
-            ProvideTextStyle(MaterialTheme.typography.titleLarge) {
-                Text(stringResource(Res.string.map_btn_create_note))
-            }
-        }
-        contentBinding.descriptionLabel.text = getString(R.string.create_new_note_description)
+        bottomSheetBinding.questHeader.content { Surface {
+            QuestHeader(
+                title = stringResource(Res.string.map_btn_create_note),
+                subtitle = null,
+                hintText =
+                    stringResource(Res.string.create_new_note_description) +
+                    "\n" +
+                    stringResource(Res.string.create_new_note_hint),
+                hintImages = emptyList()
+            )
+        } }
+
+        content.content { Surface {
+            NoteForm(
+                text = noteText.value,
+                onTextChange = {
+                    noteText.value = it
+                    updateOkButtonEnablement()
+                },
+                isGpxAttached = false,
+                addImagesEnabled = addImagesEnabled,
+                onDeleteImage = ::deleteImage,
+                onTakePhoto = { takePhoto() },
+                fileSystem = fileSystem,
+                imagePaths = noteImagePaths.value,
+                isShowingGpxButton = prefs.getBoolean(Prefs.GPX_BUTTON, false),
+            )
+        } }
         if (prefs.getBoolean(Prefs.GPX_BUTTON, false)) {
             bottomSheetBinding.okButton.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0) // removes check drawable
             gpxButton.text = "GPX"
@@ -169,11 +185,11 @@ class CreateNoteFragment : AbstractCreateNoteFragment() {
 
     override fun onComposedNote(text: String, imagePaths: List<String>, isGpxNote: Boolean) {
         /* pressing once on "OK" should first only close the keyboard, so that the user can review
-           the position of the note he placed (this is now optional) */
-        if (prefs.getBoolean(Prefs.HIDE_KEYBOARD_FOR_NOTE, true) && contentBinding.noteInput.isKeyboardOpen) {
-            contentBinding.noteInput.hideKeyboard()
-            return
-        }
+           the position of the note he placed */
+        // TODO Compose: When layout including OK button has been migrated to Compose, uncomment
+        //if (prefs.getBoolean(Prefs.HIDE_KEYBOARD_FOR_NOTE, true) && isImeVisible()) {
+        //    LocalSoftwareKeyboardController.current?.hide()
+        //}
 
         val createNoteMarker = binding.markerCreateLayout.pin.root
         val screenPos = createNoteMarker.getLocationInWindow()

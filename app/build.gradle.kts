@@ -46,7 +46,7 @@ plugins {
 repositories {
     google()
     mavenCentral()
-    // for com.github.chrisbaines:PhotoView
+    // for com.github.ticofab:android-gpx-parser
     maven { url = uri("https://www.jitpack.io") }
 }
 
@@ -209,7 +209,6 @@ kotlin {
 
                 // widgets
                 implementation("com.google.android.flexbox:flexbox:3.0.0")
-                implementation("com.github.chrisbanes:PhotoView:2.3.0")
 
                 // map and location
                 implementation("org.maplibre.gl:android-sdk:12.3.1")
@@ -481,7 +480,7 @@ tasks.register<UpdateMapStyleTask>("updateMapStyle") {
 tasks.register<GenerateMetadataByCountryTask>("generateMetadataByCountry") {
     group = "streetcomplete"
     sourceDir = "$rootDir/res/country_metadata"
-    targetDir = "$projectDir/src/androidMain/assets/country_metadata"
+    targetDir = "$projectDir/src/commonMain/composeResources/files/country_metadata"
 }
 
 tasks.register("copyDefaultStringsToEnStrings") {

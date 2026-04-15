@@ -98,7 +98,7 @@ fun NoteSettingsScreen(
             SwitchPreference(
                 name = stringResource(R.string.pref_save_photos_title),
                 description = stringResource(R.string.pref_save_photos_summary),
-                pref = Prefs.QUEST_SETTINGS_PER_PRESET,
+                pref = Prefs.SAVE_PHOTOS,
                 default = false,
             )
             Preference(

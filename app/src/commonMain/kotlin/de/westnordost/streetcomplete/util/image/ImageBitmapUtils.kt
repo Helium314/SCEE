@@ -20,15 +20,28 @@ import androidx.core.graphics.drawable.toBitmap
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
-expect fun loadBitmapFromFile(filePath: String): ImageBitmap?
+import kotlinx.io.buffered
+import kotlinx.io.files.FileSystem
+import kotlinx.io.files.Path
+import kotlinx.io.readByteArray
+import org.jetbrains.compose.resources.decodeToImageBitmap
 
 @Composable
-fun fileBitmapPainter(filePath: String): Painter? {
-    val imageBitmap by produceState<ImageBitmap?>(initialValue = null, key1 = filePath) {
-        value = withContext(Dispatchers.IO) { loadBitmapFromFile(filePath) }
+fun fileBitmapPainter(fileSystem: FileSystem, file: Path): Painter? {
+    val imageBitmap by produceState<ImageBitmap?>(initialValue = null, key1 = file) {
+        value = withContext(Dispatchers.IO) { fileSystem.loadImageBitmap(file) }
     }
     return remember(imageBitmap) { imageBitmap?.let { BitmapPainter(it) } }
+}
+
+fun FileSystem.loadImageBitmap(path: Path): ImageBitmap? = try {
+    if (exists(path)) {
+        source(path).buffered().use { it.readByteArray() }.decodeToImageBitmap()
+    } else {
+        null
+    }
+} catch (e: Exception) {
+    null
 }
 
 /** allows creating a painter from all kinds of drawable resources,

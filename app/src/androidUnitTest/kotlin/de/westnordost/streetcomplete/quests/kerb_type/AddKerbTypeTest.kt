@@ -6,6 +6,7 @@ import de.westnordost.streetcomplete.quests.answerApplied
 import de.westnordost.streetcomplete.testutils.way
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class AddKerbTypeTest {
 
@@ -33,5 +34,9 @@ class AddKerbTypeTest {
             setOf(StringMapEntryAdd("kerb", "yes")),
             questType.answerApplied(KerbType.REGULAR)
         )
+    }
+
+    @Test fun `disabled by default in SCEE`() {
+        assertNotNull(questType.defaultDisabledMessage)
     }
 }

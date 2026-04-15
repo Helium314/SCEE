@@ -23,6 +23,7 @@ class AddKerbType : OsmFilterQuestType<KerbType>(), AndroidQuest {
     override val wikiLink = "Key:kerb"
     override val icon = R.drawable.quest_kerb_type
     override val title = Res.string.quest_kerb_type_title
+    override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
     override val achievements = listOf(BLIND, WHEELCHAIR, BICYCLIST)
 
     override fun createForm() = AddKerbTypeForm()

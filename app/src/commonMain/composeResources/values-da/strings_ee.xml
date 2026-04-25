@@ -364,7 +364,7 @@
     <string name="move_node_message_external_source_addition">Bemærk, at positionen for denne opgave ikke nødvendigvis flytter sig med punktet.</string>
     <string name="close_note_checkbox">Luk bemærkningen (gør kun dette, hvis du rent faktisk løser bemærkningen!)</string>
     <string name="quest_brewery_title">Hvilke ølmærker serveres her?</string>
-    <string name="quest_viaFerrataScale_zero">"Grad 0 -  ingen"</string>
+    <string name="quest_viaFerrataScale_zero">Grad 0 -  ingen</string>
     <string name="quest_viaFerrataScale_one">Grad 1/K1/A - meget let</string>
     <string name="quest_viaFerrataScale_zero_description">Lav sværhedsgrad; terrænet varierer fra fladt til stejlt; nogle udsatte sektioner. Sikret med kabler, kæder eller korte stiger. Kræver godt fodfæste; fint for de usportslige. Ferrata-sæt er valgfrit for de fleste.</string>
     <string name="quest_viaFerrataScale_title">Hvad er Via Ferrata-skalaen for denne ferrata?</string>
@@ -511,7 +511,7 @@
     <string name="default_disabled_msg_ee">Opgaver, der tilføjes i SCEE, er altid deaktiveret som standard, da de ikke altid kan besvares og kan kræve viden om emnet og tagging.</string>
     <string name="quest_parking_capacity_hint">Dette omfatter også særlige pladser til handicappede, familier, opladning osv. Skjul opgaven, hvis parkeringspladserne ikke er markerede og dermed ikke kan tælles</string>
     <string name="quest_parking_capacity_disabled_default_disabled_msg">Opgaver, der tilføjes i SCEE, er altid deaktiveret som standard, da de ikke altid kan besvares og kan kræve viden om emnet og tagging.
-\nDenne opgave vil ikke blive stillet, hvis capacity:disabled=yes er angivet. Hvis du også vil specificere det, skal du ændre elementvalget fra "and !capacity:disabled" til "and (!capacity:disabled or capacity:disabled=yes)"</string>
+\nDenne opgave vil ikke blive stillet, hvis capacity:disabled=yes er angivet. Hvis du også vil specificere det, skal du ændre elementvalget fra "and !capacity:disabled" til "and (!capacity:disabled or capacity:disabled=yes)</string>
     <string name="restriction_overlay_select_way">Klik på den næste linjestreng på kortet. Den skal have en fælles slutpunkt med den nuværende linjestreng. Opdel om nødvendigt.</string>
     <string name="create_custom_quest_button">Opret brugerdefineret opgave</string>
     <string name="custom_overlay_color_message">Vælg nøgle(r) til at få farve fra. Accepterer regex og bruger matchende tags til at få en farve. Farven udledes af nøgle og værdi for alle matchende nøgler. Hvis en matchende nøgle indeholder :left/right/both, vil den blive brugt til at farve de respektive sider af en vej, men ikke midterlinjen. Hvis der ikke er noget match, er farven altid rød, hvilket indikerer manglende data. Viden om regulære udtryk er meget nyttig for denne funktion.
@@ -520,10 +520,6 @@
 \nEksempel:
 \n"surface" viser surface=asphalt i samme farve og surface=concrete i en anden farve
 \n".*surface" ligner, men viser også sidewalk:(left/right/both):surface=asphalt i én farve, og cycleway:(left/right/both):surface=asphalt i en anden farve</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Høje lastbiler kan køre igennem</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Der er ikke plads til høje lastbiler</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Uklart</string>
-    <string name="quest_maxheight_answer_noSign_question">Er der rigeligt med plads til, at selv de højeste lastbiler (mindst ca. 4,5 meter) kan køre igennem?</string>
     <string name="action_all_quests">Vis alle opgaver</string>
     <string name="default_disabled_msg_sacScale">Denne opgavetype er som standard deaktiveret, fordi Sac-skalaværdien for stier er meget subjektiv og kræver ekspertviden om det anvendte klassificeringssystem. Da der ikke findes en verdensomspændende skala for stiers sværhedsgrad, bruges SAC's skala for bjerg- og alpinvandring her.</string>
     <string name="quest_sacScale_six_description">Meget udsat. Vanskeligt, klippefyldt terræn. Gletsjere med stor risiko for glide.</string>

@@ -4,8 +4,6 @@ import android.app.ActivityManager
 import android.app.ActivityManager.MemoryInfo
 import android.app.Application
 import android.content.ComponentCallbacks2
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.getSystemService
@@ -181,7 +179,7 @@ class StreetCompleteApplication : Application() {
 
         crashReportExceptionHandler.install()
 
-        feedsUpdater.updateDaily()
+        feedsUpdater.updateNow()
 
         enqueuePeriodicCleanupWork()
 

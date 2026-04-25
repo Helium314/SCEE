@@ -514,9 +514,6 @@
     <string name="quest_crossing_marking_value_zebra_dots">斑马线 + 点</string>
     <string name="quest_piste_difficulty_intermediate">中级</string>
     <string name="quest_parking_orientation_title">这里的汽车以什么方向停放？</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">高大的卡车可以通过</string>
-    <string name="quest_maxheight_answer_noSign_question_no">高大的卡车不适合</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">不清楚</string>
     <string name="quest_piste_difficulty_title">这条滑雪道的难度如何？</string>
     <string name="quest_piste_difficulty_expert">专家</string>
     <string name="quest_piste_difficulty_freeride">自由滑雪</string>
@@ -552,7 +549,6 @@
     <string name="quest_crossing_type_raised">高架人行横道</string>
     <string name="quest_piste_difficulty_advanced">高级</string>
     <string name="quest_parking_capacity_disabled_default_disabled_msg">SCEE 中添加的任务默认始终处于禁用状态，因为它们可能并不总是可回答的，并且可能需要了解主题和标记。 \n如果设置了 capacity:disabled=yes，则不会询问此任务。如果您也想指定它们，请将元素选择从“and !capacity:disabled”更改为“and (!capacity:disabled or capacity:disabled=yes)”</string>
-    <string name="quest_maxheight_answer_noSign_question">即使最高的卡车（至少约 4.5 米/15 英尺）是否有足够的空间可以轻松通过？</string>
     <string name="custom_overlay_color_message">选择要从中获取颜色的键。接受正则表达式并使用匹配的标签来获取颜色。颜色来自所有匹配键的键和值。如果匹配的键包含：left/right/both，它将用于为道路的两侧着色，但不为中心线着色。如果没有匹配，颜色始终为红色，表示缺少数据。正则表达式知识对于此功能非常有帮助。 \n如果表达式不是正则表达式，请在编辑标签时以“!”开头以重点值开头。 \n \n示例： \n“surface”以相同颜色显示 surface=asphalt，以不同颜色显示 surface=concrete \n“.*surface”类似，但也以一种颜色显示 sidewalk:(left/right/both):surface=asphalt，以另一种颜色显示 cycleway:(left/right/both):surface=asphalt</string>
     <string name="quest_surface_value_chipseal">碎石封层</string>
     <string name="quest_buildingType_barn">谷仓</string>

@@ -18,10 +18,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -130,12 +132,13 @@ private fun insideColor(item: QuestSelection): Color {
 
 @Composable
 private fun DisabledHint(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.body2,
-        fontStyle = FontStyle.Italic,
-        color = LocalContentColor.current.copy(alpha = ContentAlpha.medium),
-    )
+    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.body2,
+            fontStyle = FontStyle.Italic,
+        )
+    }
 }
 
 @Preview

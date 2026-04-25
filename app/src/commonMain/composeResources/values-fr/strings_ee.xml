@@ -98,7 +98,6 @@
     <string name="quest_seating_balcony">Sur un balcon (pas au rez-de-chaussée)</string>
     <string name="quest_seating_roof">Sur un toit</string>
     <string name="quest_seating_beach">À la plage</string>
-    <string name="quest_artwork_title">De quel type d'œuvre d'art s'agit-il \?</string>
     <string name="quest_healthcare_speciality_title">Quelles spécialités médicales sont offertes dans cet établissement de santé \?</string>
     <string name="quest_railwayPlatformRef_title">Quel est le numéro du quai \?</string>
     <string name="quest_railwayPlatformRef_abc">ABC/123</string>
@@ -258,7 +257,7 @@
     <string name="quest_buildingType_riding_hall">Manège d'équitation</string>
     <string name="quest_surface_value_metal_grid">Grille métallique</string>
     <string name="tag_editor_duplicate_key">Ignorer le changement de clé dupliquée %s</string>
-    <string name="access_manager_message">Choisir les clés d'accès. N'oubliez d'indiquer seulement les accès précisé sur le terrain, et d'éviter autant que possible le marquage générique avec la clé "access"</string>
+    <string name="access_manager_message">Choisir les clés d'accès. N'oubliez d'indiquer seulement les accès précisé sur le terrain, et d'éviter autant que possible le marquage générique avec la clé "access</string>
     <string name="custom_overlay_dash_filter_hint">Filtrer les éléments en pointillés</string>
     <string name="custom_overlay_color_info">Détails à afficher en couleur</string>
     <string name="quest_monitor_running">Suivi de la localisation</string>
@@ -297,7 +296,7 @@
 \nÀ l'installation, SCEE est configuré afin de se comporter très similairement à StreetComplete.</string>
     <string name="pref_show_gpx_button_summary">Contrairement aux notes OSM, ajouter un fichier GPX ne masquera aucune quête à l'endroit concerné</string>
     <string name="pref_dynamic_quest_creation_summary">Les quêtes sont créées lors du chargement de la zone visualisée. Un peu plus lent, mais permet d'appliquer immédiatement les paramètres modifiés de la quête.</string>
-    <string name="pref_quest_monitor_summary">Surveille la localisation lorsque l'application est en arrière-plan, sauf si elle est mise en arrière-plan à l'aide du bouton "retour"</string>
+    <string name="pref_quest_monitor_summary">Surveille la localisation lorsque l'application est en arrière-plan, sauf si elle est mise en arrière-plan à l'aide du bouton "retour</string>
     <string name="quest_railwayPlatformRef_message">Quel tag utiliser pour indiquer les voies accessibles depuis ce quai \? D'après le wiki OSM, local_ref est préférable, mais l'usage actuel le plus répandu est surtout ref.</string>
     <string name="default_disabled_msg_ee">Les quêtes ajoutées dans SCEE sont toujours désactivées par défaut, car il n'est pas toujours possible d'y répondre facilement, et elles peuvent nécessiter une connaissance plus approfondi du sujet et des tags à utiliser.</string>
     <string name="quest_healthcare_speciality_disabled_message">Cette quête nécessite des connaissances à propos des tags healthcare:speciality. Sans ces connaissances, il peut être très difficile de répondre à cette quête.</string>
@@ -494,7 +493,7 @@
     <string name="quest_service_building_ventilation_description">Un puits d'aération, ou puits de ventilation ou système d'aérage est du dispositif présent dans les mines, tunnels, ou immeubles permettant de renouveler l'air intérieur. Pour les puits non en lien avec une infrastructure ferroviaire.</string>
     <string name="quest_service_building_monitoring_station">Station de surveillance</string>
     <string name="quest_service_building_monitoring_station_description">Il existe une très grande variété de "stations de surveillance".
-\nCela va de la surveillance du niveau des rivières ( Limnimètre), à celui de la marée ( Marégraphe), à celle du niveau du bruit, de la pollution atmosphérique, ou encore des signaux du positionnement par satellite (GPS) jusqu'aux stations météorologiques ( Station météorologique). Cette balise ne se réfère pas aux objets utilisés pour "surveiller"</string>
+\nCela va de la surveillance du niveau des rivières ( Limnimètre), à celui de la marée ( Marégraphe), à celle du niveau du bruit, de la pollution atmosphérique, ou encore des signaux du positionnement par satellite (GPS) jusqu'aux stations météorologiques ( Station météorologique). Cette balise ne se réfère pas aux objets utilisés pour "surveiller</string>
     <string name="quest_street_cabinet_type_title">Quel genre d'armoire de rue est ce ?</string>
     <string name="quest_street_cabinet_traffic_control">Armoire protéger les automates de signalisation</string>
     <string name="quest_street_cabinet_postal_service">Armoire destinée à stocker le courrier en attente de distribution</string>
@@ -518,10 +517,9 @@
     <string name="quest_viaFerrataScale_one_description">1 ou 2 passages légèrement athlétiques ou un peu en hauteur. Itinéraire pour enfants et débutants.</string>
     <string name="quest_viaFerrataScale_four_description">Passages très physique, souvent en dévers. Ces passages sont vite très éprouvant pour les bras. Itinéraire pour un pratiquant bien entrainé et maitrisant parfaitement l'activité.</string>
     <string name="close">Fermer</string>
-    <string name="quest_maxheight_answer_noSign_question">Y a-t-il suffisamment d’espace pour que même les plus grands camions (au moins 4,5 mètres) puissent passer ?</string>
     <string name="quest_parking_capacity_hint">Cela comprend également les places spéciales pour les personnes handicapées, les familles, les places payantes, etc. Masquer la quête si les places de stationnement ne sont pas marquées et ne peuvent donc pas être comptabilisées</string>
     <string name="quest_parking_capacity_disabled_default_disabled_msg">Les quêtes ajoutées dans SCEE sont toujours désactivées par défaut, car il n'est pas toujours possible d'y répondre, et elles peuvent nécessiter une connaissance du sujet et de l'étiquetage.
-\nCette question ne sera pas posée si l'option capacity:disabled=yes est activée. Si vous souhaitez les spécifier également, modifiez la sélection de l'élément de "and !capacity:disabled" à "and (!capacity:disabled or capacity:disabled=yes)"</string>
+\nCette question ne sera pas posée si l'option capacity:disabled=yes est activée. Si vous souhaitez les spécifier également, modifiez la sélection de l'élément de "and !capacity:disabled" à "and (!capacity:disabled or capacity:disabled=yes)</string>
     <string name="quest_shelter_type_picnic_shelter">Pique-nique</string>
     <string name="quest_footway_width_title">Quelle est la largeur du chemin piéton ?</string>
     <string name="quest_shelter_type_disabled_msg">Cette quête est désactivée par défaut car il n'est pas facile d'y répondre. Le type d'abri doit être choisi parmi des suggestions, qui sont tirées des valeurs les plus utilisées et qui ne sont souvent pas faciles à différencier.</string>
@@ -534,9 +532,6 @@
 \nExemple :
 \n"surface" montre surface=asphalte dans la même couleur, et surface=béton dans une couleur différente.
 \n".*surface" est similaire, mais montre aussi trottoir :(left/right/both):surface= asphalt dans une couleur, et piste cyclable :(left/right/both):surface= asphalt dans une autre couleur.</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Les grands camions peuvent passer</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Les grands camions ne rentrent pas</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Manque de précision</string>
     <string name="quest_parking_capacity_disabled_answer_yes">Il y en a, mais leur nombre n'est pas clair</string>
     <string name="quest_parking_capacity_disabled_title">Combien y a-t-il de places de stationnement pour les personnes handicapées ?</string>
     <string name="quest_parking_orientation_title">Dans quel sens les voitures se garent-elles ?</string>

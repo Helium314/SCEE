@@ -339,7 +339,7 @@
     <string name="restriction_overlay_relation_unsupported">Неподдерживаемый тип ограничения:
 \n%s</string>
     <string name="restriction_overlay_select_way">Коснитесь следующей линии на карте. Она должна иметь общую крайнюю точку с текущей линией. Делите линии по необходимости.</string>
-    <string name="access_manager_message">Выберите метки ограничения доступа. Отмечайте только предписанное знаками, по возможности, не применяйте общую метку "access"</string>
+    <string name="access_manager_message">Выберите метки ограничения доступа. Отмечайте только предписанное знаками, по возможности, не применяйте общую метку "access</string>
     <string name="level_filter">Фильтр этажности</string>
     <string name="level_filter_enable">Включить фильтр этажности</string>
     <string name="quest_osmose_hide_type">Пропускать такие проблемы…</string>
@@ -538,7 +538,7 @@
     <string name="quest_caravanSiteType_lake">Озеро - место расположена прямо на озере.</string>
     <string name="default_disabled_msg_roof">Этот тип задания по умолчанию отключен, поскольку крыши зачастую с улицы не видны. Кроме того, этот тип квестов также довольно трудоёмкий, и в большинстве случаев проще и эффективнее использовать космоснимки.</string>
     <string name="quest_viaFerrataScale_title">Какая категория сложности этой виа ферраты?</string>
-    <string name="quest_viaFerrataScale_zero">"Категория 0 -  нет"</string>
+    <string name="quest_viaFerrataScale_zero">Категория 0 -  нет</string>
     <string name="quest_viaFerrataScale_zero_description">Сложность низкая; рельеф варьируется от ровного до крутого с открытыми участками. Безопасность обеспечивается тросами, цепями или короткими лестницами. Преодолевается пешком без требований к физической форме. Скорее всего комплект для виа ферраты не потребуется.</string>
     <string name="quest_viaFerrataScale_one">Категория 1/K1/A - очень простая</string>
     <string name="quest_viaFerrataScale_one_description">Хорошие естественные или железные ступени, высеченные лестницы, короткие закреплённые лестницы. Открытые проходы оборудованы тросами, цепями или веревками в качестве поручней. Опытные альпинисты могут отказаться от использования усов самостраховки.</string>
@@ -569,10 +569,6 @@
     <string name="quest_guidepostRef_hint">Справочный номер этой карты или указателя, а не справочный номер обозначенных маршрутов.</string>
     <string name="quest_guidepostName_hint">Подпись с названием этой карты или указателя. Не вводите здесь справочный номер.</string>
     <string name="quest_guidepost_disabled_msg">этот квест по умолчанию отключен, потому что надписи сильно различаются в зависимости от региона и обслуживающей организации. Возможно, вам потребуется уточнить элементы применительно к вашему региону (например, добавить или удалить карты, выбрать только элементы с hiking=yes и т. д.)</string>
-    <string name="quest_maxheight_answer_noSign_question">Достаточно ли места для проезда даже самых высоких грузовиков (≥4,5 метров / 15 футов)?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Высокие грузовики могут проехать</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Высокие грузовики не проедут</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Неясно</string>
     <string name="pref_quest_pedestrian_crossing_markings_extended">Расширение «Есть ли на этом переходе разметка?» позволяет определить стиль разметки перехода</string>
     <string name="quest_crossing_marking_value_no">Нет</string>
     <string name="quest_crossing_marking_value_ladder_skewed">Лестница перекошена</string>

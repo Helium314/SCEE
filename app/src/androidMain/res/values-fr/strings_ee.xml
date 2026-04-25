@@ -98,7 +98,6 @@
     <string name="quest_seating_balcony">Sur un balcon (pas au rez-de-chaussée)</string>
     <string name="quest_seating_roof">Sur un toit</string>
     <string name="quest_seating_beach">À la plage</string>
-    <string name="quest_artwork_title">De quel type d\'œuvre d\'art s\'agit-il \?</string>
     <string name="quest_healthcare_speciality_title">Quelles spécialités médicales sont offertes dans cet établissement de santé \?</string>
     <string name="quest_railwayPlatformRef_title">Quel est le numéro du quai \?</string>
     <string name="quest_railwayPlatformRef_abc">ABC/123</string>

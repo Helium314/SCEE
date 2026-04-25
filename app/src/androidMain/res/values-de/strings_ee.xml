@@ -534,7 +534,7 @@
     <string name="quest_sacScale_five">T5 - anspruchsvolles Alpinwandern</string>
     <string name="quest_sacScale_six">T6 - schwieriges Alpinwandern</string>
     <string name="quest_sacScale_five_description">Exponiertes, oft wegloses und anspruchsvolles Gelände. Kann steile Kletterstellen, Gletscher und Schneefelder mit Rutschgefahr umfassen.</string>
-    <string name="quest_sacScale_six_description">Starke Exponierung. Schwieriges felsiges Gelände. Gletscher mit hoher Rutschgefahr. Kletterstellen bis II.</string>
+    <string name="quest_sacScale_six_description">Erhebliche Gefährdung. Schwieriges, felsiges Gelände. Gletscher mit hoher Rutschgefahr.</string>
     <string name="quest_surface_value_chipseal">Chipseal (Splittasphalt)</string>
     <string name="quest_crossing_marking_value_no">Keine</string>
     <string name="quest_crossing_marking_value_lines">Linien</string>

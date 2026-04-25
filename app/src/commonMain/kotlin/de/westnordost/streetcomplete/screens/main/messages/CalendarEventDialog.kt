@@ -19,6 +19,8 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
@@ -63,7 +65,6 @@ import de.westnordost.streetcomplete.util.ktx.toLocalDateTime
 import de.westnordost.streetcomplete.util.locale.DateTimeFormatStyle
 import de.westnordost.streetcomplete.util.locale.LocalDateFormatter
 import de.westnordost.streetcomplete.util.locale.LocalTimeFormatter
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -268,9 +269,14 @@ private fun CalendarPageContent(
                         dontShowAgain = it
                         onToggleDontShowAgain(it)
                     },
+                    colors = CheckboxDefaults.colors(
+                        uncheckedColor = LocalContentColor.current.copy(alpha = 0.6f),
+                        checkmarkColor = MaterialTheme.colors.onSecondary,
+                        disabledColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
+                    ),
                 )
                 Text(
-                    text = stringResource(Res.string.dialog_dont_notify_again),
+                    text = stringResource(Res.string.dialog_dont_notify_again2),
                     style = MaterialTheme.typography.body1
                 )
             }

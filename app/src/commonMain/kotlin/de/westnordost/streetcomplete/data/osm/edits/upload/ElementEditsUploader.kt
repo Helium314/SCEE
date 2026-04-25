@@ -29,6 +29,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -73,7 +75,7 @@ class ElementEditsUploader(
             /* the sync of local change -> API and its response should not be cancellable because
              * otherwise an inconsistency in the data would occur. E.g. no "star" for an uploaded
              * change, a change could be uploaded twice etc */
-            withContext(scope.coroutineContext) { uploadEdit(edit, getIdProvider) }
+            withContext(NonCancellable) { uploadEdit(edit, getIdProvider) }
             if (ApplicationConstants.DEBUG && !UserLoginController.loggedIn)
                 break // slow uploading is much better to read in logs
         }

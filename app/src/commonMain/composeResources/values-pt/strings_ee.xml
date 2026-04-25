@@ -128,7 +128,7 @@
     <string name="pref_auto_download_summary">Transferir dados automaticamente da área em redor</string>
     <string name="pref_screen_quests">Missões</string>
     <string name="quest_service_building_type_substation_description">Subestações que relacionam-se principalmente com redes de distribuição regionais</string>
-    <string name="quest_parking_capacity_disabled_default_disabled_msg">As missões adicionadas pelo SCEE estão sempre desativadas por predefinição, pois nem sempre são simples de responder, e podem requerer conhecimento do tópico e das etiquetas associadas.\nEsta missão não irá aparecer se capacity:disabled=yes estiver definido. Se também queres especificar estes lugares, altera a seleção de elementos de "and !capacity:disabled" para "and (!capacity:disabled or capacity:disabled=yes)"</string>
+    <string name="quest_parking_capacity_disabled_default_disabled_msg">As missões adicionadas pelo SCEE estão sempre desativadas por predefinição, pois nem sempre são simples de responder, e podem requerer conhecimento do tópico e das etiquetas associadas.\nEsta missão não irá aparecer se capacity:disabled=yes estiver definido. Se também queres especificar estes lugares, altera a seleção de elementos de "and !capacity:disabled" para "and (!capacity:disabled or capacity:disabled=yes)</string>
     <string name="quest_service_building_type_title">Que tipo de edifício de serviço é este?</string>
     <string name="pref_overlay_quick_selector_title">Mostrar seletor rápido de camadas</string>
     <string name="quest_buildingColour_title">Qual é a cor geral deste edifício?</string>
@@ -175,10 +175,6 @@
     <string name="restriction_overlay_title">Restrições de tráfego</string>
     <string name="restriction_overlay_exceptions">Exceções: %s</string>
     <string name="restriction_overlay_only_for">Apenas para: %s</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Camiões altos conseguem passar</string>
-    <string name="quest_maxheight_answer_noSign_question">Existe espaço suficiente para os camiões mais altos (pelo menos 4.5 metros / 15 pés) passarem?</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Camiões altos não cabem</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Não é claro</string>
     <string name="restriction_overlay_direction_text">Aplica-se à seguinte direção de viagem:</string>
     <string name="quest_parking_capacity_title">Quantos carros podem estacionar aqui?</string>
     <string name="restriction_overlay_sign_give_way">Cedência de prioridade</string>

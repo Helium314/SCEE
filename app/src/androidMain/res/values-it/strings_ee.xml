@@ -63,7 +63,6 @@
     <string name="pref_interval_summary">%d secondi</string>
     <string name="quest_settings_sidewalk_distance_button">Distanza</string>
     <string name="quest_trail_visibility_excellent">Eccellente</string>
-    <string name="quest_artwork_title">Che tipo di opera d\'arte è?</string>
     <string name="quest_mapSize_title">Che area è coperta da questa mappa?</string>
     <string name="quest_buildingType_stable">Stalla</string>
     <string name="time_limited_from">Da</string>
@@ -135,4 +134,13 @@
     <string name="pref_gpx_track_enable">Mostra traccia GPX</string>
     <string name="pref_gpx_track_download">Scarica l\'area coperta dalla traccia GPX</string>
     <string name="pref_custom_geometry_title">Mostra caratteristiche della mappa da un file GeoJson</string>
+    <string name="pref_read_log_title">Non è necessario tradurre, solo a scopo di debug</string>
+    <string name="pref_show_gpx_button_title">Mostra tasto nota GPX</string>
+    <string name="pref_show_gpx_button_summary">A differenza delle note OSM, aggiungere una nota GPX non nasconderà alcuna missione nella posiziona interessata</string>
+    <string name="pref_get_photos_title">Ottieni foto a risoluzione massima</string>
+    <string name="pref_volume_zoom_title">Zoom con i tasti del volume</string>
+    <string name="pref_volume_zoom_summary">Avvicina/Allontana la mappa usando i tasti del volume</string>
+    <string name="pref_rotate_while_zooming_title">Consenti di ruotare mentre zoomi</string>
+    <string name="pref_show_quick_settings_title">Mostra tasto impostazioni rapide</string>
+    <string name="pref_show_next_quest_title">Mostra immediatamente la prossima missione</string>
 </resources>

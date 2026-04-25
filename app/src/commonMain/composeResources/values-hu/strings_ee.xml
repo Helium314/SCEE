@@ -338,7 +338,6 @@
     <string name="quest_valves_dunlop">DV/NV: Dunlop (bicikli szelep)</string>
     <string name="quest_valves_schrader">AV: Schrader / autó szelep</string>
     <string name="quest_valves_regina">RV: Regina / olasz</string>
-    <string name="quest_artwork_title">Milyen típusú műalkotás ez?</string>
     <string name="quest_trail_visibility_title">Milyen az ösvény láthatósága?</string>
     <string name="quest_trail_visibility_excellent">Kiváló</string>
     <string name="quest_trail_visibility_excellent_description">Egyértelműen látható ösvény vagy jelzések mindenhol. A tájékozódás problémamentes, nincs szükség térképre.</string>
@@ -412,9 +411,6 @@
     <string name="quest_guidepostEle_title">Milyen magasság szerepel itt?</string>
     <string name="quest_guidepostRef_hint">A térkép vagy útjelző tábla azonosító száma, és nem a jelzett útvonalak azonosítója.</string>
     <string name="quest_guidepostName_hint">A térkép vagy útjelző tábla kiírt (hely)neve. Ne írd ide az azonosító számát.</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Magas teherautók átférnek</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Magas teherautók nem férnek át</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Bizonytalan</string>
     <string name="quest_crossing_marking_value_no">Nem</string>
     <string name="quest_crossing_marking_value_zebra">Zebra</string>
     <string name="quest_crossing_marking_value_ladder">Létra</string>
@@ -504,7 +500,6 @@
     <string name="quest_tree_disabled_msg">Ez a kérdés alapértelmezés szerint ki van kapcsolva, mert nem könnyű megválaszolni. A fajokat/nemzetségeket a javaslatok közül kell kiválasztani, amelyek a leggyakrabban használt értékekből származnak. Megadhatsz saját fajlista javaslatokat kereshető névvel, ha az adatbeállítások menüben megadsz egy &lt;faj&gt; (&lt;név&gt;) formátumú fájlt.</string>
     <string name="quest_railwayPlatformRef_message">Melyik címkét használjuk a peronról elérhető vágányokhoz? Az OSM wiki szerint a local_ref a javasolt, de a gyakorlatban a ref a gyakrabban használt.</string>
     <string name="quest_disabled_msg_railway_platform_ref">Megjegyzendő, hogy a wikiben nem teljesen egyértelmű, hogy melyik címkét érdemes használni, ezért ez a felhasználóra van bízva.\nVálassz a 'ref' (alapértelmezett) és a 'local_ref' között a kérdés beállításaiban. Ha egy peron mentén két vágány van, pontosvesszővel válaszd el az értékeket, pl. 2;3</string>
-    <string name="quest_maxheight_answer_noSign_question">Van elég hely, hogy még a legmagasabb teherautók (legalább 4,5 méter) is könnyen áthaladjanak?</string>
     <string name="quest_crossing_marking_value_dots">Pontozott vonalak</string>
     <string name="quest_building_demolished">Lebontották (láthatóak a nyomai)</string>
     <string name="quest_name_brand">Van márkaneve…</string>
@@ -517,7 +512,7 @@
     <string name="quest_crossing_marking_value_surface">Teli felület</string>
     <string name="quest_generalRef_disabled_msg">Ez a kérdés alapértelmezés szerint le van tiltva, mivel a kiírás régiótól és üzemeltetőtől függően erősen eltérő lehet. Lehet, hogy finomítani kell a területére vonatkozó elemkiválasztást (pl. közvilágítás eltávolítása, térképek hozzáadása, csak a hiking=yes táblák kiválasztása, stb.)</string>
     <string name="quest_sacScale_five">T5 – technikás alpesi túraút</string>
-    <string name="quest_parking_capacity_disabled_default_disabled_msg">Az SCEE-ben hozzáadott kérdések alapértelmezés szerint mind ki vannak kapcsolva, mivel nem mindig lehet rájuk válaszolni, és előfordulhat, hogy a téma és a címkézés ismeretét igénylik.\nEz a kérdés nem lesz feltéve, ha capacity:disabled=yes van megadva. Ha ilyenkor is meg akarod adni, változtasd meg az elemválasztást erről: "and !capacity:disabled" erre: "and (!capacity:disabled or capacity:disabled=yes)"</string>
+    <string name="quest_parking_capacity_disabled_default_disabled_msg">Az SCEE-ben hozzáadott kérdések alapértelmezés szerint mind ki vannak kapcsolva, mivel nem mindig lehet rájuk válaszolni, és előfordulhat, hogy a téma és a címkézés ismeretét igénylik.\nEz a kérdés nem lesz feltéve, ha capacity:disabled=yes van megadva. Ha ilyenkor is meg akarod adni, változtasd meg az elemválasztást erről: "and !capacity:disabled" erre: "and (!capacity:disabled or capacity:disabled=yes)</string>
     <string name="default_disabled_msg_sacScale">Ez a kérdéstípus alapértelmezés szerint ki van kapcsolva, mert az ösvények SAC-besorolás erősen szubjektív, és az osztályozási rendszer szakértői ismeretét igényli. Mivel az ösvények nehézségére nincs világszerte elterjedt osztályozás, itt a SAC hegyi és alpesi túrázási skálát használjuk.</string>
     <string name="quest_sacScale_three">T3 – technikás hegyi túraút</string>
     <string name="quest_parking_capacity_hint">Beletartoznak a speciális, például a mozgássérültek, családok, töltés stb. számára fenntartott helyek is. Rejtsd el a kérdést, ha a parkolóhelyek nincsenek felfestve, így nem számolhatóak meg</string>
@@ -563,7 +558,7 @@
     <string name="quest_viaFerrataScale_two">2/K2/B fokozat – könnyű</string>
     <string name="access_manager_message">Válaszd ki a hozzáférhetőségi címkéket. Ne feledd, hogy csak kitáblázott hozzáférhetőséget címkézz, és lehetőleg kerüld az általános „access” címkét</string>
     <string name="default_disabled_msg_viaFerrataScale">Ez a kérdéstípus alapértelmezés szerint ki van kapcsolva, mivel a via ferrata útvonalak minősítése erősen szubjektív, és az osztályozási rendszer szakértői ismeretét igényli, valamint a via ferrata végigmászása haladó hegymászási ismereteket igényel. Mivel a via ferrata nehézségére nincs világszerte elterjedt osztályozás, itt a német Huesler-skálát használjuk.</string>
-    <string name="quest_viaFerrataScale_zero">"0 fokozat –  nincs"</string>
+    <string name="quest_viaFerrataScale_zero">0 fokozat –  nincs</string>
     <string name="quest_viaFerrataScale_zero_description">Alacsony nehézség, a terep a sík és a meredek között változik, néhány szakasz kitett. Kábelekkel, láncokkal vagy rövid létrákkal biztosítva. Lépésbiztonságot igényel, de nem sportos túrázóknak is jó. Ferrata szett a legtöbbeknek opcionális.</string>
     <string name="quest_viaFerrataScale_two_description">A meredek vagy függőleges átjárók létrával vagy acéllépcsővel vannak ellátva. Acélkábelek és láncok biztosítják a mászót, még a kevésbé nehéz terepen is. Ferrata szett erősen ajánlott.</string>
     <string name="quest_viaFerrataScale_one_description">Jó természetes vagy faragott lépcsők, rövid létrák vagy acéllépcsők. A kitett átjárókon kábelek, láncok vagy kötelek vannak felszerelve a kapaszkodáshoz. A tapasztalt hegymászók dönthetnek úgy, hogy nem csatolják be magukat.</string>

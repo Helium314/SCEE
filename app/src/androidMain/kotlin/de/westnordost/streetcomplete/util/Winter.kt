@@ -3,7 +3,7 @@ package de.westnordost.streetcomplete.util
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.util.ktx.systemTimeNow
 import de.westnordost.streetcomplete.util.ktx.toLocalDate
-import java.time.Month.*
+import kotlinx.datetime.Month.*
 
 fun isWinter(location: LatLon?): Boolean {
     if (location == null) return false

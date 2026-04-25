@@ -519,10 +519,6 @@
     <string name="quest_generalRef_hint">Referenznummer</string>
     <string name="quest_generalRef_disabled_msg">Diese Aufgabe ist standardmäßig deaktiviert, da die Beschilderung je nach Region und Betreiber sehr unterschiedlich ist. Möglicherweise musst du die Auswahl der Elemente für dein Gebiet verfeinern (z. B. Straßenlaternen entfernen, Karten hinzufügen, nur Wegweiser mit hiking=yes auswählen usw.)</string>
     <string name="close">Schließen</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Große Lastwagen passen durch</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Große Lastwagen passen nicht durch</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Unsicher</string>
-    <string name="quest_maxheight_answer_noSign_question">Haben selbst die größten Lastwagen (mindestens 4,5 Meter) genügend Platz, um durchzufahren?</string>
     <string name="action_all_quests">Alle Aufgaben anzeigen</string>
     <string name="pref_quest_sac_scale_without_relation">Suche alle Wege, auch die, die nicht in einer Wanderrelation sind</string>
     <string name="quest_sacScale_four_description">Bereits stark exponiertes Gelände, einschließlich steiler Grasabschnitte, Geröllhänge, leichter Schneefelder oder schneefreier Gletscherüberquerungen.</string>
@@ -538,7 +534,7 @@
     <string name="quest_sacScale_five">T5 - anspruchsvolles Alpinwandern</string>
     <string name="quest_sacScale_six">T6 - schwieriges Alpinwandern</string>
     <string name="quest_sacScale_five_description">Exponiertes, oft wegloses und anspruchsvolles Gelände. Kann steile Kletterstellen, Gletscher und Schneefelder mit Rutschgefahr umfassen.</string>
-    <string name="quest_sacScale_six_description">Starke Exponierung. Schwieriges felsiges Gelände. Gletscher mit hoher Rutschgefahr. Kletterstellen bis II.</string>
+    <string name="quest_sacScale_six_description">Erhebliche Gefährdung. Schwieriges, felsiges Gelände. Gletscher mit hoher Rutschgefahr.</string>
     <string name="quest_surface_value_chipseal">Chipseal (Splittasphalt)</string>
     <string name="quest_crossing_marking_value_no">Keine</string>
     <string name="quest_crossing_marking_value_lines">Linien</string>

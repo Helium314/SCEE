@@ -128,7 +128,6 @@
     <string name="quest_seating_patio">Na terase (nezastřešené, na nádvoří)</string>
     <string name="quest_buildingColour_title">Jakou má budova celkově barvu?</string>
     <string name="quest_buildingPartColour_title">Jakou má tato část budovy celkově barvu?</string>
-    <string name="quest_artwork_title">Co je toto za umělecké dílo?</string>
     <string name="quest_trail_visibility_excellent">Excelentní</string>
     <string name="quest_trail_visibility_excellent_description">Všude jednoznačná cesta nebo značky. Orientace bezproblémová, není třeba mapy.</string>
     <string name="quest_trail_visibility_good">Dobrá</string>
@@ -326,10 +325,6 @@
     <string name="custom_overlay_color_hint">Nechte políčko prázdné pro zobrazení všech prvků stejnou barvou</string>
     <string name="custom_overlay_highlight_missing">Zvýraznit chybějící data</string>
     <string name="custom_overlay_color_info">Detaily barvení</string>
-    <string name="quest_maxheight_answer_noSign_question">Je zde místo na jednoduchý průjezd i pro ty největší náklaďáky (aspoň 4.5 metrů)?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Vysoké náklaďáky mohou projet</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Vysoké náklaďáky se nevejdou</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Není jasné</string>
     <string name="quest_mapSize_title">Jaká oblast je pokryta touto mapou?</string>
     <string name="quest_caravanSiteType_winery">Vinárna - stání ve vinárně, běžně přímo u vinných sadů.</string>
     <string name="quest_roofColour_title">Jakou celkovou barvu má střecha této budovy?</string>

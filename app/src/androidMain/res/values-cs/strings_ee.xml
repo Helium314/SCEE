@@ -128,7 +128,6 @@
     <string name="quest_seating_patio">Na terase (nezastřešené, na nádvoří)</string>
     <string name="quest_buildingColour_title">Jakou má budova celkově barvu?</string>
     <string name="quest_buildingPartColour_title">Jakou má tato část budovy celkově barvu?</string>
-    <string name="quest_artwork_title">Co je toto za umělecké dílo?</string>
     <string name="quest_trail_visibility_excellent">Excelentní</string>
     <string name="quest_trail_visibility_excellent_description">Všude jednoznačná cesta nebo značky. Orientace bezproblémová, není třeba mapy.</string>
     <string name="quest_trail_visibility_good">Dobrá</string>

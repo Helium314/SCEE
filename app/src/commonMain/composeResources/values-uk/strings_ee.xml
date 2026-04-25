@@ -357,10 +357,6 @@
     <string name="close">Закрити</string>
     <string name="quest_guidepostEle_title">Яка тут висота над рівнем моря?</string>
     <string name="quest_guidepostEle_hint">Не використовуйте дані про висоту за GPS, оскільки вони, як правило, занадто неточні і не надаються в правильній системі відліку висоти.</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Високі вантажівки можуть проїхати</string>
-    <string name="quest_maxheight_answer_noSign_question">Чи достатньо місця для проїзду навіть найвищих вантажівок (від 4,5 метрів / 15 футів заввишки)?</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Невідомо</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Високі вантажівки не проїдуть</string>
     <string name="action_all_quests">Показати всі квести</string>
     <string name="quest_outdoor_seating_name_title">Які місця на вулиці є в цьому закладі?</string>
     <string name="quest_saunaAvailability_title">Чи є тут сауна?</string>
@@ -579,7 +575,7 @@
     <string name="quest_parking_capacity_hint">Це також включає спеціальні місця, наприклад, для людей з інвалідністю, сімей, для заряджання тощо. Приховайте квест, якщо паркувальні місця не позначені та, отже, не підлягають врахуванню</string>
     <string name="quest_parking_capacity_disabled_title">Скільки тут паркувальних місць для людей з інвалідністю?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">Є, але кількість незрозуміла</string>
-    <string name="quest_parking_capacity_disabled_default_disabled_msg">Квести, додані в SCEE, завжди вимкнені за замовчуванням, оскільки на них не завжди можна відповісти, і вони можуть вимагати знання теми та тегів.\nЦей квест не буде запропоновано, якщо встановлено capacity:disabled=yes. Якщо ви також хочете вказати їх, змініть вибір елемента з "and !capacity:disabled" на "and (!capacity:disabled або capacity:disabled=yes)"</string>
+    <string name="quest_parking_capacity_disabled_default_disabled_msg">Квести, додані в SCEE, завжди вимкнені за замовчуванням, оскільки на них не завжди можна відповісти, і вони можуть вимагати знання теми та тегів.\nЦей квест не буде запропоновано, якщо встановлено capacity:disabled=yes. Якщо ви також хочете вказати їх, змініть вибір елемента з "and !capacity:disabled" на "and (!capacity:disabled або capacity:disabled=yes)</string>
     <string name="quest_parking_orientation_title">В якій орієнтації тут паркуються автомобілі?</string>
     <string name="pref_quest_sac_scale_without_relation">Шукати всі стежки, навіть ті, хто не мають стосунку до піших прогулянок</string>
     <string name="quest_sacScale_title">Яка шкала SAC цього шляху?</string>

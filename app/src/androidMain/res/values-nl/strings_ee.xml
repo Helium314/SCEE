@@ -95,4 +95,16 @@
     <string name="quest_lampMount_highMast">Hoge paal (hoger dan 30m)</string>
     <string name="quest_lampMount_wall">Muur</string>
     <string name="quest_lampMount_ceiling">Plafond</string>
+    <string name="quest_contact_phone">Wat is het telefoon­nummer van deze plek?</string>
+    <string name="quest_contact_website">Wat is de website van deze plek?</string>
+    <string name="quest_benchMaterial_title">Waar is deze bank van gemaakt?</string>
+    <string name="quest_bench_armrest_title">Heeft deze bank arm­leuningen?</string>
+    <string name="quest_barrier_locked_title">Is deze barrière (meestal) op slot?</string>
+    <string name="quest_guidepost_sports_title">Voor welke sport is deze weg­wijzer bedoeld?</string>
+    <string name="quest_guidepost_sports_answer_simple">Het is gewoon een een­voudige weg­wijzer</string>
+    <string name="quest_guidepost_sports_horse">Paard­rijden</string>
+    <string name="ban_check_fails">De controle op verboden versies mislukt steeds. Mogelijk gebruikt u een verouderde versie; overweeg de app bij te werken.</string>
+    <string name="custom_overlay_title">Aangepaste overlay</string>
+    <string name="import_export_custom_overlays">Aangepaste overlays</string>
+    <string name="custom_overlay_add_button">Nieuwe aan­gepaste overlay</string>
 </resources>

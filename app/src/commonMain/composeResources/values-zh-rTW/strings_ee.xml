@@ -106,7 +106,7 @@
     <string name="quest_lampMount_ceiling">天花板</string>
     <string name="quest_lampMount_transitShelter">大眾運輸涼亭</string>
     <string name="default_disabled_msg_roof">這種任務類型預設是停用的，因為屋頂通常不容易從街道上看見。這種任務類型也相當耗時；在大多數情況下，在家裡使用航空影像來繪製更輕鬆有效率。</string>
-    <string name="pref_really_all_notes_title">"顯示所有的註記" 是指"所有的"註記</string>
+    <string name="pref_really_all_notes_title">顯示所有的註記" 是指"所有的"註記</string>
     <string name="pref_really_all_notes_summary">在請求顯示所有備註時，也顯示由你自己建立（或評論）的備註</string>
     <string name="pref_create_custom_quest_summary">…作為留下註記的替代方法。這可以用作在地圖上可見的本地儲存註記。請注意，你需要啟用自訂任務。</string>
     <string name="pref_save_photos_summary">儲存建立註記時拍攝的照片原始大小版本，並保留 EXIF 資料</string>
@@ -433,7 +433,6 @@
     <string name="quest_wheelchair_description_no_language">沒有指定的語言</string>
     <string name="quest_building_demolished">已經被毀壞(仍可見到殘骸)</string>
     <string name="quest_maxspeed_conditional">取決於…</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">不清楚</string>
     <string name="quest_crossing_marking_value_no">沒有</string>
     <string name="quest_parking_capacity_title">這邊可以停幾輛車？</string>
     <string name="quest_parking_capacity_hint">這包含了特殊停車位，例如無障礙停車位、孕婦停車位、充電停車位等等。如果沒有劃記停車位的話，請將此任務隱藏</string>

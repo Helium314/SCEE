@@ -48,7 +48,7 @@
     <string name="quest_shelter_type_title">Minkälainen katos tämä on?</string>
     <string name="quest_shelter_type_disabled_msg">Tämä tehtävä on oletusarvoisesti pois käytöstä, koska siihen ei ole helppo vastata. Katoksen tyyppi täytyy valita ehdotuksista, jotka on otettu yleisimmistä vastauksista, ja ne on usein vaikea erottaa toisistaan.</string>
     <string name="quest_saunaAvailability_title">Onko täällä sauna?</string>
-    <string name="pref_really_all_notes_title">"Näytä kaikki huomautukset" tarkoittaahan kaikkia huomautuksia</string>
+    <string name="pref_really_all_notes_title">Näytä kaikki huomautukset" tarkoittaahan kaikkia huomautuksia</string>
     <string name="pref_really_all_notes_summary">Kun pyydät näyttämään kaikki huomautukset, näytä jopa itse luomasi (tai kommentoimasi) huomautukset</string>
     <string name="pref_create_custom_quest_summary">…vaihtoehtona huomautuksen jättämiselle. Tätä voidaan käyttää paikallisesti tallennettuna huomautuksena, joka näkyy kartalla. Huomaa, että sinun on otettava käyttöön mukautetut pyynnöt.</string>
     <string name="pref_save_photos_title">Tallenna huomautuksiin käytetyt valokuvat</string>

@@ -380,7 +380,6 @@
     <string name="quest_service_building_railway_wash">鉄道洗車場</string>
     <string name="quest_service_building_railway_wash_description">列車を洗浄する施設がある建物です(日本では大抵、鉄道車両基地の一部)</string>
     <string name="quest_street_cabinet_waste">廃棄物</string>
-    <string name="quest_artwork_title">これは何の種類の芸術作品ですか?</string>
     <string name="quest_street_cabinet_traffic">交通</string>
     <string name="quest_street_cabinet_traffic_control">交通制御</string>
     <string name="quest_street_cabinet_traffic_monitoring">交通監視</string>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quest_settings_level_default">Shops &amp; similar in shopping centres (default)</string>
+    <string name="quest_guidepost_sports_hiking">Bushwalking</string>
+    <string name="quest_guidepost_sports_winter_hiking">Alpine Bushwalking</string>
+    <string name="quest_recycling_excrement_bag_dispenser">It has a poo bag dispenser</string>
+    <string name="quest_seating_sidewalk">On the footpath</string>
+    <string name="quest_buildingColour_title">What overall colour does this building have?</string>
+    <string name="quest_buildingPartColour_title">What overall colour does this building part have?</string>
+    <string name="quest_roofColour_title">What overall colour does this building’s roof have?</string>
+    <string name="quest_mapType_topo_description">A map with topographical background for e.g. a historical or bushwalking map. The map contains contour lines.</string>
+    <string name="quest_mapType_toposcope_description">A marker erected on high places which indicates the direction to notable landscape features which can be seen from that point. Often used with lookouts.</string>
+    <string name="pref_quest_sac_scale_without_relation">Search all paths even those who are not in a bushwalking relation</string>
+    <string name="quest_piste_lit_title">Is this ski run lit here?</string>
+    <string name="quest_piste_ref_title">What is the number of this ski run?</string>
+    <string name="quest_piste_ref_connection">It's a ski run connection</string>
+    <string name="quest_shelter_type_sun_shelter">Sun shelter / shade shelter</string>
+    <string name="quest_shelter_type_rock_shelter">Cave / rock overhang</string>
+    <string name="quest_railwayPlatformRef_title">What platform number is here?</string>
+    <string name="quest_piste_difficulty_title">What is the difficulty of this ski run?</string>
+</resources>

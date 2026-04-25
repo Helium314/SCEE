@@ -151,7 +151,7 @@
     <string name="quest_osmose_message">Aquestes missions són descarregades des del servei d'Osmose i indiquen potencials problemes amb dades d'OSM. Sols és descarregen i es mostren si, com a mínim, un nivell de severitat és seleccionat en la configuració dol missió.
 \n El missatge d'Osmose es mostra amb la missió, qualsevol modificació en l'element marca el problema com a resolt.
 \n També pots marcar el problema com un fals positiu; aquesta acció no es pot desfer.</string>
-    <string name="quest_custom_quest_message">Usa-ho per comprovar elements o ubicacions predefinits específics. També pots especificar etiquetes i sun un node. Per usar-ho, carrega un fitxer en el menú de configuració principal que contingui type,id,message (per exemple: NODE,1234,check position) o latitude,longitude,message. Per afegir nodes, posa les etiquetes en el missatge després d'"addNode"; per exemple: "addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes"</string>
+    <string name="quest_custom_quest_message">Usa-ho per comprovar elements o ubicacions predefinits específics. També pots especificar etiquetes i sun un node. Per usar-ho, carrega un fitxer en el menú de configuració principal que contingui type,id,message (per exemple: NODE,1234,check position) o latitude,longitude,message. Per afegir nodes, posa les etiquetes en el missatge després d'"addNode"; per exemple: "addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
     <string name="restore_dialog_hint">També pots triar manualment quines missions restaurar via mantenint pressionat el botó de desfer.</string>
     <string name="element_selection_button">Selecció d'elements</string>
     <string name="quest_service_building_monitoring_station">Estació de control i monitoratge</string>
@@ -220,15 +220,13 @@
     <string name="quest_guidepostEle_title">Quina és l'elevació aquí?</string>
     <string name="quest_construction_value">Estableix "construction=…", o deixa-ho en blanc si no ho saps</string>
     <string name="quest_parking_capacity_disabled_default_disabled_msg">Missions afegides a SCEE estan sempre desactivades per defecte, ja que no sempre poden ser contestades, i requereixen de coneixements en el tema i en les etiquetes a usar.
-\nAquesta missió no serà preguntada si l'etiqueta es capacity:disabled=yes. Si vols especificar-les per a aquestes ocasions també, canvia la secció d'elements dol missió desde "and !capacity:disabled" cap a "and (!capacity:disabled or capacity:disabled=yes)"</string>
+\nAquesta missió no serà preguntada si l'etiqueta es capacity:disabled=yes. Si vols especificar-les per a aquestes ocasions també, canvia la secció d'elements dol missió desde "and !capacity:disabled" cap a "and (!capacity:disabled or capacity:disabled=yes)</string>
     <string name="quest_buildingType_transformer_tower">Torre transformadora</string>
     <string name="quest_guidepost_disabled_msg">Aquesta missió està desactivada per defecte, ja que varia fortament entre regions i operadors. És possible que hagis de redefinir la selecció d'elements per a aquesta missió segons l'àrea on estiguis (per exemple: afegir o esborrar mapes, seleccionar sols elements amb hiking=yes, etc.)</string>
     <string name="quest_guidepostEle_hint">No usis l'altitud del GPS, ja que normalment es força imprecisa i no sempre proporciona l'altitud correcta.</string>
     <string name="quest_crossing_marking_value_zebra_paired">Zebra en línies per parelles</string>
     <string name="quest_parking_capacity_title">Quants cotxes poden aparcar aquí?</string>
     <string name="quest_parking_capacity_hint">Això també inclou places per a persones discapacitades, per a famílies, per a càrrega i descarrega, etc. Amaga aquesta missió si els espais d'aparcament no estan marcats i, per tant, no és possible contar-los</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Els camions i vehicles més alts no hi passen</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">No està del tot clar</string>
     <string name="pref_quest_pedestrian_crossing_markings_extended">Vols activar l'extensió dol missió "Aquest encreuament té marques a terra"? Això et permetrà definir l'estil dols marques de l'encreuament</string>
     <string name="quest_crossing_marking_value_no">No</string>
     <string name="quest_crossing_marking_value_zebra">Zebra</string>
@@ -300,8 +298,6 @@
     <string name="quest_guidepostName_title">Quin és el nom?</string>
     <string name="quest_guidepostRef_hint">Número de referència per a aquest mapa o aquesta senyalització; no ho confonguis amb el número de referència dols rutes o les destinacions senyalitzades.</string>
     <string name="quest_guidepostName_hint">Ubicació (segons com està escrit) d'aquest mapa o aquest senyal. No introdueixis aquí sun número de referència.</string>
-    <string name="quest_maxheight_answer_noSign_question">Hi ha espai de sobra perquè inclús els camions i vehicles més alts (com a mínim 4.5m / 15ft. d'alçada) hi puguin passar per aquí?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Els camions i vehicles més alts hi poden passar</string>
     <string name="quest_caravanSiteType_restaurant">Ubicat prop d'una cafeteria o d'un restaurant, sovint en sun aparcament.</string>
     <string name="quest_cuisine_title">Quin tipus de cuina/estil de menjar té aquest lloc? Usa etiquetes d'OSM suggerides!</string>
     <string name="quest_guidepost_sports_winter_hiking">Senderisme hivernal</string>

@@ -18,7 +18,7 @@
     <string name="pref_read_filter_hint">Filtrele…</string>
     <string name="pref_hide_keyboard_title">Not oluşturmadan önce klavyeyi gizleyin</string>
     <string name="pref_hide_keyboard_summary">Not veri tabanına yüklenmeden önce klavyeyi gizler (pozisyonunu tekrar kontrol edebilmek için)</string>
-    <string name="pref_really_all_notes_title">"Tüm notları göster" her bir çeşit not için geçerlidir</string>
+    <string name="pref_really_all_notes_title">Tüm notları göster" her bir çeşit not için geçerlidir</string>
     <string name="pref_screen_ui">Kullanıcı Arayüzü</string>
     <string name="import_presets_overlays_add">Ön Ayar Ekle</string>
     <string name="pref_way_direction">Çizgilerin yönünü göster</string>

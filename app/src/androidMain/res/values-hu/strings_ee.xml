@@ -338,7 +338,6 @@
     <string name="quest_valves_dunlop">DV/NV: Dunlop (bicikli szelep)</string>
     <string name="quest_valves_schrader">AV: Schrader / autó szelep</string>
     <string name="quest_valves_regina">RV: Regina / olasz</string>
-    <string name="quest_artwork_title">Milyen típusú műalkotás ez?</string>
     <string name="quest_trail_visibility_title">Milyen az ösvény láthatósága?</string>
     <string name="quest_trail_visibility_excellent">Kiváló</string>
     <string name="quest_trail_visibility_excellent_description">Egyértelműen látható ösvény vagy jelzések mindenhol. A tájékozódás problémamentes, nincs szükség térképre.</string>

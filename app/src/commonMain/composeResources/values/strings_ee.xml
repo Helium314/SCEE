@@ -176,7 +176,7 @@
     <string name="theme_dark_contrast">Dark (increased contrast)</string>
     <string name="resurvey_intervals_even_less_often">Ask even less often</string>
     <string name="pref_gps_interval_title">GPS location update interval</string>
-    <string name="pref_network_interval_title">"Network location update interval"</string>
+    <string name="pref_network_interval_title">Network location update interval</string>
     <string name="pref_interval_summary">%d seconds</string>
     <string name="pref_interval_message">Update interval in seconds</string>
     <string name="action_scee_quests">Show only SCEE quests</string>
@@ -255,7 +255,7 @@
     <string name="quest_custom_quest_add_node_text">You can add a node with: %s</string>
 
     <!--barrier locked -->
-    <string name="quest_barrier_locked_title">"Is this barrier (usually) locked?"</string>
+    <string name="quest_barrier_locked_title">Is this barrier (usually) locked?</string>
 
     <!-- bench material -->
     <string name="quest_benchMaterial_title">What’s this made of?</string>
@@ -271,8 +271,8 @@
     <!-- guidepost sports -->
     <string name="quest_guidepost_sports_title">For which sport is this guidepost intended?</string>
     <string name="quest_guidepost_sports_note">If there is anything not covered by the features listed, please leave a note instead.</string>
-    <string name="quest_guidepost_sports_answer_simple">"It´s just a simple guidepost"</string>
-    <string name="quest_guidepost_sports_answer_simple_description">"This is just a simple guidepost with no specific sports."</string>
+    <string name="quest_guidepost_sports_answer_simple">It´s just a simple guidepost</string>
+    <string name="quest_guidepost_sports_answer_simple_description">This is just a simple guidepost with no specific sports.</string>
     <string name="quest_guidepost_sports_hiking">Hiking</string>
     <string name="quest_guidepost_sports_bicycle">Cycling</string>
     <string name="quest_guidepost_sports_mtb">MTB</string>
@@ -288,7 +288,7 @@
     <string name="quest_is_pharmacy_dispensing_title">Is this pharmacy dispensing all prescription drugs?</string>
 
     <!-- piste lit -->
-    <string name="quest_piste_lit_title">"Is this piste lit here?"</string>
+    <string name="quest_piste_lit_title">Is this piste lit here?</string>
 
     <!-- poi quests -->
     <string name="quest_poi_seating_title">POI: Seating</string>
@@ -318,8 +318,8 @@
     <string name="quest_recycling_excrement_bag_dispenser">It has an excrement bag dispenser</string>
 
     <!-- piste ref -->
-    <string name="quest_piste_ref_title">"What is the number of this piste?"</string>
-    <string name="quest_piste_ref_connection">"It's a piste connection"</string>
+    <string name="quest_piste_ref_title">What is the number of this piste?</string>
+    <string name="quest_piste_ref_connection">It's a piste connection</string>
 
     <!-- shared "utility" types for service building type and street cabinet type -->
     <string name="quest_utility_power">Electricity</string>
@@ -432,27 +432,27 @@
     <string name="quest_valves_regina">RV: Regina / Italian</string>
 
     <!-- trail visibility -->
-    <string name="quest_trail_visibility_title">"What is the Trail Visibility of this way?"</string>
-    <string name="default_disabled_msg_trail_visibility">"This quest type is disabled by default because the rating of the trail visibility is highly subjective and needs expert knowledge in the used grading system."</string>
-    <string name="quest_trail_visibility_excellent">"Excellent"</string>
-    <string name="quest_trail_visibility_excellent_description">"Unambiguous path or markers everywhere. Orientation unproblematic, no map required."</string>
-    <string name="quest_trail_visibility_good">"Good"</string>
-    <string name="quest_trail_visibility_good_description">"Path or next marker always visible, but sometimes has to be searched for. Basic sense of direction needed, map recommended."</string>
-    <string name="quest_trail_visibility_intermediate">"Intermediate"</string>
-    <string name="quest_trail_visibility_intermediate_description">"Path mostly visible, no markers. Good sense of direction needed, map required."</string>
-    <string name="quest_trail_visibility_bad">"Bad"</string>
-    <string name="quest_trail_visibility_bad_description">"Path sometimes invisible, route partly pathless, no markers. Basic skills in orientation required."</string>
-    <string name="quest_trail_visibility_horrible">"Horrible"</string>
-    <string name="quest_trail_visibility_horrible_description">"Often pathless, no markers. Advanced orientational skills required."</string>
-    <string name="quest_trail_visibility_no">"No Visibility"</string>
-    <string name="quest_trail_visibility_no_description">"Mostly pathless, no markers. Excellent orientational skills required."</string>
+    <string name="quest_trail_visibility_title">What is the Trail Visibility of this way?</string>
+    <string name="default_disabled_msg_trail_visibility">This quest type is disabled by default because the rating of the trail visibility is highly subjective and needs expert knowledge in the used grading system.</string>
+    <string name="quest_trail_visibility_excellent">Excellent</string>
+    <string name="quest_trail_visibility_excellent_description">Unambiguous path or markers everywhere. Orientation unproblematic, no map required.</string>
+    <string name="quest_trail_visibility_good">Good</string>
+    <string name="quest_trail_visibility_good_description">Path or next marker always visible, but sometimes has to be searched for. Basic sense of direction needed, map recommended.</string>
+    <string name="quest_trail_visibility_intermediate">Intermediate</string>
+    <string name="quest_trail_visibility_intermediate_description">Path mostly visible, no markers. Good sense of direction needed, map required.</string>
+    <string name="quest_trail_visibility_bad">Bad</string>
+    <string name="quest_trail_visibility_bad_description">Path sometimes invisible, route partly pathless, no markers. Basic skills in orientation required.</string>
+    <string name="quest_trail_visibility_horrible">Horrible</string>
+    <string name="quest_trail_visibility_horrible_description">Often pathless, no markers. Advanced orientational skills required.</string>
+    <string name="quest_trail_visibility_no">No Visibility</string>
+    <string name="quest_trail_visibility_no_description">Mostly pathless, no markers. Excellent orientational skills required.</string>
 
     <!-- building colour -->
-    <string name="quest_buildingColour_title">"What overall color does this building have?"</string>
-    <string name="quest_buildingPartColour_title">"What overall color does this building part have?"</string>
+    <string name="quest_buildingColour_title">What overall color does this building have?</string>
+    <string name="quest_buildingPartColour_title">What overall color does this building part have?</string>
 
     <!-- roof colour -->
-    <string name="quest_roofColour_title">"What overall color does this building’s roof have?"</string>
+    <string name="quest_roofColour_title">What overall color does this building’s roof have?</string>
     <string name="default_disabled_msg_roof">This quest type is disabled by default because roofs are often not easily visible from the street. This quest type is also quite time-consuming; in most cases it is easier and more efficient to map this from aerial imagery at home.</string>
 
     <!-- map type -->
@@ -474,39 +474,39 @@
     <string name="quest_mapSize_landscape">A whole landscape, mostly used on toposcopes</string>
 
     <!-- via ferrata scale -->
-    <string name="quest_viaFerrataScale_title">"What is the Via Ferrata Scale of this ferrata?"</string>
-    <string name="default_disabled_msg_viaFerrataScale">"This quest type is disabled by default because the rating of via ferrata routes is highly subjective and needs expert knowledge in the used grading system and when climbing via ferrata, as this requires advanced mountaineering skills. As there is no "world wide scale" for via ferrata difficulty, the German Huesler scale is used here."</string>
-    <string name="quest_viaFerrataScale_zero">"Grade 0 -  none"</string>
-    <string name="quest_viaFerrataScale_zero_description">"Difficulty low; terrain varies from flat to steep; some exposed sections. Secured with cables, chains or brief ladders. Requires surefootedness; fine for the unsporty. Ferrata set optional for most."</string>
-    <string name="quest_viaFerrataScale_one">"Grade 1/K1/A - very easy"</string>
-    <string name="quest_viaFerrataScale_one_description">"Good natural steps or hewn stairs, short ladders or iron steps. Exposed passages are fitted with cables, chains or ropes for handrails rails. Experienced mountaineers may choose not to clip in."</string>
-    <string name="quest_viaFerrataScale_two">"Grade 2/K2/B - easy"</string>
-    <string name="quest_viaFerrataScale_two_description">"Steep or vertical passages are fitted with ladders or iron steps. Steel cables and chains secure the climber, even in less difficult terrain. Ferrata set strongly advised."</string>
-    <string name="quest_viaFerrataScale_three">"Grade 3/K3/C - moderate"</string>
-    <string name="quest_viaFerrataScale_three_description">"Some technical climbing, but nothing that requires particularly strong arms. Ferrata set necessary."</string>
-    <string name="quest_viaFerrataScale_four">"Grade 4/K4/D - difficult"</string>
-    <string name="quest_viaFerrataScale_four_description">"Steep terrain with continuous steel cables to attach to. Arm strength required. Artificial aids (iron steps, handholds) on hardest sections."</string>
-    <string name="quest_viaFerrataScale_five">"Grade 5/K5/E - very difficult"</string>
-    <string name="quest_viaFerrataScale_five_description">"Long, persistently demanding and very strenuous. Exposed terrain may only have cables for safety, these are reserved only for places that would other wise be impossible to cross. For experienced climbers."</string>
-    <string name="quest_viaFerrataScale_six">"Grade 6/K6/F - extremely difficult"</string>
-    <string name="quest_viaFerrataScale_six_description">"Long sparsely secured gymnastic circuits that require real stamina. Climbing shoes may be useful. Additional security to be provided by rope or belaying (recommended)"</string>
+    <string name="quest_viaFerrataScale_title">What is the Via Ferrata Scale of this ferrata?</string>
+    <string name="default_disabled_msg_viaFerrataScale">This quest type is disabled by default because the rating of via ferrata routes is highly subjective and needs expert knowledge in the used grading system and when climbing via ferrata, as this requires advanced mountaineering skills. As there is no "world wide scale" for via ferrata difficulty, the German Huesler scale is used here.</string>
+    <string name="quest_viaFerrataScale_zero">Grade 0 -  none</string>
+    <string name="quest_viaFerrataScale_zero_description">Difficulty low; terrain varies from flat to steep; some exposed sections. Secured with cables, chains or brief ladders. Requires surefootedness; fine for the unsporty. Ferrata set optional for most.</string>
+    <string name="quest_viaFerrataScale_one">Grade 1/K1/A - very easy</string>
+    <string name="quest_viaFerrataScale_one_description">Good natural steps or hewn stairs, short ladders or iron steps. Exposed passages are fitted with cables, chains or ropes for handrails rails. Experienced mountaineers may choose not to clip in.</string>
+    <string name="quest_viaFerrataScale_two">Grade 2/K2/B - easy</string>
+    <string name="quest_viaFerrataScale_two_description">Steep or vertical passages are fitted with ladders or iron steps. Steel cables and chains secure the climber, even in less difficult terrain. Ferrata set strongly advised.</string>
+    <string name="quest_viaFerrataScale_three">Grade 3/K3/C - moderate</string>
+    <string name="quest_viaFerrataScale_three_description">Some technical climbing, but nothing that requires particularly strong arms. Ferrata set necessary.</string>
+    <string name="quest_viaFerrataScale_four">Grade 4/K4/D - difficult</string>
+    <string name="quest_viaFerrataScale_four_description">Steep terrain with continuous steel cables to attach to. Arm strength required. Artificial aids (iron steps, handholds) on hardest sections.</string>
+    <string name="quest_viaFerrataScale_five">Grade 5/K5/E - very difficult</string>
+    <string name="quest_viaFerrataScale_five_description">Long, persistently demanding and very strenuous. Exposed terrain may only have cables for safety, these are reserved only for places that would other wise be impossible to cross. For experienced climbers.</string>
+    <string name="quest_viaFerrataScale_six">Grade 6/K6/F - extremely difficult</string>
+    <string name="quest_viaFerrataScale_six_description">Long sparsely secured gymnastic circuits that require real stamina. Climbing shoes may be useful. Additional security to be provided by rope or belaying (recommended)</string>
 
     <!-- caravan site type -->
-    <string name="quest_caravanSiteType_title">"Where is this caravan site located?"</string>
-    <string name="default_disabled_msg_caravanSiteType">"This quest type is disabled by default because the classification and use of the tag is not commonly used."</string>
-    <string name="quest_caravanSiteType_village">"Village - a stopover near a smaller village."</string>
-    <string name="quest_caravanSiteType_town">"Town - a stopover near a bigger town."</string>
-    <string name="quest_caravanSiteType_river">"River - the site is located directly on the river."</string>
-    <string name="quest_caravanSiteType_lake">"Lake - the site is located directly on the lake."</string>
-    <string name="quest_caravanSiteType_parking_lot">"Parking Lot - directly on a parking lot."</string>
-    <string name="quest_caravanSiteType_harbour">"Harbor - at a harbor or marina."</string>
-    <string name="quest_caravanSiteType_winery">"Winery - staying at a winery, often right next to vineyards."</string>
-    <string name="quest_caravanSiteType_camp_site">"Camp site - a separate motorhome stopover at a campsite."</string>
-    <string name="quest_caravanSiteType_museum">"Museum - located at a museum, exhibition or similar."</string>
-    <string name="quest_caravanSiteType_restaurant">"Restaurant - at a restaurant or cafe, often on the parking lot."</string>
-    <string name="quest_caravanSiteType_farm">"Farm - staying at a farm."</string>
-    <string name="quest_caravanSiteType_beach">"Beach - next to a beach or by the sea."</string>
-    <string name="quest_caravanSiteType_supermarket">"Supermarket - on the parking lot of a supermarket."</string>
+    <string name="quest_caravanSiteType_title">Where is this caravan site located?</string>
+    <string name="default_disabled_msg_caravanSiteType">This quest type is disabled by default because the classification and use of the tag is not commonly used.</string>
+    <string name="quest_caravanSiteType_village">Village - a stopover near a smaller village.</string>
+    <string name="quest_caravanSiteType_town">Town - a stopover near a bigger town.</string>
+    <string name="quest_caravanSiteType_river">River - the site is located directly on the river.</string>
+    <string name="quest_caravanSiteType_lake">Lake - the site is located directly on the lake.</string>
+    <string name="quest_caravanSiteType_parking_lot">Parking Lot - directly on a parking lot.</string>
+    <string name="quest_caravanSiteType_harbour">Harbor - at a harbor or marina.</string>
+    <string name="quest_caravanSiteType_winery">Winery - staying at a winery, often right next to vineyards.</string>
+    <string name="quest_caravanSiteType_camp_site">Camp site - a separate motorhome stopover at a campsite.</string>
+    <string name="quest_caravanSiteType_museum">Museum - located at a museum, exhibition or similar.</string>
+    <string name="quest_caravanSiteType_restaurant">Restaurant - at a restaurant or cafe, often on the parking lot.</string>
+    <string name="quest_caravanSiteType_farm">Farm - staying at a farm.</string>
+    <string name="quest_caravanSiteType_beach">Beach - next to a beach or by the sea.</string>
+    <string name="quest_caravanSiteType_supermarket">Supermarket - on the parking lot of a supermarket.</string>
 
     <!-- other -->
     <string name="quest_contact_phone">What is the phone number of this place?</string>
@@ -517,7 +517,7 @@
     <string name="quest_brewery_add_more">Add another brewery</string>
     <string name="quest_brewery_is_various">Many brands of beer are served here</string>
     <string name="quest_brewery_is_not_available">No beer is sold here</string>
-    <string name="quest_service_building_operator_title">"Who is the operator for this service building?"</string>
+    <string name="quest_service_building_operator_title">Who is the operator for this service building?</string>
     <string name="quest_healthcare_speciality_title">What healthcare specialities does this place have?</string>
     <string name="quest_healthcare_speciality_switch_ui">Switch UI</string>
     <string name="quest_healthcare_speciality_add_more">Add another speciality</string>
@@ -536,15 +536,17 @@
     <string name="quest_destination_add_more">Add another destination</string>
     <!-- use 2 lines for the button so it doesn't get too wide -->
     <string name="quest_destination_all_lanes_button">All\nlanes</string>
-    <string name="quest_footway_width_title">"How wide is the foot path here?"</string>
-    <string name="quest_barrier_height_title">"How tall is this barrier?"</string>
+
+    <string name="quest_footway_width_title">How wide is the foot path here?</string>
+    <string name="quest_barrier_height_title">How tall is this barrier?</string>
     <string name="quest_kerb_type_title">What type of kerb is this?</string>
+
 
     <!-- additional strings for quests available in StreetComplete -->
     <string name="quest_bicycle_parking_type_saddleholder">Saddle holder</string>
     <string name="quest_surface_value_metal_grid">Metal grid</string>
     <string name="quest_surface_value_stepping_stones">Stepping stones</string>
-    <string name="quest_surface_value_chipseal">"Chipseal"</string>
+    <string name="quest_surface_value_chipseal">Chipseal</string>
     <string name="quest_buildingType_presbytery">Presbytery</string>
     <string name="quest_buildingType_barn">Barn</string>
     <string name="quest_buildingType_cowshed">Cowshed</string>
@@ -576,17 +578,12 @@
     <string name="time_limited_from">From</string>
     <string name="time_limited_to">To</string>
     <string name="quest_name_brand">It has a brand name…</string>
-    <string name="quest_guidepostName_title">"What is the name here?"</string>
-    <string name="quest_guidepostEle_title">"What is the elevation here?"</string>
+    <string name="quest_guidepostName_title">What is the name here?</string>
+    <string name="quest_guidepostEle_title">What is the elevation here?</string>
     <string name="quest_guidepostEle_hint">Do not use GPS altitude, as it typically is too inaccurate and not provided in the correct height reference system.</string>
     <string name="quest_guidepostRef_hint">Reference number of this map or guidepost, not the reference number of signed routes.</string>
     <string name="quest_guidepostName_hint">Signed (location) name of this map or guidepost. Do not enter a reference number here.</string>
     <string name="quest_guidepost_disabled_msg">This quest is disabled by default because what is signed strongly varies by region and operator. You may need to refine the element selection for your area (e.g. add or remove maps, only select elements with hiking=yes, etc.)</string>
-    <!-- maxheight_answer_noSign strings removed in SC, could take existing translations from https://github.com/streetcomplete/StreetComplete/blob/312dd4135ad75beff9f13c446040d1c3afbc9a80/app/src/main/res/values/strings.xml -->
-    <string name="quest_maxheight_answer_noSign_question">Is there easily enough space for even the tallest trucks (at least about 4.5 meters / 15 feet) to pass through?</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Tall trucks can pass through</string>
-    <string name="quest_maxheight_answer_noSign_question_no">"Tall trucks don’t fit"</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">"Unclear"</string>
     <!-- quest crossing marking -->
     <string name="pref_quest_pedestrian_crossing_markings_extended">Enable extension of "Does this crossing have markings on the ground?", allows you to define the style of crossing markings</string>
     <string name="quest_crossing_marking_value_no">No</string>
@@ -622,29 +619,29 @@
     <string name="quest_parking_capacity_hint">This also includes special spaces like for disabled people, families, for charging etc. Hide the quest if the parking spaces are not marked and thus not countable</string>
     <string name="quest_parking_capacity_disabled_title">How many parking spaces for disabled people are here?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">There are, but unclear count</string>
-    <string name="quest_parking_capacity_disabled_default_disabled_msg">Quests added in SCEE are always disabled by default, as they may not always be answerable, and may require knowledge of the topic and tagging.\nThis quest will not be asked if capacity:disabled=yes is set. If you want to specify them as well, change the element selection from "and !capacity:disabled" to "and (!capacity:disabled or capacity:disabled=yes)"</string>
+    <string name="quest_parking_capacity_disabled_default_disabled_msg">Quests added in SCEE are always disabled by default, as they may not always be answerable, and may require knowledge of the topic and tagging.\nThis quest will not be asked if capacity:disabled=yes is set. If you want to specify them as well, change the element selection from "and !capacity:disabled" to "and (!capacity:disabled or capacity:disabled=yes)</string>
 
     <!-- parking orientation quest -->
     <string name="quest_parking_orientation_title">In what orientation do cars park here?</string>
 
     <!-- sac scale -->
     <string name="pref_quest_sac_scale_without_relation">Search all paths even those who are not in a hiking relation</string>
-    <string name="quest_sacScale_title">"What is the SAC Scale of this path?"</string>
-    <string name="default_disabled_msg_sacScale">"This quest type is disabled by default because the sac scale of path is highly subjective and needs expert knowledge in the used grading system and. As there is no "world wide scale" for path difficulty, the SAC Mountain and Alpine Hiking Scale is used here."</string>
-    <string name="quest_sacScale_strolling">"Strolling"</string>
-    <string name="quest_sacScale_strolling_description">"Smooth, level trail with no obstacles, suitable for all footwear, strollers, or crutches, and requires no orientation skills."</string>
-    <string name="quest_sacScale_one">"T1 - hiking"</string>
-    <string name="quest_sacScale_one_description">"Terrain level or slightly inclined; no risk of falling with appropriate behaviour."</string>
-    <string name="quest_sacScale_two">"T2 - mountain hiking"</string>
-    <string name="quest_sacScale_two_description">"Terrain is steep in places and may pose fall hazards."</string>
-    <string name="quest_sacScale_three">"T3 - demanding mountain hiking"</string>
-    <string name="quest_sacScale_three_description">"Portions of the route exposed with danger of falling. Trail may have unmarked portions and cross fields of loose scree or talus."</string>
-    <string name="quest_sacScale_four">"T4 - alpine hiking"</string>
-    <string name="quest_sacScale_four_description">"Terrain already quite exposed, including steep grassy pitches, talus slopes, easy snowfields, or snow-free glacier crossings."</string>
-    <string name="quest_sacScale_five">"T5 - demanding alpine hiking"</string>
-    <string name="quest_sacScale_five_description">"Exposed and demanding terrain. May include steep rock scrambles, glaciers and snowfields with risk of sliding."</string>
-    <string name="quest_sacScale_six">"T6 - difficult alpine hiking"</string>
-    <string name="quest_sacScale_six_description">"Severe exposure. Difficult craggy terrain. Glaciers with high risk of sliding."</string>
+    <string name="quest_sacScale_title">What is the SAC Scale of this path?</string>
+    <string name="default_disabled_msg_sacScale">This quest type is disabled by default because the sac scale of path is highly subjective and needs expert knowledge in the used grading system and. As there is no "world wide scale" for path difficulty, the SAC Mountain and Alpine Hiking Scale is used here.</string>
+    <string name="quest_sacScale_strolling">Strolling</string>
+    <string name="quest_sacScale_strolling_description">Smooth, level trail with no obstacles, suitable for all footwear, strollers, or crutches, and requires no orientation skills.</string>
+    <string name="quest_sacScale_one">T1 - hiking</string>
+    <string name="quest_sacScale_one_description">Terrain level or slightly inclined; no risk of falling with appropriate behaviour.</string>
+    <string name="quest_sacScale_two">T2 - mountain hiking</string>
+    <string name="quest_sacScale_two_description">Terrain is steep in places and may pose fall hazards.</string>
+    <string name="quest_sacScale_three">T3 - demanding mountain hiking</string>
+    <string name="quest_sacScale_three_description">Portions of the route exposed with danger of falling. Trail may have unmarked portions and cross fields of loose scree or talus.</string>
+    <string name="quest_sacScale_four">T4 - alpine hiking</string>
+    <string name="quest_sacScale_four_description">Terrain already quite exposed, including steep grassy pitches, talus slopes, easy snowfields, or snow-free glacier crossings.</string>
+    <string name="quest_sacScale_five">T5 - demanding alpine hiking</string>
+    <string name="quest_sacScale_five_description">Exposed and demanding terrain. May include steep rock scrambles, glaciers and snowfields with risk of sliding.</string>
+    <string name="quest_sacScale_six">T6 - difficult alpine hiking</string>
+    <string name="quest_sacScale_six_description">Severe exposure. Difficult craggy terrain. Glaciers with high risk of sliding.</string>
 
     <!-- lamp type -->
     <string name="quest_lampType_title">What kind of lamp is this?</string>
@@ -733,7 +730,7 @@
     <!-- other -->
     <string name="hide_button">Hide</string>
     <string name="tag_editor_last_edited">Last edited: %s</string>
-    <string name="tag_editor_duplicate_key">Ignoring change of duplicate key "%s"</string>
+    <string name="tag_editor_duplicate_key">Ignoring change of duplicate key "%s</string>
     <string name="tutorial_info_fork_message"><b>SCEE</b>\n\n
 This is a modified version of StreetComplete. It is intended for experienced users with advanced knowledge about OSM. It gives you more control, but also more <i>responsibility</i>.\n
 This especially applies to the possibility of editing raw tags and deleting nodes, but also for modification of element selection for quests.
@@ -778,11 +775,11 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_roofOrientation_along">Parallel to the building’s longer side</string>
     <string name="quest_roofOrientation_across">Parallel to the building’s shorter side</string>
     <string name="quest_roofOrientation_title">How is the roof ridge oriented?</string>
-    <string name="quest_pavingStonesMaterial_title">"What material are these paving stones made of?"</string>
+    <string name="quest_pavingStonesMaterial_title">What material are these paving stones made of?</string>
 
     <!-- building material -->
-    <string name="quest_buildingMaterial_title">"What material is this building's facade made of?"</string>
-    <string name="quest_buildingPartMaterial_title">"What material is this building part's facade made of?"</string>
+    <string name="quest_buildingMaterial_title">What material is this building's facade made of?</string>
+    <string name="quest_buildingPartMaterial_title">What material is this building part's facade made of?</string>
     <string name="quest_material_cement_block">Cement block</string>
     <string name="quest_material_plaster">Plaster</string>
     <string name="quest_material_glass">Glass</string>

@@ -351,7 +351,7 @@
     <string name="quest_trail_visibility_horrible_description">Ofta väglös, inga markeringar. Avancerad orienteringsfärdigheter krävs.</string>
     <string name="quest_trail_visibility_no_description">För det mesta väglös, inga markeringar. Utmärkta orienteringsfärdigheter krävs.</string>
     <string name="quest_mapSize_site">Ett ställe, t.ex. en park eller ett zoo</string>
-    <string name="quest_viaFerrataScale_zero">"Grad 0 -  ingen"</string>
+    <string name="quest_viaFerrataScale_zero">Grad 0 -  ingen</string>
     <string name="quest_viaFerrataScale_four">Grad 4/K4/D - svår</string>
     <string name="quest_viaFerrataScale_five">Grad 5/K5/E - mycket svår</string>
     <string name="quest_viaFerrataScale_six">Grad 6/K6/F - extremt svår</string>
@@ -405,9 +405,6 @@
     <string name="quest_caravanSiteType_restaurant">Restaurang - vid en restaurang eller ett kafé, ofta på parkeringsplatsen.</string>
     <string name="quest_caravanSiteType_beach">Strand - vid en strand eller vid havet.</string>
     <string name="quest_caravanSiteType_supermarket">Stormarknad - på parkeringsplatsen vid en stormarknad.</string>
-    <string name="quest_maxheight_answer_noSign_question_yes">Höga lastbilar kan köra igenom</string>
-    <string name="quest_maxheight_answer_noSign_question_no">Höga lastbilar får inte plats</string>
-    <string name="quest_maxheight_answer_noSign_question_unclear">Oklart</string>
     <string name="quest_crossing_marking_value_no">Inga</string>
     <string name="quest_crossing_marking_value_zebra">Zebra</string>
     <string name="quest_lampType_led">LED-lampa</string>
@@ -446,7 +443,7 @@
     <string name="quest_material_tiles">Klinker</string>
     <string name="quest_material_bamboo">Bambu</string>
     <string name="pref_read_filter_hint">Filtrera…</string>
-    <string name="pref_really_all_notes_title">"Visa alla anteckningar" betyder ALLA anteckningar</string>
+    <string name="pref_really_all_notes_title">Visa alla anteckningar" betyder ALLA anteckningar</string>
     <string name="quest_swimming_pool_no">Ingen swimmingpool</string>
     <string name="quest_caravanSiteType_title">Var ligger denna husbilsställplats?</string>
     <string name="quest_buildingType_elevator">Hiss</string>
@@ -466,7 +463,6 @@
     <string name="quest_saunaAvailability_title">Finns det en bastu här?</string>
     <string name="quest_valves_disabled_msg">Detta uppdrag är inaktiverat som standard, eftersom det kräver en mycket noggrann inspektion av de tillgängliga ventilerna.</string>
     <string name="quest_custom_quest_add_node_text">Du kan lägga till en nod med: %s</string>
-    <string name="quest_maxheight_answer_noSign_question">Finns det uppenbart tillräckligt mycket plats för även de högsta lastbilarna (åtminstone 4,5 meter / 15 fot) att köra igenom?</string>
     <string name="quest_material_limestone">Kalksten</string>
     <string name="pref_rotate_angle_threshold_title">Tröskel för rotationsgest</string>
     <string name="quest_lampType_title">Vilken typ av lampa är detta?</string>

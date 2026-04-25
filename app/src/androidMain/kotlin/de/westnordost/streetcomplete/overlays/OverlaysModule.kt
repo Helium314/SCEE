@@ -67,6 +67,6 @@ fun overlaysRegistry(
     8 to ThingsOverlay(getFeature),
     7 to BuildingsOverlay(),
     9 to MtbScaleOverlay(),
-    (EE_QUEST_OFFSET + 1) to RestrictionOverlay(),
+//    (EE_QUEST_OFFSET + 1) to RestrictionOverlay(),
     (EE_QUEST_OFFSET + 0) to CustomOverlay(prefs),
 ))

@@ -2,7 +2,6 @@ package de.westnordost.streetcomplete.quests.custom
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.AnnotatedString
 import androidx.fragment.app.commit
@@ -12,13 +11,10 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestCont
 import de.westnordost.streetcomplete.data.quest.ExternalSourceQuestKey
 import de.westnordost.streetcomplete.quests.AbstractExternalSourceQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
-import de.westnordost.streetcomplete.quests.QuestHeader
 import de.westnordost.streetcomplete.screens.main.MainActivity
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.CreatePoiFragment
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.toTags
-import de.westnordost.streetcomplete.ui.util.content
 import de.westnordost.streetcomplete.util.ktx.toast
-import org.jetbrains.compose.resources.stringResource
 import org.koin.android.ext.android.inject
 
 class CustomQuestForm : AbstractExternalSourceQuestForm() {

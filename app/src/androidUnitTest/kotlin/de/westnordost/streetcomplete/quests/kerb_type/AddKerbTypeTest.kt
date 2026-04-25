@@ -31,7 +31,7 @@ class AddKerbTypeTest {
 
     @Test fun `apply regular kerb answer`() {
         assertEquals(
-            setOf(StringMapEntryAdd("kerb", "yes")),
+            setOf(StringMapEntryAdd("kerb", "no")),
             questType.answerApplied(KerbType.REGULAR)
         )
     }

@@ -5,6 +5,5 @@ enum class KerbType(val osmValue: String) {
     LOWERED("lowered"),
     FLUSH("flush"),
     KERB_RAMP("lowered"),
-    REGULAR("yes"),
+    REGULAR("no"),
 }
-

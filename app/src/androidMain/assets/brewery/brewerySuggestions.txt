@@ -57,6 +57,7 @@ Hacker-Pschorr
 Harvey's
 Hatz
 Heineken
+Herforder
 Herrnbräu
 Hirsch
 Hirter
@@ -96,6 +97,7 @@ Paulaner
 Pelforth
 Peroni
 Pilsner Urquell
+Pinkus
 Puntigamer
 Pécsi
 Radeberger
@@ -142,6 +144,7 @@ Weitra Bräu
 Weldebräu
 Wieselburger
 Wildbräu
+Wolters
 Zipfer
 Zwettler
 Zwiefalter

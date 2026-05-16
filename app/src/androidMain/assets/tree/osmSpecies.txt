@@ -22,20 +22,16 @@ Acer griseum
 Acer negundo
 Acer palmatum
 Acer platanoides
-Acer platanoïdes
-Acer platanoïdes Columnare
 Acer platanoides 'Crimson King'
 Acer platanoides 'Globosum'
 Acer platanoides 'Purpureum'
 Acer platanoides 'Schwedleri'
 Acer pseudoplatanus
 Acer pseudoplatanus 'Atropurpureum'
-Acer psuedoplatanus
 Acer rubrum
 Acer rubrum "Armstrong"
 Acer rubrum Morgan
 Acer rubrum Red Sunset
-Acer saccarinum
 Acer saccharinum
 Acer saccharinum laciniatum
 Acer saccharinum Laciniatum Wieri
@@ -61,13 +57,11 @@ Alnus viridis
 Amelanchier canadensis
 Amelanchier laevis
 Amelanchier lamarckii
-Ananas comosus Merr.
 Angophora costata
 Araucaria araucana
 Araucaria heterophylla
 Arbutus unedo
 Azadirachta indica
-Azardiraecta indica
 Banksia integrifolia
 Banksia marginata
 Bauhinia kalbreyeri Harms.
@@ -78,7 +72,6 @@ Betula nigra
 Betula papyrifera
 Betula pendula
 Betula pendula Dalecarlica
-Betula platyphylla Sukaczev var. japonica H.Hara
 Betula populifolia
 Betula pubescens
 Betula utilis
@@ -93,19 +86,16 @@ Callistemon salignus
 Callistemon viminalis
 Calocedrus decurrens
 Camellia sinensis
-Camellia sinensis Kuntze
 Carica papaya
 Carica papaya L.
 Carpinus betulus
 Carpinus betulus 'Fastigiata'
 Carpinus betulus 'Frans Fontaine'
-Carya illinoinensis K.Koch
 Castanea dentata
 Castanea sativa
 Casuarina cunninghamiana
 Casuarina glauca
 Catalpa bignonioides
-Catalpa bungeii
 Cedrus atlantica
 Cedrus atlantica glauca
 Cedrus deodara
@@ -127,7 +117,6 @@ Cinnamomum camphora
 Citrus × aurantium
 Citrus × sinensis
 Cocos nucifera
-Cocos nucifera L.
 Coprosma repens
 Cordyline australis
 Cornus florida
@@ -238,7 +227,6 @@ Luma apiculata
 Magnolia Galaxy
 Magnolia grandiflora
 Magnolia kobus
-Magnolia x soulangiana
 Malus domestica
 Malus 'Evereste'
 Malus floribunda
@@ -260,7 +248,6 @@ Melaleuca linariifolia
 Melaleuca nesophila
 Melaleuca styphelioides
 Melia azedarach
-Melia azederach
 Metasequoia glyptostroboides
 Metrosideros excelsa
 Morus alba
@@ -271,7 +258,6 @@ Nothofagus dombeyi
 Nothofagus obliqua
 Olea europaea
 Olea europea
-Opuntia ficus-indica Mill.
 Ostrya carpinifolia
 Parrotia persica
 Paulownia tomentosa
@@ -283,7 +269,6 @@ Phoenix dactylifera
 Phoenix dactylifera L.
 Photinia serrulata
 Picea abies
-Picea abies Karst.
 Picea glauca
 Picea mariana
 Picea omorika
@@ -323,7 +308,6 @@ Populus deltoides
 Populus nigra
 Populus nigra 'Italica'
 Populus pyramidalis
-Populus robusta
 Populus simonii
 Populus tremula
 Populus tremula 'Erecta'
@@ -344,9 +328,7 @@ Prunus cerasifera 'Pissardii'
 Prunus cerasus
 Prunus domestica
 Prunus dulcis
-Prunus dulcis D.A.Webb
 Prunus hillierii x Spire
-Prunus kanzan
 Prunus laurocerasus
 Prunus lusitanica
 Prunus maackii
@@ -365,7 +347,6 @@ Prunus 'Tai Haku'
 Prunus 'Umineko'
 Prunus virginiana
 Prunus Virginiana `Schubert`
-Prunus x hillieri Spire
 Prunus x schmittii
 Prunus × yedoensis
 Pseudotsuga menziesii
@@ -399,11 +380,9 @@ Quercus rubra
 Quercus suber
 Quillaja saponaria
 Rhus typhina
-River Red Gum
 Robinia pseudoacacia
 Robinia umbraculifera
 Roystonea regia
-SA Blue Gum
 Salix alba
 Salix alba 'Tristis'
 Salix babylonica
@@ -452,8 +431,6 @@ Tilia platyphyllos Scop.
 Tilia tomentosa
 Tilia x euchlora
 Tilia x europaea
-Tilia x europea
-Tilia x europeana
 Tilia x flavescens Glenleven
 Tilia x intermedia
 Tilia x vulgaris

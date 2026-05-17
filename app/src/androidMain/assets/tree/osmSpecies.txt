@@ -78,7 +78,6 @@ Betula pubescens
 Betula utilis
 Betula verrucosa
 Brachychiton populneus
-Branchychiton populneus
 Broussonetia papyrifera
 Buxus sempervirens
 Caesalpinia pluviosa DC.
@@ -134,7 +133,6 @@ Crataegus laevigata 'Paul's Scarlet'
 Crataegus monogyna
 Crataegus monogyna 'Stricta'
 Crataegus oxyacantha
-Crataegus x lavallei
 Crataegus X prunifolia
 Cryptomeria japonica
 Cupressocyparis leylandii
@@ -215,7 +213,6 @@ Larix decidua
 Larix laricina
 Laurus nobilis
 Ligustrum japonica
-Ligustrum japonica "variegata"
 Ligustrum japonicum
 Ligustrum lucidum
 Ligustrum vulgare
@@ -329,7 +326,6 @@ Prunus cerasifera 'Pissardii'
 Prunus cerasus
 Prunus domestica
 Prunus dulcis
-Prunus hillierii x Spire
 Prunus laurocerasus
 Prunus lusitanica
 Prunus maackii
@@ -459,4 +455,3 @@ Wodyetia bifurcata
 Zelkova carpinifolia
 Zelkova serrata
 Zelkova serrata Green Vase
-Zellkova serrata

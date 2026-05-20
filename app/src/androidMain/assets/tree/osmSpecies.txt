@@ -39,12 +39,10 @@ Acer saccharum
 Acer x freemanii
 Adansonia digitata
 Adansonia grandidieri
-Aesculus carnea
 Aesculus glabra
 Aesculus hippocastanum
 Aesculus rubicunda
 Aesculus × carnea
-Aesculus x carnea
 Agave tequilana F.A.C.Weber
 Agonis flexuosa
 Ailanthus altissima
@@ -417,7 +415,6 @@ Tilia cordata
 Tilia cordata Green Spire
 Tilia cordata Mill.
 Tilia cordata 'Rancho'
-Tilia euchlora
 Tilia europaea
 Tilia europaea Pallida
 Tilia mongolica
@@ -425,7 +422,6 @@ Tilia platyphyllos
 Tilia platyphyllos Scop.
 Tilia tomentosa
 Tilia × euchlora
-Tilia x euchlora
 Tilia x europaea
 Tilia x flavescens Glenleven
 Tilia x intermedia

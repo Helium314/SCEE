@@ -221,7 +221,6 @@ Liquidambar styraciflua Worplesdon
 Liriodendron tulipifera
 Lophostemon confertus
 Luma apiculata
-Magnolia Galaxy
 Magnolia grandiflora
 Magnolia kobus
 Malus domestica
@@ -314,7 +313,6 @@ Populus × canescens
 Populus x canescens
 Populus x euramericana
 Prosopis chilensis
-Prunus Accolade
 Prunus 'Amanogawa'
 Prunus armeniaca
 Prunus avium
@@ -442,7 +440,6 @@ Ulmus americana 'Brandon'
 Ulmus carpinifolia
 Ulmus glabra
 Ulmus hollandica
-Ulmus hybride Lobel
 Ulmus laevis
 Ulmus minor
 Ulmus parvifolia

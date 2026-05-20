@@ -327,7 +327,6 @@ Prunus lusitanica
 Prunus maackii
 Prunus padus
 Prunus persica
-Prunus Persica
 Prunus sargentii
 Prunus sargentii "Yedoensis"
 Prunus serotina
@@ -356,7 +355,6 @@ Quercus coccinea
 Quercus frainetto
 Quercus fusiformis
 Quercus ilex
-Quercus Ilex
 Quercus imbricaria
 Quercus macrocarpa
 Quercus muehlenbergii

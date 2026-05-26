@@ -290,7 +290,6 @@ Platanus acerifolia
 Platanus hybrida
 Platanus occidentalis
 Platanus orientalis
-Platanus Platanor "Vallis Clausa"
 Platanus x acerifolia
 Platanus x hybrida
 Populus alba
@@ -338,7 +337,7 @@ Prunus 'Sunset Boulevard'
 Prunus 'Tai Haku'
 Prunus 'Umineko'
 Prunus virginiana
-Prunus Virginiana `Schubert`
+Prunus virginiana 'Schubert'
 Prunus x schmittii
 Prunus × yedoensis
 Pseudotsuga menziesii

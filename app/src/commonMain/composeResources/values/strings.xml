@@ -1218,8 +1218,6 @@ A level counts as a roof level when its windows are in the roof. Subsequently, r
     <string name="quest_kerb_height_lowered_ramp">Curb ramp</string>
     <string name="quest_kerb_height_no">No curb at all</string>
 
-    <string name="quest_kerb_type_title">What type of kerb is this?</string>
-
     <string name="quest_lane_markings_title">Does this road have lane markings?</string>
 
     <string name="quest_lanes_title">How many car lanes does this road have?</string>

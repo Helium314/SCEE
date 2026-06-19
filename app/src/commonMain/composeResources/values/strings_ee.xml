@@ -800,4 +800,11 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_fence_material_title">What material is this fence made of?</string>
     <string name="quest_material_wire">Wire</string>
 
+
+<!-- orchard type -->
+    <string name="quest_orchard_type_title">What type of orchard is this?</string>
+    <string name="quest_orchard_type_meadow_orchard">Meadow orchard</string>
+    <string name="quest_orchard_type_plantation">Plantation</string>
+    <string name="quest_orchard_type_meadow_orchard_description">Large trees, wide spacing</string>
+    <string name="quest_orchard_type_plantation_description">Spindle trees, narrow spacing (usually commercial)</string>
 </resources>

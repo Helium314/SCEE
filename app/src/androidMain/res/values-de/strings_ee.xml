@@ -655,4 +655,9 @@
     <string name="quest_pavingStonesMaterial_title">Aus welchem Material sind diese Pflastersteine?</string>
     <string name="quest_fence_material_title">Aus welchem Material ist dieser Zaun?</string>
     <string name="quest_material_wire">Draht</string>
+<string name="quest_orchard_type_title">Um welche Art von Obstgarten handelt es sich?</string>
+    <string name="quest_orchard_type_meadow_orchard">Streuobstwiese</string>
+    <string name="quest_orchard_type_plantation">Obstplantage</string>
+    <string name="quest_orchard_type_meadow_orchard_description">Große Bäume, große Abstände</string>
+    <string name="quest_orchard_type_plantation_description">Spindelbäume, kleine Abstände (meistens kommerziell genutzt)</string>
 </resources>

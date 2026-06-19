@@ -157,6 +157,7 @@ import de.westnordost.streetcomplete.quests.oneway.AddOnewayBicycle
 import de.westnordost.streetcomplete.quests.opening_hours.AddOpeningHours
 import de.westnordost.streetcomplete.quests.opening_hours_signed.CheckOpeningHoursSigned
 import de.westnordost.streetcomplete.quests.orchard_produce.AddOrchardProduce
+import de.westnordost.streetcomplete.quests.orchard_type.AddOrchardType
 import de.westnordost.streetcomplete.quests.osmose.OsmoseDao
 import de.westnordost.streetcomplete.quests.osmose.OsmoseQuest
 import de.westnordost.streetcomplete.quests.parcel_locker_brand.AddParcelLockerBrand
@@ -568,6 +569,7 @@ fun getQuestTypeList(
     107 to AddForestLeafType(), // need to walk around in the highlighted section
 
     108 to AddOrchardProduce(), // difficult to find out if the orchard does not carry fruits right now
+    198 to AddOrchardType(), // need to look around the orchard to tell apart meadow orchard and plantation
 
     109 to AddLevel(), // requires to search for the place on several levels (or at least find a mall map)
     178 to AddLevelThing(), // requires to search for the place on several levels (or at least find a mall map)

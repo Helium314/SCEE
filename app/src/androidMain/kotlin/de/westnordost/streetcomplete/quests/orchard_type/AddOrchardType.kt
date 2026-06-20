@@ -18,6 +18,7 @@ class AddOrchardType : OsmFilterQuestType<OrchardType>(), AndroidQuest {
     override val icon = R.drawable.quest_apple
     override val title = Res.string.quest_orchard_type_title
     override val achievements = listOf(OUTDOORS)
+    override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 
     override fun createForm() = AddOrchardTypeForm()
 

@@ -569,7 +569,6 @@ fun getQuestTypeList(
     107 to AddForestLeafType(), // need to walk around in the highlighted section
 
     108 to AddOrchardProduce(), // difficult to find out if the orchard does not carry fruits right now
-    198 to AddOrchardType(), // need to look around the orchard to tell apart meadow orchard and plantation
 
     109 to AddLevel(), // requires to search for the place on several levels (or at least find a mall map)
     178 to AddLevelThing(), // requires to search for the place on several levels (or at least find a mall map)
@@ -716,6 +715,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 58 to AddOnewayBicycle(),
     EE_QUEST_OFFSET + 62 to AddToiletsDisposal(),
     EE_QUEST_OFFSET + 63 to AddEvseId(),
+    EE_QUEST_OFFSET + 64 to AddOrchardType(), // need to look around the orchard to tell apart meadow orchard and plantation
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),
     // POI quests

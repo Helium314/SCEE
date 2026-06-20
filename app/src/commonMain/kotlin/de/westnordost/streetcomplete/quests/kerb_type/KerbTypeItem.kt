@@ -10,7 +10,7 @@ val KerbType.title: StringResource get() = when (this) {
     LOWERED -> Res.string.quest_kerb_height_lowered
     FLUSH -> Res.string.quest_kerb_height_flush
     KERB_RAMP -> Res.string.quest_kerb_height_lowered_ramp
-    REGULAR -> Res.string.quest_kerb_height_no
+    NO_KERB -> Res.string.quest_kerb_height_no
 }
 
 val KerbType.icon: DrawableResource get() = when (this) {
@@ -18,5 +18,5 @@ val KerbType.icon: DrawableResource get() = when (this) {
     LOWERED -> Res.drawable.kerb_height_lowered
     FLUSH -> Res.drawable.kerb_height_flush
     KERB_RAMP -> Res.drawable.kerb_height_lowered_ramp
-    REGULAR -> Res.drawable.kerb_height_no
+    NO_KERB -> Res.drawable.kerb_height_no
 }

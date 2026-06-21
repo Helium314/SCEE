@@ -429,8 +429,10 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
         else null
     }
 
+    private val pathsAndRoadsFilter = "ways with highway ~ ${(ALL_ROADS + ALL_PATHS).joinToString("|")}"
+        .toElementFilterExpression()
     private fun createAccessManagerAnswer(): AnswerItem? {
-        if (!"ways with highway ~ ${(ALL_ROADS + ALL_PATHS).joinToString("|")}".toElementFilterExpression().matches(element)) return null
+        if (!pathsAndRoadsFilter.matches(element)) return null
         val title = if (element.tags.containsAnyKey(*accessKeys.toTypedArray()))
                 R.string.manage_access
             else R.string.add_access
@@ -439,8 +441,7 @@ abstract class AbstractOsmQuestForm<T> : AbstractQuestForm(), IsShowingQuestDeta
 
     private fun createConstructionAnswer(): AnswerItem? {
         if (!elementWithoutAccessTagsFilter.matches(element)
-            || !element.tags.containsKey("highway")
-            || element.tags["highway"] == "construction"
+            || !pathsAndRoadsFilter.matches(element)
         ) return null
         return AnswerItem(R.string.quest_construction) {
             val tomorrow = systemTimeNow().toLocalDate().plus(1, DateTimeUnit.DAY)

@@ -8,7 +8,6 @@ import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.BLIND
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.WHEELCHAIR
 import de.westnordost.streetcomplete.osm.Tags
-import de.westnordost.streetcomplete.osm.updateWithCheckDate
 import de.westnordost.streetcomplete.resources.*
 
 class AddKerbType : OsmFilterQuestType<KerbType>(), AndroidQuest {
@@ -29,6 +28,9 @@ class AddKerbType : OsmFilterQuestType<KerbType>(), AndroidQuest {
     override fun createForm() = AddKerbTypeForm()
 
     override fun applyAnswerTo(answer: KerbType, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-        tags.updateWithCheckDate("kerb", answer.osmValue)
+        if (answer == KerbType.NO_KERB) {
+            tags.remove("barrier")
+            tags["no:barrier"] = "kerb"
+        }
     }
 }

@@ -13,10 +13,12 @@ import de.westnordost.streetcomplete.data.osm.mapdata.WayTables.Columns.TIMESTAM
 import de.westnordost.streetcomplete.data.osm.mapdata.WayTables.Columns.VERSION
 import de.westnordost.streetcomplete.data.osm.mapdata.WayTables.NAME
 import de.westnordost.streetcomplete.data.osm.mapdata.WayTables.NAME_NODES
+import de.westnordost.streetcomplete.util.Mockable
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.ktx.toInternedMap
 
 /** Stores OSM ways */
+@Mockable
 class WayDao(private val db: Database) {
     fun put(way: Way) {
         putAll(listOf(way))

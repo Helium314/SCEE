@@ -14,7 +14,7 @@ import de.westnordost.streetcomplete.data.visiblequests.LevelFilter
 import de.westnordost.streetcomplete.data.overlays.SelectedOverlaySource
 import de.westnordost.streetcomplete.data.visiblequests.DayNightQuestFilter
 import de.westnordost.streetcomplete.data.visiblequests.QuestsHiddenSource
-import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilter
+import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilterSource
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeSource
 import de.westnordost.streetcomplete.util.Listeners
 import de.westnordost.streetcomplete.util.logs.Log
@@ -32,7 +32,7 @@ import kotlinx.atomicfu.locks.withLock
  *  Quests can be not visible for a user for the following reasons:
  *  - when the user has hidden a quest, see [QuestsHiddenSource]
  *  - when the type of the quest is disabled in the user settings, see [VisibleEditTypeSource]
- *  - when the team mode is activated, only every Xth quest is visible, see [TeamModeQuestFilter]
+ *  - when the team mode is activated, only every Xth quest is visible, see [TeamModeQuestFilterSource]
  *  - when the selected overlay disables the quest type because the overlay lets the user edit
  *   the same info as the quest, see [SelectedOverlaySource] / [Overlay.hidesQuestTypes][de.westnordost.streetcomplete.overlays.Overlay.hidesQuestTypes]
  *
@@ -46,7 +46,7 @@ class VisibleQuestsSource(
     private val osmNoteQuestSource: OsmNoteQuestSource,
     private val questsHiddenSource: QuestsHiddenSource,
     private val visibleEditTypeSource: VisibleEditTypeSource,
-    private val teamModeQuestFilter: TeamModeQuestFilter,
+    private val teamModeQuestFilterSource: TeamModeQuestFilterSource,
     private val selectedOverlaySource: SelectedOverlaySource,
     private val levelFilter: LevelFilter,
     private val dayNightQuestFilter: DayNightQuestFilter,
@@ -117,7 +117,7 @@ class VisibleQuestsSource(
         }
     }
 
-    private val teamModeQuestFilterListener = object : TeamModeQuestFilter.TeamModeChangeListener {
+    private val teamModeQuestFilterListener = object : TeamModeQuestFilterSource.Listener {
         override fun onTeamModeChanged(enabled: Boolean) {
             invalidate()
         }
@@ -151,7 +151,7 @@ class VisibleQuestsSource(
         osmNoteQuestSource.addListener(osmNoteQuestSourceListener)
         questsHiddenSource.addListener(questsHiddenSourceListener)
         visibleEditTypeSource.addListener(visibleEditTypeSourceListener)
-        teamModeQuestFilter.addListener(teamModeQuestFilterListener)
+        teamModeQuestFilterSource.addListener(teamModeQuestFilterListener)
         selectedOverlaySource.addListener(selectedOverlayListener)
         externalSourceQuestController.addQuestListener(otherQuestListener)
     }
@@ -196,7 +196,7 @@ class VisibleQuestsSource(
         questsHiddenSource.get(questKey) == null
 
     private fun isVisibleInTeamMode(quest: Quest): Boolean =
-        teamModeQuestFilter.isVisible(quest) && levelFilter.isVisible(quest) && dayNightQuestFilter.isVisible(quest)
+        teamModeQuestFilterSource.isVisible(quest) && levelFilter.isVisible(quest) && dayNightQuestFilter.isVisible(quest)
 
     fun getNearbyQuests(quest: Quest, distance: Double): Collection<Quest> {
         val bbox = quest.position.enclosingBoundingBox(distance)

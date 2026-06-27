@@ -15,6 +15,31 @@ import java.time.format.DateTimeFormatter
 import kotlinx.atomicfu.locks.ReentrantLock
 import kotlinx.atomicfu.locks.withLock
 
+interface NoteEditsController : NoteEditsSource {
+    fun add(
+        noteId: Long,
+        action: NoteEditAction,
+        position: LatLon,
+        text: String? = null,
+        imagePaths: List<String> = emptyList(),
+        track: List<Trackpoint> = emptyList(),
+    )
+
+    fun getOldestNeedingImagesActivation(): NoteEdit?
+
+    fun markImagesActivated(id: Long): Boolean
+
+    fun markSynced(edit: NoteEdit, note: Note)
+
+    fun markSyncFailed(edit: NoteEdit): Boolean
+
+    fun undo(edit: NoteEdit): Boolean
+
+    fun deleteSyncedOlderThan(timestamp: Long): Int
+
+    fun updateElementIds(idUpdates: Collection<ElementIdUpdate>)
+}
+
 class NoteEditsController(
     private val editsDB: NoteEditsDao
 ) : NoteEditsSource {

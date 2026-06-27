@@ -15,10 +15,12 @@ import de.westnordost.streetcomplete.data.osm.mapdata.NodeTable.Columns.TAGS
 import de.westnordost.streetcomplete.data.osm.mapdata.NodeTable.Columns.TIMESTAMP
 import de.westnordost.streetcomplete.data.osm.mapdata.NodeTable.Columns.VERSION
 import de.westnordost.streetcomplete.data.osm.mapdata.NodeTable.NAME
+import de.westnordost.streetcomplete.util.Mockable
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.ktx.toInternedMap
 
 /** Stores OSM nodes */
+@Mockable
 class NodeDao(private val db: Database) {
     fun put(node: Node) {
         putAll(listOf(node))

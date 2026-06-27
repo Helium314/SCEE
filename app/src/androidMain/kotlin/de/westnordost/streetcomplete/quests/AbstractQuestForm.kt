@@ -14,7 +14,7 @@ import androidx.core.view.isGone
 import androidx.core.view.size
 import androidx.core.widget.NestedScrollView
 import androidx.viewbinding.ViewBinding
-import de.westnordost.countryboundaries.CountryBoundaries
+import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.meta.CountryInfos
@@ -87,7 +87,7 @@ abstract class AbstractQuestForm :
     /** either DE or US-NY (or null), depending on what countryBoundaries returns */
     protected val countryOrSubdivisionCode: String? get() {
         val latLon = geometry.center
-        return countryBoundaries.value.getIds(latLon.longitude, latLon.latitude).firstOrNull()
+        return countryBoundaries.value.getIds(latLon).firstOrNull()
     }
 
     // passed in parameters

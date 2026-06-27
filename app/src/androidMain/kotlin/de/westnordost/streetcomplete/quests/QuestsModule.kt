@@ -1,6 +1,6 @@
 package de.westnordost.streetcomplete.quests
 
-import de.westnordost.countryboundaries.CountryBoundaries
+import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.ApplicationConstants.EE_QUEST_OFFSET
@@ -283,7 +283,7 @@ val questsModule = module {
         questTypeRegistry(
             get(),
             { countryInfos.get(countryBoundariesLazy.value, it) },
-            { countryBoundariesLazy.value.getIds(it.longitude, it.latitude).firstOrNull() },
+            { countryBoundariesLazy.value.getIds(it).firstOrNull() },
             { featureDictionaryLazy.value.getFeature(it) },
             get(),
             get()

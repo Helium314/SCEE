@@ -13,8 +13,10 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.LO
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.Columns.QUEST_TYPE
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestTable.NAME
 import de.westnordost.streetcomplete.data.quest.OsmQuestKey
+import de.westnordost.streetcomplete.util.Mockable
 
 /** Persists OsmQuest objects, or more specifically, OsmQuestEntry objects */
+@Mockable
 class OsmQuestDao(private val db: Database) {
 
     fun put(quest: OsmQuestDaoEntry) {

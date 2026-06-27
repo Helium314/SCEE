@@ -2,6 +2,7 @@ package de.westnordost.streetcomplete.data.osm.osmquests
 
 import com.russhwolf.settings.ObservableSettings
 import de.westnordost.countryboundaries.CountryBoundaries
+import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.elementfilter.ElementsTypeFilter
@@ -23,8 +24,6 @@ import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.util.Listeners
 import de.westnordost.streetcomplete.util.ktx.format
-import de.westnordost.streetcomplete.util.ktx.intersects
-import de.westnordost.streetcomplete.util.ktx.isInAny
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.ktx.truncateTo6Decimals
 import de.westnordost.streetcomplete.util.logs.Log
@@ -44,7 +43,7 @@ import kotlinx.coroutines.withContext
 
 /** Controller for managing OsmQuests. Takes care of persisting OsmQuest objects and notifying
  *  listeners about changes */
-class OsmQuestController internal constructor(
+class OsmQuestController(
     private val db: OsmQuestDao,
     private val mapDataSource: MapDataWithEditsSource,
     private val notesSource: NotesWithEditsSource,

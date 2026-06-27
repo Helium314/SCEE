@@ -24,6 +24,9 @@ import de.westnordost.streetcomplete.data.osm.edits.move.RevertMoveNodeAction
 import de.westnordost.streetcomplete.data.osm.edits.split_way.SplitWayAction
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.RevertUpdateElementTagsAction
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.UpdateElementTagsAction
+import de.westnordost.streetcomplete.util.Mockable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import de.westnordost.streetcomplete.data.osm.edits.create.CreateRelationAction
 import de.westnordost.streetcomplete.data.osm.edits.delete.DeleteRelationAction
 import de.westnordost.streetcomplete.data.osm.edits.delete.RevertDeleteRelationAction
@@ -32,6 +35,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
 
+@Mockable
 class ElementEditsDao(
     private val db: Database,
     private val allEditTypes: AllEditTypes,

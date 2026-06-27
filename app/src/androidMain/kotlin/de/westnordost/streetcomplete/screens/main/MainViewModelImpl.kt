@@ -36,7 +36,8 @@ import de.westnordost.streetcomplete.data.urlconfig.UrlConfig
 import de.westnordost.streetcomplete.data.urlconfig.UrlConfigController
 import de.westnordost.streetcomplete.data.user.UserLoginSource
 import de.westnordost.streetcomplete.data.user.statistics.StatisticsSource
-import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilter
+import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilterController
+import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilterSource
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeSource
 import de.westnordost.streetcomplete.overlays.custom.CustomOverlay
 import de.westnordost.streetcomplete.screens.main.controls.LocationState
@@ -78,7 +79,7 @@ class MainViewModelImpl(
     private val overlayRegistry: OverlayRegistry,
     private val visibleEditTypeSource: VisibleEditTypeSource,
     private val messagesSource: MessagesSource,
-    private val teamModeQuestFilter: TeamModeQuestFilter,
+    private val teamModeQuestFilterController: TeamModeQuestFilterController,
     private val elementEditsSource: ElementEditsSource,
     private val noteEditsSource: NoteEditsSource,
     private val prefs: Preferences,
@@ -244,27 +245,27 @@ class MainViewModelImpl(
 
     /* team mode */
 
-    override val isTeamMode = MutableStateFlow(teamModeQuestFilter.isEnabled)
+    override val isTeamMode = MutableStateFlow(teamModeQuestFilterController.isEnabled)
     override var teamModeChanged: Boolean = false
-    override val indexInTeam = MutableStateFlow(teamModeQuestFilter.indexInTeam)
+    override val indexInTeam = MutableStateFlow(teamModeQuestFilterController.indexInTeam)
 
     override fun enableTeamMode(teamSize: Int, indexInTeam: Int) {
-        launch(IO) { teamModeQuestFilter.enableTeamMode(teamSize, indexInTeam) }
+        launch(IO) { teamModeQuestFilterController.enableTeamMode(teamSize, indexInTeam) }
     }
 
     override fun disableTeamMode() {
-        launch(IO) { teamModeQuestFilter.disableTeamMode() }
+        launch(IO) { teamModeQuestFilterController.disableTeamMode() }
     }
 
     override fun download(bbox: BoundingBox, enqueue: Boolean) {
         downloadController.download(bbox, true, enqueue)
     }
 
-    private val teamModeListener = object : TeamModeQuestFilter.TeamModeChangeListener {
+    private val teamModeListener = object : TeamModeQuestFilterSource.Listener {
         override fun onTeamModeChanged(enabled: Boolean) {
             teamModeChanged = true
             isTeamMode.value = enabled
-            indexInTeam.value = teamModeQuestFilter.indexInTeam
+            indexInTeam.value = teamModeQuestFilterController.indexInTeam
         }
     }
 
@@ -468,13 +469,13 @@ class MainViewModelImpl(
         launch(IO) {
             lastCrashReport.value = crashReportExceptionHandler.popCrashReport()
         }
-        teamModeQuestFilter.addListener(teamModeListener)
+        teamModeQuestFilterController.addListener(teamModeListener)
         elementEditsSource.addListener(elementEditsListener)
         noteEditsSource.addListener(noteEditsListener)
     }
 
     override fun onCleared() {
-        teamModeQuestFilter.removeListener(teamModeListener)
+        teamModeQuestFilterController.removeListener(teamModeListener)
         elementEditsSource.removeListener(elementEditsListener)
         noteEditsSource.removeListener(noteEditsListener)
     }

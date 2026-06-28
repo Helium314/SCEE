@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -125,7 +126,7 @@ class MoveNodeFragment :
             )
         }
 
-        binding.composeView.content {
+        binding.composeView.content { Surface {
             MoveNodeForm(
                 distance = distance.floatValue,
                 displayUnit = displayUnit,
@@ -133,7 +134,7 @@ class MoveNodeFragment :
                 onClickBackground = { toggleBackground() },
                 backgroundText = backgroundText.value
             )
-        }
+        } }
 
         binding.okButtonComposeView.content {
             FloatingOkButton(

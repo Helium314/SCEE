@@ -68,8 +68,8 @@ import de.westnordost.streetcomplete.util.TempLogger
 import de.westnordost.streetcomplete.util.getSelectedLocales
 import de.westnordost.streetcomplete.util.ktx.deleteRecursively
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
-import de.westnordost.streetcomplete.util.logs.AndroidLogger
 import de.westnordost.streetcomplete.util.logs.DatabaseLogger
+import de.westnordost.streetcomplete.util.logs.KermitLogger
 import de.westnordost.streetcomplete.util.logs.Log
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -264,7 +264,7 @@ class StreetCompleteApplication : Application() {
     }
 
     private fun setLoggerInstances() {
-        Log.instances.add(AndroidLogger())
+        Log.instances.add(KermitLogger())
         if (prefs.getBoolean(Prefs.TEMP_LOGGER, false))
             Log.instances.add(TempLogger)
         else

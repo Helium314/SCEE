@@ -24,7 +24,7 @@ Follow [**this link**](https://translate.codeberg.org/projects/scee/) to improve
 
 [![POEditor](https://poeditor.com/public/images/logo_small.png)](https://poeditor.com/join/project/IE4GC127Ki)
 
-The source translation is in US English (in [app/src/androidMain/res/values/strings_ee.xml](app/src/androidMain/res/values/strings_ee.xml)).
+The source translation is in US English (in [app/src/commonMain/composeResources/values/strings_ee.xml](app/src/commonMain/composeResources/values/strings_ee.xml)).
 
 ### iD presets
 

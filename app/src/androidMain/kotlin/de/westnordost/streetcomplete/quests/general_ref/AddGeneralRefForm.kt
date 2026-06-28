@@ -1,37 +1,30 @@
 package de.westnordost.streetcomplete.quests.general_ref
 
-import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.widget.doAfterTextChanged
+import androidx.compose.runtime.Composable
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.databinding.QuestGeneralRefBinding
-import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
-import de.westnordost.streetcomplete.util.ktx.nonBlankTextOrNull
+import de.westnordost.streetcomplete.quests.TextInputForm
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.quest_generalRef_hint
+import de.westnordost.streetcomplete.resources.quest_guidepostRef_hint
+import org.jetbrains.compose.resources.stringResource
 
-class AddGeneralRefForm : AbstractOsmQuestForm<GeneralRefAnswer>() {
-
-    override val contentLayoutResId = R.layout.quest_general_ref
-    private val binding by contentViewBinding(QuestGeneralRefBinding::bind)
-
+class AddGeneralRefForm : TextInputForm<GeneralRefAnswer>() {
     override val otherAnswers = listOf(
         AnswerItem(R.string.quest_ref_answer_noRef) { confirmNoRef() }
     )
 
-    private val ref get() = binding.refInput.nonBlankTextOrNull
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.refInput.doAfterTextChanged { checkIsFormComplete() }
-
-        if (element.tags.containsKey("guidepost") || element.tags["information"] == "guidepost") {
-            binding.tvHint.setText(R.string.quest_guidepostRef_hint)
-        }
+    @Composable
+    override fun hint(): String{
+        return if (element.tags.containsKey("guidepost") || element.tags["information"] == "guidepost")
+            stringResource(Res.string.quest_guidepostRef_hint)
+        else
+            stringResource(Res.string.quest_generalRef_hint)
     }
 
     override fun onClickOk() {
-        applyAnswer(GeneralRef(ref!!))
+        applyAnswer(GeneralRef(text.value))
     }
 
     private fun confirmNoRef() {
@@ -42,6 +35,4 @@ class AddGeneralRefForm : AbstractOsmQuestForm<GeneralRefAnswer>() {
             .setNegativeButton(R.string.quest_generic_confirmation_no, null)
             .show()
     }
-
-    override fun isFormComplete() = ref != null
 }

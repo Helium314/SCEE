@@ -10,6 +10,7 @@ import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.quest_guidepostEle_hint
 import de.westnordost.streetcomplete.resources.quest_guidepostEle_title
 import de.westnordost.streetcomplete.resources.quest_guidepost_disabled_msg
 
@@ -23,6 +24,7 @@ class AddGuidepostEle : OsmFilterQuestType<String>(), AndroidQuest {
     """
     override val changesetComment = "Specify guidepost elevation"
     override val wikiLink = "Tag:information=guidepost"
+    override val hint = Res.string.quest_guidepostEle_hint
     override val icon = R.drawable.ic_quest_guidepost_ele
     override val title = Res.string.quest_guidepostEle_title
     override val isDeleteElementEnabled = true

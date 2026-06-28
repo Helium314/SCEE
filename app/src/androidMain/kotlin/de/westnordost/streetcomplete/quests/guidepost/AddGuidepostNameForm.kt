@@ -1,33 +1,24 @@
 package de.westnordost.streetcomplete.quests.guidepost
 
-import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.widget.doAfterTextChanged
+import androidx.compose.runtime.Composable
 import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.databinding.QuestGuidepostNameBinding
-import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
 import de.westnordost.streetcomplete.quests.AnswerItem
-import de.westnordost.streetcomplete.util.ktx.nonBlankTextOrNull
+import de.westnordost.streetcomplete.quests.TextInputForm
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.quest_guidepostName_hint
+import org.jetbrains.compose.resources.stringResource
 
-class AddGuidepostNameForm : AbstractOsmQuestForm<GuidepostNameAnswer>() {
+class AddGuidepostNameForm : TextInputForm<GuidepostNameAnswer>() {
 
-    override val contentLayoutResId = R.layout.quest_guidepost_name
-    private val binding by contentViewBinding(QuestGuidepostNameBinding::bind)
-
+    @Composable
+    override fun hint() = stringResource(Res.string.quest_guidepostName_hint)
     override val otherAnswers = listOf(
         AnswerItem(R.string.quest_placeName_no_name_answer) { confirmNoRef() }
     )
 
-    private val name get() = binding.nameInput.nonBlankTextOrNull
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.nameInput.doAfterTextChanged { checkIsFormComplete() }
-    }
-
     override fun onClickOk() {
-        applyAnswer(GuidepostName(name!!))
+        applyAnswer(GuidepostName(text.value))
     }
 
     private fun confirmNoRef() {
@@ -38,6 +29,4 @@ class AddGuidepostNameForm : AbstractOsmQuestForm<GuidepostNameAnswer>() {
             .setNegativeButton(R.string.quest_generic_confirmation_no, null)
             .show()
     }
-
-    override fun isFormComplete() = name != null
 }

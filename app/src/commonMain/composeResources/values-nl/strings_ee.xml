@@ -107,4 +107,9 @@
     <string name="custom_overlay_title">Aangepaste overlay</string>
     <string name="import_export_custom_overlays">Aangepaste overlays</string>
     <string name="custom_overlay_add_button">Nieuwe aan­gepaste overlay</string>
+    <string name="quest_generic_answer_show_edit_tags">Tags weergeven/bewerken</string>
+    <string name="pref_read_filter_hint">Filteren…</string>
+    <string name="pref_screen_quests">Vragen</string>
+    <string name="quest_guidepost_sports_mtb">MTB</string>
+    <string name="quest_fixme_title">FixMe:</string>
 </resources>

@@ -33,7 +33,7 @@
     <string name="pref_delete_old_data_after_summary">%d μέρες</string>
     <string name="pref_screen_quests">Αποστολές</string>
     <string name="pref_tile_source_hide_labels">Απόκρυψη ετικετών</string>
-    <string name="pref_tile_source_message">Το URL των πλακιδίων πρέπει να περιλαμβάνει {x}, {y} και {z}</string>
+    <string name="pref_tile_source_message">Το URL των πλακιδίων πρέπει να περιλαμβάνει {x}, {y} και είτε {z} είτε {zoom}. Η WMS πηγή πρέπει να υποστηρίζει EPSG:3857 και το URL πρέπει να περιλαμβάνει είτε {bbox-epsg-3857} είτε και τα δύο από {bbox} και {proj}.</string>
     <string name="pref_update_local_statistics">Ενημέρωση στατιστικών στο ανέβασμα</string>
     <string name="quest_settings_reset">Επαναφορά</string>
     <string name="quest_settings_level_title">Εμφάνισε αυτή την αποστολή για:</string>

@@ -133,6 +133,7 @@ import de.westnordost.streetcomplete.quests.incline_direction.AddBicycleIncline
 import de.westnordost.streetcomplete.quests.incline_direction.AddStepsIncline
 import de.westnordost.streetcomplete.quests.internet_access.AddInternetAccess
 import de.westnordost.streetcomplete.quests.kerb_height.AddKerbHeight
+import de.westnordost.streetcomplete.quests.kerb_type.AddKerbType
 import de.westnordost.streetcomplete.quests.lamp_type.AddLampType
 import de.westnordost.streetcomplete.quests.lamp_mount.AddLampMount
 import de.westnordost.streetcomplete.quests.lane_markings.AddLaneMarkings
@@ -702,6 +703,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 37 to AddMapType(),
     EE_QUEST_OFFSET + 38 to AddMapSize(),
     EE_QUEST_OFFSET + 34 to AddBarrierHeight(arSupportChecker),
+    EE_QUEST_OFFSET + 64 to AddKerbType(),
     EE_QUEST_OFFSET + 40 to AddPisteLit(),
     EE_QUEST_OFFSET + 35 to AddPisteRef(),
     EE_QUEST_OFFSET + 36 to AddPisteDifficulty(),

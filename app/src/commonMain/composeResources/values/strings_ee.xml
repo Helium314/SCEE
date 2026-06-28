@@ -331,6 +331,10 @@
     <!-- sauna availability quest -->
     <string name="quest_saunaAvailability_title">Is there a sauna here?</string>
 
+    <!-- service times quest -->
+    <string name="quest_service_times_title">When is religious service performed here?</string>
+    <string name="quest_service_times_resurvey_title">Are the religious service times here still correct?</string>
+
     <!-- swimming pool availability quest -->
     <string name="quest_swimmingPoolAvailability_title">Is there a swimming pool here?</string>
     <string name="quest_swimming_pool_indoor_and_outdoor">Both (indoor and outdoor)</string>

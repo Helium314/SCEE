@@ -646,4 +646,10 @@
     <string name="quest_evse_id_hint">наприклад, DE*GCE*E1234567</string>
     <string name="quest_evse_id_title">Який EVSE ID цієї зарядної станції?</string>
     <string name="quest_evse_id_add_more">Додати ще один EVSE ID</string>
+    <string name="quest_kerb_type_title">Який це тип бордюру?</string>
+    <string name="quest_orchard_type_title">Що це за сад?</string>
+    <string name="quest_orchard_type_meadow_orchard">Фруктовий сад</string>
+    <string name="quest_orchard_type_plantation">Плантація</string>
+    <string name="quest_orchard_type_meadow_orchard_description">Великі дерева, широкі міжряддя</string>
+    <string name="quest_orchard_type_plantation_description">Веретеноподібні дерева, вузькі міжряддя (зазвичай комерційні насадження)</string>
 </resources>

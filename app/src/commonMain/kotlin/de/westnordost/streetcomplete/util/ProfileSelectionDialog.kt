@@ -12,7 +12,6 @@ import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_presets_default_name
 import de.westnordost.streetcomplete.resources.quest_settings_per_preset_rescan
 import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
-import de.westnordost.streetcomplete.util.ktx.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,7 +40,7 @@ import org.koin.compose.koinInject
             if (prefs.getBoolean(Prefs.QUEST_SETTINGS_PER_PRESET, false)) {
                 OsmQuestController.reloadQuestTypes()
                 if (!prefs.getBoolean(Prefs.DYNAMIC_QUEST_CREATION, false))
-                    ctx.toast(toastText, Toast.LENGTH_LONG)
+                    Toast.makeText(ctx, toastText, Toast.LENGTH_LONG).show()
             }
             // launch in background, because this can block for quite a while if database is occupied
             GlobalScope.launch(Dispatchers.IO) { editTypePresetsController.selectedId = it.id }

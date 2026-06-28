@@ -37,6 +37,7 @@ import de.westnordost.streetcomplete.quests.barrier_type.AddBarrierType
 import de.westnordost.streetcomplete.quests.barrier_type.AddStileType
 import de.westnordost.streetcomplete.quests.bbq_fuel.AddBbqFuel
 import de.westnordost.streetcomplete.quests.bench_armrest.AddBenchArmrest
+import de.westnordost.streetcomplete.quests.service_times.AddServiceTimes
 import de.westnordost.streetcomplete.quests.bench_backrest.AddBenchBackrest
 import de.westnordost.streetcomplete.quests.bench_material.AddBenchMaterial
 import de.westnordost.streetcomplete.quests.bicycle_repair_station.AddBicycleRepairStationServices
@@ -717,6 +718,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 58 to AddOnewayBicycle(),
     EE_QUEST_OFFSET + 62 to AddToiletsDisposal(),
     EE_QUEST_OFFSET + 63 to AddEvseId(),
+    EE_QUEST_OFFSET + 66 to AddServiceTimes(),
     EE_QUEST_OFFSET + 64 to AddOrchardType(), // need to look around the orchard to tell apart meadow orchard and plantation
     EE_QUEST_OFFSET + 10 to OsmoseQuest(osmoseDao),
     EE_QUEST_OFFSET + 11 to CustomQuest(customQuestList),

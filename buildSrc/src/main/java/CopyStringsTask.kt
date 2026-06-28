@@ -32,6 +32,21 @@ open class CopyStringsTask : DefaultTask() {
                     targetStringsDir.mkdirs()
                     targetStringsFile.writeText(newStringsFileText)
                 }
+                val eeStringsFile = File(dir, "strings_ee.xml")
+                if (eeStringsFile.exists()) {
+                    val stringsFileText = eeStringsFile.readText()
+                    val newStringsFileText = stringRegex.replace(stringsFileText) {
+                        val key = it.groupValues[1]
+                        val value = it.groupValues[2]
+                        "<string name=\"$key\">\"${value.escapeXml().replace("\"", "\\\"")}\"</string>"
+                    }
+
+                    val targetStringsDir = File(targetDir, dir.name)
+                    val targetStringsFile = File(targetStringsDir, eeStringsFile.name)
+
+                    targetStringsDir.mkdirs()
+                    targetStringsFile.writeText(newStringsFileText)
+                }
             }
         }
     }

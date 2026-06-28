@@ -703,7 +703,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 37 to AddMapType(),
     EE_QUEST_OFFSET + 38 to AddMapSize(),
     EE_QUEST_OFFSET + 34 to AddBarrierHeight(arSupportChecker),
-    EE_QUEST_OFFSET + 64 to AddKerbType(),
+    EE_QUEST_OFFSET + 67 to AddKerbType(),
     EE_QUEST_OFFSET + 40 to AddPisteLit(),
     EE_QUEST_OFFSET + 35 to AddPisteRef(),
     EE_QUEST_OFFSET + 36 to AddPisteDifficulty(),

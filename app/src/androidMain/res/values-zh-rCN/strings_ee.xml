@@ -183,7 +183,6 @@
     <string name="quest_poi_business_title">兴趣点：商业</string>
     <string name="quick_switch_preset">切换预设</string>
     <string name="pref_screen_ui">用户界面</string>
-    <string name="quest_artwork_title">这是哪类艺术品？</string>
     <string name="quest_osmose_message_for_element">项目类型 %1$s: %2$s</string>
     <string name="pref_read_reverse_button">反转</string>
     <string name="pref_delete_old_data_after_message">如果下载的 OSM 数据超过此天数，则将其删除</string>

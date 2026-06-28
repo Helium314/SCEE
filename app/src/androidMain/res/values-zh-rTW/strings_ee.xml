@@ -34,7 +34,6 @@
     <string name="quest_material_concrete">混凝土</string>
     <string name="quest_material_stone">石頭</string>
     <string name="quest_material_brick">磚塊</string>
-    <string name="quest_artwork_title">這是什麼類型的藝術品？</string>
     <string name="pref_way_direction_summary">在開啟任務時，於突出顯示的線條上顯示箭頭。此功能例如在新增單行道時非常有用。</string>
     <string name="import_export_settings">其他的應用程式設定</string>
     <string name="pref_show_nearby_quests_title">顯示附近的任務</string>

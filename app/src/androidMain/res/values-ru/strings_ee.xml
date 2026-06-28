@@ -299,7 +299,6 @@
     <string name="quest_osmose_settings_items">Править чёрный список</string>
     <string name="quest_osmose_use_app_language">Загружать проблемы на языке приложения</string>
     <string name="quest_settings_level_default">Магазины и подобное в торговых центрах (по умолчанию)</string>
-    <string name="quest_artwork_title">Что это за произведение\?</string>
     <string name="quest_healthcare_speciality_add_more">Добавить еще одну специальность</string>
     <string name="quest_buildingType_cowshed">Коровник</string>
     <string name="quest_buildingType_sty">Свинарник</string>

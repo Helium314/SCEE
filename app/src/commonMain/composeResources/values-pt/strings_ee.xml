@@ -160,7 +160,6 @@
     <string name="quest_material_wood">Madeira</string>
     <string name="quest_material_metal">Metal</string>
     <string name="quest_material_plastic">Plástico</string>
-    <string name="quest_artwork_title">Que tipo de obra de arte é esta?</string>
     <string name="quest_mapSize_region">Uma área maior com, por exemplo, múltiplas aldeias</string>
     <string name="quest_healthcare_speciality_title">Que especialidades médicas são oferecidas neste local?</string>
     <string name="quest_healthcare_speciality_switch_ui">Alterar interface</string>

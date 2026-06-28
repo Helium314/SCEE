@@ -270,7 +270,6 @@
     <string name="quest_wheelchair_description_title">Вкажіть хоча б одну мову</string>
     <string name="quest_seating_garden">У саду</string>
     <string name="quest_construction_value">Вкажіть «construction=…» або залиште порожнім, якщо невідомо</string>
-    <string name="quest_artwork_title">Що це за твір мистецтва\?</string>
     <string name="restriction_overlay_sign_stop_all_way">Рух без зупинки заборонено</string>
     <string name="quest_service_building_type_title">Якого типу ця службова будівля\?</string>
     <string name="quest_cuisine_title">Страви якої кухні пропонують у цьому закладі\? Використовуйте пропоновані теги OSM!</string>

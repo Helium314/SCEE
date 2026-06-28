@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="pref_category_mods">SCEE 설정</string>
-    <string name="pref_expert_mode_title">전문가 모드</string>
-    <string name="pref_read_log_save">전체 로그를 파일로 저장</string>
-    <string name="pref_read_filter_hint">필터…</string>
-</resources>

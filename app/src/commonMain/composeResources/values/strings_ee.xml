@@ -219,7 +219,6 @@
 
     <!-- quick settings -->
     <string name="quest_order_reverse">Reverse quest order</string>
-    <string name="quest_order_normal">Back to normal quest order</string>
     <string name="level_filter">Level filter</string>
     <string name="level_filter_title">Choose keys to check</string>
     <string name="level_filter_message">Enter level value, or filter using &gt; and &lt;. Use * to match all elements containing an allowed level key</string>

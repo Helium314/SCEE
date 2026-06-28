@@ -272,7 +272,6 @@
     <string name="quest_settings_fixme_title">Vyberte které fixme hodnoty ignorovat</string>
     <string name="element_selection_button">Výběr prvků</string>
     <string name="quest_settings_highlight_changes_button">Zvýraznit změny</string>
-    <string name="quest_order_normal">Zpět na normální řazení úkolů</string>
     <string name="quest_order_reverse">Obrátit pořadí úkolů</string>
     <string name="quick_switch_preset">Přepnout předvolbu</string>
     <string name="quest_osmose_false_positive">Nahlásit falešně pozitivní</string>

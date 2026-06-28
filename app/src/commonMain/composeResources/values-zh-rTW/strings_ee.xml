@@ -275,7 +275,6 @@
     <string name="quest_settings_building_levels_mandatory_roof">在大多數國家/地區要求輸入屋頂層數（預設）</string>
     <string name="quest_settings_building_levels_optional_roof">允許在任何地方省略屋頂層數</string>
     <string name="quest_settings_highlight_changes_button">突顯變更</string>
-    <string name="quest_order_normal">恢復正常任務順序</string>
     <string name="level_filter">層級篩選器</string>
     <string name="level_filter_title">選擇要檢查的鍵值</string>
     <string name="level_filter_hint">留空以顯示未標記的項目</string>

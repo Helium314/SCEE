@@ -214,7 +214,6 @@
     <string name="level_filter_title">Choisir les clés à utiliser</string>
     <string name="quest_settings_building_levels_optional_roof">Omettre les niveaux de toit partout</string>
     <string name="quest_settings_building_levels_mandatory_roof">Exiger de préciser le nombre de niveaux du toit dans la plupart des pays (par défaut)</string>
-    <string name="quest_order_normal">Retour à l'ordre normal des quêtes</string>
     <string name="level_filter_hint">Laisser vide pour indiquer qu'il n'y a pas d'attribut</string>
     <string name="quest_osmose_title">Quête Osmose :</string>
     <string name="quest_osmose_message_for_element">Type d'élément %1$s : %2$s</string>

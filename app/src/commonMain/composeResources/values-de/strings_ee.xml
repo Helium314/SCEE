@@ -153,7 +153,6 @@
     <string name="quest_healthcare_speciality_switch_ui">Design wechseln</string>
     <string name="quest_osmose_remove_checked">Entfernen</string>
     <string name="action_scee_quests">Nur SCEE-Aufgaben anzeigen</string>
-    <string name="quest_order_normal">Zurück zur normalen Aufgabenreihenfolge</string>
     <string name="quest_buildingType_elevator">Aufzug</string>
     <string name="quick_switch_map_background">Luftbild-/Kartenhintergrund umschalten</string>
     <string name="pref_advanced_resurvey_title">Erweiterte Neuvermessung</string>

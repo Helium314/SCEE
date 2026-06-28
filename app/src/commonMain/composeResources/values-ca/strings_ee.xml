@@ -88,7 +88,6 @@
     <string name="pref_dynamic_quest_creation_summary">Les missions es creen en carregar l'àrea actual. És una mica lent, però aplica immediatament canvis en la configuració de missions.</string>
     <string name="pref_quest_monitor_title">Notificar sobre missions properes</string>
     <string name="quest_order_reverse">Regirar ordre de missions</string>
-    <string name="quest_order_normal">Tornar a l'ordre de missions normal</string>
     <string name="level_filter">Filtre de nivell</string>
     <string name="level_filter_title">Esculli claus per comprovar</string>
     <string name="level_filter_message">Escrigui un valor de nivell, o un filtre usant &gt; i &lt;. Usi * per seleccionar tots els elements que continguin un valor de nivell autoritzat</string>

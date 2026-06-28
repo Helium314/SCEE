@@ -264,7 +264,6 @@
     <string name="pref_quest_monitor_download">Подгружать данные по необходимости\? Значительно повысит расход трафика и заряда, и может не работать из-за политик энергосбережения в Android.</string>
     <string name="quest_settings_element_selection">Укажите подходящие для этого квеста элементы. <a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection"> Нажмите</a>, чтобы открыть сведения о правилах выбора элементов в браузере.</string>
     <string name="quest_settings_osmose_level_title">Выберите степень критичности для скачивания и показа</string>
-    <string name="quest_order_normal">Нормальный порядок квестов</string>
     <string name="quest_osmose_message">Эти квесты скачиваются из сервиса Osmose и указывают на возможные проблемы в данных OSM. Скачивание происходит если в настройках квеста выбрана хотя бы одна из степеней важности.
 \n Квест покажет сообщение из Osmose, любое изменение помечает проблему как решённую.
 \n Также можно сообщить об излишнем обнаружении проблемы; эта операция не обратима.</string>

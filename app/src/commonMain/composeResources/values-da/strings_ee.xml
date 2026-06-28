@@ -381,7 +381,6 @@
     <string name="quest_settings_building_levels_mandatory_roof">Kræv angivelse af tagetager i de fleste lande (standard)</string>
     <string name="quest_settings_highlight_changes_button">Fremhæv ændringer</string>
     <string name="quest_order_reverse">Omvendt rækkefølge af opgaver</string>
-    <string name="quest_order_normal">Tilbage til normal opgave-rækkefølge</string>
     <string name="quest_custom_quest_title">Brugerdefineret opgave:</string>
     <string name="quest_settings_fixme_title">Vælg Retmig-værdier, der skal ignoreres</string>
     <string name="level_filter_title">Vælg nøgler (keys), der skal kontrolleres</string>

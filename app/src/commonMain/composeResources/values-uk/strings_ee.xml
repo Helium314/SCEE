@@ -174,7 +174,6 @@
     <string name="day_night_ignore">Ігнорувати час доби</string>
     <string name="pref_screen_ui">Інтерфейс</string>
     <string name="quest_settings_highlight_changes_button">Виділити зміни</string>
-    <string name="quest_order_normal">Звичайний порядок завдань</string>
     <string name="quest_osmose_title">Завдання з Osmose:</string>
     <string name="quest_osmose_message">Ці завдання завантажуються з сервісу Osmose і вказують на потенційні проблеми з даними OSM. Завантаження відбувається тільки якщо в налаштуваннях завдання вибрано хоча б один рівень важливості.
 \n Повідомлення Osmose відображається разом із завданням, будь-яке редагування повідомляє про проблему як вирішену.

@@ -100,7 +100,6 @@
     <string name="quest_healthcare_speciality_switch_ui">切换用户界面</string>
     <string name="quest_osmose_remove_checked">移除</string>
     <string name="action_scee_quests">只显示 SCEE 任务</string>
-    <string name="quest_order_normal">恢复到正常任务顺序</string>
     <string name="quick_switch_map_background">切换航拍/地图背景</string>
     <string name="pref_advanced_resurvey_title">高级重新调查</string>
     <string name="pref_quest_settings_preset_title">单独预设任务设置</string>

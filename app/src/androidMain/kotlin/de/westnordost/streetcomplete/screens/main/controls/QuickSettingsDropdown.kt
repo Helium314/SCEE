@@ -64,10 +64,10 @@ fun QuickSettingsDropdown(
             onDismissRequest()
             viewModel.reverseQuestOrder.value = !viewModel.reverseQuestOrder.value
         }) {
-            val textResId = if (viewModel.reverseQuestOrder.collectAsState().value)
-                R.string.quest_order_normal
-            else R.string.quest_order_reverse
-            Text(text = stringResource(textResId))
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                Text(text = stringResource(R.string.quest_order_reverse))
+                Switch(viewModel.reverseQuestOrder.collectAsState().value, { viewModel.reverseQuestOrder.value = it; onDismissRequest() })
+            }
         }
     }
     if (levelFilterDialog)

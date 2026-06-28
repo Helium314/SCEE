@@ -184,7 +184,6 @@
     <string name="quest_settings_highlight_changes_button">Istakni promjene</string>
     <string name="file_provide">Izaberi datoteku</string>
     <string name="quest_order_reverse">Obrnuti redoslijed zadataka</string>
-    <string name="quest_order_normal">Povratak na normalan redoslijed zadataka</string>
     <string name="level_filter">Filter razine</string>
     <string name="level_filter_title">Izaberi ključeve za provjeru</string>
     <string name="level_filter_message">Unesi vrijednost razine ili filtriraj koristeći &gt; i &lt;. Koristi * za podudaranje svih elemenata koji sadrže dopušteni ključ razine</string>

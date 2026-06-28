@@ -54,7 +54,6 @@
     <string name="pref_quest_monitor_title">Notificar de missões em redor</string>
     <string name="quest_settings_max_steps_length">Número máximo de degraus em metros para mostrar esta missão</string>
     <string name="quest_order_reverse">Reverter ordem das missões</string>
-    <string name="quest_order_normal">Restaurar ordem normal das missões</string>
     <string name="quick_switch_preset">Alterar conjunto de missões</string>
     <string name="quest_service_building_type_industrial_substation">Subestação elétrica industrial</string>
     <string name="quest_service_building_type_minor_substation_description">Uma pequena subestação no nível mais baixo de transformação na rede de distribuição</string>

@@ -130,7 +130,6 @@
     <string name="quest_settings_building_levels_mandatory_roof">A legtöbb országban meg kell adni a tetőszinteket (alapértelmezett)</string>
     <string name="quest_settings_highlight_changes_button">Módosítások kiemelése</string>
     <string name="quest_order_reverse">Kérdések sorrendjének megfordítása</string>
-    <string name="quest_order_normal">Visszatérés a normál kérdéssorrendhez</string>
     <string name="level_filter">Szintszűrő</string>
     <string name="level_filter_hint">Hagyd üresen a címkézetlenek megjelenítéséhez</string>
     <string name="level_filter_enable">Szintszűrő engedélyezése</string>

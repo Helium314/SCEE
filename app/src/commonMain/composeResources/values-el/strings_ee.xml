@@ -39,7 +39,6 @@
     <string name="quest_settings_level_title">Εμφάνισε αυτή την αποστολή για:</string>
     <string name="quest_settings_resurvey_all_opening_hours_no">Προεπιλογή</string>
     <string name="element_selection_button">Επιλογή στοιχείου</string>
-    <string name="quest_order_normal">Επιστροφή στη φυσιολογική σειρά αποστολών</string>
     <string name="level_filter">Φίλτρο επιπέδου</string>
     <string name="level_filter_title">Επιλογή κλειδιών για έλεγχο</string>
     <string name="quest_settings_highlight_changes_button">Επισήμανση αλλαγών</string>

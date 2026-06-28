@@ -123,7 +123,6 @@
     <string name="level_filter">Filtro de nivel</string>
     <string name="quick_switch_preset">Cambiar preajuste</string>
     <string name="quest_order_reverse">Orden de tarea inverso</string>
-    <string name="quest_order_normal">Volver al orden de tarea normal</string>
     <string name="level_filter_title">Elija claves para comprobar</string>
     <string name="level_filter_enable">Habilitar filtro de nivel</string>
     <string name="quest_osmose_title">Tareas Osmose:</string>

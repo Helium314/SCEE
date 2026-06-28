@@ -17,10 +17,6 @@ import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilterSourc
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeSource
 import dev.mokkery.matcher.any
 import de.westnordost.streetcomplete.testutils.bbox
-import de.westnordost.streetcomplete.testutils.eq
-import de.westnordost.streetcomplete.testutils.mock
-import de.westnordost.streetcomplete.testutils.mockPrefs2
-import de.westnordost.streetcomplete.testutils.on
 import dev.mokkery.mock
 import dev.mokkery.answering.returns
 import dev.mokkery.every
@@ -102,11 +98,15 @@ class VisibleQuestsSourceTest {
             }
         }
 
-        questTypeRegistry = QuestTypeRegistry(questTypes.mapIndexed { index, questType -> index to questType })
+        levelFilter = mock()
+        dayNightFilter = mock()
+
+        questTypeRegistry = QuestTypeRegistry({questTypes.mapIndexed { index, questType -> index to questType }})
 
         source = VisibleQuestsSource(
             questTypeRegistry, osmQuestSource, osmNoteQuestSource, questsHiddenSource,
-            visibleEditTypeSource, teamModeQuestFilterSource, selectedOverlaySource
+            visibleEditTypeSource, teamModeQuestFilterSource, selectedOverlaySource, levelFilter, dayNightFilter,
+            mock(), mock()
         )
 
         listener = mock()
@@ -117,7 +117,7 @@ class VisibleQuestsSourceTest {
         val bboxCacheWillRequest = bbox.asBoundingBoxOfEnclosingTiles(16)
         val osmQuests = questTypes.map { OsmQuest(it, ElementType.NODE, 1L, pGeom()) }
         val noteQuests = listOf(osmNoteQuest(0L, p(0.0, 0.0)), osmNoteQuest(1L, p(1.0, 1.0)))
-        every { osmQuestSource.getAllInBBox(bboxCacheWillRequest, questTypeNames) } returns osmQuests
+        every { osmQuestSource.getAllInBBox(bboxCacheWillRequest, questTypes) } returns osmQuests
         every { osmNoteQuestSource.getAllInBBox(bboxCacheWillRequest) } returns noteQuests
         every { questsHiddenSource.get(any()) } returns null
 
@@ -131,7 +131,7 @@ class VisibleQuestsSourceTest {
         val bboxCacheWillRequest = bbox.asBoundingBoxOfEnclosingTiles(16)
         val osmQuests = questTypes.map { OsmQuest(it, ElementType.NODE, 1L, pGeom()) }
         val noteQuests = listOf(osmNoteQuest(0L, p(0.0, 0.0)), osmNoteQuest(1L, p(1.0, 1.0)))
-        every { osmQuestSource.getAllInBBox(bboxCacheWillRequest, questTypeNames) } returns osmQuests
+        every { osmQuestSource.getAllInBBox(bboxCacheWillRequest, questTypes) } returns osmQuests
         every { osmNoteQuestSource.getAllInBBox(bboxCacheWillRequest) } returns noteQuests
 
         every { questsHiddenSource.get(any()) } returns 1
@@ -144,7 +144,7 @@ class VisibleQuestsSourceTest {
         val bboxCacheWillRequest = bbox.asBoundingBoxOfEnclosingTiles(16)
         val osmQuest = OsmQuest(questTypes.first() as OsmElementQuestType<*>, ElementType.NODE, 1L, pGeom())
         val noteQuest = osmNoteQuest(0L, p(0.0, 0.0))
-        every { osmQuestSource.getAllInBBox(bboxCacheWillRequest, questTypeNames) } returns listOf(osmQuest)
+        every { osmQuestSource.getAllInBBox(bboxCacheWillRequest, questTypes) } returns listOf(osmQuest)
         every { osmNoteQuestSource.getAllInBBox(bboxCacheWillRequest) } returns listOf(noteQuest)
         every { questsHiddenSource.get(any()) } returns null
         every { teamModeQuestFilterSource.isVisible(any()) } returns false
@@ -157,7 +157,7 @@ class VisibleQuestsSourceTest {
     @Test fun `getAll does not return those that are invisible because of an overlay`() {
         val qta = questTypes.first() // we need the same instance as in the registry
         val bboxCacheWillRequest = bbox.asBoundingBoxOfEnclosingTiles(16)
-        every { osmQuestSource.getAllInBBox(bboxCacheWillRequest, listOf("TestQuestTypeA")) } returns
+        every { osmQuestSource.getAllInBBox(bboxCacheWillRequest, listOf(qta)) } returns
              listOf(OsmQuest(TestQuestTypeA(), ElementType.NODE, 1, ElementPointGeometry(bbox.min)))
         every { osmNoteQuestSource.getAllInBBox(bboxCacheWillRequest) } returns listOf()
         every { questsHiddenSource.get(any()) } returns null

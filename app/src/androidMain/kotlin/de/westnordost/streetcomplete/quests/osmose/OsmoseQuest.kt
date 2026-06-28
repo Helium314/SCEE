@@ -24,7 +24,6 @@ import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuest
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestType
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
-import de.westnordost.streetcomplete.data.quest.Countries
 import de.westnordost.streetcomplete.quests.questPrefix
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -76,8 +75,7 @@ class OsmoseQuest(private val osmoseDao: OsmoseDao) : ExternalSourceQuestType, A
             GlobalScope.launch { osmoseDao.reportChange(id, false) } // edits are never false positive
     }
 
-    override val enabledInCountries: Countries
-        get() = super.enabledInCountries
+    override val enabledInCountries get() = super.enabledInCountries
 
     override val changesetComment = "Fix osmose issues"
     override val wikiLink = "Osmose"

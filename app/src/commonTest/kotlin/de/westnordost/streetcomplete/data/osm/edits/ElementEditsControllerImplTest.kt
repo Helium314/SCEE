@@ -153,8 +153,8 @@ class ElementEditsControllerImplTest {
         every { db.get(5L) } returns edit5
 
         // hence, edits 2 to 5 all depend on edit 1 directly or indirectly
+        every { db.getAll() } returns listOf(edit1, edit2, edit3, edit4, edit5)
 
-        on(db.getAll()).thenReturn(listOf(edit1, edit2, edit3, edit4, edit5))
 
         ctrl.undo(edit1)
 

@@ -1,7 +1,6 @@
 package de.westnordost.streetcomplete.data.osm.osmquests
 
 import com.russhwolf.settings.ObservableSettings
-import de.westnordost.countryboundaries.CountryBoundaries
 import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
@@ -18,7 +17,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.MutableMapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.key
 import de.westnordost.streetcomplete.data.osmnotes.Note
 import de.westnordost.streetcomplete.data.osmnotes.edits.NotesWithEditsSource
-import de.westnordost.streetcomplete.data.quest.AllCountries
+import de.westnordost.streetcomplete.util.countryboundaries.AllCountries
 import de.westnordost.streetcomplete.data.quest.OsmQuestKey
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry

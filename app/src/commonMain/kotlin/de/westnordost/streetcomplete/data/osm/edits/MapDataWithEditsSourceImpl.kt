@@ -3,6 +3,7 @@ package de.westnordost.streetcomplete.data.osm.edits
 import de.westnordost.streetcomplete.data.ConflictException
 import de.westnordost.streetcomplete.data.osm.edits.move.MoveNodeAction
 import de.westnordost.streetcomplete.data.osm.edits.move.RevertMoveNodeAction
+import de.westnordost.streetcomplete.data.osm.edits.update_tags.UpdateElementTagsAction
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryCreator
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometryEntry
@@ -27,6 +28,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.Relation
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.mapdata.key
 import de.westnordost.streetcomplete.util.Listeners
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.contains
 import de.westnordost.streetcomplete.util.math.intersect
 import kotlinx.atomicfu.AtomicBoolean
@@ -475,7 +477,12 @@ class MapDataWithEditsSourceImpl(
             val key = element.key
             deletedElements.remove(key)
             updatedElements[key] = element
-            updatedGeometries[key] = createGeometry(element)
+            updatedGeometries[key] = if (element !is Node && edit.action is UpdateElementTagsAction && updates.size == 1)
+            // fetch geometry if only tags were updated (size == 1 should always be true, but better be safe)
+            // but don't fetch if it's a node, because fetching usually isn't faster than creating, unless we have a node geometry cache
+                getGeometry(element.type, element.id)
+            else
+                createGeometry(element)
         }
 
         return MapDataUpdates(updated = updates, deleted = deletedKeys)
@@ -523,6 +530,8 @@ class MapDataWithEditsSourceImpl(
 
     private fun callOnUpdated(updated: MapDataWithGeometry, deleted: Collection<ElementKey>) {
         if (updated.size == 0 && deleted.isEmpty()) return
+        if (updated.size > 10 || deleted.size > 10) Log.i(TAG, "updated ${updated.size}, deleted ${deleted.size}")
+        else Log.i(TAG, "updated: ${updated.map { it.key }}, deleted: $deleted")
         listeners.forEach { it.onUpdated(updated, deleted) }
 
         if (isReplacingForBBox.value) {
@@ -544,3 +553,5 @@ private fun Element.isEqualExceptVersionAndTimestamp(element: Element?): Boolean
         is Way -> nodeIds == (element as Way).nodeIds
         is Relation -> members == (element as Relation).members
     }
+
+private const val TAG = "MapDataWithEditsSourceImpl"

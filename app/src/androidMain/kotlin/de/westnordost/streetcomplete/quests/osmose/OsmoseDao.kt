@@ -34,6 +34,7 @@ import de.westnordost.streetcomplete.util.getSelectedLocales
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.measuredMultiPolygonArea
+import de.westnordost.streetcomplete.util.Mockable
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
@@ -45,6 +46,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.IOException
 
+@Mockable
 class OsmoseDao(
     private val db: Database,
     private val prefs: Preferences,

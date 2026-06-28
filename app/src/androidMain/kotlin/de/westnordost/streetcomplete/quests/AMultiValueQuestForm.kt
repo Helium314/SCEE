@@ -9,6 +9,8 @@ import androidx.core.view.doOnLayout
 import androidx.core.widget.doAfterTextChanged
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.databinding.QuestMultiValueBinding
+import de.westnordost.streetcomplete.data.preferences.addLastPicked
+import de.westnordost.streetcomplete.data.preferences.getLastPicked
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import de.westnordost.streetcomplete.util.takeFavorites
@@ -77,8 +79,8 @@ abstract class AMultiValueQuestForm<T> : AbstractOsmQuestForm<T>() {
 
     override fun onClickOk() {
         values.removeAll { it.isBlank() }
-        if (values.isNotEmpty()) prefs.addLastPicked(javaClass.simpleName, values.toList())
-        if (value.isNotBlank()) prefs.addLastPicked(javaClass.simpleName, value)
+        if (values.isNotEmpty()) prefs.addLastPicked(this::class.simpleName!!, values.toList())
+        if (value.isNotBlank()) prefs.addLastPicked(this::class.simpleName!!, value)
         if (value.isBlank())
             applyAnswer(stringToAnswer(values.joinToString(";")))
         else
@@ -104,7 +106,7 @@ abstract class AMultiValueQuestForm<T> : AbstractOsmQuestForm<T>() {
     }
 
     private val lastPickedAnswers by lazy {
-        prefs.getLastPicked<String>(javaClass.simpleName).takeFavorites(20, 50, 1)
+        prefs.getLastPicked<String>(this::class.simpleName!!).takeFavorites(20, 50, 1)
     }
 
     private fun showSuggestions() {

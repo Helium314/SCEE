@@ -9,6 +9,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.data.preferences.addLastPicked
+import de.westnordost.streetcomplete.data.preferences.getLastPicked
 import de.westnordost.streetcomplete.databinding.ComposeViewBinding
 import de.westnordost.streetcomplete.quests.AMultiValueQuestForm
 import de.westnordost.streetcomplete.quests.AbstractOsmQuestForm
@@ -80,7 +82,7 @@ class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
     })
 
     private val lastPickedAnswers by lazy {
-        prefs.getLastPicked<String>(javaClass.simpleName).takeFavorites(12, 50, 1)
+        prefs.getLastPicked<String>(this::class.simpleName!!).takeFavorites(12, 50, 1)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -119,7 +121,7 @@ class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
             ShopTypeFormOption.FEATURE -> {
                 val feature = feature.value!!
                 applyAnswer(feature.addTags["healthcare:speciality"]!!)
-                prefs.addLastPicked(javaClass.simpleName, feature.id)
+                prefs.addLastPicked(this::class.simpleName!!, feature.id)
             }
             ShopTypeFormOption.VACANT -> composeNote()
             ShopTypeFormOption.LEAVE_NOTE -> composeNote()

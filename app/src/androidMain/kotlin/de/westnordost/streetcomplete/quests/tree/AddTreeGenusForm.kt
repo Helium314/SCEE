@@ -5,6 +5,8 @@ import android.view.View
 import androidx.core.view.doOnLayout
 import androidx.core.widget.doAfterTextChanged
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.data.preferences.addLastPicked
+import de.westnordost.streetcomplete.data.preferences.getLastPicked
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
@@ -37,7 +39,7 @@ class AddTreeGenusForm : AbstractOsmQuestForm<TreeAnswer>() {
         if (tree == null) {
             binding.nameInput.error = context?.resources?.getText(R.string.quest_tree_error)
         } else {
-            prefs.addLastPicked(javaClass.simpleName, "${tree.isSpecies}§${tree.name}")
+            prefs.addLastPicked(this::class.simpleName!!, "${tree.isSpecies}§${tree.name}")
             applyAnswer(tree)
         }
     }
@@ -109,7 +111,7 @@ class AddTreeGenusForm : AbstractOsmQuestForm<TreeAnswer>() {
     }
 
     private val lastPickedAnswers by lazy {
-        prefs.getLastPicked<String>(javaClass.simpleName).takeFavorites(20, 50, 1)
+        prefs.getLastPicked<String>(this::class.simpleName!!).takeFavorites(20, 50, 1)
     }
 
     private fun loadTrees(): Set<Tree> {

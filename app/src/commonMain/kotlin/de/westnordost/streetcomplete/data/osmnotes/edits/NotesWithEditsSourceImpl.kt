@@ -6,10 +6,12 @@ import de.westnordost.streetcomplete.data.osmnotes.Note
 import de.westnordost.streetcomplete.data.osmnotes.NoteComment
 import de.westnordost.streetcomplete.data.osmnotes.NoteSource
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditAction.COMMENT
+import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditAction.CLOSE
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditAction.CREATE
 import de.westnordost.streetcomplete.data.user.User
 import de.westnordost.streetcomplete.data.user.UserDataSource
 import de.westnordost.streetcomplete.util.Listeners
+import de.westnordost.streetcomplete.util.SpatialCache
 import kotlin.collections.plus
 import kotlin.collections.set
 
@@ -20,6 +22,7 @@ class NotesWithEditsSourceImpl(
 ) : NotesWithEditsSource {
 
     private val listeners = Listeners<NotesWithEditsSource.Listener>()
+    private val noteCache = SpatialCache(16, 64, null, { getAllForCache(it) }, Note::id, Note::position)
 
     private val notesListener = object : NoteSource.Listener {
         override fun onUpdated(added: Collection<Note>, updated: Collection<Note>, deleted: Collection<Long>) {
@@ -29,11 +32,11 @@ class NotesWithEditsSourceImpl(
             callOnUpdated(
                 added = editsAppliedToNotes(
                     originalNotes = added,
-                    noteEdits = noteEditsSource.getAllUnsyncedForNotes(added.map { it.id })
+                    noteEdits = noteEditsSource.getAllUnsyncedForNotes(added.map { it.id }).filter { it.action != CREATE }
                 ),
                 updated = editsAppliedToNotes(
                     originalNotes = updated,
-                    noteEdits = noteEditsSource.getAllUnsyncedForNotes(updated.map { it.id })
+                    noteEdits = noteEditsSource.getAllUnsyncedForNotes(updated.map { it.id }).filter { it.action != CREATE }
                 ),
                 /* we pass through deletions because `NoteEditAction.REOPEN` is not implemented. */
                 deleted = deleted
@@ -50,6 +53,9 @@ class NotesWithEditsSourceImpl(
             /* can't just get the associated note from DB and apply this edit to it because this
              * edit might just be the last in a long chain of edits, i.e. if several comments
              * are added to a note, or if a note is created through an edit (and then commented) */
+
+            // note has changed, so we need to fetch it from db and rebuild it
+            noteCache.update(deleted = listOf(edit.noteId))
             val note = get(edit.noteId) ?: return
 
             if (edit.action == CREATE) {
@@ -66,6 +72,8 @@ class NotesWithEditsSourceImpl(
         }
 
         override fun onDeletedEdits(edits: List<NoteEdit>) {
+            // remove from cache, as they need to be fetched from db again
+            noteCache.update(deleted = edits.filter { it.action != CREATE }.map { it.noteId })
             callOnUpdated(
                 updated = edits.filter { it.action != CREATE }.mapNotNull { get(it.noteId) },
                 deleted = edits.filter { it.action == CREATE }.map { it.noteId }
@@ -79,6 +87,7 @@ class NotesWithEditsSourceImpl(
     }
 
     override fun get(noteId: Long): Note? {
+        noteCache.get(noteId)?.let { return it }
         val noteEdits = noteEditsSource.getAllUnsyncedForNote(noteId)
         var note = noteSource.get(noteId)
         for (noteEdit in noteEdits) {
@@ -91,16 +100,23 @@ class NotesWithEditsSourceImpl(
                         note = note.copy(comments = note.comments + noteEdit.createNoteComment())
                     }
                 }
+                CLOSE -> {
+                    if (note != null) {
+                        note = note.copy(comments = note.comments + noteEdit.createNoteComment(NoteComment.Action.CLOSED), status = Note.Status.CLOSED)
+                    }
+                }
             }
         }
+        note?.let { noteCache.update(updatedOrAdded = listOf(it)) }
         return note
     }
 
-    override fun getAllPositions(bbox: BoundingBox): List<LatLon> =
-        noteSource.getAllPositions(bbox) +
-            noteEditsSource.getAllUnsyncedPositions(bbox)
+    // this is used only for blacklisting quest positions, so we can do that (but ideally it should be renamed...)
+    override fun getAllPositions(bbox: BoundingBox): List<LatLon> = noteCache.get(bbox).filterNot { it.isClosed }.map { it.position }
 
-    override fun getAll(bbox: BoundingBox): Collection<Note> =
+    override fun getAll(bbox: BoundingBox): Collection<Note> = noteCache.get(bbox)
+
+    private fun getAllForCache(bbox: BoundingBox): Collection<Note> =
         editsAppliedToNotes(
             noteSource.getAll(bbox),
             noteEditsSource.getAllUnsynced(bbox)
@@ -114,7 +130,7 @@ class NotesWithEditsSourceImpl(
 
     /** returns collection with modified notes */
     private fun editsAppliedToNotes(originalNotes: Collection<Note>, noteEdits: List<NoteEdit>): Collection<Note> {
-        if (noteEdits.isEmpty()) return originalNotes
+        if (originalNotes.isEmpty() && noteEdits.isEmpty()) return originalNotes
 
         val notesById = HashMap<Long, Note>(originalNotes.size)
         originalNotes.associateByTo(notesById) { it.id }
@@ -129,6 +145,12 @@ class NotesWithEditsSourceImpl(
                     val note = notesById[id]
                     if (note != null) {
                         notesById[id] = note.copy(comments = note.comments + noteEdit.createNoteComment())
+                    }
+                }
+                CLOSE -> {
+                    val note = notesById[id]
+                    if (note != null) {
+                        notesById[id] = note.copy(comments = note.comments + noteEdit.createNoteComment(NoteComment.Action.CLOSED), status = Note.Status.CLOSED)
                     }
                 }
             }
@@ -167,10 +189,12 @@ class NotesWithEditsSourceImpl(
     }
 
     private fun callOnUpdated(added: Collection<Note> = emptyList(), updated: Collection<Note> = emptyList(), deleted: Collection<Long> = emptyList()) {
+        noteCache.update(added + updated, deleted)
         listeners.forEach { it.onUpdated(added, updated, deleted) }
     }
 
     private fun callOnCleared() {
+        noteCache.clear()
         listeners.forEach { it.onCleared() }
     }
 }

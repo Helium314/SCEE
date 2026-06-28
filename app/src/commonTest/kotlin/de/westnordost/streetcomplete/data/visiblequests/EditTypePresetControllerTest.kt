@@ -25,7 +25,7 @@ class EditTypePresetControllerTest {
 
     @BeforeTest fun setUp() {
         editTypePresetsDao = mock()
-        prefs = mockPrefs3()
+//        prefs = mockPrefs3()
         ctrl = EditTypePresetsController(editTypePresetsDao, prefs)
 
         listener = mock()

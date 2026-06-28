@@ -1,6 +1,6 @@
 package de.westnordost.streetcomplete.data.externalsource
 
-import de.westnordost.countryboundaries.CountryBoundaries
+import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.streetcomplete.data.osm.edits.ElementEdit
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditsController
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditsSource
@@ -9,7 +9,7 @@ import de.westnordost.streetcomplete.data.quest.ExternalSourceQuestKey
 import de.westnordost.streetcomplete.data.quest.QuestKey
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
-import de.westnordost.streetcomplete.util.ktx.intersects
+import de.westnordost.streetcomplete.util.Mockable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -18,6 +18,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CopyOnWriteArrayList
 
+@Mockable
 class ExternalSourceQuestController(
     private val countryBoundaries: Lazy<CountryBoundaries>,
     private val questTypeRegistry: QuestTypeRegistry,

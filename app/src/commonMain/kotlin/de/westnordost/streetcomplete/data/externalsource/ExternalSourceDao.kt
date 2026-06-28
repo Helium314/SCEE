@@ -9,8 +9,10 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestTabl
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestTables.NAME_EDITS
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestTables.NAME_HIDDEN
 import de.westnordost.streetcomplete.data.quest.ExternalSourceQuestKey
+import de.westnordost.streetcomplete.util.Mockable
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 
+@Mockable
 class ExternalSourceDao(private val db: Database) {
 
     fun addElementEdit(key: ExternalSourceQuestKey, elementEditId: Long) {
@@ -31,6 +33,7 @@ class ExternalSourceDao(private val db: Database) {
         db.delete(NAME_EDITS, where = "$EDIT_ID not in (${elementEditIds.joinToString(",")})") > 0
 }
 
+@Mockable
 class ExternalSourceHiddenDao(private val db: Database) {
 
     fun add(key: ExternalSourceQuestKey): Long {

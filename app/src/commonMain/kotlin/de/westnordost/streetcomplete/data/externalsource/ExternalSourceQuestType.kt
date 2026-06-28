@@ -5,8 +5,8 @@ import de.westnordost.streetcomplete.data.osm.edits.ElementEditType
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
-import de.westnordost.streetcomplete.data.quest.AllCountries
-import de.westnordost.streetcomplete.data.quest.Countries
+import de.westnordost.streetcomplete.util.countryboundaries.AllCountries
+import de.westnordost.streetcomplete.util.countryboundaries.Countries
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.quests.questPrefix
 

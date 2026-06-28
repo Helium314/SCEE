@@ -69,13 +69,13 @@ class OsmQuestControllerTest {
             }
         }
 
-        questTypeRegistry = QuestTypeRegistry(listOf(
+        questTypeRegistry = QuestTypeRegistry({ listOf(
             0 to ApplicableQuestType,
             1 to NotApplicableQuestType,
             2 to ComplexQuestTypeApplicableToNode42,
             3 to ApplicableQuestTypeNotInAnyCountry,
             4 to ApplicableQuestType2
-        ))
+        ) })
         countryBoundaries = object : CountryBoundaries {
             override fun isInAny(position: LatLon, countries: Countries): Boolean =
                 countries !is NoCountriesExcept

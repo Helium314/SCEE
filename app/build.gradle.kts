@@ -84,6 +84,7 @@ mokkery {
     defaultMockMode.set(MockMode.autofill)
     // to enable mocking of classes whose constructor parameters also need to be mocked (with concrete classes)
     stubs.allowConcreteClassInstantiation = true
+    stubs.allowClassInheritance = true
 }
 
 kotlin {

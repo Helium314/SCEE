@@ -8,8 +8,6 @@ import de.westnordost.streetcomplete.data.user.UserLoginSource
 import dev.mokkery.matcher.any
 import de.westnordost.streetcomplete.testutils.bbox
 import de.westnordost.streetcomplete.testutils.comment
-import de.westnordost.streetcomplete.testutils.mock
-import de.westnordost.streetcomplete.testutils.mockPrefs3
 import dev.mokkery.mock
 import de.westnordost.streetcomplete.testutils.note
 import dev.mokkery.answering.returns
@@ -75,13 +73,13 @@ class OsmNoteQuestControllerTest {
     }
 
     @Test fun `get note quest with comment from user returns non-null if reallyAllNotes`() {
-        on(prefs.reallyAllNotes).thenReturn(true)
-        on(prefs.showAllNotes).thenReturn(true)
-        on(noteSource.get(1)).thenReturn(note(comments = listOf(
+        every { prefs.reallyAllNotes } returns true
+        every { prefs.showAllNotes } returns true
+        every { noteSource.get(1) } returns note(comments = listOf(
             comment(text = "test?", user = User(id = 100, "Blaubär")),
             comment(text = "test", user = User(id = 1, "Blubbi"))
-        )))
-        on(userDataSource.userId).thenReturn(1)
+        ))
+        every { userDataSource.userId } returns 1
 
         assertNotNull(ctrl.get(1))
     }

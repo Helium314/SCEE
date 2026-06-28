@@ -3,6 +3,8 @@ package de.westnordost.streetcomplete.quests.service_building
 import android.os.Bundle
 import android.view.View
 import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.data.preferences.addLastPicked
+import de.westnordost.streetcomplete.data.preferences.getLastPicked
 import de.westnordost.streetcomplete.quests.ANameWithSuggestionsForm
 import de.westnordost.streetcomplete.quests.AnswerItem
 import de.westnordost.streetcomplete.util.takeFavorites
@@ -17,7 +19,7 @@ class AddServiceBuildingOperatorForm : ANameWithSuggestionsForm<ServiceBuildingO
     )
 
     override fun onClickOk() {
-        prefs.addLastPicked(javaClass.simpleName, name!!)
+        prefs.addLastPicked(this::class.simpleName!!, name!!)
         applyAnswer(ServiceBuildingOperator(name!!))
     }
 
@@ -27,7 +29,7 @@ class AddServiceBuildingOperatorForm : ANameWithSuggestionsForm<ServiceBuildingO
     }
 
     private val lastPickedAnswers by lazy {
-        prefs.getLastPicked<String>(javaClass.simpleName).takeFavorites(50, 50, 1)
+        prefs.getLastPicked<String>(this::class.simpleName!!).takeFavorites(50, 50, 1)
     }
 }
 

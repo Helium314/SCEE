@@ -7,13 +7,15 @@ import de.westnordost.streetcomplete.data.quest.DayNightCycle.DAY_AND_NIGHT
 import de.westnordost.streetcomplete.data.quest.DayNightCycle.ONLY_DAY
 import de.westnordost.streetcomplete.data.quest.DayNightCycle.ONLY_NIGHT
 import de.westnordost.streetcomplete.data.quest.Quest
+import de.westnordost.streetcomplete.util.Mockable
 import de.westnordost.streetcomplete.util.isDay
 
+@Mockable
 class DayNightQuestFilter internal constructor(
     private val prefs: ObservableSettings
 ) {
     var isEnabled = false
-        private set
+//        private set
 
     fun reload() {
         isEnabled = DayNightBehavior.valueOf(prefs.getString(Prefs.DAY_NIGHT_BEHAVIOR, "IGNORE")) == DayNightBehavior.VISIBILITY

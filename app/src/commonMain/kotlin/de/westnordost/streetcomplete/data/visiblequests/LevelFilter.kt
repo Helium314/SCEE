@@ -9,10 +9,12 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuest
 import de.westnordost.streetcomplete.data.overlays.SelectedOverlayController
 import de.westnordost.streetcomplete.data.overlays.SelectedOverlaySource
 import de.westnordost.streetcomplete.data.quest.Quest
+import de.westnordost.streetcomplete.util.Mockable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 /** Controller for filtering all quests that are hidden because they are on the wrong level */
+@Mockable
 class LevelFilter internal constructor(private val prefs: ObservableSettings) : KoinComponent {
     var isEnabled = false
         set(value) {
@@ -21,9 +23,9 @@ class LevelFilter internal constructor(private val prefs: ObservableSettings) : 
             reload()
         }
     var allowedLevel: String? = null
-        private set
+//        private set
     lateinit var allowedLevelTags: Set<String>
-        private set
+//        private set
 
     private val mapDataSource: MapDataWithEditsSource by inject()
     private val selectedOverlaySource: SelectedOverlaySource by inject()

@@ -15,7 +15,7 @@ val visibleQuestsModule = module {
     single { DayNightQuestFilter(get()) }
 
     single<QuestsHiddenSource> { get<QuestsHiddenController>() }
-    single<QuestsHiddenController> { QuestsHiddenControllerImpl(get(), get()) }
+    single<QuestsHiddenController> { QuestsHiddenControllerImpl(get(), get(), get()) }
 
     single<VisibleEditTypeSource> { get<VisibleEditTypeController>() }
     single { VisibleEditTypeController(get(), get(), get()) }

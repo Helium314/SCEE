@@ -11,6 +11,7 @@ import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.logs.Log
 import kotlinx.atomicfu.locks.ReentrantLock
 import kotlinx.atomicfu.locks.withLock
+import kotlin.plus
 
 class MapDataControllerImpl constructor(
     private val nodeDB: NodeDao,
@@ -19,7 +20,7 @@ class MapDataControllerImpl constructor(
     private val elementDB: ElementDao,
     private val geometryDB: ElementGeometryDao,
     private val elementGeometryCreator: ElementGeometryCreator,
-    private val createdElementsController: CreatedElementsController
+    private val createdElementsController: CreatedElementsController,
 ) : MapDataController {
 
     private val listeners = Listeners<MapDataSource.Listener>()
@@ -54,7 +55,7 @@ class MapDataControllerImpl constructor(
             geometryEntries = createGeometries(mapData, mapData)
 
             // don't use cache here, because if not everything is already cached, db call will be faster
-            oldElementKeys = elementDB.getAllKeys(mapData.boundingBox!!).toMutableSet()
+            oldElementKeys = elementDB.getAllKeys(mapData.boundingBox!!).toHashSet()
             for (element in mapData) {
                 oldElementKeys.remove(element.key)
             }
@@ -202,7 +203,7 @@ class MapDataControllerImpl constructor(
 
     override fun getWayComplete(id: Long): MapData? {
         val way = getWay(id) ?: return null
-        val nodeIds = way.nodeIds.toSet()
+        val nodeIds = way.nodeIds.toHashSet()
         val nodes = getNodes(nodeIds)
         if (nodes.size < nodeIds.size) return null
         return MutableMapData(nodes + way)
@@ -210,7 +211,7 @@ class MapDataControllerImpl constructor(
 
     override fun getRelationComplete(id: Long): MapData? {
         val relation = getRelation(id) ?: return null
-        val elementKeys = relation.members.map { it.key }.toSet()
+        val elementKeys = relation.members.mapTo(HashSet(relation.members.size)) { it.key }
         val elements = getAll(elementKeys)
         if (elements.size < elementKeys.size) return null
         return MutableMapData(elements + relation)

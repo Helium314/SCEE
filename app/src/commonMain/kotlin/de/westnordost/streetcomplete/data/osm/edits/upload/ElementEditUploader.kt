@@ -138,7 +138,7 @@ class ElementEditUploader(
     // fake upload in debug mode: create pseudo-random new (positive!) ids that are unlikely to clash with real ids
     // useful for testing upload
     private fun fakeUpload(edit: ElementEdit, getIdProvider: () -> ElementIdProvider): MapDataUpdates {
-        val localChanges = edit.action.createUpdates(mapDataController, getIdProvider())
+        val localChanges = edit.action.createUpdates(mapDataSource, getIdProvider())
         val creationsByNewId = localChanges.creations.associateBy { Long.MAX_VALUE - Int.MAX_VALUE + it.hashCode() }
         val updates = MapDataUpdates(
             updated = (localChanges.modifications + creationsByNewId.map { it.value.copy(id = it.key) })

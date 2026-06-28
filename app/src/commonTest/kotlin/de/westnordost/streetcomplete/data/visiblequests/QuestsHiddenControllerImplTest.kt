@@ -42,7 +42,7 @@ class QuestsHiddenControllerImplTest {
             every { getAll() } returns listOf()
         }
         listener = mock()
-        ctrl = QuestsHiddenControllerImpl(osmDb, notesDb)
+        ctrl = QuestsHiddenControllerImpl(osmDb, notesDb, externalDb)
         ctrl.addListener(listener)
     }
 

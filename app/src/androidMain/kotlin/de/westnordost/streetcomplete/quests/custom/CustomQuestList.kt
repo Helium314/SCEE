@@ -13,12 +13,14 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestCont
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.util.math.contains
+import de.westnordost.streetcomplete.util.Mockable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
 import java.io.IOException
 import kotlin.Exception
 
+@Mockable
 class CustomQuestList(context: Context) : KoinComponent {
     private val entriesById by lazy {
         // need to load by lazy, because there is a problem if mapDataWithEditsSource is accessed early

@@ -16,6 +16,7 @@ import io.ktor.client.statement.bodyAsChannel
 import io.ktor.http.HttpStatusCode
 import io.ktor.utils.io.asSource
 import kotlinx.io.buffered
+import kotlin.plus
 
 class MapDataApiClientImpl(
     private val httpClient: HttpClient,
@@ -28,7 +29,7 @@ class MapDataApiClientImpl(
     override suspend fun uploadChanges(
         changesetId: Long,
         changes: MapDataChanges,
-        ignoreRelation: (tags: Map<String, String>) -> Boolean
+        ignoreRelation: (tags: Map<String, String>, members: Int) -> Boolean
     ): MapDataUpdates = wrapApiClientExceptions {
         try {
             val response = httpClient.post(baseUrl + "changeset/$changesetId/upload") {
@@ -62,7 +63,7 @@ class MapDataApiClientImpl(
 
     override suspend fun getMap(
         bounds: BoundingBox,
-        ignoreRelation: (tags: Map<String, String>) -> Boolean
+        ignoreRelation: (tags: Map<String, String>, members: Int) -> Boolean
     ): MutableMapData = wrapApiClientExceptions {
         if (bounds.crosses180thMeridian) {
             throw IllegalArgumentException("Bounding box crosses 180th meridian")
@@ -115,7 +116,7 @@ class MapDataApiClientImpl(
         try {
             val response = httpClient.get(baseUrl + query) { expectSuccess = true }
             val source = response.bodyAsChannel().asSource().buffered()
-            return parser.parseMapData(source) { false }
+            return parser.parseMapData(source) { _, _ -> false }
         } catch (e: ClientRequestException) {
             when (e.response.status) {
                 HttpStatusCode.Gone, HttpStatusCode.NotFound -> return null

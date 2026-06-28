@@ -3,45 +3,55 @@ package de.westnordost.streetcomplete.testutils
 import android.content.SharedPreferences
 import com.russhwolf.settings.ObservableSettings
 import de.westnordost.streetcomplete.data.preferences.Preferences
-import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatcher
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito
-import org.mockito.stubbing.OngoingStubbing
-import org.mockito.stubbing.Stubber
+import dev.mokkery.answering.returns
+import dev.mokkery.every
+import dev.mokkery.matcher.any
+import dev.mokkery.matcher.capture.Capture
+import dev.mokkery.matcher.capture.capture
+import dev.mokkery.matcher.capture.get
+import dev.mokkery.mock
 
 // mock SharedPreferences that always return default value
 fun mockPrefs(): SharedPreferences {
     val prefs: SharedPreferences = mock()
-    on(prefs.getString(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenAnswer { inv -> inv.getArgument(1, String::class.java) }
-    on(prefs.getInt(ArgumentMatchers.anyString(), ArgumentMatchers.anyInt())).thenAnswer { inv -> inv.getArgument(1, Integer::class.java) }
-    on(prefs.getLong(ArgumentMatchers.anyString(), ArgumentMatchers.anyLong())).thenAnswer { inv -> inv.getArgument(1, Long::class.java) }
+    val string = Capture.slot<String>()
+    every { prefs.getString(any(), capture(string)) } returns string.get()
+    val int = Capture.slot<Int>()
+    every { prefs.getInt(any(), capture(int)) } returns int.get()
+    val long = Capture.slot<Long>()
+    every { prefs.getLong(any(), capture(long)) } returns long.get()
     // style above doesn't work for boolean ("Cannot cast java.lang.Boolean to boolean")
-    on(prefs.getBoolean(ArgumentMatchers.anyString(), eq(true))).thenAnswer { true }
-    on(prefs.getBoolean(ArgumentMatchers.anyString(), eq(false))).thenAnswer { false }
+    every { prefs.getBoolean(any(), true) } returns true
+    every { prefs.getBoolean(any(), false) } returns false
     return prefs
 }
 
 fun mockPrefs2(): ObservableSettings {
     val prefs: ObservableSettings = mock()
-    on(prefs.getString(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenAnswer { inv -> inv.getArgument(1, String::class.java) }
-    on(prefs.getInt(ArgumentMatchers.anyString(), ArgumentMatchers.anyInt())).thenAnswer { inv -> inv.getArgument(1, Integer::class.java) }
-    on(prefs.getLong(ArgumentMatchers.anyString(), ArgumentMatchers.anyLong())).thenAnswer { inv -> inv.getArgument(1, Long::class.java) }
+    val string = Capture.slot<String>()
+    every { prefs.getString(any(), capture(string)) } returns string.get()
+    val int = Capture.slot<Int>()
+    every { prefs.getInt(any(), capture(int)) } returns int.get()
+    val long = Capture.slot<Long>()
+    every { prefs.getLong(any(), capture(long)) } returns long.get()
     // style above doesn't work for boolean ("Cannot cast java.lang.Boolean to boolean")
-    on(prefs.getBoolean(ArgumentMatchers.anyString(), eq(true))).thenAnswer { true }
-    on(prefs.getBoolean(ArgumentMatchers.anyString(), eq(false))).thenAnswer { false }
+    every { prefs.getBoolean(any(), true) } returns true
+    every { prefs.getBoolean(any(), false) } returns false
     return prefs
 }
 
 fun mockPrefs3(): Preferences {
     val prefs: Preferences = mock()
     val obs = mockPrefs2()
-    on(prefs.prefs).thenReturn(obs)
-    on(prefs.getString(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenAnswer { inv -> inv.getArgument(1, String::class.java) }
-    on(prefs.getInt(ArgumentMatchers.anyString(), ArgumentMatchers.anyInt())).thenAnswer { inv -> inv.getArgument(1, Integer::class.java) }
-    on(prefs.getLong(ArgumentMatchers.anyString(), ArgumentMatchers.anyLong())).thenAnswer { inv -> inv.getArgument(1, Long::class.java) }
+    every { prefs.prefs } returns obs
+    val string = Capture.slot<String>()
+    every { prefs.getString(any(), capture(string)) } returns string.get()
+    val int = Capture.slot<Int>()
+    every { prefs.getInt(any(), capture(int)) } returns int.get()
+    val long = Capture.slot<Long>()
+    every { prefs.getLong(any(), capture(long)) } returns long.get()
     // style above doesn't work for boolean ("Cannot cast java.lang.Boolean to boolean")
-    on(prefs.getBoolean(ArgumentMatchers.anyString(), eq(true))).thenAnswer { true }
-    on(prefs.getBoolean(ArgumentMatchers.anyString(), eq(false))).thenAnswer { false }
+    every { prefs.getBoolean(any(), true) } returns true
+    every { prefs.getBoolean(any(), false) } returns false
     return prefs
 }

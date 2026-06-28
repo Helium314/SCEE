@@ -11,7 +11,7 @@
     <string name="pref_hide_keyboard_title">Приховати клавіатуру перед створенням нотатки</string>
     <string name="pref_hide_keyboard_summary">Приховує клавіатуру, коли вона відкрита до того, як нотатка фактично створена (щоб можна було переглянути позицію)</string>
     <string name="pref_read_reverse_button">Назад</string>
-    <string name="pref_hide_notes_message">Введіть імена користувачів або ідентифікатори для ігнорування</string>
+    <string name="pref_hide_notes_message">Уведіть імена користувачів або ідентифікатори для ігнорування</string>
     <string name="pref_swap_gpx_note_button">Поміняти місцями кнопки нотаток OSM та GPX</string>
     <string name="pref_create_custom_quest_title">Дозволити створювати власні завдання</string>
     <string name="pref_show_gpx_button_summary">На відміну від нотаток OSM, додавання нотаток GPX не приховує жодного завдання на відповідній локації</string>
@@ -65,12 +65,12 @@
     <string name="pref_auto_download_summary">Автоматично завантажувати дані в прилеглому районі</string>
     <string name="pref_manual_download_cache_title">Завжди завантажувати дані повторно</string>
     <string name="pref_manual_download_cache_summary">Якщо вимкнено, дані не будуть повторно завантажуватися при ручному завантаженні, якщо вони не старші за 12 годин</string>
-    <string name="advanced_resurvey_message_keys">Завжди перевіряйте ці ключі повторно, якщо немає ключа з контрольною датою. Контрольна дата завжди буде додаватися до відповідей на пов'язані завдання</string>
+    <string name="advanced_resurvey_message_keys">Завжди перевіряйте ці ключі повторно, якщо немає ключа з контрольною датою. Контрольна дата завжди буде додаватися до відповідей на пов’язані завдання</string>
     <string name="advanced_resurvey_message_date">Замість того, щоб використовувати інтервали повторного опитування, повторно опитуйте ключі вище, якщо дата перевірки старіша за:</string>
     <string name="advanced_resurvey_hint_keys">Відокремлюйте кілька ключів комою</string>
     <string name="advanced_resurvey_hint_date">Використовуйте формат: YYYY-MM-DD</string>
     <string name="level_filter_title">Виберіть ключі для перевірки</string>
-    <string name="level_filter_message">Введіть значення рівня або відфільтруйте за допомогою &gt; і &lt;. Використовуйте * для пошуку всіх елементів, що містять допустимий ключ рівня</string>
+    <string name="level_filter_message">Уведіть значення рівня або відфільтруйте за допомогою &gt; і &lt;. Використовуйте * для пошуку всіх елементів, що містять допустимий ключ рівня</string>
     <string name="pref_quest_settings_preset_summary">Якщо ввімкнено, налаштування завдання дійсні лише для поточного пресету завдань</string>
     <string name="quest_settings_per_preset_rescan">Для коректного застосування всіх змінених налаштувань завдань необхідний повторний пошук завдань.</string>
     <string name="pref_quest_monitor_title">Сповіщати про завдання поблизу</string>
@@ -135,7 +135,7 @@
     <string name="quest_monitor_active_request">Активний запит місцезнаходжень збільшує витрату заряду акумулятора. Якщо ви не запитуєте місця розташування активно, місця розташування, запитані іншими програмами, все одно будуть використовуватися.</string>
     <string name="restore_dialog_hint">Ви також можете вручну вибрати, які завдання відновити, затиснувши кнопку скасування.</string>
     <string name="quest_settings_reset">Скидання</string>
-    <string name="quest_settings_element_selection">Встановіть елементи, що підходять для цього завдання.<a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection">Натисніть тут</a>, щоб відкрити інформацію про синтаксис виділення елементів у браузері.</string>
+    <string name="quest_settings_element_selection">Встановіть елементи, що підходять для цього завдання. &lt;a href=\"https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection\"&gt;Натисніть тут&lt;/a&gt;, щоб відкрити інформацію про синтаксис виділення елементів у браузері.</string>
     <string name="quest_settings_eligible_highways">Через кому перерахувати магістралі, які підходять для цього завдання</string>
     <string name="quest_settings_what_to_edit">Що встановити\?</string>
     <string name="quest_settings_sidewalk_cycleway_distance_message">Встановити мінімальну відстань від окремих шляхів, якщо менше, то завдання не буде показано</string>
@@ -145,13 +145,13 @@
     <string name="quest_settings_osmose_level_title">Виберіть рівень важливості проблеми для завантаження та відображення</string>
     <string name="quest_settings_osmose_level_medium">Середній</string>
     <string name="quest_settings_fixme_title">Виберіть значення «Виправити» для ігнорування</string>
-    <string name="pref_expert_mode_message">Це дозволить використовувати завдання, додані у SCEE, та способи \n <li>редагування необроблених тегів</li> \n <li>переміщення точок, які є частиною ліній або зв'язків</li> \n <li>видалення будь-якої вільно плаваючої точки</li> \n <li>редагування елементів, які мають бути заблоковані приміткою</li> \n <li>додавання вільно плаваючих точок у будь-якому місці</li> \n <li>зміни вибору елементів завдань</li> \n \n Це все ще менше, ніж дозволяє більшість інших редакторів, але необережне використання може призвести до пошкодження даних у спосіб, який неможливий у StreetComplete. Майте на увазі, що ввімкнувши експертний режим, ви несете значно більшу відповідальність за свої правки. \n Будь ласка, вмикайте цей параметр лише якщо ви маєте досвід роботи з OSM поза StreetComplete і розумієте, що ви робите.</string>
+    <string name="pref_expert_mode_message">Це дозволить використовувати завдання, додані у SCEE, та способи \n <li>редагування необроблених тегів</li> \n <li>переміщення точок, які є частиною ліній або зв’язків</li> \n <li>видалення будь-якої вільно плаваючої точки</li> \n <li>редагування елементів, які мають бути заблоковані приміткою</li> \n <li>додавання вільно плаваючих точок у будь-якому місці</li> \n <li>зміни вибору елементів завдань</li> \n \n Це все ще менше, ніж дозволяє більшість інших редакторів, але необережне використання може призвести до пошкодження даних у спосіб, який неможливий у StreetComplete. Майте на увазі, що ввімкнувши експертний режим, ви несете значно більшу відповідальність за свої правки. \n Будь ласка, вмикайте цей параметр лише якщо маєте досвід роботи з OSM поза StreetComplete і розумієте, що ви робите.</string>
     <string name="quest_osmose_settings_items">Змінити типи елементів для ігнорування</string>
     <string name="quest_settings_building_levels_optional_roof">Дозволяти не використовувати рівні даху скрізь</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">Усі</string>
     <string name="quest_settings_resurvey_all_opening_hours_no">За замовчуванням</string>
     <string name="quest_custom_quest_title">Своє завдання:</string>
-    <string name="quest_settings_resurvey_all_opening_hours_message">Повторно переглянути всі години роботи, включно зі значеннями, які не розуміє SCEE\? Можливо, вам доведеться скористатися редактором тегів, щоб ввести правильні значення.</string>
+    <string name="quest_settings_resurvey_all_opening_hours_message">Повторно переглянути всі години роботи, включно зі значеннями, які не розуміє SCEE? Можливо, вам доведеться скористатися редактором тегів, щоб увести правильні значення.</string>
     <string name="quest_osmose_false_positive">Повідомити про хибне спрацювання</string>
     <string name="quest_osmose_message_for_element">Тип елементу %1$s: %2$s</string>
     <string name="quest_osmose_remove_checked">Видалити</string>
@@ -163,7 +163,7 @@
     <string name="custom_overlay_title">Користувацький шар</string>
     <string name="pref_read_log_title">Перегляд журналу</string>
     <string name="pref_select_first_edit_title">Виберіть перше редагування у панелі історії</string>
-    <string name="pref_search_more_languages_summary">Пошук об'єктів показує результати всіма системними та локальними мовами</string>
+    <string name="pref_search_more_languages_summary">Пошук об’єктів показує результати всіма системними та локальними мовами</string>
     <string name="pref_overlay_quick_selector_title">Показати швидкий перемикач накладання</string>
     <string name="pref_trees_title">Завантажити файл дерева завдань</string>
     <string name="custom_overlay_filter_info">Деталі фільтрації</string>
@@ -193,13 +193,13 @@
     <string name="add_access">Додати доступ…</string>
     <string name="quest_material_metal">Метал</string>
     <string name="quest_poi_recycling_title">POI: Переробка відходів</string>
-    <string name="quest_custom_quest_message">Використовується для перевірки певних заздалегідь визначених елементів або місць. Ви також можете вказати теги і додати точку з ними. Для використання завантажте файл у головному меню налаштувань, що містить або type,id,message (наприклад, NODE,1234,check position), або latitude,longitude,message. Для додавання точок, додайте теги у повідомлення після «addNode», наприклад, addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
+    <string name="quest_custom_quest_message">Використовується для перевірки певних заздалегідь визначених елементів або місць. Ви також можете вказати теги і додати точку з ними. Для використання завантажте файл у головному меню налаштувань, що містить або `type,id,message` (наприклад, NODE,1234,check position), або `latitude,longitude,message`. Для додавання точок, додайте теги у повідомлення після «addNode», наприклад: addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
     <string name="quest_material_concrete">Бетон</string>
     <string name="quest_material_plastic">Пластик</string>
-    <string name="default_disabled_msg_poi_bench">Це завдання показує об'єкти POI, такі як лавки або столи для пікніка, коричневими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
+    <string name="default_disabled_msg_poi_bench">Це завдання показує об’єкти POI, такі як лавки або столи для пікніка, коричневими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
     <string name="pref_hide_overlay_quests">Приховати специфічні для накладення завдання</string>
     <string name="default_disabled_msg_poi_other">Це завдання показує різні POI, такі як гідранти, оглядові майданчики або туалети, жовтими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
-    <string name="default_disabled_msg_poi_recycling">Це завдання показує POI, пов'язані з переробкою/сміттям, зеленими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
+    <string name="default_disabled_msg_poi_recycling">Це завдання показує POI, пов’язані з переробкою/сміттям, зеленими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
     <string name="quest_poi_machine_title">POI: Автомати</string>
     <string name="quest_osmose_use_app_language">Завантажувати проблеми мовою програми</string>
     <string name="quest_custom_quest_add_node">Додати точку</string>
@@ -215,11 +215,11 @@
     <string name="quest_osmose_hide_type">Ігнорувати проблеми з такими ж…</string>
     <string name="quest_poi_business_title">POI: Бізнес</string>
     <string name="quest_is_pharmacy_dispensing_title">Чи відпускає ця аптека всі ліки за рецептом\?</string>
-    <string name="default_disabled_msg_poi_machine">Це завдання показує такі об'єкти, як банкомати, телефони чи торгові автомати, синіми крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
+    <string name="default_disabled_msg_poi_machine">Це завдання показує об’єкти POI, такі як банкомати, телефони чи торгові автомати, синіми крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
     <string name="quest_custom_quest_add_node_text">Ви можете додати точку з: %s</string>
     <string name="default_disabled_msg_poi_business">Це завдання показує магазини, ресторани, лікарів і подібні POI у вигляді помаранчевих крапок. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
     <string name="quest_material_brick">Цегла</string>
-    <string name="default_disabled_msg_poi_bike">Це завдання показує POI, пов'язані з велосипедом, фіолетовими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
+    <string name="default_disabled_msg_poi_bike">Це завдання показує POI, пов’язані з велосипедом, фіолетовими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
     <string name="quest_material_wood">Деревина</string>
     <string name="quest_buildingColour_title">Який загальний колір має ця будівля\?</string>
     <string name="quest_buildingPartColour_title">Який загальний колір має ця частина будівлі\?</string>
@@ -282,13 +282,13 @@
     <string name="ban_check_fails">Не вдалося пройти перевірку на заборонені версії. Можливо, Ви використовуєте застарілу версію, подумайте про оновлення.</string>
     <string name="quest_footway_width_title">Яка тут ширина пішохідної доріжки\?</string>
     <string name="quest_lanes_answer_noLanes_known_count">Без розмітки, очевидна кількість смуг</string>
-    <string name="default_disabled_msg_poi_traffic">Це завдання показує POI, пов'язані з дорожнім рухом, блакитними крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
+    <string name="default_disabled_msg_poi_traffic">Це завдання показує POI, пов’язані з дорожнім рухом, блакитними крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
     <string name="quest_monitor_running">Відстеження місцезнаходження</string>
     <string name="quest_monitor_error">Не вдалося почати відстеження, можливо проблема з дозволами</string>
     <string name="quest_poi_vacant_title">POI: Вільне місце</string>
     <string name="quest_destination_all_lanes_button">Усі
 \nсмуги</string>
-    <string name="create_custom_quest_title_message">Введіть повідомлення, яке буде показано</string>
+    <string name="create_custom_quest_title_message">Уведіть повідомлення, яке буде показано</string>
     <string name="default_disabled_msg_poi_fixme">Це завдання показує теги «Виправити» червоними крапками (крім значень «yes» і «continue» за замовчуванням). Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
     <string name="quest_monitor_channel_name">Відстеження завдань поблизу</string>
     <string name="default_disabled_msg_poi_vacant">Це завдання показує порожні магазини сірими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
@@ -328,7 +328,7 @@
     <string name="quest_maxspeed_conditional_limited_enter_default">Перед вибором цієї відповіді виберіть обмеження за замовчуванням</string>
     <string name="quest_brewery_add_more">Додати іншу броварню</string>
     <string name="quest_viaFerrataScale_three">Рівень 3/K3/C — досить складно</string>
-    <string name="quest_building_entrance_parking">В'їзд на стоянку</string>
+    <string name="quest_building_entrance_parking">В’їзд на стоянку</string>
     <string name="quest_viaFerrataScale_title">Який рівень складності цього маршруту віа феррата\?</string>
     <string name="quest_viaFerrataScale_two">Рівень 2/K2/B — легко</string>
     <string name="quest_name_brand">Має фірмову назву…</string>
@@ -366,7 +366,7 @@
     <string name="pref_offset_fix_title2">Видалити зміщення для білих крапок</string>
     <string name="quest_crossing_marking_value_pictograms">Піктограми</string>
     <string name="tutorial_info_fork_message"><b>SCEE</b>\n\n Це модифікована версія StreetComplete. Вона призначена для досвідчених користувачів з глибокими знаннями про OSM. Це дає вам більше інструментів, але також покладає більшу <i>відповідальність</i>.\n Особливо це стосується можливості редагування необроблених тегів і видалення точок, а також зміни вибору елементів для завдань. Завдання, додані в SCEE, <i>можуть не мати вирішення</i> в усіх випадках і вимкнені за замовчуванням. Будь ласка, приховайте їх, якщо ви не можете на них відповісти, а <i>не спамте примітками</i>.\n\n З коробки SCEE налаштовано на поведінку, дуже схожу на StreetComplete.</string>
-    <string name="pref_custom_geometry_title">Відображення об'єктів карти з файлу GeoJson</string>
+    <string name="pref_custom_geometry_title">Відображення об’єктів карти з файлу GeoJson</string>
     <string name="pref_custom_geometry_info">Якщо ви хочете відобразити текст, він повинен бути під тегом «name»</string>
     <string name="pref_rotate_while_zooming_title">Дозволити поворот під час масштабування</string>
     <string name="pref_rotate_angle_threshold_title">Поріг для жесту обертання</string>
@@ -401,8 +401,8 @@
     <string name="file_loading_error">Помилка завантаження файлу</string>
     <string name="pref_tile_maxzoom">Максимальний підтримуваний масштаб</string>
     <string name="quest_recycling_excrement_bag_dispenser">Він має диспенсер для пакетів для екскрементів</string>
-    <string name="quest_piste_ref_connection">Це з'єднання трас</string>
-    <string name="quest_service_building_type_industrial_substation_description">Призначений для промислових або важких видів діяльності, що забезпечують постачання</string>
+    <string name="quest_piste_ref_connection">Це з’єднання трас</string>
+    <string name="quest_service_building_type_industrial_substation_description">Призначена для живлення промислових або важких видів діяльності</string>
     <string name="quest_service_building_type_switchgear">Розподільне обладнання</string>
     <string name="quest_service_building_type_switchgear_description">Апаратура управління електроенергетичної системи</string>
     <string name="quest_service_building_type_reservoir_description">Великий штучний резервуар для зберігання прісної води</string>
@@ -426,13 +426,13 @@
     <string name="quest_street_cabinet_television">Телебачення</string>
     <string name="quest_street_cabinet_street_lighting">Вуличне освітлення</string>
     <string name="quest_service_building_type_traction_substation_description">Електрична підстанція, яка перетворює енергію для живлення залізниць, трамваїв або тролейбусів тяговим струмом</string>
-    <string name="quest_service_building_sewerage_description">Будівля, пов'язана зі збором, транспортуванням або переробкою стічних вод</string>
+    <string name="quest_service_building_sewerage_description">Будівля, пов’язана зі збором, транспортуванням або переробкою стічних вод</string>
     <string name="quest_service_building_type_pressure_description">Газова розподільна підстанція в будівлі, відповідальна за зниження тиску для споживачів в околицях</string>
     <string name="quest_traffic_stuff_raised">Це піднятий перехід</string>
     <string name="quest_service_building_type_minor_substation_description">Невелика підстанція на найнижчому рівні трансформації в розподільній мережі</string>
     <string name="quest_service_building_telecom_exchange_description">Місце для підключення абонентів стаціонарних телефонних ліній до телекомунікаційного обладнання</string>
     <string name="quest_service_building_railway_engine_shed_description">Навіс для захисту локомотивів та рухомого складу від впливу навколишнього середовища</string>
-    <string name="quest_service_building_type_substation_description">Підстанції, які в основному пов'язані з регіональними розподільчими мережами</string>
+    <string name="quest_service_building_type_substation_description">Підстанції, які в основному пов’язані з регіональними розподільчими мережами</string>
     <string name="quest_service_building_type_well_description">Структурна споруда для доступу до підземних вод, створена шляхом копання або буріння</string>
     <string name="quest_service_building_railway_signal_box_description">Стаціонарна залізнична система для управління залізничними операціями</string>
     <string name="quest_osmose_use_app_language_information">Це заважатиме елементам, які ігноруються субтитрами</string>
@@ -447,7 +447,7 @@
     <string name="quest_shelter_type_basic_hut">Проста хатина</string>
     <string name="quest_shelter_type_sun_shelter">Укриття від сонця</string>
     <string name="quest_shelter_type_field_shelter">Польове укриття</string>
-    <string name="quest_shelter_type_rock_shelter">Кам'яне укриття</string>
+    <string name="quest_shelter_type_rock_shelter">Кам’яне укриття</string>
     <string name="quest_valves_title">Які типи клапанів тут доступні?</string>
     <string name="quest_valves_disabled_msg">Це завдання вимкнено за замовчуванням, оскільки воно вимагає ретельного огляду доступних клапанів.</string>
     <string name="quest_valves_sclaverand">SV: Sclaverand / Presta / Французький клапан</string>
@@ -457,7 +457,7 @@
     <string name="quest_trail_visibility_excellent">Відмінно</string>
     <string name="quest_trail_visibility_excellent_description">Однозначний шлях або позначки всюди. Орієнтація без проблем, карта не потрібна.</string>
     <string name="quest_trail_visibility_good">Добре</string>
-    <string name="quest_trail_visibility_good_description">Стежка або наступний маркер завжди видно, але іноді доводиться шукати. Потрібне базове відчуття напрямку, рекомендується карта.</string>
+    <string name="quest_trail_visibility_good_description">Стежку або наступний маркер завжди видно, але іноді доводиться шукати. Потрібне базове відчуття напрямку, рекомендується карта.</string>
     <string name="quest_trail_visibility_intermediate">Середній рівень</string>
     <string name="quest_trail_visibility_intermediate_description">Стежка здебільшого видима, без позначок. Потрібне добре відчуття напрямку, потрібна карта.</string>
     <string name="quest_trail_visibility_bad">Погано</string>
@@ -515,10 +515,10 @@
     <string name="quest_healthcare_speciality_disabled_message">Цей квест вимагає знання тегів healthcare:specialty. Без цих знань виконати квест може бути дуже важко.</string>
     <string name="quest_tree_genus_title">Який рід або вид цього дерева?</string>
     <string name="quest_tree_error">Не розпізнано. Спробуйте ввести рід, вид або англійську назву дерева. В іншому випадку, залиште записку.</string>
-    <string name="quest_tree_disabled_msg">Цей квест за замовчуванням вимкнено, оскільки на нього нелегко відповісти. Вид/рід потрібно вибрати з пропозицій, які взяті з найбільш використовуваних значень. Ви можете надати пропозиції з власного списку видів з назвами, які можна шукати, надавши файл у меню налаштувань керування даними, що містить &lt;вид&gt; (&lt;назва&gt;).</string>
+    <string name="quest_tree_disabled_msg">Цей квест за замовчуванням вимкнено, оскільки на нього нелегко відповісти. Вид/рід потрібно вибрати з пропозицій, які взяті з найбільш використовуваних значень. Ви можете надати пропозиції з власного списку видів з назвами, які можна шукати, надавши файл у меню налаштувань керування даними, що містить `&lt;вид&gt; (&lt;назва&gt;)`.</string>
     <string name="default_disabled_msg_ee">Квести, додані в SCEE, завжди вимкнені за замовчуванням, оскільки на них не завжди можна відповісти, і вони можуть вимагати знання теми та тегів.</string>
-    <string name="quest_railwayPlatformRef_title">Який тут номер треку?</string>
-    <string name="quest_railwayPlatformRef_message">Який тег використовувати для треків, доступних з цієї платформи? Згідно з вікі OSM, local_ref може бути кращим, але фактичне використання здебільшого пов'язане з посиланнями.</string>
+    <string name="quest_railwayPlatformRef_title">Який тут номер колії?</string>
+    <string name="quest_railwayPlatformRef_message">Який тег використовувати для колій, доступних з цієї платформи? Вікі OSM рекомендує local_ref, але фактично здебільшого використовується ref.</string>
     <string name="quest_disabled_msg_railway_platform_ref">Зверніть увагу, що у вікі не зовсім зрозуміло, який тег використовувати найкраще, тому вибір залишається на розсуд користувача. У налаштуваннях квесту виберіть між «ref» (за замовчуванням) та «local_ref».\nЯкщо вздовж платформи є дві колії, використовуйте значення, розділені крапкою з комою, наприклад, 2;3</string>
     <string name="quest_destination_title">Які напрямки позначені на цій дорозі?</string>
     <string name="quest_destination_add_more">Додати ще один пункт призначення</string>
@@ -542,7 +542,7 @@
     <string name="quest_seating_no">Без місць для сидіння, але й не тільки їжа на винос</string>
     <string name="quest_guidepostRef_hint">Довідковий номер цієї карти або дороговказу, а не довідковий номер позначених маршрутів.</string>
     <string name="quest_guidepostName_hint">Підписана назва (місцезнаходження) цієї карти або дороговказу. Не вводьте тут номер посилання.</string>
-    <string name="quest_guidepost_disabled_msg">Цей квест вимкнено за замовчуванням, оскільки підписи сильно відрізняються залежно від регіону та оператора. Вам може знадобитися уточнити вибір елементів для вашого регіону (наприклад, додати або видалити карти, вибрати лише елементи з походженням=так тощо)</string>
+    <string name="quest_guidepost_disabled_msg">Цей квест вимкнено за замовчуванням, оскільки підписи сильно відрізняються залежно від регіону та оператора. Вам може знадобитися уточнити вибір елементів для вашого регіону (наприклад, додати або видалити карти, вибрати лише елементи з hiking=yes тощо)</string>
     <string name="pref_quest_pedestrian_crossing_markings_extended">Увімкнути розширення «Чи має цей перехід розмітку на землі?», що дозволяє визначити стиль розмітки переходу</string>
     <string name="quest_crossing_marking_value_no">Ні</string>
     <string name="quest_crossing_marking_value_zebra">Зебра</string>
@@ -573,7 +573,7 @@
     <string name="quest_parking_capacity_hint">Це також включає спеціальні місця, наприклад, для людей з інвалідністю, сімей, для заряджання тощо. Приховайте квест, якщо паркувальні місця не позначені та, отже, не підлягають врахуванню</string>
     <string name="quest_parking_capacity_disabled_title">Скільки тут паркувальних місць для людей з інвалідністю?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">Є, але кількість незрозуміла</string>
-    <string name="quest_parking_capacity_disabled_default_disabled_msg">Квести, додані в SCEE, завжди вимкнені за замовчуванням, оскільки на них не завжди можна відповісти, і вони можуть вимагати знання теми та тегів.\nЦей квест не буде запропоновано, якщо встановлено capacity:disabled=yes. Якщо ви також хочете вказати їх, змініть вибір елемента з "and !capacity:disabled" на "and (!capacity:disabled або capacity:disabled=yes)</string>
+    <string name="quest_parking_capacity_disabled_default_disabled_msg">Квести, додані в SCEE, завжди вимкнені за замовчуванням, оскільки на них не завжди можна відповісти, і вони можуть вимагати знання теми та тегів.\nЦей квест не буде запропоновано, якщо встановлено capacity:disabled=yes. Якщо ви також хочете вказати їх, змініть вибір елемента з «and !capacity:disabled» на «and (!capacity:disabled or capacity:disabled=yes)»</string>
     <string name="quest_parking_orientation_title">В якій орієнтації тут паркуються автомобілі?</string>
     <string name="pref_quest_sac_scale_without_relation">Шукати всі стежки, навіть ті, хто не мають стосунку до піших прогулянок</string>
     <string name="quest_sacScale_title">Яка шкала SAC цього шляху?</string>
@@ -623,8 +623,8 @@
     <string name="restriction_overlay_select_way">Клацніть наступний шлях на карті. Йому потрібен кінцевий вузол, спільний з поточним шляхом. Розділіть, якщо необхідно.</string>
     <string name="tag_editor_duplicate_key">Ігнорування зміни дубліката ключа %s</string>
     <string name="insert_node_select_way">Виберіть позицію на лінії</string>
-    <string name="move_node_with_geometry">Переміщення цієї точки змінить геометрію наступних ліній або мультиполігональних зв'язків: %s.\nМайте на увазі, що будь-які зміни не будуть одразу видимими на фоновій карті.</string>
-    <string name="move_node_of_other_relation">Ця точка є частиною наступних небагатополігональних зв'язків: %s</string>
+    <string name="move_node_with_geometry">Переміщення цієї точки змінить геометрію таких ліній або мультиполігональних зв’язків: %s.\nМайте на увазі, що будь-які зміни не будуть одразу видимими на фоновій карті.</string>
+    <string name="move_node_of_other_relation">Ця точка є частиною таких небагатополігональних зв’язків: %s</string>
     <string name="move_node_message_external_source_addition">Зверніть увагу, що позиція цього завдання може не змінюватися разом із точкою.</string>
     <string name="close_note_checkbox">Закрити нотатку (зробіть це лише якщо ви справді розгадали нотатку!)</string>
     <string name="closed_note_action_title">Ти його закрив</string>

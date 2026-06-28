@@ -1,0 +1,4 @@
+- add kerb type quest for ways (by @splatypus)
+- add service time quest (by @paulklie)
+- update data for tree genus / species quest (by @dokutan / @matkoniecz)
+- add beers for brewery quest (by @mal-tee)

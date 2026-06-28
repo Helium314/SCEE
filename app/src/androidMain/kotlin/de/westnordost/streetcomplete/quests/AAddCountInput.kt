@@ -26,7 +26,7 @@ abstract class AAddCountInput : AbstractOsmQuestForm<Int>() {
     override val contentLayoutResId = R.layout.compose_view
     private val binding by contentViewBinding(ComposeViewBinding::bind)
 
-    private lateinit var count: MutableState<Int?>
+    protected lateinit var count: MutableState<Int?>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

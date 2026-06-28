@@ -12,6 +12,7 @@ import de.westnordost.streetcomplete.osm.updateWithCheckDate
 import de.westnordost.streetcomplete.data.quest.AndroidQuest
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
+import de.westnordost.streetcomplete.resources.quest_parking_capacity_hint
 import de.westnordost.streetcomplete.resources.quest_parking_capacity_title
 
 class AddParkingCapacity : OsmFilterQuestType<Int>(), AndroidQuest {
@@ -28,6 +29,7 @@ class AddParkingCapacity : OsmFilterQuestType<Int>(), AndroidQuest {
     override val wikiLink = "Tag:amenity=parking"
     override val icon = R.drawable.ic_quest_parking_capacity
     override val title = Res.string.quest_parking_capacity_title
+    override val hint = Res.string.quest_parking_capacity_hint
     override val achievements = listOf(CAR)
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
 

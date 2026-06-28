@@ -13,7 +13,7 @@ import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_parking_capacity_disabled_default_disabled_msg
 import de.westnordost.streetcomplete.resources.quest_parking_capacity_disabled_title
 
-class AddDisabledParkingCapacity : OsmFilterQuestType<String>(), AndroidQuest {
+class AddDisabledParkingCapacity : OsmFilterQuestType<Int>(), AndroidQuest {
 
     override val elementFilter = """
         nodes, ways with
@@ -34,7 +34,11 @@ class AddDisabledParkingCapacity : OsmFilterQuestType<String>(), AndroidQuest {
 
     override fun createForm() = AddDisabledParkingCapacityForm()
 
-    override fun applyAnswerTo(answer: String, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
-            tags["capacity:disabled"] = answer
+    override fun applyAnswerTo(answer: Int, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
+            tags["capacity:disabled"] = when (answer) {
+                 0 -> "no"
+                -1 -> "yes"
+                else -> answer.toString()
+            }
     }
 }

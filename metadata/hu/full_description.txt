@@ -1,0 +1,12 @@
+Az SCEE a StreetComplete alkalmazás módosított változata, amely azon tapasztalt OSM-felhasználók számára készült, akik elégedetlenek az alap StreetComplete szerkesztési lehetőségeivel.
+
+Fontos: az SCEE nem azoknak készült, akik olvasás nélkül figyelmen kívül szokták hagyni a figyelmeztetéseket!
+Az OpenStreetMap kezdő felhasználóinak inkább az alap StreetComplete használatát javasoljuk: https://f-droid.org/en/packages/de.westnordost.streetcomplete/
+
+Az SCEE-ben hozzáadott funkciók jóval kevésbé leteszteltek, mint amit az alap StreetComplete-nél megszokhattál, ezért előfordulhatnak hibák vagy nem várt működés. Ha ilyennel találkozol, kérjük, hogy jelentsd a problémát.
+A kiegészítő funkciók miatt az SCEE működése jelentősen eltérhet az alap StreetComplete-étől.
+
+A StreetComplete és az SCEE közti különbségek teljes listáját lásd itt: https://github.com/Helium314/SCEE#differences-to-streetcomplete
+
+F-Droid anti-feature: fizetős internetkapcsolat,
+az SCEE a jawg által szolgáltatott csempéket használja, és opcionálisan légi / műholdas felvételeket is az Esri-től.

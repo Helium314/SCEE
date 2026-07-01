@@ -42,7 +42,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import de.westnordost.countryboundaries.CountryBoundaries
+import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.osmfeatures.Feature
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -334,7 +334,7 @@ class MainActivity :
             }
             if (addPoiAt.value != null) {
                 val pos = addPoiAt.value ?: return@content
-                val country = countryBoundaries.value.getIds(pos.longitude, pos.latitude).firstOrNull()
+                val country = countryBoundaries.value.getIds(pos).firstOrNull()
                 val defaultFeatureIds: List<String> = prefs.getString(Prefs.CREATE_POI_RECENT_FEATURE_IDS, "")
                     .split("§").filter { it.isNotBlank() && it != "shop" }
                     .ifEmpty { POPULAR_PLACE_FEATURE_IDS }

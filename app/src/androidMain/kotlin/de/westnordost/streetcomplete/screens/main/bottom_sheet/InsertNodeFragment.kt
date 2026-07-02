@@ -33,7 +33,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.russhwolf.settings.ObservableSettings
-import de.westnordost.countryboundaries.CountryBoundaries
+import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.osmfeatures.GeometryType
@@ -186,7 +186,7 @@ class InsertNodeFragment :
             if (showDialog.value) {
                 val pow = positionOnWay ?: return@setContent
                 val fd = featureDictionary.value
-                val country = countryBoundaries.value.getIds(pow.position.longitude, pow.position.latitude).firstOrNull()
+                val country = countryBoundaries.value.getIds(pow.position).firstOrNull()
                 val defaultFeatureIds = prefs.getString(Prefs.INSERT_NODE_RECENT_FEATURE_IDS, "")
                     .split("§").filter { it.isNotBlank() }
                     .ifEmpty { listOf("amenity/post_box", "barrier/gate", "highway/crossing/unmarked", "highway/crossing/uncontrolled", "highway/traffic_signals", "barrier/bollard", "traffic_calming/table") }

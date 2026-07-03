@@ -638,4 +638,16 @@
     <string name="quest_material_loam">Vályog</string>
     <string name="quest_fence_material_title">Milyen anyagból készült ez a kerítés?</string>
     <string name="quest_material_wire">Drót</string>
+    <string name="quest_service_times_title">Mikor tartanak itt istentiszteletet?</string>
+    <string name="quest_service_times_resurvey_title">Még mindig ez a vallási szertartások időpontja?</string>
+    <string name="quest_kerb_type_title">Milyen fajta padka ez?</string>
+    <string name="quest_lampMount_bollard">Poller</string>
+    <string name="quest_material_cement_block">Betonkocka</string>
+    <string name="quest_material_vinyl">PVC homlokzati burkolat</string>
+    <string name="quest_material_pebbledash">Kavics</string>
+    <string name="quest_orchard_type_title">Milyen típusú gyümölcsös ez?</string>
+    <string name="quest_orchard_type_meadow_orchard">Réti gyümölcsös</string>
+    <string name="quest_orchard_type_plantation">Ültetvény</string>
+    <string name="quest_orchard_type_meadow_orchard_description">Nagy fák, ritkásan</string>
+    <string name="quest_orchard_type_plantation_description">Oszlopos fák, sűrűn ültetve (általában kereskedelmi célból)</string>
 </resources>

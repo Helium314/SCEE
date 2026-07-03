@@ -214,7 +214,7 @@
     <string name="quest_bench_armrest_title">Ima li ova klupa naslon za ruke?</string>
     <string name="quest_guidepost_sports_title">Za koji je sport namijenjen ovaj putokaz?</string>
     <string name="quest_guidepost_sports_note">Ako postoji nešto što nije pokriveno navedenim značajkama, umjesto toga ostavi bilješku.</string>
-    <string name="quest_guidepost_sports_answer_simple">To je samo jednostavan putokaz</string>
+    <string name="quest_guidepost_sports_answer_simple">To je samo jednostavna oznaka</string>
     <string name="quest_guidepost_sports_answer_simple_description">Ovo je samo jednostavna smjernica bez posebnih sportova.</string>
     <string name="quest_guidepost_sports_bicycle">Vožnja biciklom</string>
     <string name="quest_guidepost_sports_mtb">MTB</string>

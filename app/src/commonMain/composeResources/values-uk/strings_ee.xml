@@ -18,7 +18,7 @@
     <string name="pref_save_gpx">Отримуйте нотатки у форматі GPX і прикріплені фотографії та треки</string>
     <string name="pref_save_file_error">Помилка збереження файлу</string>
     <string name="pref_files_not_found">Файли не знайдено</string>
-    <string name="pref_create_custom_quest_summary">…як альтернатива залишенню нотатки. Це можна використовувати як локально збережену примітку, яку буде видно на мапі. Зауважте, що вам потрібно ввімкнути користувацькі завдання.</string>
+    <string name="pref_create_custom_quest_summary">…як альтернатива залишенню нотатки. Це можна використовувати як локально збережену нотатку, яку буде видно на мапі. Зауважте, що вам потрібно ввімкнути користувацькі завдання.</string>
     <string name="pref_save_photos_title">Збереження фотографій для нотаток</string>
     <string name="pref_save_photos_summary">Зберігати повнорозмірні версії фотографій, зроблених під час створення нотаток, без очищення даних EXIF</string>
     <string name="pref_get_photos_title">Отримати повнорозмірні фотографії</string>
@@ -145,7 +145,7 @@
     <string name="quest_settings_osmose_level_title">Виберіть рівень важливості проблеми для завантаження та відображення</string>
     <string name="quest_settings_osmose_level_medium">Середній</string>
     <string name="quest_settings_fixme_title">Виберіть значення «Виправити» для ігнорування</string>
-    <string name="pref_expert_mode_message">Це дозволить використовувати завдання, додані у SCEE, та способи \n <li>редагування необроблених тегів</li> \n <li>переміщення точок, які є частиною ліній або зв’язків</li> \n <li>видалення будь-якої вільно плаваючої точки</li> \n <li>редагування елементів, які мають бути заблоковані приміткою</li> \n <li>додавання вільно плаваючих точок у будь-якому місці</li> \n <li>зміни вибору елементів завдань</li> \n \n Це все ще менше, ніж дозволяє більшість інших редакторів, але необережне використання може призвести до пошкодження даних у спосіб, який неможливий у StreetComplete. Майте на увазі, що ввімкнувши експертний режим, ви несете значно більшу відповідальність за свої правки. \n Будь ласка, вмикайте цей параметр лише якщо маєте досвід роботи з OSM поза StreetComplete і розумієте, що ви робите.</string>
+    <string name="pref_expert_mode_message">Це дозволить використовувати завдання, додані у SCEE, та способи \n <li>редагування необроблених тегів</li> \n <li>переміщення точок, які є частиною ліній або зв’язків</li> \n <li>видалення будь-якої вільно плаваючої точки</li> \n <li>редагування елементів, які мають бути заблоковані нотаткою</li> \n <li>додавання вільно плаваючих точок у будь-якому місці</li> \n <li>зміни вибору елементів завдань</li> \n \n Це все ще менше, ніж дозволяє більшість інших редакторів, але необережне використання може призвести до пошкодження даних у спосіб, який неможливий у StreetComplete. Майте на увазі, що ввімкнувши експертний режим, ви несете значно більшу відповідальність за свої правки. \n Будь ласка, вмикайте цей параметр лише якщо маєте досвід роботи з OSM поза StreetComplete і розумієте, що ви робите.</string>
     <string name="quest_osmose_settings_items">Змінити типи елементів для ігнорування</string>
     <string name="quest_settings_building_levels_optional_roof">Дозволяти не використовувати рівні даху скрізь</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">Усі</string>
@@ -187,7 +187,7 @@
     <string name="restriction_overlay_exceptions">Винятки: %s</string>
     <string name="access_manager_button_add_conditional">Додати умови</string>
     <string name="restriction_overlay_only_for">Лише для: %s</string>
-    <string name="restriction_overlay_show_details">Показати деталі зв'язку</string>
+    <string name="restriction_overlay_show_details">Показати деталі зв’язку</string>
     <string name="restriction_overlay_signed_switch">Існує знак або дорожня розмітка</string>
     <string name="restriction_overlay_other_restrictions">Інші обмеження цього шляху:</string>
     <string name="add_access">Додати доступ…</string>
@@ -338,7 +338,7 @@
     <string name="import_export_custom_overlays_select">Виберіть накладення для експорту</string>
     <string name="quest_piste_lit_title">Чи освітлена ця траса тут\?</string>
     <string name="quest_piste_ref_title">Який номер цієї траси\?</string>
-    <string name="quest_guidepost_sports_note">Залиште примітку, якщо жоден із перелічених варіантів не підходить.</string>
+    <string name="quest_guidepost_sports_note">Залиште нотатку, якщо жоден із перелічених варіантів не підходить.</string>
     <string name="quest_guidepost_sports_winter_hiking">Зимовий пішохідний туризм</string>
     <string name="quest_guidepost_sports_horse">Верхова їзда</string>
     <string name="quest_guidepost_sports_title">Для якого виду спорту призначений цей орієнтир?</string>
@@ -365,7 +365,7 @@
     <string name="quest_swimmingPoolAvailability_title">Чи є тут басейн?</string>
     <string name="pref_offset_fix_title2">Видалити зміщення для білих крапок</string>
     <string name="quest_crossing_marking_value_pictograms">Піктограми</string>
-    <string name="tutorial_info_fork_message"><b>SCEE</b>\n\n Це модифікована версія StreetComplete. Вона призначена для досвідчених користувачів з глибокими знаннями про OSM. Це дає вам більше інструментів, але також покладає більшу <i>відповідальність</i>.\n Особливо це стосується можливості редагування необроблених тегів і видалення точок, а також зміни вибору елементів для завдань. Завдання, додані в SCEE, <i>можуть не мати вирішення</i> в усіх випадках і вимкнені за замовчуванням. Будь ласка, приховайте їх, якщо ви не можете на них відповісти, а <i>не спамте примітками</i>.\n\n З коробки SCEE налаштовано на поведінку, дуже схожу на StreetComplete.</string>
+    <string name="tutorial_info_fork_message"><b>SCEE</b>\n\n Це модифікована версія StreetComplete. Вона призначена для досвідчених користувачів з глибокими знаннями про OSM. Це дає вам більше інструментів, але також покладає більшу <i>відповідальність</i>.\n Особливо це стосується можливості редагування необроблених тегів і видалення точок, а також зміни вибору елементів для завдань. Завдання, додані в SCEE, <i>можуть не мати вирішення</i> в усіх випадках і вимкнені за замовчуванням. Будь ласка, приховайте їх, якщо ви не можете на них відповісти, а <i>не спамте нотатками</i>.\n\n З коробки SCEE налаштовано на поведінку, дуже схожу на StreetComplete.</string>
     <string name="pref_custom_geometry_title">Відображення об’єктів карти з файлу GeoJson</string>
     <string name="pref_custom_geometry_info">Якщо ви хочете відобразити текст, він повинен бути під тегом «name»</string>
     <string name="pref_rotate_while_zooming_title">Дозволити поворот під час масштабування</string>
@@ -375,14 +375,14 @@
     <string name="default_disabled_msg_roof">Цей тип завдання вимкнено за замовчуванням, оскільки дахи часто не дуже добре видно з вулиці. Це завдання також потребує досить багато часу; у більшості випадків простіше й ефективніше скласти карту з аерофотознімків удома.</string>
     <string name="quest_roofOrientation_across">Паралельно коротшій стороні будівлі</string>
     <string name="pref_really_all_notes_title">«Показати всі нотатки» означає ВСІ нотатки</string>
-    <string name="pref_really_all_notes_summary">При запиті показати всі нотатки, показувати навіть нотатки, створені (або прокоментовані) вами</string>
+    <string name="pref_really_all_notes_summary">При запиті «Показати всі нотатки» показувати також нотатки, створені (або прокоментовані) вами</string>
     <string name="quest_material_sandstone">Пісковик</string>
     <string name="quest_material_glass">Скло</string>
     <string name="quest_material_limestone">Вапняк</string>
     <string name="quest_material_adobe">Саман</string>
     <string name="quest_material_clay">Глина</string>
     <string name="quest_material_mirror">Дзеркальне скло</string>
-    <string name="quest_material_timber_framing">Дерев'яний каркас</string>
+    <string name="quest_material_timber_framing">Дерев’яний каркас</string>
     <string name="quest_material_bamboo">Бамбук</string>
     <string name="quest_material_reed">Очерет</string>
     <string name="quest_material_tiles">Кахлі</string>
@@ -453,7 +453,7 @@
     <string name="quest_valves_sclaverand">SV: Sclaverand / Presta / Французький клапан</string>
     <string name="quest_valves_schrader">AV: Шредер / Автомобільний клапан</string>
     <string name="quest_trail_visibility_title">Яка видимість стежки на цьому шляху?</string>
-    <string name="default_disabled_msg_trail_visibility">Цей тип завдання вимкнено за замовчуванням, оскільки оцінка видимості стежки є дуже суб'єктивною та вимагає експертних знань використовуваної системи оцінювання.</string>
+    <string name="default_disabled_msg_trail_visibility">Цей тип завдання вимкнено за замовчуванням, оскільки оцінка видимості стежки є дуже суб’єктивною та вимагає експертних знань використовуваної системи оцінювання.</string>
     <string name="quest_trail_visibility_excellent">Відмінно</string>
     <string name="quest_trail_visibility_excellent_description">Однозначний шлях або позначки всюди. Орієнтація без проблем, карта не потрібна.</string>
     <string name="quest_trail_visibility_good">Добре</string>
@@ -480,8 +480,8 @@
     <string name="quest_mapSize_city">Ціле місто</string>
     <string name="quest_mapSize_region">Більша територія, наприклад, із кількома селами</string>
     <string name="quest_mapSize_landscape">Цілий ландшафт, здебільшого використовується на топоскопах</string>
-    <string name="default_disabled_msg_viaFerrataScale">Цей тип завдання вимкнено за замовчуванням, тому що оцінка маршрутів віа феррата є дуже суб'єктивною та вимагає експертних знань використовуваної системи оцінювання та під час сходження віа феррата, оскільки це вимагає просунутих навичок альпінізму. Оскільки не існує всесвітньої шкали складності віа феррата, тут використовується німецька шкала Хюслера.</string>
-    <string name="quest_viaFerrataScale_zero_description">Низька складність; місцевість варіюється від рівної до крутої; деякі ділянки відкриті. Закріплений тросами, ланцюгами або короткими драбинами. Потрібна впевнена хода; підходить для людей, які не займаються спортом. Для більшості учасників набір для віа феррата не обов'язковий.</string>
+    <string name="default_disabled_msg_viaFerrataScale">Цей тип завдання вимкнено за замовчуванням, тому що оцінка маршрутів віа феррата є дуже суб’єктивною та вимагає експертних знань використовуваної системи оцінювання, а також тому, що сходження віа феррата вимагає просунутих навичок альпінізму. Оскільки не існує всесвітньої шкали складності віа феррата, тут використовується німецька шкала Хюслера.</string>
+    <string name="quest_viaFerrataScale_zero_description">Низька складність; місцевість варіюється від рівної до крутої; деякі ділянки відкриті. Закріплений тросами, ланцюгами або короткими драбинами. Потрібна впевнена хода; підходить для людей, які не займаються спортом. Для більшості учасників набір для віа феррата не обов’язковий.</string>
     <string name="quest_viaFerrataScale_one_description">Гарні природні сходи або обтесані сходи, короткі драбини або залізні сходи. Відкриті проходи облаштовуються тросами, ланцюгами або мотузками для поручнів. Досвідчені альпіністи можуть вирішити не закріплюватися.</string>
     <string name="quest_viaFerrataScale_two_description">Круті або вертикальні проходи облаштовуються драбинами або залізними сходами. Сталеві троси та ланцюги закріплюють альпініста навіть у менш складній місцевості. Наполегливо рекомендується використовувати набір для віа феррата.</string>
     <string name="quest_viaFerrataScale_three_description">Трохи технічного скелелазіння, але нічого, що вимагає особливо сильних рук. Необхідний набір для віа феррата.</string>
@@ -508,13 +508,13 @@
     <string name="quest_material_mud">Висушений мул</string>
     <string name="fixme_for_object">Хтось додав тег «Виправити»:</string>
     <string name="outside_downloaded_area_warning">Ця позиція знаходиться за межами завантаженої території. Продовжити?</string>
-    <string name="create_relation_action_description">Ви створили зв'язок із…</string>
+    <string name="create_relation_action_description">Ви створили зв’язок із…</string>
     <string name="quest_guidepostName_title">Яка тут назва?</string>
-    <string name="restriction_overlay_relation_unsupported">Тип зв'язку не підтримується:\n%s</string>
-    <string name="restriction_overlay_relation_incomplete">Зв'язок з обмеженнями неповний, потрібно завантажити навколишню територію</string>
+    <string name="restriction_overlay_relation_unsupported">Тип зв’язку не підтримується:\n%s</string>
+    <string name="restriction_overlay_relation_incomplete">Зв’язок з обмеженнями неповний, потрібно завантажити навколишню територію</string>
     <string name="quest_healthcare_speciality_disabled_message">Цей квест вимагає знання тегів healthcare:specialty. Без цих знань виконати квест може бути дуже важко.</string>
     <string name="quest_tree_genus_title">Який рід або вид цього дерева?</string>
-    <string name="quest_tree_error">Не розпізнано. Спробуйте ввести рід, вид або англійську назву дерева. В іншому випадку, залиште записку.</string>
+    <string name="quest_tree_error">Не розпізнано. Спробуйте ввести рід, вид або назву дерева англійською мовою. Або ж залиште нотатку.</string>
     <string name="quest_tree_disabled_msg">Цей квест за замовчуванням вимкнено, оскільки на нього нелегко відповісти. Вид/рід потрібно вибрати з пропозицій, які взяті з найбільш використовуваних значень. Ви можете надати пропозиції з власного списку видів з назвами, які можна шукати, надавши файл у меню налаштувань керування даними, що містить `&lt;вид&gt; (&lt;назва&gt;)`.</string>
     <string name="default_disabled_msg_ee">Квести, додані в SCEE, завжди вимкнені за замовчуванням, оскільки на них не завжди можна відповісти, і вони можуть вимагати знання теми та тегів.</string>
     <string name="quest_railwayPlatformRef_title">Який тут номер колії?</string>
@@ -577,7 +577,7 @@
     <string name="quest_parking_orientation_title">В якій орієнтації тут паркуються автомобілі?</string>
     <string name="pref_quest_sac_scale_without_relation">Шукати всі стежки, навіть ті, хто не мають стосунку до піших прогулянок</string>
     <string name="quest_sacScale_title">Яка шкала SAC цього шляху?</string>
-    <string name="default_disabled_msg_sacScale">Цей тип квесту за замовчуванням вимкнено, оскільки шкала складності шляху є дуже суб'єктивною та вимагає експертних знань у використовуваній системі оцінювання. Оскільки не існує загальносвітової шкали складності шляху, тут використовується шкала гірського та альпійського походів SAC.</string>
+    <string name="default_disabled_msg_sacScale">Цей тип квесту за замовчуванням вимкнено, оскільки шкала складності шляху є дуже суб’єктивною та вимагає експертних знань використовуваної системи оцінювання. Оскільки не існує загальносвітової шкали складності шляху, тут використовується шкала гірського та альпійського походів SAC.</string>
     <string name="quest_sacScale_strolling">Прогулянка</string>
     <string name="quest_sacScale_strolling_description">Плавна, рівна стежка без перешкод, підходить для будь-якого взуття, колясок або милиць, і не вимагає навичок орієнтування.</string>
     <string name="quest_sacScale_one">Т1 - піший туризм</string>
@@ -587,7 +587,7 @@
     <string name="quest_sacScale_three">T3 – складний гірський маршрут</string>
     <string name="quest_sacScale_three_description">Ділянки маршруту відкриті та мають небезпеку падіння. Стежка може мати нерозмічені ділянки та перетинати поля пухкого осипу або суглинків.</string>
     <string name="quest_sacScale_four">T4 - складний гірський маршрут</string>
-    <string name="quest_sacScale_four_description">Місцевість вже досить відкрита, включаючи круті трав'янисті схили, осипи, легкі снігові поля або переходи через льодовики без снігу.</string>
+    <string name="quest_sacScale_four_description">Місцевість досить відкрита, включаючи круті трав’янисті схили, осипи, легкі снігові поля або переходи через льодовики без снігу.</string>
     <string name="quest_sacScale_five">T5 - надскладний гірський маршрут</string>
     <string name="quest_sacScale_five_description">Відкритий та складний рельєф. Може включати круті скелясті схили, льодовики та снігові поля з ризиком зсуву.</string>
     <string name="quest_sacScale_six">T6 - складний альпіністський маршрут</string>
@@ -616,7 +616,7 @@
     <string name="quest_postOffice_postAnnex">Приватне поштове відділення (обмежені послуги)</string>
     <string name="quest_postOffice_postPartner">Стійка поштової служби з обмеженим набором послуг (наприклад, у магазині)</string>
     <string name="custom_overlay_filter_message">Натисніть посилання нижче, щоб відкрити інформацію про синтаксис вибору елементів у браузері. Зверніть увагу, що під час вибору елементів за віком налаштування інтервалу повторного опитування може впливати на результат.\nПрапорці замінюють частину «вузли, шляхи з».</string>
-    <string name="custom_overlay_color_message">Виберіть ключі, з яких потрібно отримати колір. Приймає регулярний вираз та використовує відповідні теги для отримання кольору. Колір визначається ключем та значенням усіх відповідних ключів. Якщо відповідний ключ містить :left/right/both, він буде використаний для забарвлення відповідних сторін лінії, але не центральної лінії. Якщо збігу немає, колір завжди червоний, що вказує на відсутність даних. Знання регулярних виразів дуже корисне для цієї функції.\nЯкщо вираз не є регулярним, додайте префікс '!', щоб почати зі значення, на яке орієнтовано під час редагування тегів.\n\nПриклад:\n"surface" показує surface=asphalt тим самим кольором, а surface=concrete — іншим кольором.\n".*surface" схожий, але також показує sidewalk:(left/right/both):surface=asphalt одним кольором, а cycleway:(left/right/both):surface=asphalt — іншим кольором</string>
+    <string name="custom_overlay_color_message">Виберіть ключі, з яких потрібно отримати колір. Приймає регулярний вираз та використовує відповідні теги для отримання кольору. Колір визначається ключем та значенням усіх відповідних ключів. Якщо відповідний ключ містить :left/right/both, він буде використаний для забарвлення відповідних сторін лінії, але не центральної лінії. Якщо збігу немає, колір завжди червоний, що вказує на відсутність даних. Знання регулярних виразів дуже корисне для цієї функції.\nЯкщо вираз не є регулярним, додайте префікс «!», щоб під час редагування тегів почати зі значення, на яке орієнтовано.\n\nПриклад:\nsurface показує surface=asphalt тим самим кольором, а surface=concrete — іншим кольором.\n.*surface схожий, але також показує sidewalk:(left/right/both):surface=asphalt одним кольором, а cycleway:(left/right/both):surface=asphalt — іншим кольором</string>
     <string name="custom_overlay_color_hint">Залиште порожнім, щоб відобразити все одним кольором</string>
     <string name="custom_overlay_dash_filter_hint">Фільтр пунктирних елементів</string>
     <string name="custom_overlay_add_button">Новий шар</string>
@@ -627,7 +627,7 @@
     <string name="move_node_of_other_relation">Ця точка є частиною таких небагатополігональних зв’язків: %s</string>
     <string name="move_node_message_external_source_addition">Зверніть увагу, що позиція цього завдання може не змінюватися разом із точкою.</string>
     <string name="close_note_checkbox">Закрити нотатку (зробіть це лише якщо ви справді розгадали нотатку!)</string>
-    <string name="closed_note_action_title">Ти його закрив</string>
+    <string name="closed_note_action_title">Закрита вами</string>
     <string name="manage_access">Керувати доступом…</string>
     <string name="access_manager_message">Виберіть теги доступу. Пам’ятайте, що тегом позначено лише підписаний доступ, і по можливості уникайте загального тегу «доступ»</string>
     <string name="quest_valves_regina">RV: Regina / Італійський</string>
@@ -651,4 +651,7 @@
     <string name="quest_orchard_type_plantation">Плантація</string>
     <string name="quest_orchard_type_meadow_orchard_description">Великі дерева, широкі міжряддя</string>
     <string name="quest_orchard_type_plantation_description">Веретеноподібні дерева, вузькі міжряддя (зазвичай комерційні насадження)</string>
+    <string name="quest_service_times_title">Коли тут проводяться богослужіння?</string>
+    <string name="quest_service_times_resurvey_title">Чи є актуальним наведений тут розклад богослужінь?</string>
+    <string name="quest_railwayPlatformRef_abc">ABC</string>
 </resources>

@@ -139,7 +139,7 @@
     <string name="pref_manual_download_cache_summary">Si ho desactives, les dades no es tornaran a descarregar en fer una descarrega manual a no ser que siguin més antigues de 12 hores</string>
     <string name="pref_quest_monitor_summary">Supervisa l'ubicació quan l'app està en segon pla, excepte si has sortit de l'aplicació prement el botó d'endarrere</string>
     <string name="quest_settings_osmose_level_title">Selecciona els nivells de gravetat dels problemes per descarregar i mostrar</string>
-    <string name="pref_search_more_languages_summary">La funció de cerca mostrarà resultats en tots els idiomes de tun sistema i en l'idioma local</string>
+    <string name="pref_search_more_languages_summary">La funció de cerca mostrarà resultats en tots els idiomes de tun sistema i en l\'idioma local</string>
     <string name="quest_monitor_search_radius_text">Estableix el radi de cerca de missions. Tingui en compte que es podrien trobar missions que estiguin lleugerament fora del radi especificat. Ubicacions amb menor precisió que aquest valor seran ignorades.</string>
     <string name="pref_show_next_quest_summary">Mostrar més missions pel mateix element just després de resoldre'n una missió</string>
     <string name="pref_recent_answers_first_min_lines">Moure les respostes recents al capdavant dol llista</string>

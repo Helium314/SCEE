@@ -359,7 +359,7 @@
     <string name="quest_cuisine_add_more">Eine weitere Variante der Küche hinzufügen</string>
     <string name="import_export_settings">Andere App-Einstellungen</string>
     <string name="quest_surface_value_metal_grid">Metallgitter</string>
-    <string name="pref_search_more_languages_summary">Merkmalsuche zeigt Ergebnisse in allen System- und Landessprachen</string>
+    <string name="pref_search_more_languages_summary">Merkmalsuche zeigt Ergebnisse in allen System- und Landessprachen an</string>
     <string name="restriction_overlay_relation_incomplete">Einschränkungsrelation ist unvollständig, Download der Umgebung erforderlich</string>
     <string name="ban_check_fails">Die Prüfung auf verbotene Versionen schlägt immer wieder fehl. Möglicherweise wird eine veraltete Version ausgeführt, bitte erwäge ein Upgrade.</string>
     <string name="quest_footway_width_title">Wie breit ist der Fußweg hier\?</string>
@@ -654,9 +654,12 @@
     <string name="quest_pavingStonesMaterial_title">Aus welchem Material sind diese Pflastersteine?</string>
     <string name="quest_fence_material_title">Aus welchem Material ist dieser Zaun?</string>
     <string name="quest_material_wire">Draht</string>
-<string name="quest_orchard_type_title">Um welche Art von Obstgarten handelt es sich?</string>
+    <string name="quest_orchard_type_title">Um welche Art von Obstgarten handelt es sich?</string>
     <string name="quest_orchard_type_meadow_orchard">Streuobstwiese</string>
     <string name="quest_orchard_type_plantation">Obstplantage</string>
     <string name="quest_orchard_type_meadow_orchard_description">Große Bäume, große Abstände</string>
     <string name="quest_orchard_type_plantation_description">Spindelbäume, kleine Abstände (meistens kommerziell genutzt)</string>
+    <string name="quest_service_times_title">Wann findet hier ein Gottesdienst statt?</string>
+    <string name="quest_service_times_resurvey_title">Sind die Gottesdienstzeiten hier noch aktuell?</string>
+    <string name="quest_kerb_type_title">Um welche Art von Bordstein handelt es sich hier?</string>
 </resources>

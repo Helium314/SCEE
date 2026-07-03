@@ -32,6 +32,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.core.graphics.ColorUtils
 import androidx.compose.ui.geometry.Offset
 import androidx.core.graphics.Insets
@@ -366,6 +367,12 @@ class MainActivity :
                             zoom = mapFragment?.cameraPosition?.zoom ?: 18.0
                         )
                     }
+                },
+                isExpertMode = prefs.getBoolean(Prefs.EXPERT_MODE, false) && lastLongPressPosition != null,
+                onClickAddNode = { onClickAddPoi(lastLongPressPosition!!) },
+                onClickInsertNode = {
+                    mapFragment?.hideOverlay()
+                    showInBottomSheet(InsertNodeFragment.create(lastLongPressPosition!!))
                 },
                 offset = lastLongPressOffset.toDpOffset()
             )
@@ -983,44 +990,7 @@ class MainActivity :
     }
 
     /* -------------------------------------- Context Menu -------------------------------------- */
-/*
-    private fun showMapContextMenu(position: LatLon) {
-        val popupMenu = PopupMenu(this, binding.contextMenuView)
-        popupMenu.inflate(R.menu.menu_map_context)
-        if (prefs.getBoolean(Prefs.EXPERT_MODE, false)) {
-            popupMenu.menu.add(Menu.NONE, 4, 4, R.string.create_poi)
-            popupMenu.menu.add(Menu.NONE, 5, 5, R.string.insert_node)
-        }
-        popupMenu.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_create_note -> onClickCreateNote(position)
-                R.id.action_create_track -> onClickCreateTrack()
-                R.id.action_open_location -> onClickOpenLocationInOtherApp(position)
-                4 -> onClickAddPoi(position)
-                5 -> {
-                    mapFragment?.hideOverlay()
-                    showInBottomSheet(InsertNodeFragment.create(position))
-                }
-            }
-            true
-        }
-        popupMenu.show()
-    }
 
-    private fun onClickOpenLocationInOtherApp(pos: LatLon) {
-        val zoom = mapFragment?.cameraPosition?.zoom
-        val uri = buildGeoUri(pos.latitude, pos.longitude, zoom)
-
-        val intent = Intent(Intent.ACTION_VIEW, uri.toUri())
-        val otherMapAppInstalled = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-            .any { !it.activityInfo.packageName.equals(packageName) }
-        if (otherMapAppInstalled) {
-            startActivity(intent)
-        } else {
-            toast(R.string.map_application_missing, Toast.LENGTH_LONG)
-        }
-    }
-*/
     private fun onClickCreateNote(pos: LatLon) {
         if ((mapFragment?.cameraPosition?.zoom ?: 0.0) < ApplicationConstants.NOTE_MIN_ZOOM) {
             toast(R.string.create_new_note_unprecise)

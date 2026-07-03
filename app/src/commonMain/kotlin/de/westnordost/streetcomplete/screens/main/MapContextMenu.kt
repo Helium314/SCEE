@@ -17,7 +17,10 @@ fun MapContextMenu(
     onClickCreateNote: () -> Unit,
     onClickCreateTrack: () -> Unit,
     onClickOpenLocation: () -> Unit,
+    onClickAddNode: () -> Unit,
+    onClickInsertNode: () -> Unit,
     isOpenLocationAvailable: Boolean,
+    isExpertMode: Boolean,
     modifier: Modifier = Modifier,
     offset: DpOffset = DpOffset.Zero
 ) {
@@ -36,6 +39,14 @@ fun MapContextMenu(
         if (isOpenLocationAvailable) {
             DropdownMenuItem(onClick = { onDismissRequest(); onClickOpenLocation() }) {
                 Text(stringResource(Res.string.action_open_location))
+            }
+        }
+        if (isExpertMode) {
+            DropdownMenuItem(onClick = { onDismissRequest(); onClickAddNode() }) {
+                Text(stringResource(Res.string.create_poi))
+            }
+            DropdownMenuItem(onClick = { onDismissRequest(); onClickInsertNode() }) {
+                Text(stringResource(Res.string.insert_node))
             }
         }
     }

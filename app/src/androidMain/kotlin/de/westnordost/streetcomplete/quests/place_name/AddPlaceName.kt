@@ -152,7 +152,7 @@ private val NAME_PLACES = mapOf(
 
         // name only
         "dance", "nature_reserve", "marina", "horse_riding",
-        "bathing_place", "escape_game", "beach_resort", "summer_camp"
+        "bathing_place", "escape_game", "beach_resort", "summer_camp", "marina"
     ),
     "landuse" to arrayOf(
         "cemetery", "allotments"

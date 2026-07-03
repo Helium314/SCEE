@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.PointF
@@ -28,7 +27,6 @@ import androidx.annotation.AnyThread
 import androidx.annotation.DrawableRes
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.PopupMenu
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
@@ -37,7 +35,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.graphics.ColorUtils
 import androidx.compose.ui.geometry.Offset
 import androidx.core.graphics.Insets
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -136,12 +133,12 @@ import de.westnordost.streetcomplete.screens.main.map.getIcon
 import de.westnordost.streetcomplete.screens.main.map.getTitle
 import de.westnordost.streetcomplete.screens.main.map.maplibre.CameraPosition
 import de.westnordost.streetcomplete.screens.main.map.maplibre.toPadding
+import de.westnordost.streetcomplete.ui.ktx.toDpOffset
 import de.westnordost.streetcomplete.ui.util.content
 import de.westnordost.streetcomplete.screens.settings.custom_geometry_changed
 import de.westnordost.streetcomplete.screens.settings.gpx_track_changed
 import de.westnordost.streetcomplete.ui.common.feature.FeatureSearchDialog
 import de.westnordost.streetcomplete.util.SoundFx
-import de.westnordost.streetcomplete.util.buildGeoUri
 import de.westnordost.streetcomplete.util.getSystemLocales
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.getLocationInWindow
@@ -221,6 +218,7 @@ class MainActivity :
     private val feedsUpdater: FeedsUpdater by inject()
     private val featureDictionary: Lazy<FeatureDictionary> by inject(named("FeatureDictionaryLazy"))
     private val soundFx: SoundFx by inject()
+    private val mapAppLauncher: MapAppLauncher by inject()
     private val levelFilter: LevelFilter by inject()
     private val countryBoundaries: Lazy<CountryBoundaries> by inject(named("CountryBoundariesLazy"))
     private val osmQuestController: OsmQuestController by inject()
@@ -230,6 +228,8 @@ class MainActivity :
 
     private val viewModel by viewModel<MainViewModel>()
     private val editHistoryViewModel by viewModel<EditHistoryViewModel>()
+    private val showMapContextMenu = mutableStateOf(false)
+    private val lastMapLongPress = mutableStateOf<Pair<Offset, LatLon>?>(null)
 
     private lateinit var binding: ActivityMainBinding
 
@@ -312,6 +312,8 @@ class MainActivity :
         setContentView(binding.root)
 
         binding.controls.content {
+            val isMapAppLaunchAvailable = remember { mapAppLauncher.isAvailable() }
+
             // color for HUD elements without a background (e.g. scalebar, attribution button)
             CompositionLocalProvider(
                 LocalContentColor provides MaterialTheme.colors.onSurface
@@ -348,6 +350,25 @@ class MainActivity :
                     codesOfDefaultFeatures = defaultFeatureIds.reversed()
                 )
             }
+
+            val lastLongPressOffset = lastMapLongPress.value?.first ?: Offset.Zero
+            val lastLongPressPosition = lastMapLongPress.value?.second
+            MapContextMenu(
+                expanded = showMapContextMenu.value,
+                onDismissRequest = { showMapContextMenu.value = false },
+                onClickCreateNote = { lastLongPressPosition?.let { onClickCreateNote(it) } },
+                onClickCreateTrack = { onClickCreateTrack() },
+                isOpenLocationAvailable = isMapAppLaunchAvailable,
+                onClickOpenLocation = {
+                    if (lastLongPressPosition != null) {
+                        mapAppLauncher.openAt(
+                            position = lastLongPressPosition,
+                            zoom = mapFragment?.cameraPosition?.zoom ?: 18.0
+                        )
+                    }
+                },
+                offset = lastLongPressOffset.toDpOffset()
+            )
         }
 
         onBackPressedDispatcher.addCallback(this, sheetBackPressedCallback)
@@ -513,10 +534,8 @@ class MainActivity :
     override fun onLongPress(point: PointF, position: LatLon) {
         if (bottomSheetFragment != null || editHistoryViewModel.isShowingSidebar.value) return
 
-        binding.contextMenuView.translationX = point.x
-        binding.contextMenuView.translationY = point.y
-
-        showMapContextMenu(position)
+        lastMapLongPress.value = Pair(Offset(point.x, point.y), position)
+        showMapContextMenu.value = true
     }
 
     /* ---------------------------- MainMapFragment.Listener --------------------------- */
@@ -964,7 +983,7 @@ class MainActivity :
     }
 
     /* -------------------------------------- Context Menu -------------------------------------- */
-
+/*
     private fun showMapContextMenu(position: LatLon) {
         val popupMenu = PopupMenu(this, binding.contextMenuView)
         popupMenu.inflate(R.menu.menu_map_context)
@@ -1001,7 +1020,7 @@ class MainActivity :
             toast(R.string.map_application_missing, Toast.LENGTH_LONG)
         }
     }
-
+*/
     private fun onClickCreateNote(pos: LatLon) {
         if ((mapFragment?.cameraPosition?.zoom ?: 0.0) < ApplicationConstants.NOTE_MIN_ZOOM) {
             toast(R.string.create_new_note_unprecise)

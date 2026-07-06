@@ -12,6 +12,7 @@ import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.quest.TestQuestTypeA
 import dev.mokkery.matcher.any
 import de.westnordost.streetcomplete.testutils.edit
+import de.westnordost.streetcomplete.testutils.mockPrefs3
 import dev.mokkery.mock
 import de.westnordost.streetcomplete.testutils.node
 import dev.mokkery.answering.returns
@@ -38,7 +39,7 @@ class ElementEditsControllerImplTest {
         }
         elementsDb = mock()
         idProvider = mock()
-        prefs = mock()
+        prefs = mockPrefs3()
 
         listener = mock()
         ctrl = ElementEditsControllerImpl(db, elementsDb, idProvider, prefs)

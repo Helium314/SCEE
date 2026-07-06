@@ -8,6 +8,7 @@ import de.westnordost.streetcomplete.data.user.UserLoginSource
 import dev.mokkery.matcher.any
 import de.westnordost.streetcomplete.testutils.bbox
 import de.westnordost.streetcomplete.testutils.comment
+import de.westnordost.streetcomplete.testutils.mockPrefs3
 import dev.mokkery.mock
 import de.westnordost.streetcomplete.testutils.note
 import dev.mokkery.answering.returns
@@ -49,7 +50,7 @@ class OsmNoteQuestControllerTest {
                 userLoginListener = listener
             }
         }
-        prefs = mock()
+        prefs = mockPrefs3()
 
         listener = mock()
 

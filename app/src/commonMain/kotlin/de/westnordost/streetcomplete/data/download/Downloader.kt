@@ -12,6 +12,7 @@ import de.westnordost.streetcomplete.data.osmnotes.NotesDownloader
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
 import de.westnordost.streetcomplete.data.user.UserLoginController
 import de.westnordost.streetcomplete.util.Listeners
+import de.westnordost.streetcomplete.util.Mockable
 import de.westnordost.streetcomplete.util.ktx.format
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.logs.Log
@@ -25,6 +26,7 @@ import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.max
 
 /** Downloads all the things */
+@Mockable
 class Downloader(
     private val notesDownloader: NotesDownloader,
     private val mapDataDownloader: MapDataDownloader,
@@ -38,10 +40,8 @@ class Downloader(
     private val listeners = Listeners<DownloadProgressSource.Listener>()
 
     override var isUserInitiatedDownloadInProgress: Boolean = false
-        private set
 
     override var isDownloadInProgress: Boolean = false
-        private set
 
     suspend fun download(bbox: BoundingBox, isUserInitiated: Boolean, ignoreCache: Boolean) {
         var hasError = false

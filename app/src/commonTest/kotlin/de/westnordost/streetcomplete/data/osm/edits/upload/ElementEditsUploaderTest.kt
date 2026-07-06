@@ -13,6 +13,7 @@ import de.westnordost.streetcomplete.data.upload.OnUploadedChangeListener
 import de.westnordost.streetcomplete.data.user.statistics.StatisticsController
 import dev.mokkery.matcher.any
 import de.westnordost.streetcomplete.testutils.edit
+import de.westnordost.streetcomplete.testutils.mockPrefs2
 import dev.mokkery.mock
 import de.westnordost.streetcomplete.testutils.node
 import dev.mokkery.answering.repeat
@@ -53,7 +54,7 @@ class ElementEditsUploaderTest {
 
         listener = mock()
 
-//        uploader = ElementEditsUploader(elementEditsController, noteEditsController, mapDataController, singleUploader, mapDataApi, statisticsController, mock(), mock(), mockPrefs2())
+        uploader = ElementEditsUploader(elementEditsController, noteEditsController, mapDataController, singleUploader, mapDataApi, statisticsController, mock(), mock(), mockPrefs2())
         uploader.uploadedChangeListener = listener
     }
 

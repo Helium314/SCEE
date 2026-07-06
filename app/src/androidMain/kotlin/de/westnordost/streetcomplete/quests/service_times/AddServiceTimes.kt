@@ -34,7 +34,7 @@ class AddServiceTimes : OsmElementQuestType<CollectionTimesAnswer>, AndroidQuest
     /* Don't ask again for places without signed service times. This is very unlikely to
      * change and problematic to tag clearly with the check date scheme */
 
-    override val changesetComment = "Survey postbox collection times"
+    override val changesetComment = "Survey religious service times"
     override val wikiLink = "Key:collection_times"
     override val icon = R.drawable.religion_service_times
     override val title = Res.string.quest_service_times_title

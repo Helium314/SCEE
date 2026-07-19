@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.UnsyncedChangesCountSource
-import de.westnordost.streetcomplete.data.connection.InternetConnectionState
+import de.westnordost.streetcomplete.data.connection.ActiveNetworkConnection
 import de.westnordost.streetcomplete.data.download.DownloadController
 import de.westnordost.streetcomplete.data.download.DownloadProgressSource
 import de.westnordost.streetcomplete.data.messages.Message
@@ -48,7 +48,7 @@ import de.westnordost.streetcomplete.util.getFakeCustomOverlays
 import de.westnordost.streetcomplete.util.ktx.launch
 import de.westnordost.streetcomplete.util.parseGeoUri
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -77,7 +77,7 @@ class MainViewModelImpl(
     private val userLoginSource: UserLoginSource,
     private val unsyncedChangesCountSource: UnsyncedChangesCountSource,
     private val statisticsSource: StatisticsSource,
-    private val internetConnectionState: InternetConnectionState,
+    private val activeNetworkConnection: ActiveNetworkConnection,
     private val selectedOverlayController: SelectedOverlayController,
     private val questTypeRegistry: QuestTypeRegistry,
     private val overlayRegistry: OverlayRegistry,
@@ -146,7 +146,7 @@ class MainViewModelImpl(
 
     private suspend fun parseShownUrlConfig(uri: String): ShownUrlConfig? {
         val config = urlConfigController.parse(uri) ?: return null
-        val alreadyExists = withContext(IO) {
+        val alreadyExists = withContext(Dispatchers.IO) {
             config.presetName == null || editTypePresetsSource.getByName(config.presetName) != null
         }
         return ShownUrlConfig(urlConfig = config, alreadyExists = alreadyExists)
@@ -155,7 +155,7 @@ class MainViewModelImpl(
     override val urlConfig = MutableStateFlow<ShownUrlConfig?>(null)
 
     override fun applyUrlConfig(config: UrlConfig) {
-        launch(IO) {
+        launch(Dispatchers.IO) {
             urlConfigController.apply(config)
         }
     }
@@ -188,10 +188,10 @@ class MainViewModelImpl(
         }
         messagesSource.addListener(listener)
         awaitClose { messagesSource.removeListener(listener) }
-    }.stateIn(viewModelScope + IO, SharingStarted.Eagerly, 0)
+    }.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, 0)
 
     override suspend fun popMessage(): Message? =
-        withContext(IO) { messagesSource.popNextMessage() }
+        withContext(Dispatchers.IO) { messagesSource.popNextMessage() }
 
     override val allQuestTypes: List<QuestType> get() = questTypeRegistry
 
@@ -226,7 +226,7 @@ class MainViewModelImpl(
             visibleEditTypeSource.removeListener(listener)
             Prefs.sharedPreferences.unregisterOnSharedPreferenceChangeListener(prefListener)
         }
-    }.stateIn(viewModelScope + IO, SharingStarted.Eagerly, getVisibleOverlays())
+    }.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, getVisibleOverlays())
 
     private fun getVisibleOverlays(): List<Overlay> =
         overlayRegistry.filter {
@@ -249,14 +249,14 @@ class MainViewModelImpl(
         }
         selectedOverlayController.addListener(listener)
         awaitClose { selectedOverlayController.removeListener(listener) }
-    }.stateIn(viewModelScope + IO, SharingStarted.Eagerly, null)
+    }.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, null)
 
     override var hasShownOverlaysTutorial: Boolean
         get() = prefs.hasShownOverlaysTutorial
         set(value) { prefs.hasShownOverlaysTutorial = value }
 
     override fun selectOverlay(overlay: Overlay?) {
-        launch(IO) {
+        launch(Dispatchers.IO) {
             selectedOverlayController.selectedOverlay = overlay
         }
     }
@@ -268,11 +268,11 @@ class MainViewModelImpl(
     override val indexInTeam = MutableStateFlow(teamModeQuestFilterController.indexInTeam)
 
     override fun enableTeamMode(teamSize: Int, indexInTeam: Int) {
-        launch(IO) { teamModeQuestFilterController.enableTeamMode(teamSize, indexInTeam) }
+        launch(Dispatchers.IO) { teamModeQuestFilterController.enableTeamMode(teamSize, indexInTeam) }
     }
 
     override fun disableTeamMode() {
-        launch(IO) { teamModeQuestFilterController.disableTeamMode() }
+        launch(Dispatchers.IO) { teamModeQuestFilterController.disableTeamMode() }
     }
 
     override fun download(bbox: BoundingBox, enqueue: Boolean) {
@@ -293,7 +293,7 @@ class MainViewModelImpl(
         send(prefs.autosync == Autosync.ON)
         val listener = prefs.onAutosyncChanged { trySend(it == Autosync.ON) }
         awaitClose { listener.deactivate() }
-    }.stateIn(viewModelScope + IO, SharingStarted.Eagerly, true)
+    }.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, true)
 
     override val unsyncedEditsCount: StateFlow<Int> = callbackFlow {
         var count = unsyncedChangesCountSource.getCount()
@@ -304,7 +304,7 @@ class MainViewModelImpl(
         }
         unsyncedChangesCountSource.addListener(listener)
         awaitClose { unsyncedChangesCountSource.removeListener(listener) }
-    }.stateIn(viewModelScope + IO, SharingStarted.Eagerly, 0)
+    }.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, 0)
 
     override val isUploading: StateFlow<Boolean> = callbackFlow {
         val listener = object : UploadProgressSource.Listener {
@@ -341,7 +341,7 @@ class MainViewModelImpl(
         awaitClose { userLoginSource.removeListener(listener) }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-    override val isConnected: Boolean get() = internetConnectionState.isConnected
+    override val isConnected: Boolean get() = activeNetworkConnection.capabilities?.hasInternet == true
 
     override fun upload() {
         if (isLoggedIn.value || (ApplicationConstants.DEBUG && !isConnected)) {
@@ -365,7 +365,7 @@ class MainViewModelImpl(
 
     private suspend fun ensureLoggedIn() {
         if (
-            internetConnectionState.isConnected &&
+            activeNetworkConnection.capabilities?.hasInternet == true &&
             !userLoginSource.isLoggedIn &&
             prefs.autosync != Autosync.OFF &&
             // new users should not be immediately pestered to login after each change (#1446)
@@ -451,7 +451,7 @@ class MainViewModelImpl(
         val unsyncedEdits = if (isAutoSync) solvedEditsCount else 0
         val syncedEdits = if (isShowingStarsCurrentWeek) editCountCurrentWeek else editCount
         syncedEdits + unsyncedEdits
-    }.stateIn(viewModelScope + IO, SharingStarted.Eagerly, 0)
+    }.stateIn(viewModelScope + Dispatchers.IO, SharingStarted.Eagerly, 0)
 
     override val locationState = MutableStateFlow(LocationState.ENABLED)
     override val mapCamera = MutableStateFlow<CameraPosition?>(null)
@@ -484,7 +484,7 @@ class MainViewModelImpl(
     // ---------------------------------------------------------------------------------------
 
     init {
-        launch(IO) {
+        launch(Dispatchers.IO) {
             lastCrashReport.value = crashReportHolder.takeCrashReport()
         }
         teamModeQuestFilterController.addListener(teamModeListener)

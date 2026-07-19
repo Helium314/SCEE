@@ -6,7 +6,8 @@ import de.westnordost.streetcomplete.data.AndroidDatabase
 import de.westnordost.streetcomplete.data.CleanerWorker
 import de.westnordost.streetcomplete.data.Database
 import de.westnordost.streetcomplete.data.StreetCompleteSQLiteOpenHelper
-import de.westnordost.streetcomplete.data.connection.InternetConnectionState
+import de.westnordost.streetcomplete.data.connection.AndroidActiveNetworkConnection
+import de.westnordost.streetcomplete.data.connection.ActiveNetworkConnection
 import de.westnordost.streetcomplete.data.download.DownloadController
 import de.westnordost.streetcomplete.data.download.DownloadControllerAndroid
 import de.westnordost.streetcomplete.data.download.DownloadWorker
@@ -18,6 +19,8 @@ import de.westnordost.streetcomplete.data.osm.edits.upload.changesets.ChangesetA
 import de.westnordost.streetcomplete.data.upload.UploadController
 import de.westnordost.streetcomplete.data.upload.UploadControllerAndroid
 import de.westnordost.streetcomplete.data.upload.UploadWorker
+import de.westnordost.streetcomplete.util.sound.AndroidSoundEffectPlayer
+import de.westnordost.streetcomplete.util.sound.SoundEffectPlayer
 import kotlinx.io.files.Path
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.dsl.worker
@@ -47,7 +50,7 @@ val androidModule = module {
 
     factory<MapTilesDownloader> { MapTilesDownloaderAndroid(androidContext()) }
 
-    factory<InternetConnectionState> { InternetConnectionState(androidContext()) }
+    factory<ActiveNetworkConnection> { AndroidActiveNetworkConnection(androidContext()) }
 
     // Cache dir
 
@@ -61,4 +64,11 @@ val androidModule = module {
     // Settings
 
     single<ObservableSettings> { SharedPreferencesSettings.Factory(androidContext()).create() }
+
+    // sound
+
+    single<SoundEffectPlayer> {
+        val dir = "composeResources/de.westnordost.streetcomplete.resources/files"
+        AndroidSoundEffectPlayer(androidContext(), dir)
+    }
 }

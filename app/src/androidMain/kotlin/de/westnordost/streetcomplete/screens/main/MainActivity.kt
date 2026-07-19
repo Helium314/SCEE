@@ -16,15 +16,11 @@ import android.os.IBinder
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.AnyThread
-import androidx.annotation.DrawableRes
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.material.LocalContentColor
@@ -93,7 +89,6 @@ import de.westnordost.streetcomplete.data.quest.VisibleQuestsSource
 import de.westnordost.streetcomplete.data.visiblequests.QuestsHiddenSource
 import de.westnordost.streetcomplete.databinding.ActivityMainBinding
 import de.westnordost.streetcomplete.data.visiblequests.LevelFilter
-import de.westnordost.streetcomplete.databinding.EffectQuestPlopBinding
 import de.westnordost.streetcomplete.osm.POPULAR_PLACE_FEATURE_IDS
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.applyTo
@@ -121,8 +116,8 @@ import de.westnordost.streetcomplete.screens.main.bottom_sheet.InsertNodeFragmen
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.IsCloseableBottomSheet
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.IsMapOrientationAware
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.IsMapPositionAware
-import de.westnordost.streetcomplete.screens.main.bottom_sheet.move_node.MoveNodeFragment
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.SplitWayFragment
+import de.westnordost.streetcomplete.screens.main.bottom_sheet.move_node.MoveNodeFragment
 import de.westnordost.streetcomplete.screens.main.controls.LocationState
 import de.westnordost.streetcomplete.screens.main.edithistory.EditHistoryViewModel
 import de.westnordost.streetcomplete.screens.main.edithistory.icon
@@ -139,9 +134,7 @@ import de.westnordost.streetcomplete.ui.util.content
 import de.westnordost.streetcomplete.screens.settings.custom_geometry_changed
 import de.westnordost.streetcomplete.screens.settings.gpx_track_changed
 import de.westnordost.streetcomplete.ui.common.feature.FeatureSearchDialog
-import de.westnordost.streetcomplete.util.SoundFx
 import de.westnordost.streetcomplete.util.getSystemLocales
-import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.getLocationInWindow
 import de.westnordost.streetcomplete.util.ktx.hasLocationPermission
 import de.westnordost.streetcomplete.util.ktx.hideKeyboard
@@ -171,7 +164,6 @@ import org.koin.core.qualifier.named
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.sqrt
-import kotlin.random.Random
 
 /** Controls the main view.
  *
@@ -218,7 +210,6 @@ class MainActivity :
     private val questsHiddenSource: QuestsHiddenSource by inject()
     private val feedsUpdater: FeedsUpdater by inject()
     private val featureDictionary: Lazy<FeatureDictionary> by inject(named("FeatureDictionaryLazy"))
-    private val soundFx: SoundFx by inject()
     private val mapAppLauncher: MapAppLauncher by inject()
     private val levelFilter: LevelFilter by inject()
     private val countryBoundaries: Lazy<CountryBoundaries> by inject(named("CountryBoundariesLazy"))
@@ -229,8 +220,10 @@ class MainActivity :
 
     private val viewModel by viewModel<MainViewModel>()
     private val editHistoryViewModel by viewModel<EditHistoryViewModel>()
+
     private val showMapContextMenu = mutableStateOf(false)
     private val lastMapLongPress = mutableStateOf<Pair<Offset, LatLon>?>(null)
+    private val lastQuestSolved = mutableStateOf<QuestSolvedEvent?>(null)
 
     private lateinit var binding: ActivityMainBinding
 
@@ -350,6 +343,10 @@ class MainActivity :
                     filterFn = { true },
                     codesOfDefaultFeatures = defaultFeatureIds.reversed()
                 )
+            }
+
+            lastQuestSolved.value?.let {
+                LastQuestSolvedEffect(it)
             }
 
             val lastLongPressOffset = lastMapLongPress.value?.first ?: Offset.Zero
@@ -1372,42 +1369,10 @@ class MainActivity :
         val offset = binding.root.getLocationInWindow()
         val startPos = mapFragment?.getPointOf(position) ?: return
 
-        val size = resources.dpToPx(42).toInt()
-        startPos.x += offset.x - size / 2f
-        startPos.y += offset.y - size * 1.5f
+        startPos.x += offset.x
+        startPos.y += offset.y
 
-        showMarkerSolvedAnimation(iconResId, startPos)
-    }
-
-    private fun showMarkerSolvedAnimation(@DrawableRes iconResId: Int, startScreenPos: PointF) {
-        lifecycleScope.launch {
-            soundFx.play(resources.getIdentifier("plop" + Random.nextInt(4), "raw", packageName))
-        }
-
-        val root = window.decorView as ViewGroup
-        val img = EffectQuestPlopBinding.inflate(layoutInflater, root, false).root
-        img.x = startScreenPos.x
-        img.y = startScreenPos.y
-        img.setImageResource(iconResId)
-        root.addView(img)
-
-        flingQuestMarker(img) { root.removeView(img) }
-    }
-
-    private fun flingQuestMarker(quest: View, onFinished: () -> Unit) {
-        quest.animate()
-            .scaleX(1.6f).scaleY(1.6f)
-            .setInterpolator(OvershootInterpolator(8f))
-            .setDuration(250)
-            .withEndAction {
-                quest.animate()
-                    .scaleX(0.2f).scaleY(0.2f)
-                    .alpha(0.8f)
-                    .x(0f).y(0f)
-                    .setDuration(250)
-                    .setInterpolator(AccelerateInterpolator())
-                    .withEndAction(onFinished)
-            }
+        lastQuestSolved.value = QuestSolvedEvent(iconResId, Offset(startPos.x, startPos.y))
     }
 
     //endregion

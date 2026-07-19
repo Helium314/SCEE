@@ -39,7 +39,6 @@ import de.westnordost.streetcomplete.data.user.statistics.StatisticsSource
 import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilterController
 import de.westnordost.streetcomplete.data.visiblequests.TeamModeQuestFilterSource
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeSource
-import de.westnordost.streetcomplete.overlays.custom.CustomOverlay
 import de.westnordost.streetcomplete.screens.main.controls.LocationState
 import de.westnordost.streetcomplete.screens.main.map.maplibre.CameraPosition
 import de.westnordost.streetcomplete.util.error_reporting.CrashReportHolder
@@ -48,7 +47,6 @@ import de.westnordost.streetcomplete.util.getFakeCustomOverlays
 import de.westnordost.streetcomplete.util.ktx.launch
 import de.westnordost.streetcomplete.util.parseGeoUri
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -234,15 +232,15 @@ class MainViewModelImpl(
                 else overlayRegistry.getOrdinalOf(it)!! < ApplicationConstants.EE_QUEST_OFFSET
             visibleEditTypeSource.isVisible(it)
                 && eeAllowed // expert mode on, or SC overlay
-                && it !is CustomOverlay // custom overlay added separately
+                && it.javaClass.simpleName != "CustomOverlay" // custom overlay added separately
         } + getFakeCustomOverlays(prefs, resources)
 
     override val selectedOverlay: StateFlow<Overlay?> = callbackFlow {
         send(selectedOverlayController.selectedOverlay)
         val listener = object : SelectedOverlaySource.Listener {
             override fun onSelectedOverlayChanged() {
-                if (selectedOverlayController.selectedOverlay is CustomOverlay) {
-                    trySend(null) // necessary for button reload when switching between custom overlays
+                if (selectedOverlayController.selectedOverlay?.javaClass?.simpleName == "CustomOverlay") {
+                    trySend(null) // necessary for button reload when switching between custom overlays, todo: not helping any more?
                     viewModelScope.launch { delay(50); trySend(selectedOverlayController.selectedOverlay) }
                 } else trySend(selectedOverlayController.selectedOverlay)
             }

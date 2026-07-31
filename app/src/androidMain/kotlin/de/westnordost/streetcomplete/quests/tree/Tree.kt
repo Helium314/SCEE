@@ -25,4 +25,4 @@ class Tree(val name: String, val isSpecies: Boolean, val localName: String?): Tr
         else name
 }
 
-data object NotTreeButStump : TreeAnswer
+data object NotTreeButStump : TreeAnswer, TreeDenotationAnswer

@@ -811,4 +811,23 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_orchard_type_plantation">Plantation</string>
     <string name="quest_orchard_type_meadow_orchard_description">Large trees, wide spacing</string>
     <string name="quest_orchard_type_plantation_description">Spindle trees, narrow spacing (usually commercial)</string>
+
+    <!-- tree denotation -->
+    <string name="quest_tree_denotation_title">How significant is this tree?</string>
+    <string name="quest_tree_denotation_landmark">Landmark</string>
+    <string name="quest_tree_denotation_landmark_description">Remarkable due to its size or prominent location, visible from far away, useful for navigation</string>
+    <string name="quest_tree_denotation_natural_monument">Natural monument</string>
+    <string name="quest_tree_denotation_natural_monument_description">Especially old and protected for its uniqueness</string>
+    <string name="quest_tree_denotation_agricultural">Agricultural</string>
+    <string name="quest_tree_denotation_agricultural_description">In agricultural use, e.g. a fruit tree in an orchard</string>
+    <string name="quest_tree_denotation_park">Park</string>
+    <string name="quest_tree_denotation_park_description">In a park or other green space (cemetery, school grounds, …)</string>
+    <string name="quest_tree_denotation_garden">Residential garden</string>
+    <string name="quest_tree_denotation_garden_description">In the garden of a house or apartment building</string>
+    <string name="quest_tree_denotation_avenue">Avenue</string>
+    <string name="quest_tree_denotation_avenue_description">Along an avenue or road</string>
+    <string name="quest_tree_denotation_urban">Urban area</string>
+    <string name="quest_tree_denotation_urban_description">Inside a settlement</string>
+    <string name="quest_tree_denotation_natural">Natural</string>
+    <string name="quest_tree_denotation_natural_description">Outside of a settlement</string>
 </resources>

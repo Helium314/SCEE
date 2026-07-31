@@ -431,6 +431,7 @@ quest/
     toilets_wheelchair.svg
     tractor.svg
     traffic_lights.svg
+    tree_denotation.svg             modified from https://commons.wikimedia.org/wiki/File:Broccoli-tree.svg (public domain) and street.svg
     via_ferrata_scale.svg           https://www.svgrepo.com/svg/137349/climbing (CC0) and based on way_surface.svg
     washing_hands.svg               modified from Twemoji: U+1FAF1
     way_surface.svg

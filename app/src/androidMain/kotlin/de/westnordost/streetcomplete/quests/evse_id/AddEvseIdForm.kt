@@ -37,14 +37,8 @@ class AddEvseIdForm : AMultiValueQuestForm<String>() {
         input.hint = getString(R.string.quest_evse_id_hint)
     }
 
-    override fun isFormComplete(): Boolean {
-        if (!super.isFormComplete()) return false
-
-        val current = value
-        if (current.isBlank()) return false
-
-        return EVSE_REGEX.matches(current)
-    }
+    override fun isFormComplete(): Boolean =
+        super.isFormComplete() && (value.isBlank() || EVSE_REGEX.matches(value))
 
     companion object {
         private val EVSE_REGEX =

@@ -1,7 +1,6 @@
 package de.westnordost.streetcomplete.screens.main
 
 import android.content.SharedPreferences
-import android.content.res.Resources
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.viewModelScope
@@ -85,7 +84,6 @@ class MainViewModelImpl(
     private val elementEditsSource: ElementEditsSource,
     private val noteEditsSource: NoteEditsSource,
     private val prefs: Preferences,
-    private val resources: Resources
 ) : MainViewModel() {
 
     /* error handling */
@@ -233,7 +231,7 @@ class MainViewModelImpl(
             visibleEditTypeSource.isVisible(it)
                 && eeAllowed // expert mode on, or SC overlay
                 && it.javaClass.simpleName != "CustomOverlay" // custom overlay added separately
-        } + getFakeCustomOverlays(prefs, resources)
+        } + getFakeCustomOverlays(prefs, ApplicationConstants.context.resources)
 
     override val selectedOverlay: StateFlow<Overlay?> = callbackFlow {
         send(selectedOverlayController.selectedOverlay)

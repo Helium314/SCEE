@@ -1,6 +1,7 @@
 package de.westnordost.streetcomplete.data
 
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesTable
+import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestTables
 import de.westnordost.streetcomplete.data.logs.LogsTable
 import de.westnordost.streetcomplete.data.osm.created_elements.CreatedElementsTable
 import de.westnordost.streetcomplete.data.osm.edits.EditElementsTable
@@ -26,6 +27,7 @@ import de.westnordost.streetcomplete.data.user.statistics.CountryStatisticsTable
 import de.westnordost.streetcomplete.data.user.statistics.EditTypeStatisticsTable
 import de.westnordost.streetcomplete.data.visiblequests.QuestTypeOrderTable
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeTable
+import de.westnordost.streetcomplete.quests.osmose.OsmoseTable
 import de.westnordost.streetcomplete.util.logs.Log
 
 object StreetCompleteDatabaseConfigurator : DatabaseConfigurator {
@@ -102,6 +104,8 @@ object StreetCompleteDatabaseConfigurator : DatabaseConfigurator {
 
         // OSM calendar events
         db.exec(CalendarEventsTable.CREATE)
+
+        createSceeTables(db)
     }
 
     override fun onUpgrade(db: Database, oldVersion: Int) {
@@ -261,6 +265,23 @@ object StreetCompleteDatabaseConfigurator : DatabaseConfigurator {
         if (oldVersion < 20) {
             db.exec(CalendarEventsTable.CREATE)
         }
+
+        createSceeTables(db)
+    }
+
+    private fun createSceeTables(db: Database) {
+        // create some EE tables if not existing
+        // this is to avoid actual db upgrade to keep compatibility with upstream
+
+        // create other source tables
+        db.tryExec(ExternalSourceQuestTables.CREATE_HIDDEN)
+        db.tryExec(ExternalSourceQuestTables.CREATE_EDITS)
+
+        // create osmose table
+        db.tryExec(OsmoseTable.CREATE_IF_NOT_EXISTS)
+        db.tryExec(OsmoseTable.CREATE_SPATIAL_INDEX_IF_NOT_EXISTS)
+        // create osm quests element id index if not existing
+        db.tryExec(OsmQuestTable.CREATE_ELEMENT_ID_INDEX_IF_NOT_EXISTS)
     }
 }
 

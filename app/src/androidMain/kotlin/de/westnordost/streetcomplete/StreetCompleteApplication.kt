@@ -13,15 +13,19 @@ import androidx.work.WorkManager
 import com.russhwolf.settings.SettingsListener
 import de.westnordost.streetcomplete.data.CacheTrimmer
 import de.westnordost.streetcomplete.data.CleanerWorker
-import de.westnordost.streetcomplete.data.DatabaseInitializer
 import de.westnordost.streetcomplete.data.FeedsUpdater
 import de.westnordost.streetcomplete.data.Preloader
+import de.westnordost.streetcomplete.data.StreetCompleteDatabaseConfigurator
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesController
 import de.westnordost.streetcomplete.data.edithistory.EditHistoryController
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.preferences.ResurveyIntervalsUpdater
 import de.westnordost.streetcomplete.data.preferences.Theme
 import de.westnordost.streetcomplete.data.user.UserLoginController
+import de.westnordost.streetcomplete.screens.settings.LAST_KNOWN_DB_VERSION
+import de.westnordost.streetcomplete.screens.settings.renameUpdatedQuests
+import de.westnordost.streetcomplete.screens.settings.renamedQuests
+import de.westnordost.streetcomplete.util.TempLogger
 import de.westnordost.streetcomplete.util.error_reporting.CrashReportsUncaughtExceptionHandler
 import de.westnordost.streetcomplete.util.getSelectedLocales
 import de.westnordost.streetcomplete.util.ktx.deleteRecursively
@@ -63,6 +67,7 @@ class StreetCompleteApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        ApplicationConstants.context = this
 
         // got a crash report where prefs were not initialized, not sure how this can happen for a
         // single person and not for everyone, but this should help (means that we keep using android-specific prefs interface)
@@ -107,7 +112,7 @@ class StreetCompleteApplication : Application() {
 
         resurveyIntervalsUpdater.update()
 
-        require(DatabaseInitializer.DB_VERSION == LAST_KNOWN_DB_VERSION.toInt()) { "update database import/export" }
+        require(StreetCompleteDatabaseConfigurator.version == LAST_KNOWN_DB_VERSION.toInt()) { "update database import/export" }
         val lastVersion = prefs.lastDataVersion
 
         if (BuildConfig.VERSION_NAME != lastVersion) {

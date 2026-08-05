@@ -45,7 +45,7 @@ class ElementEditsDaoTest : StreetCompleteDatabaseTestCase() {
     @BeforeTest fun createDao() {
         val list = listOf(1 to TEST_QUEST_TYPE, 2 to TEST_QUEST_TYPE2)
         val list2 = listOf(1 to TestOverlay)
-        dao = ElementEditsDao(database, AllEditTypes(listOf(QuestTypeRegistry(list), OverlayRegistry(list2))))
+        dao = ElementEditsDao(database, AllEditTypes(listOf(QuestTypeRegistry({ list }), OverlayRegistry(list2))), tagEdit, addNodeEdit)
     }
 
     @Test fun addGet_UpdateElementTagsEdit() {

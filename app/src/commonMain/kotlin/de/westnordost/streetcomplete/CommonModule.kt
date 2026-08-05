@@ -16,6 +16,9 @@ import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesDao
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesSource
 import de.westnordost.streetcomplete.data.edithistory.EditHistoryController
 import de.westnordost.streetcomplete.data.edithistory.EditHistorySource
+import de.westnordost.streetcomplete.data.externalsource.ExternalSourceDao
+import de.westnordost.streetcomplete.data.externalsource.ExternalSourceHiddenDao
+import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
 import de.westnordost.streetcomplete.data.location.SurveyChecker
 import de.westnordost.streetcomplete.data.logs.LogsController
 import de.westnordost.streetcomplete.data.logs.LogsDao
@@ -35,6 +38,8 @@ import de.westnordost.streetcomplete.data.osm.edits.ElementEditsSource
 import de.westnordost.streetcomplete.data.osm.edits.ElementIdProviderDao
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSourceImpl
+import de.westnordost.streetcomplete.data.osm.edits.addNodeEdit
+import de.westnordost.streetcomplete.data.osm.edits.tagEdit
 import de.westnordost.streetcomplete.data.osm.edits.upload.ElementEditUploader
 import de.westnordost.streetcomplete.data.osm.edits.upload.ElementEditsUploader
 import de.westnordost.streetcomplete.data.osm.edits.upload.changesets.ChangesetApiClient
@@ -136,6 +141,8 @@ import de.westnordost.streetcomplete.data.user.statistics.StatisticsApiClientImp
 import de.westnordost.streetcomplete.data.user.statistics.StatisticsController
 import de.westnordost.streetcomplete.data.user.statistics.StatisticsControllerImpl
 import de.westnordost.streetcomplete.data.user.statistics.StatisticsSource
+import de.westnordost.streetcomplete.data.visiblequests.DayNightQuestFilter
+import de.westnordost.streetcomplete.data.visiblequests.LevelFilter
 import de.westnordost.streetcomplete.data.visiblequests.QuestTypeOrderController
 import de.westnordost.streetcomplete.data.visiblequests.QuestTypeOrderDao
 import de.westnordost.streetcomplete.data.visiblequests.QuestTypeOrderSource
@@ -222,7 +229,7 @@ val commonModule = module {
     single<Res> { Res }
     single<FileSystem> { SystemFileSystem }
 
-    factory { Cleaner(get(), get(), get(), get(), get(), get(), get()) }
+    factory { Cleaner(get(), get(), get(), get(), get(), get(), get(), get()) }
     factory { CacheTrimmer(get(), get()) }
     factory { Preloader(get(named("CountryBoundariesLazy")), get(named("FeatureDictionaryLazy"))) }
 
@@ -234,9 +241,9 @@ val commonModule = module {
 
     single { UnsyncedChangesCountSource(get(), get()) }
 
-    factory { VersionIsBannedChecker(get(), "https://streetcomplete.app/banned_versions.txt", ApplicationConstants.USER_AGENT) }
+    factory { VersionIsBannedChecker(get(), "https://streetcomplete.mnalis.com/streetcomplete/banned_versions.txt", ApplicationConstants.USER_AGENT) }
 
-    single { Uploader(get(), get(), get(), get(), get(), get(), get(named("SerializeSync"))) }
+    single { Uploader(get(), get(), get(), get(), get(), get(), get(named("SerializeSync")), get(), get()) }
 
     /* uploading and downloading should be serialized, i.e. may not run in parallel, to avoid
      * certain race-condition.
@@ -258,7 +265,7 @@ val commonModule = module {
     factory { MobileDataAutoDownloadStrategy(get(), get()) }
     factory { WifiAutoDownloadStrategy(get(), get()) }
 
-    single { Downloader(get(), get(), get(), get(), get(), get(named("SerializeSync"))) }
+    single { Downloader(get(), get(), get(), get(), get(), get(named("SerializeSync")), get()) }
 
     single<DownloadProgressSource> { get<Downloader>() }
 
@@ -327,7 +334,7 @@ val commonModule = module {
     single { AllEditTypes(listOf(get<QuestTypeRegistry>(), get<OverlayRegistry>())) }
 
     single<EditHistorySource> { get<EditHistoryController>() }
-    single { EditHistoryController(get(), get(), get(), get(), get(), get()) }
+    single { EditHistoryController(get(), get(), get(), get(), get(), get(), get()) }
 
     //endregion
 
@@ -335,14 +342,14 @@ val commonModule = module {
 
     factory { ElementEditUploader(get(), get(), get()) }
 
-    factory { ElementEditsDao(get(), get()) }
+    factory { ElementEditsDao(get(), get(), tagEdit, addNodeEdit) }
     factory { ElementIdProviderDao(get()) }
     factory { OpenChangesetsDao(get()) }
     factory { EditElementsDao(get()) }
 
     single { OpenChangesetsManager(get(), get(), get(), get()) }
 
-    single { ElementEditsUploader(get(), get(), get(), get(), get(), get()) }
+    single { ElementEditsUploader(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     single<ElementEditsSource> { get<ElementEditsController>() }
     single<ElementEditsController> { ElementEditsControllerImpl(get(), get(), get(), get()) }
@@ -372,7 +379,7 @@ val commonModule = module {
     factory { OsmQuestsHiddenDao(get()) }
 
     single<OsmQuestSource> { get<OsmQuestController>() }
-    single { OsmQuestController(get(), get(), get(), get(), get(named("CountryBoundariesLazy"))) }
+    single { OsmQuestController(get(), get(), get(), get(), get(named("CountryBoundariesLazy")), get()) }
 
     factory { NoteQuestsHiddenDao(get()) }
 
@@ -384,7 +391,7 @@ val commonModule = module {
 
     //region quest visibility
 
-    single { VisibleQuestsSource(get(), get(), get(), get(), get(), get(), get()) }
+    single { VisibleQuestsSource(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     factory { QuestTypeOrderDao(get()) }
     factory { VisibleEditTypeDao(get()) }
@@ -396,11 +403,17 @@ val commonModule = module {
     single<TeamModeQuestFilterController> { TeamModeQuestFilterControllerImpl(get(), get()) }
 
     single<QuestsHiddenSource> { get<QuestsHiddenController>() }
-    single<QuestsHiddenController> { QuestsHiddenControllerImpl(get(), get()) }
+    single<QuestsHiddenController> { QuestsHiddenControllerImpl(get(), get(), get()) }
 
     single<VisibleEditTypeSource> { get<VisibleEditTypeController>() }
     single { VisibleEditTypeController(get(), get(), get()) }
 
+    single { LevelFilter(get()) }
+    single { DayNightQuestFilter(get()) }
+
+    single { ExternalSourceQuestController(get(named("CountryBoundariesLazy")), get(), get(), get()) }
+    single { ExternalSourceDao(get()) }
+    single { ExternalSourceHiddenDao(get()) }
     //endregion
 
     //region metadata
@@ -540,7 +553,7 @@ val commonModule = module {
     }
 
     viewModel<EditHistoryViewModel> {
-        EditHistoryViewModelImpl(get(), get(), get(named("FeatureDictionaryLazy")))
+        EditHistoryViewModelImpl(get(), get(), get(named("FeatureDictionaryLazy")), get())
     }
 
 

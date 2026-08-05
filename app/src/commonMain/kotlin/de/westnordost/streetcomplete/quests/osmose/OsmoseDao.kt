@@ -1,7 +1,8 @@
 package de.westnordost.streetcomplete.quests.osmose
 
+import android.content.res.Resources
 import android.database.sqlite.SQLiteException
-import com.russhwolf.settings.ObservableSettings
+import android.os.LocaleList
 import de.westnordost.streetcomplete.ApplicationConstants.USER_AGENT
 import de.westnordost.streetcomplete.data.ConflictAlgorithm
 import de.westnordost.streetcomplete.data.CursorPosition
@@ -30,7 +31,6 @@ import de.westnordost.streetcomplete.quests.osmose.OsmoseTable.Columns.TITLE
 import de.westnordost.streetcomplete.quests.osmose.OsmoseTable.Columns.UUID
 import de.westnordost.streetcomplete.quests.osmose.OsmoseTable.NAME
 import de.westnordost.streetcomplete.quests.questPrefix
-import de.westnordost.streetcomplete.util.getSelectedLocales
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.measuredMultiPolygonArea
@@ -40,11 +40,11 @@ import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import io.ktor.client.request.request
 import io.ktor.client.request.url
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.IOException
+import java.util.Locale
 
 @Mockable
 class OsmoseDao(
@@ -158,7 +158,7 @@ class OsmoseDao(
                 uuid,
                 if (elements.size == 1) mapDataWithEditsSource.getGeometry(elements.single().type, elements.single().id) ?: ElementPointGeometry(position)
                 else ElementPointGeometry(position),
-                questTypeRegistry.getByName(OsmoseQuest::class.simpleName!!) as ExternalSourceQuestType,
+                questTypeRegistry.getByName("OsmoseQuest") as ExternalSourceQuestType,
                 position
         ).apply { if (elements.size == 1) elementKey = elements.single() }
                 // same area limitation as AddForestLeafType
@@ -338,3 +338,70 @@ private fun inBoundsSql(bbox: BoundingBox): String = """
     ($LATITUDE BETWEEN ${bbox.min.latitude} AND ${bbox.max.latitude}) AND
     ($LONGITUDE BETWEEN ${bbox.min.longitude} AND ${bbox.max.longitude})
 """.trimIndent()
+
+
+const val PREF_OSMOSE_ITEMS = "qs_OsmoseQuest_blocked_items"
+const val PREF_OSMOSE_LEVEL = "qs_OsmoseQuest_level"
+const val PREF_OSMOSE_APP_LANGUAGE = "qs_OsmoseQuest_app_language" // do not use the quest settings prefix here, as it doesn't make sense for language
+
+// items that have associated SC quests/overlays are disabled by default
+// same for issues related to ignored relation types
+// §§ is used as separator
+const val OSMOSE_DEFAULT_IGNORED_ITEMS =
+    "3230/32301" + "§§" + // "Probably only for bottles, not any type of glass"
+        "4061/40610" + "§§" + // "object needs review" (fixme poi "quest")
+        "7130/71301" + "§§" + // "Missing maxheight tag"
+        "2060/1" + "§§" + // "addr:housenumber or addr:housename without addr:street, addr:district, addr:neighbourhood, addr:quarter, addr:suburb, addr:place or addr:hamlet must be in a associatedStreet relation"
+        "3250" + "§§" + // "Invalid Opening Hours" (will be not be asked immediately, but frequently re-surveyed, at least of the option is on)
+        "shop=yes is unspecific. Please replace ''yes'' by a specific value." + "§§" +
+//    alternative for all languages: 9002/9002007 and contains "shop=yes" or "shop = yes" (thanks, translator)
+        "barrier=yes is unspecific. Please replace ''yes'' by a specific value." + "§§" +
+        "traffic_calming=yes is unspecific. Please replace ''yes'' by a specific value" + "§§" +
+        "amenity=recycling without recycling:*" + "§§" +
+//    alternative for all languages: 9001/9001001 and contains "recycling:*"
+        "amenity=recycling without recycling_type=container or recycling_type=centre" + "§§" +
+//    alternative for all languages: 9001/9001001 and contains all 3 tags
+        "emergency=fire_hydrant without fire_hydrant:type" + "§§" +
+//    alternative for all languages: 9001/9001001 and contains "emergency=fire_hydrant" and "fire_hydrant:type"
+        "Combined foot- and cycleway without segregated." + "§§" +
+//    alternative for all languages: 9001/9001001 and contains "segregated"
+        "leisure=pitch without sport" + "§§" +
+//    alternative for all languages and types: 9001/9001001 and contains "leisure=pitch" and "sport"
+        "The tag `parking:lane:both` is deprecated in favour of `parking:both`" + "§§" +
+        "The tag `parking:lane:left` is deprecated in favour of `parking:left`" + "§§" +
+        "The tag `parking:lane:right` is deprecated in favour of `parking:right`" + "§§" +
+//    alternative for all languages and types: 4010 and contains "parking:lane:*" and "parking:<same>"
+        "The tag `parking:orientation` is deprecated in favour of `orientation`" + "§§" +
+        "Same value of cycleway:left and cycleway:right" + "§§" + // there is no quest, but SC may cause this and does not understand the "fix"
+//    alternative for all languages: 9001 and contains "cycleway:left" and "cycleway:right"
+// "tracktype=grade4 together with surface=asphalt" -> how to do it properly? current system won't work, or needs blacklisting all combinations
+//    alternative for all languages and types: 9001/9001001 and contains "tracktype=" and "surface="
+        "female=yes together with male=yes" + "§§" + // this is not necessarily the same as unisex
+        // relation-related stuff below
+        "1260" + "§§" + // Osmosis_Relation_Public_Transport
+        "2140" + "§§" + // missing tags on public transport relations / stops
+        "1140" + "§§" + // missing tag or role
+        "1200" + "§§" + //  1-member relation
+        "9007" + "§§" // various relation related issues, usually missing tags
+
+// copy so it compiles
+private fun getSelectedLocale(prefs: Preferences): Locale? {
+    val languageTag = prefs.language ?: ""
+    return if (languageTag.isEmpty()) null else Locale.forLanguageTag(languageTag)
+}
+
+private fun getSelectedLocales(prefs: Preferences): LocaleList {
+    val locale = getSelectedLocale(prefs)
+    val systemLocales = getSystemLocales()
+    return if (locale == null) systemLocales else systemLocales.addedToFront(locale)
+}
+
+private fun getSystemLocales(): LocaleList =
+    Resources.getSystem().configuration.locales
+
+private fun LocaleList.addedToFront(locale: Locale): LocaleList {
+    val currentList = toList().filterNot { it == locale }.toTypedArray()
+    return LocaleList(locale, *currentList)
+}
+
+private fun LocaleList.toList(): List<Locale> = (0 until size()).map { i -> this[i]!! }

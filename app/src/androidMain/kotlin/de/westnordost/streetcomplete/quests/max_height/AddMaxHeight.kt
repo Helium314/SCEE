@@ -153,18 +153,6 @@ class AddMaxHeight : OsmElementQuestType<MaxHeightAnswer>, AndroidQuest {
 
     override fun createForm() = AddMaxHeightForm()
 
-    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry): Sequence<Element> {
-        val bridges = mapData.ways.filter { bridgeFilter.matches(it) }
-        val layer = element.tags["layer"]?.toIntOrNull() ?: 0
-        val geometry = mapData.getWayGeometry(element.id) as? ElementPolylinesGeometry ?: return emptySequence()
-        return bridges.filter { bridge ->
-            val bridgeGeometry = mapData.getWayGeometry(bridge.id) as? ElementPolylinesGeometry ?: return@filter false
-            (bridge.tags["layer"]?.toIntOrNull() ?: 0) > layer
-                && !bridge.nodeIds.toSet().containsAny((element as Way).nodeIds)
-                && bridgeGeometry.intersects(geometry)
-        }.asSequence()
-    }
-
     override fun applyAnswerTo(answer: MaxHeightAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         when (answer) {
             is MaxHeight -> {

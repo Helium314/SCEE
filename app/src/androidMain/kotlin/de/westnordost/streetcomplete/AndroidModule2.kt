@@ -9,6 +9,8 @@ import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.data.user.achievements.editTypeAliases
 import de.westnordost.streetcomplete.data.user.statistics.StatisticsParser
 import de.westnordost.streetcomplete.overlays.overlaysRegistry
+import de.westnordost.streetcomplete.quests.custom.CustomQuestList
+import de.westnordost.streetcomplete.quests.osmose.OsmoseDao
 import de.westnordost.streetcomplete.quests.questTypeRegistry
 import de.westnordost.streetcomplete.screens.measure.ArQuestsDisabler
 import de.westnordost.streetcomplete.screens.measure.ArSupportChecker
@@ -21,6 +23,7 @@ import de.westnordost.streetcomplete.screens.settings.quest_selection.QuestSelec
 import de.westnordost.streetcomplete.screens.settings.quest_selection.QuestSelectionViewModelImpl
 import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.streetcomplete.util.ktx.getFeature
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -30,6 +33,9 @@ val androidModule2 = module {
 
     // quest definitions
 
+    single { CustomQuestList(androidContext()) }
+    single { OsmoseDao(get(), get()) }
+
     single<QuestTypeRegistry> {
         val countryInfos = get<CountryInfos>()
         val countryBoundariesLazy = get<Lazy<CountryBoundaries>>(named("CountryBoundariesLazy"))
@@ -38,7 +44,9 @@ val androidModule2 = module {
             get(),
             { countryInfos.get(countryBoundariesLazy.value, it) },
             { countryBoundariesLazy.value.getIds(it).firstOrNull() },
-            { featureDictionaryLazy.value.getFeature(it) }
+            { featureDictionaryLazy.value.getFeature(it) },
+            get(),
+            get()
         )
     }
 
@@ -57,7 +65,8 @@ val androidModule2 = module {
             },
             { element ->
                 get<Lazy<FeatureDictionary>>(named("FeatureDictionaryLazy")).value.getFeature(element)
-            }
+            },
+            get()
         )
     }
 

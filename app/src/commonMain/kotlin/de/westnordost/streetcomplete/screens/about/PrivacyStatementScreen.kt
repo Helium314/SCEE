@@ -20,7 +20,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.westnordost.streetcomplete.data.upload.BANNED_VERSION_URL
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.BackIcon
 import de.westnordost.streetcomplete.ui.common.HtmlText
@@ -41,7 +40,7 @@ fun PrivacyStatementScreen(
         SelectionContainer {
             HtmlText(
                 html =
-                    tryParseHtml(stringResource(Res.string.privacy_html).replace("https://www.westnordost.de/streetcomplete/banned_versions.txt", BANNED_VERSION_URL)) +
+                    tryParseHtml(stringResource(Res.string.privacy_html).replace("https://www.westnordost.de/streetcomplete/banned_versions.txt", "https://streetcomplete.mnalis.com/streetcomplete/banned_versions.txt")) +
                     tryParseHtml(stringResource(Res.string.privacy_html_tileserver2, "JawgMaps", "https://www.jawg.io/en/confidentiality/")) +
                     tryParseHtml(stringResource(Res.string.privacy_html_statistics)) +
                     tryParseHtml(stringResource(Res.string.privacy_html_image_upload2)),

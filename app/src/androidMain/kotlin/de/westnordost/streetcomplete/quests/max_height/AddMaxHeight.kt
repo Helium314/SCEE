@@ -65,30 +65,6 @@ class AddMaxHeight : OsmElementQuestType<MaxHeightAnswer>, AndroidQuest {
           and (access !~ private|no or (foot and foot !~ private|no))
     """.toElementFilterExpression() }
 
-    private val tunnelFilter by lazy { """
-        ways with
-          highway
-          and (
-            covered = yes
-            or tunnel ~ yes|building_passage|avalanche_protector
-            or bridge = covered
-          )
-    """.toElementFilterExpression() }
-
-    private val bridgeFilter by lazy { """
-        ways with (
-            (
-              highway ~ ${(ALL_ROADS + ALL_PATHS).joinToString("|")}
-              or railway ~ rail|light_rail|subway|narrow_gauge|tram|disused|preserved|funicular|monorail
-            )
-            and bridge and bridge != no
-          ) or (
-            building = roof
-            or man_made = pipeline and location = overhead
-          )
-          and layer
-    """.toElementFilterExpression() }
-
     private val noMaxHeight = """
         !maxheight
         and !maxheight:signed
@@ -199,4 +175,9 @@ class AddMaxHeight : OsmElementQuestType<MaxHeightAnswer>, AndroidQuest {
             }
         }
     }
+
+    override fun getHighlightedElements(
+        element: Element,
+        mapData: MapDataWithGeometry
+    ): Sequence<Element> = (element as? Way)?.getIntersectingBridges(mapData).orEmpty()
 }

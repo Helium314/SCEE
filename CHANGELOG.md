@@ -1,5 +1,29 @@
 # Changelog
 
+## v63.4
+
+Fix in certain languages (such as French), presets wouldn't load, which made the app unusable. Regression from v63.3 (#6964)
+
+## v63.3
+
+### Fixes
+
+- *Fix upload of photos in notes stopped to work on 27th of July* (#6959)
+- Places overlay: Handle name field correctly for places that *usually* have a fixed name but not necessarily (#6907)
+- Fix some elements in the settings screen didn't respect window insets correctly
+
+### Quest improvements
+
+- Place & road name: Force resurvey if name was explicitly marked as to be fixed (#6932), by @paulklie
+- Summit register: Ask in Norway, too (#6902), by @paulklie
+- Sidewalks: Prefer the same tagging schema as iD (#6944)
+- Surfaces: Add laterite as an option in some countries (#6942), by @thirumani-vihaan
+- Ask a few quests for more places (#6899, #6901, #6900, #6898, #6908, #6953, #6952), by @paulklie
+- Other small improvements (#6903, #6909, #6919, #6948, #6938 …), thanks @paulklie, @mnalis
+
+### General
+- Make app name more visible in about screen (#6951), by @geritwagner
+
 ## v63.2
 
 ### Fixes

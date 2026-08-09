@@ -9,8 +9,8 @@ import java.util.Properties
 
 
 /** App version name, code and flavor */
-val appVersionName = "63.21"
-val appVersionCode = 6306
+val appVersionName = "63.4"
+val appVersionCode = 6308
 
 /** Localizations the app should be available in */
 val bcp47ExportLanguages = setOf(
@@ -24,7 +24,7 @@ val bcp47ExportLanguages = setOf(
 
 /** Version of the iD presets to use
  *  see https://github.com/openstreetmap/id-tagging-schema/releases for latest version */
-val presetsVersion = "v6.18.0"
+val presetsVersion = "v7.0.1"
 
 /** Version of the Name Suggestion Index to use
  *  see https://github.com/osmlab/name-suggestion-index/tags for latest version (without leading "v"
@@ -132,15 +132,19 @@ kotlin {
                 // I/O
                 implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.9.1")
 
+                // SQLite
+                implementation("androidx.sqlite:sqlite:2.7.0")
+                implementation("androidx.sqlite:sqlite-bundled:2.7.0")
+
                 // HTTP client
-                implementation("io.ktor:ktor-client-core:3.5.0")
-                implementation("io.ktor:ktor-client-encoding:3.5.0")
+                implementation("io.ktor:ktor-client-core:3.5.1")
+                implementation("io.ktor:ktor-client-encoding:3.5.1")
                 // SHA256 hashing, used during OAuth authentication
                 implementation("org.kotlincrypto.hash:sha2:0.8.0")
 
                 // XML
-                implementation("io.github.pdvrieze.xmlutil:core:0.91.3")
-                implementation("io.github.pdvrieze.xmlutil:core-io:0.91.3")
+                implementation("io.github.pdvrieze.xmlutil:core:1.0.1")
+                implementation("io.github.pdvrieze.xmlutil:core-io:1.0.1")
 
                 // YAML
                 implementation("com.charleskorn.kaml:kaml:0.104.0")
@@ -156,7 +160,7 @@ kotlin {
                 implementation("de.westnordost:countryboundaries:3.0.0")
 
                 // finding OSM features
-                implementation("de.westnordost:osmfeatures:7.1.0")
+                implementation("de.westnordost:osmfeatures:8.0.0")
 
                 // opening hours parser
                 implementation("de.westnordost:osm-opening-hours:0.4.0")
@@ -182,7 +186,7 @@ kotlin {
                 // NOTE: might replace with
                 // https://developer.android.com/develop/ui/compose/layouts/adaptive/grid
                 // when that API is not experimental anymore
-                implementation("com.cheonjaeung.compose.grid:grid:2.7.4")
+                implementation("com.cheonjaeung.compose.grid:grid:2.8.0")
 
                 // reorderable lists (raw Compose API is pretty complicated)
                 implementation("sh.calvin.reorderable:reorderable:3.1.0")
@@ -209,7 +213,6 @@ kotlin {
                 implementation("androidx.constraintlayout:constraintlayout:2.2.1")
                 implementation("androidx.annotation:annotation:1.10.0")
                 implementation("androidx.fragment:fragment-ktx:1.8.9")
-                implementation("androidx.recyclerview:recyclerview:1.4.0")
                 implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
                 // Compose
@@ -226,13 +229,13 @@ kotlin {
                 implementation("androidx.work:work-runtime-ktx:2.11.2")
 
                 // HTTP Client
-                implementation("io.ktor:ktor-client-android:3.5.0")
+                implementation("io.ktor:ktor-client-android:3.5.1")
 
                 // widgets
                 implementation("com.google.android.flexbox:flexbox:3.0.0")
 
                 // map and location
-                implementation("org.maplibre.gl:android-sdk-opengl:13.3.0")
+                implementation("org.maplibre.gl:android-sdk-opengl:13.3.1")
 
                 // fast json (de)serialization used for database read and write
                 implementation("com.squareup.moshi:moshi:1.15.1")
@@ -250,27 +253,21 @@ kotlin {
         iosMain {
             dependencies {
                 // HTTP client
-                implementation("io.ktor:ktor-client-darwin:3.5.0")
+                implementation("io.ktor:ktor-client-darwin:3.5.1")
             }
         }
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
 
-                implementation("io.ktor:ktor-client-mock:3.5.0")
+                implementation("io.ktor:ktor-client-mock:3.5.1")
+                implementation("androidx.sqlite:sqlite-bundled:2.7.0")
             }
         }
         androidUnitTest {
             dependencies {
+                implementation("androidx.sqlite:sqlite-bundled-jvm:2.7.0")
                 implementation(kotlin("test"))
-            }
-        }
-        androidInstrumentedTest {
-            dependencies {
-                implementation(kotlin("test"))
-                // android tests
-                implementation("androidx.test:runner:1.7.0")
-                implementation("androidx.test:rules:1.7.0")
             }
         }
     }

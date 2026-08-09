@@ -71,6 +71,9 @@ import de.westnordost.streetcomplete.util.getIndexedCustomOverlayPref
 import de.westnordost.streetcomplete.util.ktx.getActivity
 import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.logs.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import org.koin.compose.koinInject
 import java.io.BufferedWriter
@@ -348,7 +351,7 @@ private fun showRasterUrlDialog(context: Context, prefs: SharedPreferences) {
 }
 
 private fun exportHidden(uri: Uri, activity: Activity, db: Database) {
-    activity.contentResolver?.openOutputStream(uri)?.use { os ->
+    runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openOutputStream(uri)?.use { os ->
         val version = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
         if (version > LAST_KNOWN_DB_VERSION)
             activity.toast(activity.getString(R.string.export_warning_db_version), Toast.LENGTH_LONG)
@@ -378,7 +381,7 @@ private fun exportHidden(uri: Uri, activity: Activity, db: Database) {
             it.write("\n\n$BACKUP_HIDDEN_OTHER_QUESTS\n")
             it.write(hiddenExternalSourceQuests.joinToString("\n") + "\n")
         }
-    }
+    } } }
 }
 
 private fun exportPresets(uri: Uri, activity: Activity, db: Database, editTypePresetsController: EditTypePresetsController, urlConfigController: UrlConfigController) {
@@ -403,7 +406,7 @@ private fun exportPresets(uri: Uri, activity: Activity, db: Database, editTypePr
 }
 
 private fun exportPresets(ids: Collection<Long>, uri: Uri, activity: Activity, db: Database, urlConfigController: UrlConfigController) {
-    activity.contentResolver?.openOutputStream(uri)?.use { os ->
+    runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openOutputStream(uri)?.use { os ->
         val version = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
         if (version > LAST_KNOWN_DB_VERSION)
             activity.toast(activity.getString(R.string.export_warning_db_version), Toast.LENGTH_LONG)
@@ -437,7 +440,7 @@ private fun exportPresets(ids: Collection<Long>, uri: Uri, activity: Activity, d
             it.appendLine("\n$BACKUP_PRESETS_QUEST_SETTINGS")
             settingsToJsonStream(questSettings, it)
         }
-    }
+    } } }
 }
 
 // this will ignore settings with value null
@@ -524,7 +527,10 @@ private fun importOverlays(uri: Uri, activity: Activity) {
 }
 
 private fun importCustomOverlays(uri: Uri, replaceExisting: Boolean, activity: Activity): Boolean {
-    val lines = activity.contentResolver?.openInputStream(uri)?.use { it.reader().readLines() } ?: return false
+    val lines = runBlocking { withContext(Dispatchers.IO) {
+        // avoid NetworkOnMainThreadException... bleh. whatever, if the user imports from file on network, the might have to wait
+        activity.contentResolver?.openInputStream(uri)?.use { it.reader().readLines() }
+    } }  ?: return false
     if (lines.first() != "overlays") return false
     val prefs = Prefs.sharedPreferences
     return if (replaceExisting) {
@@ -660,21 +666,21 @@ private fun importHidden(uri: Uri, activity: Activity, db: Database, visibleEdit
 
 /** @returns the lines after [checkLine], which is expected to be the second or third line */
 private fun importLinesAndCheck(uri: Uri, checkLine: String, activity: Activity, db: Database): List<String> =
-    activity.contentResolver?.openInputStream(uri)?.use { it.bufferedReader().use { input ->
+    runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openInputStream(uri)?.use { it.bufferedReader().use { input ->
         val fileVersion = input.readLine().toLongOrNull()
         if (fileVersion == null || (input.readLine() != checkLine && input.readLine() != checkLine)) {
             Log.w(TAG, "import error, file version $fileVersion, checkLine $checkLine")
             activity.toast(activity.getString(R.string.import_error), Toast.LENGTH_LONG)
-            return emptyList()
+            return@withContext emptyList()
         }
         val dbVersion = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
         if (fileVersion != dbVersion && (fileVersion > LAST_KNOWN_DB_VERSION || dbVersion > LAST_KNOWN_DB_VERSION)) {
             Log.w(TAG, "import error, file version $fileVersion, dbVersion $dbVersion, last known db version $LAST_KNOWN_DB_VERSION")
             activity.toast(activity.getString(R.string.import_error_db_version), Toast.LENGTH_LONG)
-            return emptyList()
+            return@withContext emptyList()
         }
         input.readLines().renameUpdatedQuests()
-    } } ?: emptyList()
+    } } } } ?: emptyList()
 
 // when importing, names should be updated!
 private fun List<String>.renameUpdatedQuests() = map { it.renameUpdatedQuests() }
@@ -796,7 +802,7 @@ private fun importPresets(lines: List<String>, replaceExistingPresets: Boolean, 
 }
 
 private fun importSettings(uri: Uri, activity: Activity, osmoseDao: OsmoseDao, externalSourceQuestController: ExternalSourceQuestController): Boolean {
-    val lines = activity.contentResolver?.openInputStream(uri)?.use { it.reader().readLines().renameUpdatedQuests() } ?: return false
+    val lines = runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openInputStream(uri)?.use { it.reader().readLines().renameUpdatedQuests() } } } ?: return false
     val r = readToSettings(lines)
     osmoseDao.reloadIgnoredItems()
     externalSourceQuestController.invalidate()

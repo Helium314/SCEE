@@ -65,30 +65,6 @@ class AddMaxHeight : OsmElementQuestType<MaxHeightAnswer>, AndroidQuest {
           and (access !~ private|no or (foot and foot !~ private|no))
     """.toElementFilterExpression() }
 
-    private val tunnelFilter by lazy { """
-        ways with
-          highway
-          and (
-            covered = yes
-            or tunnel ~ yes|building_passage|avalanche_protector
-            or bridge = covered
-          )
-    """.toElementFilterExpression() }
-
-    private val bridgeFilter by lazy { """
-        ways with (
-            (
-              highway ~ ${(ALL_ROADS + ALL_PATHS).joinToString("|")}
-              or railway ~ rail|light_rail|subway|narrow_gauge|tram|disused|preserved|funicular|monorail
-            )
-            and bridge and bridge != no
-          ) or (
-            building = roof
-            or man_made = pipeline and location = overhead
-          )
-          and layer
-    """.toElementFilterExpression() }
-
     private val noMaxHeight = """
         !maxheight
         and !maxheight:signed
@@ -177,18 +153,6 @@ class AddMaxHeight : OsmElementQuestType<MaxHeightAnswer>, AndroidQuest {
 
     override fun createForm() = AddMaxHeightForm()
 
-    override fun getHighlightedElements(element: Element, mapData: MapDataWithGeometry): Sequence<Element> {
-        val bridges = mapData.ways.filter { bridgeFilter.matches(it) }
-        val layer = element.tags["layer"]?.toIntOrNull() ?: 0
-        val geometry = mapData.getWayGeometry(element.id) as? ElementPolylinesGeometry ?: return emptySequence()
-        return bridges.filter { bridge ->
-            val bridgeGeometry = mapData.getWayGeometry(bridge.id) as? ElementPolylinesGeometry ?: return@filter false
-            (bridge.tags["layer"]?.toIntOrNull() ?: 0) > layer
-                && !bridge.nodeIds.toSet().containsAny((element as Way).nodeIds)
-                && bridgeGeometry.intersects(geometry)
-        }.asSequence()
-    }
-
     override fun applyAnswerTo(answer: MaxHeightAnswer, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         when (answer) {
             is MaxHeight -> {
@@ -199,4 +163,9 @@ class AddMaxHeight : OsmElementQuestType<MaxHeightAnswer>, AndroidQuest {
             }
         }
     }
+
+    override fun getHighlightedElements(
+        element: Element,
+        mapData: MapDataWithGeometry
+    ): Sequence<Element> = (element as? Way)?.getIntersectingBridges(mapData).orEmpty()
 }

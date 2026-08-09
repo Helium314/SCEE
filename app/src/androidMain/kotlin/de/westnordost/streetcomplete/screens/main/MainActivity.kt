@@ -1032,7 +1032,8 @@ class MainActivity :
             val elements = if (Node(0L, pos, tags).isPlace()) {
                 data.filter { it.isPlace() }
             } else {
-                val filter = "nodes, ways, relations with ${tags
+                val filteredTags = tags.filter { it.key != "name" && !it.key.startsWith("brand") && !it.value.contains(" ") }
+                val filter = "nodes, ways, relations with ${filteredTags
                     .map { if (it.value == "yes") it.key else it.key + "=" + it.value }
                     .joinToString(" and ")}".toElementFilterExpression()
                 data.filter { filter.matches(it) }

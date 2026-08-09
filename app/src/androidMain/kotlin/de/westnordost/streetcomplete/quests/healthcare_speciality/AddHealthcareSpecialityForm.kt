@@ -91,7 +91,7 @@ class MedicalSpecialityTypeForm : AbstractOsmQuestForm<String>() {
         binding.composeViewBase.content { Surface {
             ShopTypeForm(
                 feature = feature.value,
-                option = option.value,
+                selectedOption = option.value,
                 onSelectedFeature = {
                     feature.value = it
                     checkIsFormComplete()

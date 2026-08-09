@@ -20,10 +20,6 @@ import de.westnordost.streetcomplete.ui.common.localized_name.LocalizedNamesForm
 import de.westnordost.streetcomplete.ui.util.content
 import de.westnordost.streetcomplete.ui.util.rememberSerializable
 import org.jetbrains.compose.resources.stringResource
-import org.koin.android.ext.android.inject
-import de.westnordost.streetcomplete.view.AdapterDataChangedWatcher
-import kotlinx.serialization.json.Json
-import java.util.Queue
 
 abstract class AAddLocalizedNameForm<T> : AbstractOsmQuestForm<T>() {
 

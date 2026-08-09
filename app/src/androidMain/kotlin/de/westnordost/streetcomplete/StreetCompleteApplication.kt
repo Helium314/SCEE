@@ -13,59 +13,20 @@ import androidx.work.WorkManager
 import com.russhwolf.settings.SettingsListener
 import de.westnordost.streetcomplete.data.CacheTrimmer
 import de.westnordost.streetcomplete.data.CleanerWorker
-import de.westnordost.streetcomplete.data.DatabaseInitializer
 import de.westnordost.streetcomplete.data.FeedsUpdater
 import de.westnordost.streetcomplete.data.Preloader
-import de.westnordost.streetcomplete.data.allEditTypesModule
-import de.westnordost.streetcomplete.data.download.downloadModule
+import de.westnordost.streetcomplete.data.StreetCompleteDatabaseConfigurator
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesController
 import de.westnordost.streetcomplete.data.edithistory.EditHistoryController
-import de.westnordost.streetcomplete.data.edithistory.editHistoryModule
-import de.westnordost.streetcomplete.data.feedsModule
-import de.westnordost.streetcomplete.data.logs.logsModule
-import de.westnordost.streetcomplete.data.messages.messagesModule
-import de.westnordost.streetcomplete.data.meta.metadataModule
-import de.westnordost.streetcomplete.data.osm.created_elements.createdElementsModule
-import de.westnordost.streetcomplete.data.osm.edits.elementEditsModule
-import de.westnordost.streetcomplete.data.osm.geometry.elementGeometryModule
-import de.westnordost.streetcomplete.data.osm.mapdata.mapDataModule
-import de.westnordost.streetcomplete.data.osm.osmquests.osmQuestModule
-import de.westnordost.streetcomplete.data.osmApiModule
-import de.westnordost.streetcomplete.data.osmcal.calendarEventsModule
-import de.westnordost.streetcomplete.data.osmnotes.edits.noteEditsModule
-import de.westnordost.streetcomplete.data.osmnotes.notequests.osmNoteQuestModule
-import de.westnordost.streetcomplete.data.osmnotes.notesModule
-import de.westnordost.streetcomplete.data.externalsource.externalSourceModule
-import de.westnordost.streetcomplete.data.overlays.overlayModule
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.preferences.ResurveyIntervalsUpdater
 import de.westnordost.streetcomplete.data.preferences.Theme
-import de.westnordost.streetcomplete.data.preferences.preferencesModule
-import de.westnordost.streetcomplete.data.presets.editTypePresetsModule
-import de.westnordost.streetcomplete.data.quest.questModule
-import de.westnordost.streetcomplete.data.upload.uploadModule
-import de.westnordost.streetcomplete.data.urlconfig.urlConfigModule
 import de.westnordost.streetcomplete.data.user.UserLoginController
-import de.westnordost.streetcomplete.data.user.achievements.achievementDefinitionsModule
-import de.westnordost.streetcomplete.data.user.achievements.achievementsModule
-import de.westnordost.streetcomplete.data.user.achievements.editTypeAliasesModule
-import de.westnordost.streetcomplete.data.user.statistics.statisticsModule
-import de.westnordost.streetcomplete.data.user.userModule
-import de.westnordost.streetcomplete.data.visiblequests.visibleQuestsModule
-import de.westnordost.streetcomplete.data.weeklyosm.weeklyOsmModule
-import de.westnordost.streetcomplete.overlays.overlaysModule
-import de.westnordost.streetcomplete.quests.questsModule
-import de.westnordost.streetcomplete.screens.about.aboutScreenModule
-import de.westnordost.streetcomplete.screens.main.mainModule
-import de.westnordost.streetcomplete.screens.measure.arModule
 import de.westnordost.streetcomplete.screens.settings.LAST_KNOWN_DB_VERSION
-import de.westnordost.streetcomplete.screens.settings.renamedQuests
 import de.westnordost.streetcomplete.screens.settings.renameUpdatedQuests
-import de.westnordost.streetcomplete.screens.settings.settingsModule
-import de.westnordost.streetcomplete.screens.user.userScreenModule
-import de.westnordost.streetcomplete.util.error_reporting.CrashReportsUncaughtExceptionHandler
-import de.westnordost.streetcomplete.util.error_reporting.errorReportingModule
+import de.westnordost.streetcomplete.screens.settings.renamedQuests
 import de.westnordost.streetcomplete.util.TempLogger
+import de.westnordost.streetcomplete.util.error_reporting.CrashReportsUncaughtExceptionHandler
 import de.westnordost.streetcomplete.util.getSelectedLocales
 import de.westnordost.streetcomplete.util.ktx.deleteRecursively
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
@@ -106,6 +67,7 @@ class StreetCompleteApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        ApplicationConstants.context = this
 
         // got a crash report where prefs were not initialized, not sure how this can happen for a
         // single person and not for everyone, but this should help (means that we keep using android-specific prefs interface)
@@ -118,48 +80,9 @@ class StreetCompleteApplication : Application() {
             androidContext(this@StreetCompleteApplication)
             workManagerFactory()
             modules(
-                achievementsModule,
-                achievementDefinitionsModule,
-                editTypeAliasesModule,
-                appModule,
-                aboutScreenModule,
-                userScreenModule,
-                createdElementsModule,
-                logsModule,
-                downloadModule,
-                editHistoryModule,
-                elementEditsModule,
-                elementGeometryModule,
-                mapDataModule,
-                mainModule,
-                metadataModule,
-                noteEditsModule,
-                notesModule,
-                messagesModule,
-                osmApiModule,
-                osmNoteQuestModule,
-                osmQuestModule,
-                preferencesModule,
-                questModule,
-                editTypePresetsModule,
-                visibleQuestsModule,
-                allEditTypesModule,
-                questsModule,
-                settingsModule,
-                statisticsModule,
-                uploadModule,
-                userModule,
-                arModule,
-                overlaysModule,
-                overlayModule,
-                urlConfigModule,
-                urlConfigModule,
-                weeklyOsmModule,
-                calendarEventsModule,
-                feedsModule,
                 androidModule,
-                errorReportingModule,
-                externalSourceModule,
+                androidModule2,
+                commonModule,
             )
         }
 
@@ -189,7 +112,7 @@ class StreetCompleteApplication : Application() {
 
         resurveyIntervalsUpdater.update()
 
-        require(DatabaseInitializer.DB_VERSION == LAST_KNOWN_DB_VERSION.toInt()) { "update database import/export" }
+        require(StreetCompleteDatabaseConfigurator.version == LAST_KNOWN_DB_VERSION.toInt()) { "update database import/export" }
         val lastVersion = prefs.lastDataVersion
 
         if (BuildConfig.VERSION_NAME != lastVersion) {

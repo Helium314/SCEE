@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.action_about2
 import de.westnordost.streetcomplete.resources.action_download
@@ -110,7 +111,7 @@ fun MainMenuDialog(
                         BigMenuButton(
                             onClick = { onDismissRequest(); onClickAbout() },
                             icon = { Icon(painterResource(Res.drawable.ic_info_outline_48), null) },
-                            text = stringResource(Res.string.action_about2) + " SCEE",
+                            text = stringResource(Res.string.action_about2, ApplicationConstants.NAME) + " SCEE",
                         )
                     }
                     Divider()
@@ -178,7 +179,7 @@ fun MainMenuDialog(
                         BigMenuButton(
                             onClick = { onDismissRequest(); onClickAbout() },
                             icon = { Icon(painterResource(Res.drawable.ic_info_outline_48), null) },
-                            text = stringResource(Res.string.action_about2) + " SCEE",
+                            text = stringResource(Res.string.action_about2, ApplicationConstants.NAME) + " SCEE",
                         )
                         BigMenuButton(
                             onClick = { onDismissRequest(); onClickDownload() },

@@ -813,7 +813,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="quest_orchard_type_plantation_description">Spindle trees, narrow spacing (usually commercial)</string>
 
     <!-- tree denotation -->
-    <string name="quest_tree_denotation_title">How significant is this tree?</string>
+    <string name="quest_tree_denotation_title">What best describes this tree? Choose the first that applies.</string>
     <string name="quest_tree_denotation_landmark">Landmark</string>
     <string name="quest_tree_denotation_landmark_description">Remarkable due to its size or prominent location, visible from far away, useful for navigation</string>
     <string name="quest_tree_denotation_natural_monument">Natural monument</string>

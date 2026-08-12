@@ -662,7 +662,7 @@
     <string name="quest_service_times_title">Wann findet hier ein Gottesdienst statt?</string>
     <string name="quest_service_times_resurvey_title">Sind die Gottesdienstzeiten hier noch aktuell?</string>
     <string name="quest_kerb_type_title">Um welche Art von Bordstein handelt es sich hier?</string>
-    <string name="quest_tree_denotation_title">Wie bedeutsam ist dieser Baum?</string>
+    <string name="quest_tree_denotation_title">Was beschreibt diesen Baum am besten? Wähle die erste passende Option.</string>
     <string name="quest_tree_denotation_landmark">Wahrzeichen</string>
     <string name="quest_tree_denotation_landmark_description">Bedeutsam durch seine Größe oder markante Lage, von weitem sichtbar, nützlich zur Orientierung</string>
     <string name="quest_tree_denotation_natural_monument">Naturdenkmal</string>

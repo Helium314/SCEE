@@ -662,4 +662,21 @@
     <string name="quest_service_times_title">Wann findet hier ein Gottesdienst statt?</string>
     <string name="quest_service_times_resurvey_title">Sind die Gottesdienstzeiten hier noch aktuell?</string>
     <string name="quest_kerb_type_title">Um welche Art von Bordstein handelt es sich hier?</string>
+    <string name="quest_tree_denotation_title">Was beschreibt diesen Baum am besten? Wähle die erste passende Option.</string>
+    <string name="quest_tree_denotation_landmark">Wahrzeichen</string>
+    <string name="quest_tree_denotation_landmark_description">Bedeutsam durch seine Größe oder markante Lage, von weitem sichtbar, nützlich zur Orientierung</string>
+    <string name="quest_tree_denotation_natural_monument">Naturdenkmal</string>
+    <string name="quest_tree_denotation_natural_monument_description">Besonders alt und wegen seines Seltenheitswertes geschützt</string>
+    <string name="quest_tree_denotation_agricultural">Landwirtschaftlich</string>
+    <string name="quest_tree_denotation_agricultural_description">Landwirtschaftlich genutzt, z.B. ein Obstbaum in einer Obstplantage</string>
+    <string name="quest_tree_denotation_park">Park</string>
+    <string name="quest_tree_denotation_park_description">In einem Park oder einer anderen Grünanlage (Friedhof, Schulgelände, …)</string>
+    <string name="quest_tree_denotation_garden">Wohngarten</string>
+    <string name="quest_tree_denotation_garden_description">Im Garten eines Wohn- oder Mehrfamilienhauses</string>
+    <string name="quest_tree_denotation_avenue">Allee</string>
+    <string name="quest_tree_denotation_avenue_description">Entlang einer Straße oder Allee</string>
+    <string name="quest_tree_denotation_urban">Städtisches Gebiet</string>
+    <string name="quest_tree_denotation_urban_description">Innerhalb einer Ortschaft</string>
+    <string name="quest_tree_denotation_natural">Natürlich</string>
+    <string name="quest_tree_denotation_natural_description">Außerhalb einer Ortschaft</string>
 </resources>

@@ -251,6 +251,7 @@ import de.westnordost.streetcomplete.quests.traffic_signals_button.AddTrafficSig
 import de.westnordost.streetcomplete.quests.traffic_signals_sound.AddTrafficSignalsSound
 import de.westnordost.streetcomplete.quests.traffic_signals_vibrate.AddTrafficSignalsVibration
 import de.westnordost.streetcomplete.quests.trail_visibility.AddTrailVisibility
+import de.westnordost.streetcomplete.quests.tree.AddTreeDenotation
 import de.westnordost.streetcomplete.quests.tree.AddTreeGenus
 import de.westnordost.streetcomplete.quests.sac_scale.AddSacScale
 import de.westnordost.streetcomplete.quests.sauna_availability.AddSaunaAvailability
@@ -667,6 +668,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 33 to AddTrailVisibility(),
     EE_QUEST_OFFSET + 48 to AddSacScale(),
     EE_QUEST_OFFSET + 9 to AddTreeGenus(),
+    EE_QUEST_OFFSET + 68 to AddTreeDenotation(),
     EE_QUEST_OFFSET + 39 to AddBarrierLocked(),
     EE_QUEST_OFFSET + 26 to AddIsPharmacyDispensing(),
     EE_QUEST_OFFSET + 42 to AddGeneralRef(),

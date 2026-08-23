@@ -3,6 +3,7 @@ package de.westnordost.streetcomplete.screens.main.map
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.russhwolf.settings.ObservableSettings
+import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.DayNightBehavior
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.download.tiles.TilesRect
@@ -32,6 +33,7 @@ import de.westnordost.streetcomplete.screens.main.map.maplibre.toLatLon
 import de.westnordost.streetcomplete.util.getNameLabel
 import de.westnordost.streetcomplete.util.isDay
 import de.westnordost.streetcomplete.util.math.contains
+import de.westnordost.streetcomplete.util.name
 import de.westnordost.streetcomplete.view.toAndroidResourceId
 import kotlinx.atomicfu.locks.ReentrantLock
 import kotlinx.atomicfu.locks.withLock
@@ -284,7 +286,12 @@ class QuestPinsManager(
         val props = if (label == null) quest.key.toProperties() else (quest.key.toProperties() + ("label" to label))
         val order = questTypeOrdersLock.withLock { questTypeOrders[quest.type] ?: 0 }
 
-        val pins = quest.markerLocations.map { Pin(it, quest.type.icon.toAndroidResourceId()!!, props, order, geometry, color) }
+        val pins = quest.markerLocations.mapNotNull {
+            val resId = quest.type.icon.toAndroidResourceId()
+            if (ApplicationConstants.DEBUG) requireNotNull(resId) { "icon ${quest.type.icon.name} has no android resId" }
+            else return@mapNotNull null
+            Pin(it, resId, props, order, geometry, color)
+        }
         // storing importance in the quest requires the VisibleQuestsSource.cache to be invalidated on order change!
         // or what we do: clear quest.pins if the order changed
         quest.pins = pins

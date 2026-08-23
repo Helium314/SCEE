@@ -175,7 +175,7 @@ private fun QuestForm(
 
     @Composable
     fun createDefaultOtherAnswers(): List<AnswerItem> {
-        // todo: not if edit tags
+        if (LocalIsTagEditor.current) return emptyList()
         val result = ArrayList<AnswerItem>()
         if (
             element is Node // add moveNodeAnswer only if it's a free floating node or expert mode

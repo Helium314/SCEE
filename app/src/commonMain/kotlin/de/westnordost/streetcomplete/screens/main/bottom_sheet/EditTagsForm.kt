@@ -1,6 +1,7 @@
 package de.westnordost.streetcomplete.screens.main.bottom_sheet
 
 import android.content.res.Resources
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -9,14 +10,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,25 +38,45 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.Prefs
+import de.westnordost.streetcomplete.data.meta.CountryInfo
+import de.westnordost.streetcomplete.data.meta.CountryInfos
+import de.westnordost.streetcomplete.data.meta.get
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapChanges
+import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapChangesBuilder
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.createChanges
+import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
+import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
+import de.westnordost.streetcomplete.data.osm.mapdata.Node
+import de.westnordost.streetcomplete.data.osm.osmquests.Action
+import de.westnordost.streetcomplete.data.osm.osmquests.Answer
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuest
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.ic_add_24
 import de.westnordost.streetcomplete.resources.ic_undo_24
 import de.westnordost.streetcomplete.resources.tag_editor_last_edited
-import de.westnordost.streetcomplete.ui.common.Button2
 import de.westnordost.streetcomplete.ui.common.FloatingOkButton
 import de.westnordost.streetcomplete.ui.common.auto_complete_text.AutoCompleteTextField
 import de.westnordost.streetcomplete.ui.common.bottom_sheet.BottomSheetFormScaffold
 import de.westnordost.streetcomplete.ui.common.dialogs.ConfirmDiscardDialog
 import de.westnordost.streetcomplete.ui.common.opening_hours.DeleteRowButton
 import de.westnordost.streetcomplete.ui.common.quest.LocalElement
+import de.westnordost.streetcomplete.ui.common.quest.LocalIsTagEditor
+import de.westnordost.streetcomplete.ui.common.quest.LocalQuestType
+import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
+import de.westnordost.streetcomplete.util.ktx.copy
+import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.locale.getLanguagesForFeatureDictionary
 import de.westnordost.streetcomplete.util.logs.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -71,9 +95,15 @@ fun EditTagsForm(
     val featureDictionary: FeatureDictionary = koinInject()
     val prefs: Preferences = koinInject()
     val osmQuestController: OsmQuestController = koinInject()
+    val countryBoundaries: CountryBoundaries = koinInject()
+    val countryInfos: CountryInfos = koinInject()
+    val geometry = mapDataSource.getGeometry(originalElement.type, originalElement.id) ?: ElementPointGeometry((originalElement as Node).position)
+    val countryInfo = remember { countryInfos.get(countryBoundaries, geometry.center) }
     val resources = LocalResources.current
     var updatedTags by rememberSaveable { mutableStateOf<Map<String, String>>(originalElement.tags.toSortedMap()) }
+    val questElement = remember(updatedTags) { originalElement.copy(tags = updatedTags, timestampEdited = nowAsEpochMilliseconds()) }
     var confirmDiscard by remember { mutableStateOf(false) }
+    var shownQuest by remember { mutableStateOf<OsmQuest?>(null) }
     BackHandler {
         if (updatedTags != originalElement.tags) {
             confirmDiscard = true
@@ -166,9 +196,12 @@ fun EditTagsForm(
                             append(dateText)
                         }
                     }
-                    Text(text)
-                    FlowRow(itemVerticalAlignment = Alignment.CenterVertically) {
-                        Button2({ updatedTags += emptyEntry }) { Icon(painterResource(Res.drawable.ic_add_24), "add tag") }
+                    Text(text, Modifier.fillMaxWidth())
+                    FlowRow(Modifier.fillMaxWidth(), itemVerticalAlignment = Alignment.CenterVertically) {
+                        IconButton(
+                            { updatedTags += emptyEntry },
+                            Modifier.size(56.dp)
+                        ) { Icon(painterResource(Res.drawable.ic_add_24), "add tag") }
                         if (originalElement.id == 0L) {
                             val previousTagsForFeature: Map<String, String>? = try { featureDictionary
                                 .getByTags(
@@ -180,31 +213,26 @@ fun EditTagsForm(
                                 ?.let { Json.decodeFromString(it) }
                             } catch (e: Exception) { null }
                             if (previousTagsForFeature?.isNotEmpty() == true && previousTagsForFeature != originalElement.tags)
-                                Button2({ updatedTags = previousTagsForFeature.toSortedMap() }) {
+                                IconButton({ updatedTags = previousTagsForFeature.toSortedMap() }, Modifier.size(56.dp)) {
                                     Icon(painterResource(Res.drawable.ic_undo_24), "redo", modifier = Modifier.scale(-0.7f, 0.7f))
                                 }
                         }
-                        // todo: quests (if still possible)
-                        //  we need the CompositionLocal stuff
-                        //  and a way to actually access the action value
-                        //  then just try to show the form instead of the column
-                        // just showing the quest form should allow to avoid the default other answers
-/*                        val element = originalElement.copy(tags = updatedTags, timestampEdited = nowAsEpochMilliseconds())
-                        val geometry = mapDataSource.getGeometry(element.type, element.id) ?: ElementPointGeometry((originalElement as Node).position)
-                        val quests = runBlocking { osmQuestController.createNonPoiQuestsForElement(element, geometry) }
-                        val questType = quests.first().type
-                        questType.Form(
-                            { action ->
-                                if (action is Answer) {
-                                    val changesBuilder = StringMapChangesBuilder(element.tags)
-                                    questType.applyAnswerTo(action.value, changesBuilder, geometry, element.timestampEdited)
-                                    val changes = changesBuilder.create()
-                                    onEdit(UpdateElementTagsAction(element, changes))
-                                }
-                            },
-                            element,
-                            geometry
-                        )*/
+
+                        var quests by remember { mutableStateOf(runBlocking { osmQuestController.createNonPoiQuestsForElement(questElement, geometry) }) }
+                        val scope = rememberCoroutineScope { Dispatchers.IO }
+                        var questsJob by remember { mutableStateOf<Job?>(null) }
+                        LaunchedEffect(updatedTags) {
+                            questsJob?.cancel()
+                            questsJob = scope.launch {
+                                delay(1000)
+                                quests = osmQuestController.createNonPoiQuestsForElement(originalElement.copy(tags = updatedTags, timestampEdited = nowAsEpochMilliseconds()), geometry)
+                            }
+                        }
+                        quests.forEach {
+                            IconButton({ shownQuest = it }, Modifier.size(56.dp)) {
+                                Image(painterResource(it.type.icon), it.type.name)
+                            }
+                        }
                     }
                 }
             }
@@ -243,6 +271,51 @@ fun EditTagsForm(
         ConfirmDiscardDialog(
             onDismissRequest = { confirmDiscard = false },
             onConfirmed = onDismiss,
+        )
+    }
+    if (shownQuest != null) {
+        TagEditorQuestFormContainer(
+            shownQuest!!.type,
+            { shownQuest = null },
+            questElement,
+            geometry,
+            countryInfo
+        ) { updatedTags = it }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun <T> TagEditorQuestFormContainer(
+    questType: OsmElementQuestType<T>,
+    onDismiss: () -> Unit,
+    questElement: Element,
+    geometry: ElementGeometry,
+    countryInfo: CountryInfo,
+    onUpdateTags: (Map<String, String>) -> Unit
+) {
+    CompositionLocalProvider(
+        LocalQuestType provides questType,
+        LocalElement provides questElement,
+        LocalIsTagEditor provides true, // to remove default otherAnswers
+    ) {
+        questType.Form(
+            { action ->
+                if (action is Answer) {
+                    val changesBuilder = StringMapChangesBuilder(questElement.tags)
+                    questType.applyAnswerTo(action.value, changesBuilder, geometry, questElement.timestampEdited)
+                    val changes = changesBuilder.create()
+                    val tags = questElement.tags.toMutableMap()
+                    changes.applyTo(tags)
+                    onUpdateTags(tags)
+                    onDismiss()
+                } else if (action == Action.Dismiss) {
+                    onDismiss()
+                }
+            },
+            questElement,
+            geometry,
+            countryInfo
         )
     }
 }

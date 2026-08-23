@@ -174,7 +174,6 @@ fun ExternalSourceQuestFormContainer(
                     EditTagsForm(
                         onConfirmed = { onEdit(UpdateElementTagsAction(element!!, it)) },
                         onDismiss = onDismiss,
-//                        editType = quest.type,
                     )
                 }
             }

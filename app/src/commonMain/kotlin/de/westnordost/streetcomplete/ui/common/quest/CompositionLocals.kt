@@ -24,6 +24,8 @@ val LocalMapMarkersCallback = compositionLocalOf<((Iterable<Marker>) -> Unit)?> 
 
 val LocalGetOffsetCallback = compositionLocalOf<((LatLon) -> Offset?)?> { null }
 
+val LocalIsTagEditor = compositionLocalOf<Boolean> { false }
+
 @Immutable
 data class MapClick(
     val position: LatLon,

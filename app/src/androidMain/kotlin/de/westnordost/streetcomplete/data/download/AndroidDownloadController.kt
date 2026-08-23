@@ -70,7 +70,7 @@ class DownloadWorker(
             if (enqueuedDownloads.isNotEmpty()) {
                 val next = enqueuedDownloads.first()
                 enqueuedDownloads.removeFirstOrNull()
-                DownloadControllerAndroid(context).download(next, true)
+                AndroidDownloadController(context).download(next, true)
             }
         }
     }

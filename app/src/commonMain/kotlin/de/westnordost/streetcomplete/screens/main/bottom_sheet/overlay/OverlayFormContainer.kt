@@ -59,7 +59,7 @@ import org.koin.compose.koinInject
 @Composable
 fun OverlayFormContainer(
     onDismiss: () -> Unit,
-    onEdit: (action: ElementEditAction) -> Unit,
+    onEdit: (action: ElementEditAction, isTagEdit: Boolean, isEditInContextOf: Boolean) -> Unit,
     onLeaveNote: (noteText: String, noteImagePaths: List<String>, isGpx: Boolean) -> Unit,
     overlay: Overlay,
     element: Element?,
@@ -93,7 +93,7 @@ fun OverlayFormContainer(
             Action.EditTags -> state = OverlayFormState.EditTags
             Action.ManageAccess -> showAccessManager = true
             Action.UnderConstruction -> showConstructionDialog = true
-            is Edit -> onEdit(action.value)
+            is Edit -> onEdit(action.value, false, false)
         }
     }
 
@@ -131,7 +131,7 @@ fun OverlayFormContainer(
                 }
                 OverlayFormState.SplitWay -> {
                     SplitWayForm(
-                        onConfirmed = { onEdit(SplitWayAction(element, it)) },
+                        onConfirmed = { onEdit(SplitWayAction(element, it), false, true) },
                         onDismiss = onDismiss,
                         mapPosition = mapPosition,
                         way = element as Way,
@@ -140,7 +140,7 @@ fun OverlayFormContainer(
                 }
                 OverlayFormState.MoveNode -> {
                     MoveNodeForm(
-                        onConfirmed = { onEdit(MoveNodeAction(element, it)) },
+                        onConfirmed = { onEdit(MoveNodeAction(element, it), false, true) },
                         onDismiss = onDismiss,
                         mapPosition = mapPosition,
                         nodeOffsetInWindow = geometryOffsetInWindow,
@@ -150,9 +150,8 @@ fun OverlayFormContainer(
                 }
                 OverlayFormState.EditTags -> {
                     EditTagsForm(
-                        onConfirmed = { onEdit(UpdateElementTagsAction(element!!, it)) },
+                        onConfirmed = { onEdit(UpdateElementTagsAction(element!!, it), true, false) },
                         onDismiss = onDismiss,
-//                        editType = overlay,
                     )
                 }
             }
@@ -164,14 +163,14 @@ fun OverlayFormContainer(
             tags = element!!.tags,
             countryInfo = countryInfo
         ) {
-            onEdit(UpdateElementTagsAction(element, it.create()))
+            onEdit(UpdateElementTagsAction(element, it.create()), false, true)
         }
     }
     if (showConstructionDialog) {
         ConstructionDialog(
             onDismissRequest = { showConstructionDialog = false },
             element = element!!,
-            onEdit = { onEdit(UpdateElementTagsAction(element, it)) }
+            onEdit = { onEdit(UpdateElementTagsAction(element, it), false, true) }
         )
     }
 }

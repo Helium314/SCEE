@@ -35,6 +35,8 @@ import de.westnordost.streetcomplete.osm.ConstructionDialog
 import de.westnordost.streetcomplete.osm.places.applyReplacePlaceTo
 import de.westnordost.streetcomplete.osm.places.getPlaceAsDisused
 import de.westnordost.streetcomplete.quests.custom.CustomQuestList
+import de.westnordost.streetcomplete.quests.existence.CheckExistence
+import de.westnordost.streetcomplete.quests.shop_type.CheckShopExistence
 import de.westnordost.streetcomplete.quests.shop_type.ShopGoneDialog
 import de.westnordost.streetcomplete.quests.shop_type.ShopType
 import de.westnordost.streetcomplete.quests.shop_type.ShopTypeAnswer
@@ -72,7 +74,7 @@ import org.koin.compose.koinInject
 @Composable
 fun <T> OsmQuestFormContainer(
     onDismiss: () -> Unit,
-    onEdit: (action: ElementEditAction) -> Unit,
+    onEdit: (action: ElementEditAction, isTagEdit: Boolean, isEditInContextOf: Boolean) -> Unit,
     onLeaveNote: (noteText: String, noteImagePaths: List<String>, isGpx: Boolean) -> Unit,
     onHideQuest: (tempHide: Boolean) -> Unit,
     questType: OsmElementQuestType<T>,
@@ -123,7 +125,7 @@ fun <T> OsmQuestFormContainer(
                 val changesBuilder = StringMapChangesBuilder(element.tags)
                 questType.applyAnswerTo(action.value, changesBuilder, geometry, element.timestampEdited)
                 val changes = changesBuilder.create()
-                onEdit(UpdateElementTagsAction(element, changes))
+                onEdit(UpdateElementTagsAction(element, changes), false, false)
             }
         }
     }
@@ -162,7 +164,7 @@ fun <T> OsmQuestFormContainer(
                 }
                 QuestFormState.SplitWay -> {
                     SplitWayForm(
-                        onConfirmed = { onEdit(SplitWayAction(element, it)) },
+                        onConfirmed = { onEdit(SplitWayAction(element, it), false, true) },
                         onDismiss = onDismiss,
                         mapPosition = mapPosition,
                         way = element as Way,
@@ -171,7 +173,7 @@ fun <T> OsmQuestFormContainer(
                 }
                 QuestFormState.MoveNode -> {
                     MoveNodeForm(
-                        onConfirmed = { onEdit(MoveNodeAction(element, it)) },
+                        onConfirmed = { onEdit(MoveNodeAction(element, it), false, true) },
                         onDismiss = onDismiss,
                         mapPosition = mapPosition,
                         nodeOffsetInWindow = geometryOffsetInWindow,
@@ -181,9 +183,8 @@ fun <T> OsmQuestFormContainer(
                 }
                 QuestFormState.EditTags -> {
                     EditTagsForm(
-                        onConfirmed = { onEdit(UpdateElementTagsAction(element, it)) },
+                        onConfirmed = { onEdit(UpdateElementTagsAction(element, it), true, false) },
                         onDismiss = onDismiss,
-//                        editType = questType,
                     )
                 }
             }
@@ -208,17 +209,18 @@ fun <T> OsmQuestFormContainer(
         ShopGoneDialog(
             onDismissRequest = { confirmReplacePlace = false },
             onSelectAnswer = { answer ->
+                val isOtherEdit = questType !is CheckShopExistence && questType !is CheckExistence
                 when (answer) {
                     is ShopType -> {
                         val builder = StringMapChangesBuilder(element.tags)
                         answer.feature.applyReplacePlaceTo(builder)
-                        onEdit(UpdateElementTagsAction(element, builder.create()))
+                        onEdit(UpdateElementTagsAction(element, builder.create()), false, isOtherEdit)
                     }
                     ShopTypeAnswer.IsShopVacant -> {
                         val vacantShop = featureDictionary.getPlaceAsDisused(element, country = countryInfo.countryOrSubdivisionCode)
                         val builder = StringMapChangesBuilder(element.tags)
                         vacantShop.applyReplacePlaceTo(builder)
-                        onEdit(UpdateElementTagsAction(element, builder.create()))
+                        onEdit(UpdateElementTagsAction(element, builder.create()), false, isOtherEdit)
                     }
                     ShopTypeAnswer.LeaveNote -> {
                         state = QuestFormState.LeaveNote
@@ -231,10 +233,11 @@ fun <T> OsmQuestFormContainer(
         )
     }
     if (confirmDeletePoi) {
+        val isOtherEdit = questType !is CheckShopExistence && questType !is CheckExistence
         ConfirmDeleteDialog(
             onDismissRequest = { confirmDeletePoi = false },
             onConfirmDelete = {
-                onEdit(DeletePoiNodeAction(element as Node))
+                onEdit(DeletePoiNodeAction(element as Node), false, isOtherEdit)
             },
             onLeaveNote = {
                 state = QuestFormState.LeaveNote
@@ -259,14 +262,14 @@ fun <T> OsmQuestFormContainer(
             tags = element.tags,
             countryInfo = countryInfo
         ) {
-            onEdit(UpdateElementTagsAction(element, it.create()))
+            onEdit(UpdateElementTagsAction(element, it.create()), false, true)
         }
     }
     if (showConstructionDialog) {
         ConstructionDialog(
             onDismissRequest = { showConstructionDialog = false },
             element = element,
-            onEdit = { onEdit(UpdateElementTagsAction(element, it)) }
+            onEdit = { onEdit(UpdateElementTagsAction(element, it), false, true) }
         )
     }
 }

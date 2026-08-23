@@ -92,7 +92,7 @@ fun ShowQuestFormsScreen(
 
             OsmQuestFormContainer(
                 onDismiss = { shownQuestType = null },
-                onEdit = { action ->
+                onEdit = { action, isTagEdit, isEditInContextOf ->
                     when (action) {
                         is MoveNodeAction -> {
                             message = "Moving node"

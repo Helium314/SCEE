@@ -498,9 +498,10 @@ val copyIconsToAndroid by tasks.registering(CopyIconsTask::class) {
     filter = {
         // quest pins, icons for overlays
         it.startsWith("quest_") ||
-        it.startsWith("ic_quest_") || // todo: remove this and rename the quest icons instead (or wait for full compose)
+        it.startsWith("ic_quest_") ||
         it == "ic_custom_overlay.xml" ||
         it == "ic_add_poi.xml" ||
+        it == "ic_edit_tags.xml" ||
         it.startsWith("crossing_markings") ||
         it.startsWith("building_") ||
         it.startsWith("preset_") ||

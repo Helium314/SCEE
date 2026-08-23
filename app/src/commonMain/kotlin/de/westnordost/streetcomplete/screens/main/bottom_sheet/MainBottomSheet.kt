@@ -16,6 +16,7 @@ import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.edits.addNodeEdit
 import de.westnordost.streetcomplete.data.osm.edits.create.CreateNodeAction
 import de.westnordost.streetcomplete.data.osm.edits.create.createNodeAction
+import de.westnordost.streetcomplete.data.osm.edits.tagEdit
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
@@ -111,12 +112,13 @@ fun MainBottomSheet(
         is ShownBottomSheet.OsmQuest -> {
             OsmQuestFormContainer(
                 onDismiss = onDismiss,
-                onEdit = { action ->
+                onEdit = { action, isTagEdit, isEditInContextOf ->
                     if (SuppressSurveyConfirmation || viewModel.isSurvey(shownBottomSheet.quest.geometry)) {
                         viewModel.submitEdit(
-                            elementEditType = shownBottomSheet.quest.type,
+                            elementEditType = if (isTagEdit) tagEdit else shownBottomSheet.quest.type,
                             geometry = shownBottomSheet.quest.geometry,
-                            elementEditAction = action
+                            elementEditAction = action,
+                            hasExtra = isEditInContextOf && !isTagEdit
                         )
                         onSolved(shownBottomSheet.quest.type.icon, shownBottomSheet.quest.position)
                         onDismiss()
@@ -197,14 +199,15 @@ fun MainBottomSheet(
         is ShownBottomSheet.Overlay -> {
             OverlayFormContainer(
                 onDismiss = onDismiss,
-                onEdit = { action ->
+                onEdit = { action, isTagEdit, isEditInContextOf ->
                     val geometry = shownBottomSheet.geometry ?: ElementPointGeometry(mapPosition)
 
                     if (SuppressSurveyConfirmation || viewModel.isSurvey(geometry)) {
                         viewModel.submitEdit(
-                            elementEditType = shownBottomSheet.overlay,
+                            elementEditType = if (isTagEdit) tagEdit else shownBottomSheet.overlay,
                             geometry = geometry,
-                            elementEditAction = action
+                            elementEditAction = action,
+                            hasExtra = isEditInContextOf && !isTagEdit
                         )
                         onSolved(shownBottomSheet.overlay.icon, geometry.center)
                         onDismiss()

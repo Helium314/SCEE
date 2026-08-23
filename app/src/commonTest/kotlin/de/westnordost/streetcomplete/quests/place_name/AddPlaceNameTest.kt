@@ -16,7 +16,7 @@ class AddPlaceNameTest {
     @Test fun `apply no name answer`() {
         assertEquals(
             setOf(StringMapEntryAdd("name:signed", "no")),
-            questType.answerApplied(listOf())
+            questType.answerApplied(PlaceName(listOf()))
         )
     }
 
@@ -26,10 +26,10 @@ class AddPlaceNameTest {
                 StringMapEntryAdd("name", "Hey ya!"),
                 StringMapEntryAdd("name:de", "He ja!")
             ),
-            questType.answerApplied(listOf(
+            questType.answerApplied(PlaceName(listOf(
                 LocalizedName("", "Hey ya!"),
                 LocalizedName("de", "He ja!"),
-            ))
+            )))
         )
     }
 }

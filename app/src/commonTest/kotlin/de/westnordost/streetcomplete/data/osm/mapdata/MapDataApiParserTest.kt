@@ -58,7 +58,7 @@ class MapDataApiParserTest {
         buffer.writeString("""
             <osm>
             <relation id="1" version="1" timestamp="2023-05-08T14:14:51Z">
-              <tag k="type" v="route"/>
+              <tag k="type" v="boundary"/>
             </relation>
             </osm>
         """)

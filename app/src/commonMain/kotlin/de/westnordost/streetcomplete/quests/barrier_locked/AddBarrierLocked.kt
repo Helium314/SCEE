@@ -17,6 +17,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
+import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.Answer
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
@@ -24,11 +25,13 @@ import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.opening_hours.HierarchicOpeningHours
 import de.westnordost.streetcomplete.osm.time_restriction.TimeRestriction
 import de.westnordost.streetcomplete.osm.time_restriction.TimeRestrictionInput
+import de.westnordost.streetcomplete.quests.getPrefixedFullElementSelectionPref
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
 import de.westnordost.streetcomplete.ui.util.rememberSerializable
 import org.jetbrains.compose.resources.stringResource
+import kotlin.sequences.asIterable
 
 class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer> {
 
@@ -100,7 +103,7 @@ class AddBarrierLocked : OsmElementQuestType<BarrierLockedAnswer> {
     override fun isApplicableTo(element: Element): Boolean = elementFilter.matches(element)
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
-        val base = getApplicableElements(mapData)
+        val base = mapData.filter(elementFilter).asIterable()
 
         // Build a lookup from node id to the ways that are connected to it
         val waysByNodeId = mutableMapOf<Long, MutableList<Way>>()

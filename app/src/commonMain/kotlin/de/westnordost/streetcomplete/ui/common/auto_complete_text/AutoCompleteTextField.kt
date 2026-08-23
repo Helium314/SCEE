@@ -72,6 +72,7 @@ fun AutoCompleteTextField(
     startExpanded: Boolean = false,
     startExpandedWithoutFocus: Boolean = false,
     onSelectedSuggestion: () -> Unit = {},
+    filterSuggestions: Boolean = true,
 ) {
     val windowInfo = LocalWindowInfo.current
     val density = LocalDensity.current
@@ -143,7 +144,9 @@ fun AutoCompleteTextField(
                     transformOriginState.value = calculateTransformOrigin(parentBounds, menuBounds)
                 }
             // don't show suggestion for text we already have, and don't show empty dropdown popup
-            val filtered = suggestions.filter { it.startsWith(value.text, ignoreCase = true) && it != value.text }
+            val filtered = if (filterSuggestions)
+                    suggestions.filter { it.startsWith(value.text, ignoreCase = true) && it != value.text }
+                else suggestions
             if (filtered.isEmpty()) return@Box
             Popup(
                 popupPositionProvider = popupPositionProvider,

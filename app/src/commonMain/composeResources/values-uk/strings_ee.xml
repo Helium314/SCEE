@@ -654,4 +654,21 @@
     <string name="quest_service_times_title">Коли тут проводяться богослужіння?</string>
     <string name="quest_service_times_resurvey_title">Чи є актуальним наведений тут розклад богослужінь?</string>
     <string name="quest_railwayPlatformRef_abc">ABC</string>
+    <string name="quest_tree_denotation_title">Який опис підходить для цього дерева? Виберіть найкращий варіант.</string>
+    <string name="quest_tree_denotation_landmark">Орієнтир</string>
+    <string name="quest_tree_denotation_landmark_description">Примітне завдяки своїм розмірам або вигідному розташуванню, помітне здалеку, зручне для орієнтації</string>
+    <string name="quest_tree_denotation_natural_monument">Пам’ятка природи</string>
+    <string name="quest_tree_denotation_natural_monument_description">Особливо старе дерево, яке охороняється через свою унікальність</string>
+    <string name="quest_tree_denotation_agricultural">Сільськогосподарське</string>
+    <string name="quest_tree_denotation_agricultural_description">Використовується в сільському господарстві, наприклад, фруктове дерево у саду</string>
+    <string name="quest_tree_denotation_park">Парк</string>
+    <string name="quest_tree_denotation_park_description">У парку або іншій зеленій зоні (кладовище, територія школи тощо)</string>
+    <string name="quest_tree_denotation_garden">Присадибний сад</string>
+    <string name="quest_tree_denotation_garden_description">У саду біля будинку або багатоквартирного будинку</string>
+    <string name="quest_tree_denotation_avenue">Алея</string>
+    <string name="quest_tree_denotation_avenue_description">Уздовж алеї або дороги</string>
+    <string name="quest_tree_denotation_urban">Міська територія</string>
+    <string name="quest_tree_denotation_urban_description">У межах населеного пункту</string>
+    <string name="quest_tree_denotation_natural">Природа</string>
+    <string name="quest_tree_denotation_natural_description">За межами населеного пункту</string>
 </resources>

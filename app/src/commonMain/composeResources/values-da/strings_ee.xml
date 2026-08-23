@@ -98,7 +98,7 @@
     <string name="pref_create_node_show_keyboard_title">Vis automatisk tastatur, når du tilføjer et punkt</string>
     <string name="pref_disable_navigation_mode_title">Deaktivér navigationstilstand</string>
     <string name="import_export_settings">Andre app-indstillinger</string>
-    <string name="pref_search_more_languages_summary">Egenskabssøgning viser resultater på alle system- og lokalsprog</string>
+    <string name="pref_search_more_languages_summary">Objektsøgning viser resultater på alle system- og lokalsprog</string>
     <string name="day_night_priority">Øg prioriteten af opgaver, der passer til de aktuelle dagtimer</string>
     <string name="advanced_resurvey_title">Indstil dato og nøgler for ny undersøgelse</string>
     <string name="day_night_visibility">Vis ikke opgaver, der ikke passer til de aktuelle dagtimer</string>
@@ -663,4 +663,21 @@
     <string name="quest_orchard_type_plantation">Plantage</string>
     <string name="quest_orchard_type_meadow_orchard_description">Store træer med god afstand mellem dem</string>
     <string name="quest_orchard_type_plantation_description">Spindeltræer, kort afstand (typisk kommercielt)</string>
+    <string name="quest_tree_denotation_title">Hvad beskriver dette træ bedst? Vælg det første, der passer.</string>
+    <string name="quest_tree_denotation_landmark">Vartegn</string>
+    <string name="quest_tree_denotation_landmark_description">Bemærkelsesværdig på grund af sin størrelse eller fremtrædende placering, synlig på lang afstand, nyttig til navigation</string>
+    <string name="quest_tree_denotation_natural_monument">Naturmonument</string>
+    <string name="quest_tree_denotation_natural_monument_description">Særligt gammel og fredet på grund af sin enestående karakter</string>
+    <string name="quest_tree_denotation_agricultural">Landbrug</string>
+    <string name="quest_tree_denotation_agricultural_description">Til landbrug, f.eks. et frugttræ i en frugtplantage</string>
+    <string name="quest_tree_denotation_park">Park</string>
+    <string name="quest_tree_denotation_park_description">I en park eller et andet grønt område (kirkegård, skolegård, …)</string>
+    <string name="quest_tree_denotation_garden">Have ved en bolig</string>
+    <string name="quest_tree_denotation_garden_description">I haven ved et hus eller en boligblok</string>
+    <string name="quest_tree_denotation_avenue">Allé</string>
+    <string name="quest_tree_denotation_avenue_description">Langs en allé eller vej</string>
+    <string name="quest_tree_denotation_urban">Byområde</string>
+    <string name="quest_tree_denotation_urban_description">Inde i et boligområde</string>
+    <string name="quest_tree_denotation_natural">Naturlig</string>
+    <string name="quest_tree_denotation_natural_description">Uden for et boligområde</string>
 </resources>

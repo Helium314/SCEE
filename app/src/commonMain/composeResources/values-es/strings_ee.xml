@@ -65,7 +65,7 @@
     <string name="pref_show_nearby_quests_title">Mostrar tareas cercanas</string>
     <string name="show_nearby_quests_visible">Mostrar solo los tipos de tareas habilitadas</string>
     <string name="show_nearby_quests_even_hidden">Mostrar todos los tipos y tareas ocultas</string>
-    <string name="pref_search_more_languages_summary">La función de búsqueda muestra resultados en todos los sistemas y en el idioma local</string>
+    <string name="pref_search_more_languages_summary">Buscar funciones en todos los idiomas del sistema y locales</string>
     <string name="pref_create_node_show_keyboard_title">Mostrar automáticamente el teclado al agregar un nodo</string>
     <string name="pref_recent_answers_first_min_lines_message">Mueva las respuestas recientes al frente si el formulario de respuesta de la tarea tiene más líneas de imágenes</string>
     <string name="pref_show_nearby_quests_summary">Permite cambiar tareas cercanas cuando se muestra un formulario de tarea</string>
@@ -588,7 +588,7 @@
     <string name="file_loading_error">Error al cargar el archivo</string>
     <string name="pref_really_all_notes_title">Mostrar todas las notas" significa TODAS</string>
     <string name="pref_really_all_notes_summary">Cuando solicite mostrar todas las anotaciones, incluso aquellas que usted creó (o comentó), hágalo</string>
-    <string name="pref_custom_geometry_title">Mostrar elementos del mapa a partir de un archivo GeoJSON</string>
+    <string name="pref_custom_geometry_title">Mostrar elementos del mapa a partir de un archivo GeoJson</string>
     <string name="pref_custom_geometry_info">Si desea mostrar texto, este debe estar en el atributo "name</string>
     <string name="pref_rotate_while_zooming_title">Permitir la rotación al hacer zoom</string>
     <string name="pref_rotate_angle_threshold_title">Límite del gesto de rotación</string>
@@ -669,4 +669,21 @@
     <string name="quest_service_times_title">¿Cuándo se celebran los oficios religiosos aquí?</string>
     <string name="quest_service_times_resurvey_title">¿Se mantienen vigentes los horarios del servicio religioso en este lugar?</string>
     <string name="quest_kerb_type_title">¿Qué clase de bordillo es este?</string>
+    <string name="quest_tree_denotation_title">¿Qué describe mejor este árbol? Elija la primera opción que corresponda.</string>
+    <string name="quest_tree_denotation_landmark">Punto de referencia</string>
+    <string name="quest_tree_denotation_landmark_description">Destaca por su tamaño o por su ubicación privilegiada, es visible desde lejos y resulta útil para la navegación</string>
+    <string name="quest_tree_denotation_natural_monument">Monumento natural</string>
+    <string name="quest_tree_denotation_natural_monument_description">Especialmente antiguo y protegido por su singularidad</string>
+    <string name="quest_tree_denotation_agricultural">Agrícola</string>
+    <string name="quest_tree_denotation_agricultural_description">En el ámbito agrícola, por ejemplo, un árbol frutal en un huerto</string>
+    <string name="quest_tree_denotation_park">Parque</string>
+    <string name="quest_tree_denotation_park_description">En un parque u otro espacio verde (cementerio, patios de colegio, …)</string>
+    <string name="quest_tree_denotation_garden">Jardín residencial</string>
+    <string name="quest_tree_denotation_garden_description">En el jardín de una casa o de un edificio de apartamentos</string>
+    <string name="quest_tree_denotation_avenue">Avenida</string>
+    <string name="quest_tree_denotation_avenue_description">A lo largo de una avenida o una carretera</string>
+    <string name="quest_tree_denotation_urban">Área urbana</string>
+    <string name="quest_tree_denotation_urban_description">Dentro de un núcleo de población</string>
+    <string name="quest_tree_denotation_natural">Natural</string>
+    <string name="quest_tree_denotation_natural_description">Fuera de un núcleo de población</string>
 </resources>

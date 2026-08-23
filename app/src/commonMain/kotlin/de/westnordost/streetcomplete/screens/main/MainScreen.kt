@@ -142,7 +142,6 @@ fun MainScreen(
     var showOverlaysTutorial by remember { mutableStateOf(false) }
     var showIntroTutorial by remember { mutableStateOf(false) }
     var showTeamModeWizard by remember { mutableStateOf(false) }
-    var showMainMenuDialog by remember { mutableStateOf(false) }
     var shownMessage by remember { mutableStateOf<Message?>(null) }
     var showToast by remember { mutableStateOf<Toast?>(null) }
 
@@ -226,7 +225,7 @@ fun MainScreen(
 
                 shownUnsyncedEdits = if (!isAutoSync) unsyncedEditsCount else 0,
                 shownIndexInTeam = if (isTeamMode) indexInTeam else null,
-                onClickMainMenu = { showMainMenuDialog = true },
+                onClickMainMenu = { viewModel.showMainMenuDialog.value = true },
 
                 showZoomButtons = showZoomButtons,
                 onClickZoomIn = onClickZoomIn,
@@ -332,11 +331,11 @@ fun MainScreen(
         )
     }
 
-    if (showMainMenuDialog) {
+    if (viewModel.showMainMenuDialog.value) {
         val requester = remember { FocusRequester() } // necessary for receiving key event
         val context = LocalContext.current
         MainMenuDialog(
-            onDismissRequest = { showMainMenuDialog = false },
+            onDismissRequest = { viewModel.showMainMenuDialog.value = false },
             onClickProfile = onClickProfile,
             onClickSettings = onClickSettings,
             onClickAbout = onClickAbout,
@@ -354,7 +353,8 @@ fun MainScreen(
                 .onKeyEvent {
                     if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_MENU && it.nativeKeyEvent.action == KeyEvent.ACTION_UP){
                         onClickSettings()
-                        showMainMenuDialog = false
+                        viewModel.showMainMenuDialog.value = false
+                        return@onKeyEvent true
                     }
                     false
                 }

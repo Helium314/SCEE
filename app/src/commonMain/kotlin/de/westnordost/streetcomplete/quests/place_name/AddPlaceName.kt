@@ -90,6 +90,7 @@ class AddPlaceName(
     @Composable
     override fun Form(on: (QuestAction<PlaceNameAnswer>) -> Unit, element: Element, geometry: ElementGeometry, countryInfo: CountryInfo) {
         var showBrandNameDialog by remember { mutableStateOf(false) }
+        val initialLocalizedNames = remember(element) { parseLocalizedNames(element.tags) }
         LocalizedNameQuestForm(
             on = {
                 on(when (it) {
@@ -98,7 +99,7 @@ class AddPlaceName(
                 })
             },
             countryInfo = countryInfo,
-            initialLocalizedNames = parseLocalizedNames(element.tags),
+            initialLocalizedNames = initialLocalizedNames,
             otherAnswers = { listOfNotNull(
                 if (!element.tags.containsKey("shop") && !element.tags.containsKey("amenity")
                     && !element.tags.containsKey("leisure") && !element.tags.containsKey("tourism")) null

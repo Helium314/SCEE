@@ -33,7 +33,7 @@ class AddServiceTimes : OsmElementQuestType<CollectionTimesAnswer> {
 
     override val changesetComment = "Survey religious service times"
     override val wikiLink = "Key:collection_times"
-    override val icon = Res.drawable.religion_service_times
+    override val icon = Res.drawable.quest_religion_service_times
     override val title = Res.string.quest_service_times_title
     override val achievements = listOf(CITIZEN)
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee

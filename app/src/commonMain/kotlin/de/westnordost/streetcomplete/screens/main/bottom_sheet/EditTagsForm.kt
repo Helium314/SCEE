@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
@@ -23,6 +24,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
@@ -87,9 +90,6 @@ fun EditTagsForm(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) { // lazy column has infinite height, so we need a normal column
                     updatedTags.forEach { (k, v) ->
                         // todo: width is weird, why is 0.4 and 0.8 necessary to have almost equal widths? this has weird effect on AutoCompleteTextField dropdown
-                        // todo: suggestions in AutoCompleteTextField should not show if empty after filtering or the only suggestion is already written
-                        // todo: option for AutoCompleteTextField to start expanded
-                        // todo: control focus (selecting a key or return moves to value, adding a new row focuses on key)
                         Row(modifier = Modifier.fillMaxWidth()) {
                             var key by remember { mutableStateOf(TextFieldValue(k)) }
                             var value by remember { mutableStateOf(TextFieldValue(v)) }
@@ -111,6 +111,11 @@ fun EditTagsForm(
                                 valueSuggestions = suggestions
                             }
 
+                            val valueFocusRequester = remember { FocusRequester() }
+                            val keyFocusRequester = remember { FocusRequester() }
+                            LaunchedEffect(Unit) {
+                                if (k.isEmpty() && v.isEmpty()) keyFocusRequester.requestFocus()
+                            }
                             AutoCompleteTextField(
                                 value = key,
                                 onValueChange = {
@@ -121,8 +126,12 @@ fun EditTagsForm(
                                     key = it
                                     updatedTags = mapOf(*entries.toTypedArray())
                                 },
-                                modifier = Modifier.fillMaxWidth(0.4f),
-                                suggestions = keySuggestions
+                                modifier = Modifier.fillMaxWidth(0.4f).focusRequester(keyFocusRequester),
+                                suggestions = keySuggestions,
+                                startExpanded = true,
+                                onSelectedSuggestion = { valueFocusRequester.requestFocus() },
+                                keyboardActions = KeyboardActions(onDone = { valueFocusRequester.requestFocus() }),
+                                singleLine = true,
                             )
                             Spacer(Modifier.size(6.dp))
                             AutoCompleteTextField(
@@ -133,8 +142,10 @@ fun EditTagsForm(
                                     value = it
                                     updatedTags = m
                                 },
-                                modifier = Modifier.fillMaxWidth(0.8f),
-                                suggestions = valueSuggestions
+                                modifier = Modifier.fillMaxWidth(0.8f).focusRequester(valueFocusRequester),
+                                suggestions = valueSuggestions,
+                                startExpanded = true,
+                                singleLine = true,
                             )
                             DeleteRowButton(
                                 onClick = {

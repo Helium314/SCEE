@@ -68,13 +68,15 @@ fun AutoCompleteTextField(
     interactionSource: MutableInteractionSource? = null,
     shape: Shape = TextFieldDefaults.TextFieldShape,
     colors: TextFieldColors = TextFieldDefaults.textFieldColors(),
+    startExpanded: Boolean = false,
+    onSelectedSuggestion: () -> Unit = {},
 ) {
     val windowInfo = LocalWindowInfo.current
     val density = LocalDensity.current
     val verticalMarginInPx = with(density) { MenuVerticalMargin.roundToPx() }
 
     var isFocused by remember { mutableStateOf(false) }
-    var isExpanded by remember { mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(startExpanded) }
 
     var width by remember { mutableIntStateOf(0) }
     var maxMenuHeight by remember { mutableIntStateOf(0) }
@@ -137,7 +139,9 @@ fun AutoCompleteTextField(
                 DropdownMenuPositionProvider(DpOffset.Zero, density) { parentBounds, menuBounds ->
                     transformOriginState.value = calculateTransformOrigin(parentBounds, menuBounds)
                 }
-
+            // don't show suggestion for text we already have, and don't show empty dropdown popup
+            val filtered = suggestions.filter { it.startsWith(value.text, ignoreCase = true) && it != value.text }
+            if (filtered.isEmpty()) return@Box
             Popup(
                 popupPositionProvider = popupPositionProvider,
                 onDismissRequest = { isExpanded = false },
@@ -150,13 +154,14 @@ fun AutoCompleteTextField(
                         .width(width.pxToDp())
                         .heightIn(max = maxMenuHeight.pxToDp()),
                 ) {
-                    for (suggestion in suggestions.filter { it.startsWith(value.text, ignoreCase = true) }) {
+                    for (suggestion in filtered) {
                         DropdownMenuItem(onClick = {
                             onValueChange(value.copy(
                                 text = suggestion,
                                 selection = TextRange(suggestion.length)
                             ))
                             isExpanded = false
+                            onSelectedSuggestion()
                         }) {
                             Text(suggestion)
                         }

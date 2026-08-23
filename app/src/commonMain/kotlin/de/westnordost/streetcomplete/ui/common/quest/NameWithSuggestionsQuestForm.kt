@@ -25,6 +25,7 @@ fun NameWithSuggestionsQuestForm(
     suggestions: List<String>?,
     modifier: Modifier = Modifier,
     otherAnswers: @Composable (() -> List<AnswerItem>) = { emptyList() },
+    showSuggestionsOnStart: Boolean = false,
 ) {
     var name by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue())
@@ -42,11 +43,13 @@ fun NameWithSuggestionsQuestForm(
             value = name,
             onValueChange = { name = it },
             suggestions = suggestions
-                ?.takeIf { name.text.length >= 1 }
+                ?.takeIf { name.text.length >= if (showSuggestionsOnStart) 0 else 1 }
                 ?.filter { it.startsWith(name.text, ignoreCase = true) }
                 .orEmpty(),
             textStyle = MaterialTheme.typography.largeInput,
-            isError = isTooLong
+            isError = isTooLong,
+            startExpanded = showSuggestionsOnStart,
+            startExpandedWithoutFocus = showSuggestionsOnStart,
         )
     }
 }

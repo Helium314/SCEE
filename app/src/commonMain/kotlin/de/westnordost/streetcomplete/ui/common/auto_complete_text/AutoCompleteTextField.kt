@@ -42,6 +42,7 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import de.westnordost.streetcomplete.ui.common.DropdownMenuItem
 import de.westnordost.streetcomplete.ui.ktx.pxToDp
+import de.westnordost.streetcomplete.util.logs.Log
 import kotlin.math.max
 
 /** A TextField that suggests auto-completion based on the supplied [suggestions] */
@@ -69,6 +70,7 @@ fun AutoCompleteTextField(
     shape: Shape = TextFieldDefaults.TextFieldShape,
     colors: TextFieldColors = TextFieldDefaults.textFieldColors(),
     startExpanded: Boolean = false,
+    startExpandedWithoutFocus: Boolean = false,
     onSelectedSuggestion: () -> Unit = {},
 ) {
     val windowInfo = LocalWindowInfo.current
@@ -77,6 +79,7 @@ fun AutoCompleteTextField(
 
     var isFocused by remember { mutableStateOf(false) }
     var isExpanded by remember { mutableStateOf(startExpanded) }
+    var startExpandedWithoutFocus by remember { mutableStateOf(startExpandedWithoutFocus) }
 
     var width by remember { mutableIntStateOf(0) }
     var maxMenuHeight by remember { mutableIntStateOf(0) }
@@ -128,7 +131,7 @@ fun AutoCompleteTextField(
             colors = colors,
         )
 
-        val expanded = isFocused && isExpanded && suggestions.isNotEmpty()
+        val expanded = (isFocused || startExpandedWithoutFocus) && isExpanded && suggestions.isNotEmpty()
 
         val expandedStates = remember { MutableTransitionState(false) }
         expandedStates.targetState = expanded

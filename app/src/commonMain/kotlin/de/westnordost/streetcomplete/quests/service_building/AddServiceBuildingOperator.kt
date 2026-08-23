@@ -11,7 +11,6 @@ import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
 import de.westnordost.streetcomplete.data.preferences.addLastPicked
 import de.westnordost.streetcomplete.data.preferences.getLastPicked
 import de.westnordost.streetcomplete.osm.Tags
-import de.westnordost.streetcomplete.quests.clothing_bin_operator.ClothingBinOperator
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
@@ -46,7 +45,8 @@ class AddServiceBuildingOperator : OsmFilterQuestType<ServiceBuildingOperatorAns
                 is Action -> it
             }) },
             suggestions = (lastPickedAnswers + OPERATORS).distinct(),
-            otherAnswers = { listOf(AnswerItem(stringResource(Res.string.quest_disused)) { on(Answer(DisusedServiceBuilding)) }) }
+            otherAnswers = { listOf(AnswerItem(stringResource(Res.string.quest_disused)) { on(Answer(DisusedServiceBuilding)) }) },
+            showSuggestionsOnStart = true
         )
     }
 

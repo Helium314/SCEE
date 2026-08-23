@@ -79,11 +79,14 @@ fun TreeGenusForm(on: (QuestAction<TreeAnswer>) -> Unit) {
             on(Answer(NotTreeButStump))})
         }
     ) {
+        // todo: AutoCompleteTextField filters by startsWith, but really should not in this case!
         AutoCompleteTextField(
             value = name,
             onValueChange = { name = it },
             suggestions = getTrees(name.text.trim(), lastPicked).map { it.toDisplayString() },
             textStyle = MaterialTheme.typography.largeInput,
+            startExpanded = true,
+            startExpandedWithoutFocus = true
         )
     }
 }

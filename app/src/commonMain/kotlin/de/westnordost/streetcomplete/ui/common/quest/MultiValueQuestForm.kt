@@ -72,7 +72,9 @@ fun MultiValueQuestForm(
                 textStyle = MaterialTheme.typography.largeInput,
                 isError = isTooLong,
                 keyboardOptions = keyboardOptions,
-                placeholder = hint?.let { { Text(it) } }
+                placeholder = hint?.let { { Text(it) } },
+                startExpanded = true,
+                startExpandedWithoutFocus = true
             )
             TextButton(
                 onClick = { values = values + currentValue.text.trim(); currentValue = TextFieldValue() }, // todo: show dropdown if minLengthForSuggestions is 0, also on start

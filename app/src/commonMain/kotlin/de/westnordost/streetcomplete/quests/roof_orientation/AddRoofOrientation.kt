@@ -1,5 +1,6 @@
 package de.westnordost.streetcomplete.quests.roof_orientation
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.meta.CountryInfo
@@ -7,7 +8,6 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
-import de.westnordost.streetcomplete.data.osm.osmquests.Answer
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.BUILDING
@@ -19,8 +19,7 @@ import kotlin.math.abs
 import kotlin.math.max
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
-import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
-import de.westnordost.streetcomplete.ui.common.quest.QuestForm
+import de.westnordost.streetcomplete.ui.common.quest.RadioGroupQuestForm
 import org.jetbrains.compose.resources.stringResource
 
 class AddRoofOrientation : OsmElementQuestType<String> {
@@ -59,12 +58,10 @@ class AddRoofOrientation : OsmElementQuestType<String> {
 
     @Composable
     override fun Form(on: (QuestAction<String>) -> Unit, element: Element, geometry: ElementGeometry, countryInfo: CountryInfo) {
-        QuestForm(
+        RadioGroupQuestForm(
             on,
-            answers = listOf(
-                AnswerItem(stringResource(Res.string.quest_roofOrientation_along)) { on(Answer("along)"))},
-                AnswerItem(stringResource(Res.string.quest_roofOrientation_across)) { on(Answer("across)"))}
-            )
+            items = listOf("along", "across"),
+            itemContent = { Text(stringResource(if (it == "along") Res.string.quest_roofOrientation_along else Res.string.quest_roofOrientation_across)) },
         )
     }
 

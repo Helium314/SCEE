@@ -63,17 +63,17 @@
     <string name="element_selection_button">Отбор элементов</string>
     <string name="quest_settings_resurvey_all_opening_hours_no">По умолчанию</string>
     <string name="quest_benchMaterial_title">Из чего это сделано\?</string>
-    <string name="quest_custom_quest_add_node_text">Можете добавить точку с тегами: %s</string>
+    <string name="quest_custom_quest_add_node_text">Можете добавить точку с тегами: %1$s</string>
     <string name="custom_overlay_color_hint">Всё будет одноцветным, если не заполнить</string>
     <string name="insert_node">Поместите точку на линии</string>
     <string name="fork_about_title_repository">Страница проекта SCEE</string>
-    <string name="tag_editor_duplicate_key">Пропущено изменение дубликата параметра %s</string>
+    <string name="tag_editor_duplicate_key">Пропущено изменение дубликата параметра %1$s</string>
     <string name="time_limited_to">До</string>
     <string name="time_limited_from">С</string>
     <string name="manage_access">Управление ограничениями доступа…</string>
     <string name="move_node_message_external_source_addition">Имейте в виду, что положение этого квеста может не измениться вслед за смещением точки.</string>
-    <string name="move_node_of_other_relation">Эта точка является частью этих многополигональных отношений: %s</string>
-    <string name="move_node_with_geometry">Перемещение этой точки изменит очертания следующих линий и многополигональных отношений: %s.
+    <string name="move_node_of_other_relation">Эта точка является частью этих многополигональных отношений: %1$s</string>
+    <string name="move_node_with_geometry">Перемещение этой точки изменит очертания следующих линий и многополигональных отношений: %1$s.
 \n Имейте в виду, что изменения не сразу отразятся на фоновой карте.</string>
     <string name="custom_overlay_add_button">Новое своё</string>
     <string name="general_warning">Внимание</string>
@@ -94,7 +94,7 @@
     <string name="access_manager_button_add_conditional">Добавить условие</string>
     <string name="access_manager_button_add">Добавить</string>
     <string name="add_access">Добавить ограничение доступа…</string>
-    <string name="custom_overlay_delete">Действительно удалить %s\?</string>
+    <string name="custom_overlay_delete">Действительно удалить %1$s\?</string>
     <string name="custom_overlay_filter_info">Настройка фильтра</string>
     <string name="pref_overlay_quick_selector_title">Показать быстрый переключатель наложений</string>
     <string name="pref_auto_download_title">Автоматическое скачивание</string>
@@ -213,7 +213,7 @@
     <string name="insert_node_select_way">Укажите место на линии</string>
     <string name="custom_overlay_title">Собственное наложение</string>
     <string name="hide_button">Скрыть</string>
-    <string name="tag_editor_last_edited">Последняя правка: %s</string>
+    <string name="tag_editor_last_edited">Последняя правка: %1$s</string>
     <string name="quest_buildingType_transformer_tower">Трансформаторная башня</string>
     <string name="quest_crossing_type_zebra">Зебра</string>
     <string name="quest_crossing_type_signals_controlled_zebra">Светофоры и зебра</string>
@@ -327,7 +327,7 @@
 \nполосы</string>
     <string name="custom_overlay_filter_message">Нажмите на ссылку, чтобы открыть сведения о правилах выбора элементов в браузере. Имейте в виду, что на отбор элементов по дате может влиять настройка частоты повторного обследования. \nГалочки заменяют собой такие части кода как "nodes, ways with".</string>
     <string name="quest_surface_value_stepping_stones">Камни для перехода</string>
-    <string name="restriction_overlay_exceptions">Исключения: %s</string>
+    <string name="restriction_overlay_exceptions">Исключения: %1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Убрать условия</string>
     <string name="restriction_overlay_relation_incomplete">Отношение ограничения неполно, требуется загрузка области вокруг</string>
     <string name="restriction_overlay_other_restrictions">Прочие ограничения для этой линии:</string>
@@ -335,7 +335,7 @@
     <string name="restriction_overlay_title">Ограничения поворотов</string>
     <string name="restriction_overlay_signed_switch">Есть знак или дорожная разметка</string>
     <string name="restriction_overlay_relation_unsupported">Неподдерживаемый тип ограничения:
-\n%s</string>
+\n%1$s</string>
     <string name="restriction_overlay_select_way">Коснитесь следующей линии на карте. Она должна иметь общую крайнюю точку с текущей линией. Делите линии по необходимости.</string>
     <string name="access_manager_message">Выберите метки ограничения доступа. Отмечайте только предписанное знаками, по возможности, не применяйте общую метку "access</string>
     <string name="level_filter">Фильтр этажности</string>
@@ -352,7 +352,7 @@
     <string name="pref_hide_overlay_quests">Прятать квесты, связанные с наложением</string>
     <string name="quest_buildingColour_title">Какой цвет преобладает в окраске этого здания\?</string>
     <string name="outside_downloaded_area_warning">Это место за пределами подгруженной зоны. Продолжить\?</string>
-    <string name="restriction_overlay_only_for">Только для: %s</string>
+    <string name="restriction_overlay_only_for">Только для: %1$s</string>
     <string name="quest_buildingPartColour_title">Какой цвет преобладает в окраске этой части здания\?</string>
     <string name="custom_overlay_color_message">Выберите ключ(и) для окраски. Допускаются регулярные выражения и подстановка тегов определяющих цвет. Цвет подбирается на основании ключа и значения всех искомых ключей. Когда искомый ключ содержит :left/right/both, он будет использован для окраски соответствующих сторон линии, а не её середины. Если искомого нет, всегда окрашивается красным, указывая на неполны данные. Знание регулярных выражений будет крайне полезным.
 \nЕсли выражение не является регулярным, припишите '!' перед значением выделяемым при правке тегов.

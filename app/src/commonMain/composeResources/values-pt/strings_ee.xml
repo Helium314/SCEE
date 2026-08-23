@@ -171,8 +171,8 @@
     <string name="quest_parking_capacity_disabled_answer_yes">Existem, mas não é claro quantos são</string>
     <string name="restriction_overlay_signed_switch">Existe um sinal ou marca na estrada</string>
     <string name="restriction_overlay_title">Restrições de tráfego</string>
-    <string name="restriction_overlay_exceptions">Exceções: %s</string>
-    <string name="restriction_overlay_only_for">Apenas para: %s</string>
+    <string name="restriction_overlay_exceptions">Exceções: %1$s</string>
+    <string name="restriction_overlay_only_for">Apenas para: %1$s</string>
     <string name="restriction_overlay_direction_text">Aplica-se à seguinte direção de viagem:</string>
     <string name="quest_parking_capacity_title">Quantos carros podem estacionar aqui?</string>
     <string name="restriction_overlay_sign_give_way">Cedência de prioridade</string>

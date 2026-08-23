@@ -217,7 +217,7 @@
     <string name="quest_contact_phone">Hvad er telefonnummeret til dette sted?</string>
     <string name="quest_cuisine_title">Hvilket slags køkken har dette sted? Brug de foreslåede OSM-tags!</string>
     <string name="quest_healthcare_speciality_switch_ui">Skift brugergrænseflade</string>
-    <string name="tag_editor_last_edited">Senest redigeret: %s</string>
+    <string name="tag_editor_last_edited">Senest redigeret: %1$s</string>
     <string name="quest_guidepost_sports_title">Hvilken sport er denne vejviser beregnet til?</string>
     <string name="quest_guidepost_sports_note">Hvis der er noget, der ikke er dækket af de anførte funktioner/faciliteter, bedes du skrive en bemærkning i stedet.</string>
     <string name="quest_guidepost_sports_answer_simple">Det er bare en simpel vejviser</string>
@@ -317,7 +317,7 @@
     <string name="time_limited_to">Til</string>
     <string name="quest_name_brand">Den har et varemærke…</string>
     <string name="quest_guidepostName_title">Hvad er navnet her?</string>
-    <string name="restriction_overlay_only_for">Kun for: %s</string>
+    <string name="restriction_overlay_only_for">Kun for: %1$s</string>
     <string name="quest_guidepostEle_title">Hvad er højden her?</string>
     <string name="quest_guidepostEle_hint">Brug ikke GPS-højde, da den typisk er for unøjagtig og ikke leveres i det korrekte højdereferencesystem.</string>
     <string name="quest_guidepostRef_hint">Referencenummeret på dette kort eller denne vejviser, ikke referencenummeret på skiltede ruter.</string>
@@ -385,7 +385,7 @@
     <string name="quest_settings_fixme_title">Vælg Retmig-værdier, der skal ignoreres</string>
     <string name="level_filter_title">Vælg nøgler (keys), der skal kontrolleres</string>
     <string name="quest_custom_quest_add_node">Tilføj punkt</string>
-    <string name="quest_custom_quest_add_node_text">Du kan tilføje et punkt med: %s</string>
+    <string name="quest_custom_quest_add_node_text">Du kan tilføje et punkt med: %1$s</string>
     <string name="quest_barrier_locked_title">Er denne barriere (normalt) låst?</string>
     <string name="quest_material_wood">Træ</string>
     <string name="quest_material_metal">Metal</string>
@@ -424,7 +424,7 @@
     <string name="quest_crossing_type_signals_controlled_zebra">Trafiklys og zebra-striber</string>
     <string name="quest_crossing_type_zebra">Zebra-striber</string>
     <string name="quest_crossing_type_raised">Forhøjet overgang</string>
-    <string name="tag_editor_duplicate_key">Ignorerer ændring af duplikat-nøgle %s</string>
+    <string name="tag_editor_duplicate_key">Ignorerer ændring af duplikat-nøgle %1$s</string>
     <string name="restriction_overlay_title">Trafikrestriktioner</string>
     <string name="custom_overlay_title">Egen overlejring</string>
     <string name="quest_guidepost_disabled_msg">Denne opgave er som standard deaktiveret, fordi det, der skrives, varierer meget fra region til region og fra operatør til operatør. Det kan være nødvendigt at forfine elementvalget for dit område (f.eks. tilføje eller fjerne kort, kun vælge elementer med hiking=yes osv.)</string>
@@ -436,9 +436,9 @@
     <string name="quest_guidepostName_hint">Skiltet stednavn for dette kort eller denne vejviser. Indtast ikke et referencenummer her.</string>
     <string name="quest_piste_difficulty_freeride">Freeride</string>
     <string name="quest_piste_difficulty_extreme">Ekstrem</string>
-    <string name="custom_overlay_delete">Vil du virkelig slette %s?</string>
+    <string name="custom_overlay_delete">Vil du virkelig slette %1$s?</string>
     <string name="custom_overlay_add_button">Ny brugerdefineret</string>
-    <string name="restriction_overlay_exceptions">Undtagelser: %s</string>
+    <string name="restriction_overlay_exceptions">Undtagelser: %1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Fjern betinget</string>
     <string name="restriction_overlay_signed_switch">Der er et skilt eller en vejafmærkning</string>
     <string name="close">Luk</string>
@@ -453,7 +453,7 @@
 \nAfkrydsningsfelterne erstatter "nodes, ways with"-delen.</string>
     <string name="custom_overlay_color_hint">Tom for at vise alle i samme farve</string>
     <string name="restriction_overlay_relation_unsupported">Ikke-understøttet relationstype:
-\n%s</string>
+\n%1$s</string>
     <string name="restriction_overlay_sign_give_way">Vigepligt</string>
     <string name="restriction_overlay_sign_stop_all_way">Stop for alle retninger</string>
     <string name="hide_button">Skjul</string>
@@ -465,8 +465,8 @@
     <string name="quest_monitor_channel_name_found">Opgave fundet i nærheden</string>
     <string name="quest_monitor_running">Monitorerer lokalitet</string>
     <string name="quest_monitor_error">Kunne ikke starte monitorering, muligt tilladelsesproblem</string>
-    <string name="move_node_with_geometry">Flytning af dette punkt vil ændre geometrien for følgende linjestrenge eller multipolygon-relationer: %s.\n Vær opmærksom på, at eventuelle ændringer ikke umiddelbart vil være synlige på baggrundskortet.</string>
-    <string name="move_node_of_other_relation">Dette punkt er en del af følgende ikke-multipolygon-relationer: %s</string>
+    <string name="move_node_with_geometry">Flytning af dette punkt vil ændre geometrien for følgende linjestrenge eller multipolygon-relationer: %1$s.\n Vær opmærksom på, at eventuelle ændringer ikke umiddelbart vil være synlige på baggrundskortet.</string>
+    <string name="move_node_of_other_relation">Dette punkt er en del af følgende ikke-multipolygon-relationer: %1$s</string>
     <string name="access_manager_button_add">Tilføj</string>
     <string name="access_manager_button_add_conditional">Tilføj betinget</string>
     <string name="access_length_limit">Længde</string>

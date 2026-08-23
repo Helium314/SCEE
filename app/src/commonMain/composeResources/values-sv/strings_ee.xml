@@ -82,14 +82,14 @@
     <string name="quest_maxspeed_conditional">Beror på…</string>
     <string name="time_limited_from">Från</string>
     <string name="time_limited_to">Till</string>
-    <string name="restriction_overlay_exceptions">Undantag: %s</string>
+    <string name="restriction_overlay_exceptions">Undantag: %1$s</string>
     <string name="quest_monitor_found">%d uppdrag i närheten, närmast:</string>
     <string name="quest_mapType_topo_description">En karta med topografisk bakgrund för t.ex. en historisk karta eller vandringskarta. Kartan innehåller konturlinjer.</string>
     <string name="quest_parking_capacity_disabled_title">Hur många parkeringsplatser för handikappade finns här?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">Det finns, men oklart antal</string>
     <string name="quest_parking_orientation_title">I vilken riktning parkeras bilar här?</string>
     <string name="restriction_overlay_sign_stop">Stopp</string>
-    <string name="tag_editor_last_edited">Senast redigerad: %s</string>
+    <string name="tag_editor_last_edited">Senast redigerad: %1$s</string>
     <string name="dialog_button_understood">Förstått</string>
     <string name="general_warning">Varning</string>
     <string name="quest_mapSize_title">Vilket område täcker denna karta?</string>
@@ -264,13 +264,13 @@
     <string name="hide_button">Dölj</string>
     <string name="custom_overlay_add_button">Nytt anpassat</string>
     <string name="restriction_overlay_title">Trafikrestriktioner</string>
-    <string name="restriction_overlay_only_for">Bara för: %s</string>
+    <string name="restriction_overlay_only_for">Bara för: %1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Ta bort villkorliga</string>
     <string name="restriction_overlay_signed_switch">Det finns en skylt eller vägmarkering</string>
     <string name="restriction_overlay_other_restrictions">Andra restriktioner på denna väg:</string>
     <string name="restriction_overlay_direction_text">Gäller reseriktning:</string>
     <string name="restriction_overlay_sign_stop_all_way">Flervägsstopp</string>
-    <string name="tag_editor_duplicate_key">Ignorerar ändring av dublettnyckel %s</string>
+    <string name="tag_editor_duplicate_key">Ignorerar ändring av dublettnyckel %1$s</string>
     <string name="fork_about_title_repository">SCEE-projektets hem</string>
     <string name="insert_node">Lägg till nod på denna väg</string>
     <string name="pref_hide_keyboard_summary">Döljer tangentbordet när det är öppet före anteckningen faktiskt skapas (för att möjliggöra att se positionen igen)</string>
@@ -292,7 +292,7 @@
     <string name="quest_lanes_answer_noLanes_known_count">Inga markeringar, antal körfält uppenbart</string>
     <string name="default_disabled_msg_poi_machine">Detta "uppdrag" visar POI:er som bankomater, telefoner och försäljningsautomater som blåa prickar. Klicka på pricken för att visa detaljer och andra svar.</string>
     <string name="default_disabled_msg_poi_traffic">Detta "uppdrag" visar trafikrelaterade POI:er som ljusblåa prickar. Klicka på pricken för att visa detaljer och andra svar.</string>
-    <string name="move_node_with_geometry">Att flytta denna nod kommer att modifiera geometri hos följande vägar eller multipolygonrelationer: %s
+    <string name="move_node_with_geometry">Att flytta denna nod kommer att modifiera geometri hos följande vägar eller multipolygonrelationer: %1$s
 \n Var medveten om att ändringar inte omedelbart kommer att vara synliga på bakgrundskartan.</string>
     <string name="default_disabled_msg_viaFerrataScale">Denna uppdragstyp är inaktiverad som standard eftersom gradering av via ferrata-rutter är något som är högst subjektivt och kräver expertkunskap i såväl det graderingssystem som används som i klättring via ferrata, eftersom detta kräver avancerade bergsbestigningsfärdigheter. Eftersom det inte finns någon för hela världen gemensam skala för via ferrata-svårighetsgrad så använder den tyska Huesler-skalan här.</string>
     <string name="quest_monitor_error">Kunde inte starta bevakning, möjligt behörighetsproblem</string>
@@ -419,9 +419,9 @@
     <string name="quest_lampMount_ceiling">Tak</string>
     <string name="quest_lampMount_transitShelter">Väntkur</string>
     <string name="custom_overlay_filter_info">Filtreringsdetaljer</string>
-    <string name="custom_overlay_delete">Vill du verkligen radera %s?</string>
+    <string name="custom_overlay_delete">Vill du verkligen radera %1$s?</string>
     <string name="restriction_overlay_show_details">Visa relationsdetaljer</string>
-    <string name="restriction_overlay_relation_unsupported">Relationstyp stöds ej:\n%s</string>
+    <string name="restriction_overlay_relation_unsupported">Relationstyp stöds ej:\n%1$s</string>
     <string name="enqueue_download">Starta när aktuell sökning är klar</string>
     <string name="fixme_for_object">En annan person lade till en fixme:</string>
     <string name="quest_roofOrientation_along">Parallellt med byggnadens långsida</string>
@@ -447,7 +447,7 @@
     <string name="quest_caravanSiteType_title">Var ligger denna husbilsställplats?</string>
     <string name="quest_buildingType_elevator">Hiss</string>
     <string name="quest_postOffice_title">Vilken typ av postkontor är detta?</string>
-    <string name="move_node_of_other_relation">Denna nod ingår i följande icke-multipolygon-relationer: %s</string>
+    <string name="move_node_of_other_relation">Denna nod ingår i följande icke-multipolygon-relationer: %1$s</string>
     <string name="close">Stäng</string>
     <string name="quest_settings_highlight_changes_button">Framhäv ändringar</string>
     <string name="pref_really_all_notes_summary">När du begär att visa alla anteckningar, visa även anteckningar som du själv skapat (eller kommenterat)</string>
@@ -461,7 +461,7 @@
     <string name="default_disabled_msg_poi_fixme">Detta "uppdrag" visar FixMe:er som röda punkter (med, som standard, undantag för 'yes' och 'continue'). Klicka på punkten för att visa detaljer och andra svar.</string>
     <string name="quest_saunaAvailability_title">Finns det en bastu här?</string>
     <string name="quest_valves_disabled_msg">Detta uppdrag är inaktiverat som standard, eftersom det kräver en mycket noggrann inspektion av de tillgängliga ventilerna.</string>
-    <string name="quest_custom_quest_add_node_text">Du kan lägga till en nod med: %s</string>
+    <string name="quest_custom_quest_add_node_text">Du kan lägga till en nod med: %1$s</string>
     <string name="quest_material_limestone">Kalksten</string>
     <string name="pref_rotate_angle_threshold_title">Tröskel för rotationsgest</string>
     <string name="quest_lampType_title">Vilken typ av lampa är detta?</string>

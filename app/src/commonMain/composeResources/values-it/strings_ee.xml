@@ -27,7 +27,7 @@
     <string name="pref_delete_old_data_after_summary">%d giorni</string>
     <string name="quest_brewery_title">Che marche di birra servono qui?</string>
     <string name="restriction_overlay_sign_stop">Stop</string>
-    <string name="tag_editor_last_edited">Ultima modifica: %s</string>
+    <string name="tag_editor_last_edited">Ultima modifica: %1$s</string>
     <string name="quest_utility_power">Elettricità</string>
     <string name="quest_utility_water">Acqua</string>
     <string name="quest_service_building_heating">Riscaldamento</string>
@@ -53,8 +53,8 @@
     <string name="quest_barrier_height_title">Quanto è alta questa barriera?</string>
     <string name="quest_wheelchair_description_answer">Aggiungi descrizione</string>
     <string name="time_limited_to">A</string>
-    <string name="restriction_overlay_exceptions">Eccezioni: %s</string>
-    <string name="restriction_overlay_only_for">Solo per: %s</string>
+    <string name="restriction_overlay_exceptions">Eccezioni: %1$s</string>
+    <string name="restriction_overlay_only_for">Solo per: %1$s</string>
     <string name="hide_button">Nascondi</string>
     <string name="access_manager_button_add">Aggiungi</string>
     <string name="access_length_limit">Lunghezza</string>

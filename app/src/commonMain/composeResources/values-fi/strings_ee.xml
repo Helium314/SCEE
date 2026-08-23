@@ -37,7 +37,7 @@
     <string name="quest_contact_phone">Mikä on tämän paikan puhelinnumero?</string>
     <string name="quest_contact_website">Mikä on tämän paikan nettiosoite?</string>
     <string name="quest_generic_answer_show_edit_tags">Näytä/muokkaa tageja</string>
-    <string name="tag_editor_last_edited">Viimeksi muokattu: %s</string>
+    <string name="tag_editor_last_edited">Viimeksi muokattu: %1$s</string>
     <string name="pref_3d_buildings_title">Näytä 3D-rakennukset</string>
     <string name="pref_recent_answers_first_min_lines_message">Siirrä viimeaikaiset vastaukset etummaisiksi, jos vastauslomakkeessa on kuvarivejä enemmän kuin tämä määrä</string>
     <string name="quest_benchMaterial_title">Mistä tämä on tehty?</string>

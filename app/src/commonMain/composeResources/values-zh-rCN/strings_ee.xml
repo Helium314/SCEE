@@ -193,7 +193,7 @@
     <string name="pref_expert_mode_title">专家模式</string>
     <string name="quest_service_building_type_pressure">燃气调压</string>
     <string name="default_disabled_msg_poi_machine">这个“任务”将自动取款机、电话或自动售货机等兴趣点显示为蓝点。点击圆点可显示详细信息和其他回答。</string>
-    <string name="quest_custom_quest_add_node_text">您可以用这些添加节点：%s</string>
+    <string name="quest_custom_quest_add_node_text">您可以用这些添加节点：%1$s</string>
     <string name="quest_settings_resurvey_all_opening_hours_no">默认</string>
     <string name="pref_screen_data_management">数据管理</string>
     <string name="quest_settings_highlight_changes_button">高亮显示变更</string>
@@ -264,10 +264,10 @@
     <string name="quest_construction">正在施工中，预计完工时间为……</string>
     <string name="time_limited_to">到</string>
     <string name="custom_overlay_title">自订叠加图层</string>
-    <string name="restriction_overlay_exceptions">例外：%s</string>
+    <string name="restriction_overlay_exceptions">例外：%1$s</string>
     <string name="restriction_overlay_show_details">显示关系详情</string>
     <string name="restriction_overlay_relation_unsupported">不支持的关系类型：
-\n%s</string>
+\n%1$s</string>
     <string name="hide_button">隐藏</string>
     <string name="quest_monitor_channel_name">附近任务监视器</string>
     <string name="create_custom_quest_button">创建自订任务</string>
@@ -281,7 +281,7 @@
     <string name="custom_overlay_color_hint">留空即可以相同颜色显示所有内容</string>
     <string name="restriction_overlay_other_restrictions">此路径的其它限制：</string>
     <string name="restriction_overlay_direction_text">适用于行进方向：</string>
-    <string name="tag_editor_duplicate_key">忽略重复键 %s 的更改</string>
+    <string name="tag_editor_duplicate_key">忽略重复键 %1$s 的更改</string>
     <string name="quest_piste_ref_connection">这是条雪道连接线</string>
     <string name="quest_buildingType_sports_hall">体育馆</string>
     <string name="time_limited_from">从</string>
@@ -315,9 +315,9 @@
     <string name="quest_crossing_type_signals_controlled_zebra">交通灯和斑马线</string>
     <string name="quest_wheelchair_description_answer">添加描述</string>
     <string name="quest_lanes_answer_noLanes_known_count">无标线，车道数明显</string>
-    <string name="restriction_overlay_only_for">仅用于：%s</string>
+    <string name="restriction_overlay_only_for">仅用于：%1$s</string>
     <string name="restriction_overlay_sign_stop_all_way">全向停止</string>
-    <string name="tag_editor_last_edited">最后编辑于：%s</string>
+    <string name="tag_editor_last_edited">最后编辑于：%1$s</string>
     <string name="fork_about_title_repository">SCEE 项目主页</string>
     <string name="ban_check_fails">检查已禁止版本持续失败。您运行的可能是过时的版本，请考虑升级。</string>
     <string name="enqueue_download">在当前搜索完成后启动</string>
@@ -325,7 +325,7 @@
     <string name="quest_monitor_found">附近有 %d 个任务，距离最近：</string>
     <string name="quest_monitor_error">无法开始监测，可能是权限问题</string>
     <string name="general_warning">警告</string>
-    <string name="move_node_with_geometry">移动此节点将修改以下路径或多边形关系的几何形状：%s。
+    <string name="move_node_with_geometry">移动此节点将修改以下路径或多边形关系的几何形状：%1$s。
 \n请注意：任何更改都不会在背景地图上立刻显现。</string>
     <string name="move_node_message_external_source_addition">请注意，该任务的位置可能不会随节点移动。</string>
     <string name="close_note_checkbox">关闭注记（只有当您真正解决了注记中的问题时才能这么做！）</string>
@@ -352,7 +352,7 @@
     <string name="restriction_overlay_sign_stop">停止</string>
     <string name="quest_wheelchair_description_title">填写至少一种语言</string>
     <string name="custom_overlay_dash_filter_hint">虚线元素筛选器</string>
-    <string name="custom_overlay_delete">确定要删除 %s？</string>
+    <string name="custom_overlay_delete">确定要删除 %1$s？</string>
     <string name="restriction_overlay_title">交通限制</string>
     <string name="restriction_overlay_signed_switch">存在标志或道路标记</string>
     <string name="restriction_overlay_select_way">点击地图上的下一条路径。它需要一个与当前路径共享的末端节点。如有必要，请将其拆分。</string>
@@ -361,7 +361,7 @@
     <string name="insert_node">将节点插入到路径</string>
     <string name="insert_node_select_way">选择节点在路径上的位置</string>
     <string name="create_custom_quest_title_message">输入要显示的消息</string>
-    <string name="move_node_of_other_relation">该节点是以下非多边形关系的一部分： %s</string>
+    <string name="move_node_of_other_relation">该节点是以下非多边形关系的一部分： %1$s</string>
     <string name="add_access">添加通行限制……</string>
     <string name="access_weight_limit">重量</string>
     <string name="create_relation_action_description">您已建立了与下列的关系……</string>

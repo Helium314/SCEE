@@ -318,7 +318,7 @@
 \n Això s'aplica especialment a la possibilitat d'editar etiquetes directament i poder esborrar nodes, però també en la modificació de selecció d'elements per a les missions. Les missions afegides a SCEE <i>podrien no sempre ser contestables</i>, i estan totes amagades per defecte. Fes un tomb pel menú d'opcions per activar i desactivar les que creguis convenient. En el cas que no puguis contestar-les, amaga-les o desactiva-les i <i>i no facis spam de notes</i>.
 \n
 \n Per defecte, SCEE està configurat perquè es comporti de forma similar al StreetComplete original.</string>
-    <string name="tag_editor_duplicate_key">Ignorant el canvi dol clau %s duplicada</string>
+    <string name="tag_editor_duplicate_key">Ignorant el canvi dol clau %1$s duplicada</string>
     <string name="pref_caps_word_name_input">Posar en majúscula totes les paraules en introduir noms</string>
     <string name="import_presets_overlays_message">Afegir lo important o reemplaçar lo ja existent? Si escolleixes reemplaçar, s'eliminaran tots els actuals.</string>
     <string name="import_export_settings">Altres configuracions de l'app</string>
@@ -333,7 +333,7 @@
     <string name="quest_osmose_delete_this_issue">Eliminar aquest problema localment</string>
     <string name="quest_custom_quest_remove">Eliminar dol llista</string>
     <string name="quest_custom_quest_add_node">Afegir node</string>
-    <string name="quest_custom_quest_add_node_text">Pots afegir un node amb: %s</string>
+    <string name="quest_custom_quest_add_node_text">Pots afegir un node amb: %1$s</string>
     <string name="quest_barrier_locked_title">Aquesta barrera està (normalment) tancada?</string>
     <string name="quest_benchMaterial_title">De quin material està fet aquest banc?</string>
     <string name="quest_material_wood">Fusta</string>
@@ -431,14 +431,14 @@
     <string name="quest_sacScale_six">T6 - Senderisme alpí difícil</string>
     <string name="quest_sacScale_six_description">Severa exposició. Terreny escarpat i difícil. Glaceres amb alt risc de relliscament.</string>
     <string name="restriction_overlay_title">Restriccions de trànsit</string>
-    <string name="restriction_overlay_exceptions">Excepcions: %s</string>
-    <string name="restriction_overlay_only_for">Sols per: %s</string>
+    <string name="restriction_overlay_exceptions">Excepcions: %1$s</string>
+    <string name="restriction_overlay_only_for">Sols per: %1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Eliminar condició</string>
     <string name="restriction_overlay_signed_switch">Hi ha una senyal o una marca a la via que indica això</string>
     <string name="restriction_overlay_show_details">Mostrar detalls dol relació</string>
     <string name="restriction_overlay_relation_incomplete">Relació de restricció de trànsit incompleta, primer has de descarregar l'àrea propera</string>
     <string name="restriction_overlay_relation_unsupported">Tipus de relació incorrecte / no compatible:
-\n%s</string>
+\n%1$s</string>
     <string name="restriction_overlay_select_way">Fes click a la següent via en el mapa. Ha de tindre un node final en comú amb la via actualment seleccionada. Parteix-la si és necessari.</string>
     <string name="restriction_overlay_other_restrictions">Altres restriccions d'aquesta via:</string>
     <string name="restriction_overlay_direction_text">S'aplica a la següent direcció de trànsit:</string>
@@ -446,7 +446,7 @@
     <string name="restriction_overlay_sign_stop">Stop</string>
     <string name="restriction_overlay_sign_stop_all_way">Stop total</string>
     <string name="hide_button">Amagar</string>
-    <string name="tag_editor_last_edited">Última edició: %s</string>
+    <string name="tag_editor_last_edited">Última edició: %1$s</string>
     <string name="fork_about_title_repository">Lloc d'inici del projecte SCEE</string>
     <string name="enqueue_download">Començar després que acabi la cerca actual</string>
     <string name="insert_node">Inserir nou node a la via</string>
@@ -460,9 +460,9 @@
     <string name="create_custom_quest_button">Crear missió personalitzada</string>
     <string name="create_custom_quest_title_message">Introdueix el missatge que es mostrarà</string>
     <string name="general_warning">Advertència</string>
-    <string name="move_node_with_geometry">Moure aquest node canviar la geometria dols següents vies, àrees i/o relacions multipolígon: %s.
+    <string name="move_node_with_geometry">Moure aquest node canviar la geometria dols següents vies, àrees i/o relacions multipolígon: %1$s.
 \nTingues en compte que aquests canvis podrien no ser immediatament visibles en el mapa de fons.</string>
-    <string name="move_node_of_other_relation">Aquest node és part dols següents relacions que no són multipolígon: %s</string>
+    <string name="move_node_of_other_relation">Aquest node és part dols següents relacions que no són multipolígon: %1$s</string>
     <string name="dialog_button_understood">D'acord</string>
     <string name="move_node_message_external_source_addition">Tingues en compte que aquesta missió podria no moure's amb el node.</string>
     <string name="close_note_checkbox">Tancar nota (marca-ho sols si realment has solucionat la nota!)</string>

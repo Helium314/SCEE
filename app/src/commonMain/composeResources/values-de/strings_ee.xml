@@ -33,7 +33,7 @@
     <string name="quest_monitor_active_request">Aktives Anfordern von Standorten erhöht den Akkuverbrauch. Wenn keine aktive Standortanforderung erfolgt, werden die von anderen Apps angeforderten Standorte weiterhin verwendet.</string>
     <string name="quest_healthcare_speciality_title">Welche medizinischen Fachrichtungen gibt es an diesem Ort\?</string>
     <string name="quest_material_metal">Metall</string>
-    <string name="tag_editor_last_edited">Zuletzt bearbeitet: %s</string>
+    <string name="tag_editor_last_edited">Zuletzt bearbeitet: %1$s</string>
     <string name="quest_monitor_net">Aktiv nach Netzwerkstandorten fragen\?</string>
     <string name="quest_settings_resurvey_all_opening_hours_title">Alle Öffnungszeiten neu ermitteln</string>
     <string name="quest_settings_osmose_level_low">Niedrig</string>
@@ -51,7 +51,7 @@
     <string name="create_poi">POI hinzufügen</string>
     <string name="quest_poi_recycling_title">POI: Recycling</string>
     <string name="restriction_overlay_signed_switch">Es gibt ein Schild oder eine Straßenmarkierung</string>
-    <string name="move_node_with_geometry">Das Verschieben dieses Knotens verändert die Geometrie der folgenden Wege oder Multipolygonbeziehungen: %s.
+    <string name="move_node_with_geometry">Das Verschieben dieses Knotens verändert die Geometrie der folgenden Wege oder Multipolygonbeziehungen: %1$s.
 \nBeachte, dass alle Änderungen nicht sofort auf der Hintergrundkarte sichtbar sind.</string>
     <string name="quest_settings_per_preset_rescan">Damit alle geänderten Aufgabeneinstellungen korrekt übernommen werden können, ist ein erneutes Scannen nach Aufgaben erforderlich.</string>
     <string name="quest_seating_street">In einem Straßenbereich</string>
@@ -85,7 +85,7 @@
     <string name="quest_railwayPlatformRef_message">Welches Tag soll für Tracks verwendet werden, die von dieser Plattform aus zugänglich sind\? Laut OSM-Wiki könnte local_ref vorzuziehen sein, aber die tatsächliche Verwendung ist meist ref.</string>
     <string name="pref_trees_title">Baumaufgabendatei laden</string>
     <string name="pref_save_gpx">GPX-Hinweise und angehängte Fotos und Tracks aufrufen</string>
-    <string name="move_node_of_other_relation">Dieser Knoten ist Teil der folgenden Relationen, die keine Multipolygone sind: %s</string>
+    <string name="move_node_of_other_relation">Dieser Knoten ist Teil der folgenden Relationen, die keine Multipolygone sind: %1$s</string>
     <string name="level_filter">Level-Filter</string>
     <string name="quest_contact_phone">Wie lautet die Telefonnummer dieses Ortes\?</string>
     <string name="default_disabled_msg_poi_bench">Diese „Aufgabe“ zeigt POIs wie Bänke oder Picknicktische als braune Punkte an. Ein Klick auf den Punkt zeigt Details und weitere Antworten an.</string>
@@ -97,7 +97,7 @@
     <string name="day_night_priority">Priorität von Aufgaben erhöhen, die für die aktuelle Tageszeit geeignet sind</string>
     <string name="quest_destination_add_more">Weiteres Ziel hinzufügen</string>
     <string name="quest_settings_fixme_title">Zu ignorierende FixMe-Werte auswählen</string>
-    <string name="restriction_overlay_only_for">Nur für: %s</string>
+    <string name="restriction_overlay_only_for">Nur für: %1$s</string>
     <string name="pref_hide_keyboard_summary">Blendet die Tastatur aus, wenn sie geöffnet ist, bevor der Hinweis tatsächlich erstellt wird (um eine erneute Ansicht der Position zu ermöglichen)</string>
     <string name="quest_disabled_msg_railway_platform_ref">Beachte, dass im Wiki nicht ganz klar ist, welches Tag am besten zu verwenden ist und es daher dem Benutzer überlassen bleibt. Wähle zwischen „ref“ (Standard) und „local_ref“ in den Aufgabeneinstellungen.
 \nWenn es zwei Gleise entlang einer Plattform gibt, verwende durch Semikolon getrennte Werte, z. B. 2;3</string>
@@ -117,7 +117,7 @@
     <string name="access_time_limit">Zeit</string>
     <string name="level_filter_message">Gib den Wert des Levels ein oder filtere mit &gt; und &lt;. Verwende *, um alle Elemente zu finden, die einen zulässigen Schlüssel enthalten</string>
     <string name="create_custom_quest_button">Benutzerdefinierte Aufgabe erstellen</string>
-    <string name="restriction_overlay_exceptions">Ausnahmen: %s</string>
+    <string name="restriction_overlay_exceptions">Ausnahmen: %1$s</string>
     <string name="pref_show_solved_animation_summary">Dies steuert auch den Sound bei der Lösung von Aufgaben</string>
     <string name="fork_about_title_repository">Startseite des SCEE-Projekts</string>
     <string name="theme_dark_contrast">Dunkel (erhöhter Kontrast)</string>
@@ -275,7 +275,7 @@
     <string name="pref_screen_ui">Oberfläche</string>
     <string name="quest_osmose_message_for_element">Artikeltyp %1$s: %2$s</string>
     <string name="restriction_overlay_relation_unsupported">Nicht unterstützter Relationstyp:
-\n%s</string>
+\n%1$s</string>
     <string name="pref_read_reverse_button">Umkehren</string>
     <string name="pref_delete_old_data_after_message">Entferne heruntergeladene OSM-Daten, wenn sie älter als diese Anzahl von Tagen sind</string>
     <string name="pref_expert_mode_message">Dies wird die Verwendung von Aufgaben ermöglichen, die in SCEE hinzugefügt wurden, sowie Möglichkeiten zum \n <li>Direkten Bearbeiten von Tags</li> \n <li>Verschieben von Knoten, die Teil von Wegen oder Relationen sind</li> \n <li>Löschen von alleinstehenden Knoten</li> \n <li>Bearbeiten von Elementen, die durch einen Hinweis blockiert sein sollten</li> \n <li>Hinzufügen von alleinstehenden Knoten an beliebigen Stellen</li> \n <li>Ändern der Elementauswahl von Aufgaben</li> \n\n Dies ist immer noch weniger als die meisten anderen Editoren zulassen, aber unvorsichtige Verwendung kann zu Schäden an Daten führen, die in StreetComplete nicht möglich sind. Beachte, dass du durch das Aktivieren des Expertenmodus eine deutlich größere Verantwortung für deine Bearbeitungen trägst. \n Aktiviere diese Einstellung nur, wenn du Erfahrung mit OSM außerhalb von StreetComplete hast und verstehst, was du tust.</string>
@@ -290,7 +290,7 @@
     <string name="restriction_overlay_other_restrictions">Andere Einschränkungen auf diesem Weg:</string>
     <string name="quest_service_building_type_pressure">Gasdruckregulierung</string>
     <string name="default_disabled_msg_poi_machine">Diese „Aufgabe“ zeigt POIs wie Geldautomaten, Telefone oder Verkaufsautomaten als blaue Punkte an. Ein Klick auf den Punkt zeigt Details und weitere Antworten an.</string>
-    <string name="quest_custom_quest_add_node_text">Du kannst einen Knoten hinzufügen mit: %s</string>
+    <string name="quest_custom_quest_add_node_text">Du kannst einen Knoten hinzufügen mit: %1$s</string>
     <string name="quest_building_entrance_parking">Eingang zum Parkplatz</string>
     <string name="quest_settings_resurvey_all_opening_hours_no">Standard</string>
     <string name="pref_screen_data_management">Datenverwaltung</string>
@@ -338,7 +338,7 @@
     <string name="pref_tile_source_title">Quelle für Satelliten-/Luftbilder</string>
     <string name="quest_seating_pedestrian_zone">In einer Fußgängerzone</string>
     <string name="quest_seating_balcony">Auf einem Balkon (nicht im Erdgeschoss)</string>
-    <string name="tag_editor_duplicate_key">Änderung des Zweitschlüssels %s ignorieren</string>
+    <string name="tag_editor_duplicate_key">Änderung des Zweitschlüssels %1$s ignorieren</string>
     <string name="quest_monitor_permission_warning">Damit der Monitor für die nahe gelegene Aufgabe funktioniert, ist eine Genehmigung für den Hintergrundstandort erforderlich</string>
     <string name="pref_update_local_statistics_summary">Deaktivierung beschleunigt den Upload und stoppt Erfolgsmeldungen</string>
     <string name="quest_outdoor_seating_name_title">Welche Art von Außenbestuhlung gibt es hier\?</string>
@@ -350,7 +350,7 @@
     <string name="pref_screen_display">Anzeige</string>
     <string name="quest_settings_level_default">Geschäfte und ähnliche Einrichtungen in Einkaufszentren (Standard)</string>
     <string name="quest_buildingType_presbytery">Pfarramt</string>
-    <string name="custom_overlay_delete">Wirklich %s löschen\?</string>
+    <string name="custom_overlay_delete">Wirklich %1$s löschen\?</string>
     <string name="quest_tree_genus_title">Welche Gattung oder Art hat dieser Baum\?</string>
     <string name="enqueue_download">Start nach Abschluss der aktuellen Suche</string>
     <string name="create_relation_action_description">Du hast eine Relation erstellt mit …</string>

@@ -148,7 +148,7 @@
     <string name="quest_custom_quest_osmose_not_found">Entrada eliminada, eliminando tarea</string>
     <string name="quest_custom_quest_title">Tarea personalizada:</string>
     <string name="quest_custom_quest_remove">Eliminar de la lista</string>
-    <string name="quest_custom_quest_add_node_text">Puedes añadir un nodo con: %s</string>
+    <string name="quest_custom_quest_add_node_text">Puedes añadir un nodo con: %1$s</string>
     <string name="quest_poi_seating_title">POI: Asientos</string>
     <string name="default_disabled_msg_poi_bench">Esta "tarea" muestra puntos de interés como bancos o mesas de picnic como puntos marrones. Haga clic en el punto para mostrar detalles y otras respuestas.</string>
     <string name="default_disabled_msg_poi_camera">Esta "tarea" muestra las características de vigilancia como puntos rosas. Haga clic en el punto para mostrar detalles y otras respuestas.</string>
@@ -222,27 +222,27 @@
     <string name="quest_seating_no">Sin asientos, pero no es solo comida para llevar</string>
     <string name="custom_overlay_color_info">Detalles para colorear</string>
     <string name="custom_overlay_filter_info">Filtrado de detalles</string>
-    <string name="restriction_overlay_exceptions">Excepciones: %s</string>
+    <string name="restriction_overlay_exceptions">Excepciones: %1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Eliminar condicional</string>
     <string name="restriction_overlay_show_details">Mostrar detalles de la relación</string>
     <string name="restriction_overlay_relation_unsupported">Tipo de relación no compatible:
-\n%s</string>
+\n%1$s</string>
     <string name="restriction_overlay_select_way">Haga clic en la siguiente vía en el mapa. Necesita un nodo final en común con el camino actual. Dividir si es necesario.</string>
     <string name="restriction_overlay_sign_give_way">Ceda el paso</string>
     <string name="restriction_overlay_sign_stop">Stop</string>
     <string name="hide_button">Esconder</string>
-    <string name="custom_overlay_delete">¿Eliminar realmente %s\?</string>
+    <string name="custom_overlay_delete">¿Eliminar realmente %1$s\?</string>
     <string name="custom_overlay_add_button">Nueva personalización</string>
     <string name="restriction_overlay_signed_switch">Hay una señal o señalización horizontal</string>
     <string name="restriction_overlay_sign_stop_all_way">Parada total</string>
-    <string name="tag_editor_last_edited">Última edición: %s</string>
+    <string name="tag_editor_last_edited">Última edición: %1$s</string>
     <string name="fork_about_title_repository">Inicio del proyecto SCEE</string>
     <string name="ban_check_fails">La búsqueda de versiones prohibidas sigue fallando. Es posible que ejecute una versión desactualizada, considere actualizarla.</string>
     <string name="enqueue_download">Comenzar después de realizar la búsqueda actual</string>
     <string name="create_poi">Añadir POI</string>
     <string name="insert_node">Insertar nodo en vía</string>
     <string name="insert_node_select_way">Seleccione una posición en una vía</string>
-    <string name="tag_editor_duplicate_key">Ignorar el cambio de clave duplicada %s</string>
+    <string name="tag_editor_duplicate_key">Ignorar el cambio de clave duplicada %1$s</string>
     <string name="quest_monitor_found">%d tareas cercanas, más cercanas:</string>
     <string name="quest_monitor_channel_name_found">Tarea cercana encontrada</string>
     <string name="quest_monitor_channel_name">Monitor de tarea cercana</string>
@@ -261,7 +261,7 @@
     <string name="quest_monitor_error">No se pudo iniciar el monitoreo, posible problema de permisos</string>
     <string name="create_custom_quest_button">Crear tarea personalizada</string>
     <string name="create_custom_quest_title_message">Introduzca el mensaje que se mostrará</string>
-    <string name="move_node_of_other_relation">Este nodo es parte de las siguientes relaciones no-multipolígono: %s</string>
+    <string name="move_node_of_other_relation">Este nodo es parte de las siguientes relaciones no-multipolígono: %1$s</string>
     <string name="move_node_message_external_source_addition">Tenga en cuenta que la posición de esta tarea puede no moverse con el nodo.</string>
     <string name="close_note_checkbox">Cerrar nota (¡solo haz esto si realmente resuelves la nota!)</string>
     <string name="closed_note_action_title">Lo cerraste</string>
@@ -337,7 +337,7 @@
 \n"surface" muestra surface=asphalt en el mismo color y surface=concrete en un color diferente
 \n".*superficie" es similar, pero también muestra sidewalk:(left/right/both):surface=asphalt en un color, y cycleway:(left/right/both):surface=asphalt en otro color</string>
     <string name="pref_offset_fix_summary">Existen, por lo que los puntos blancos están ocultos por pines de tareas</string>
-    <string name="move_node_with_geometry">Mover este nodo modificará la geometría de las siguientes vías o relaciones multipolígono: %s.
+    <string name="move_node_with_geometry">Mover este nodo modificará la geometría de las siguientes vías o relaciones multipolígono: %1$s.
 \n Tenga en cuenta que los cambios no se verán inmediatamente en el mapa de fondo.</string>
     <string name="access_manager_message">Elija etiquetas de acceso. Recuerde etiquetar solo el acceso firmado y evite la etiqueta genérica de "acceso" si es posible</string>
     <string name="quest_custom_quest_message">Úselo para verificar elementos o ubicaciones predefinidos específicos. También puede especificar etiquetas y agregar un nodo con ellas. Para usarlo, cargue un archivo en el menú de configuración principal, que contenga tipo, id, mensaje (por ejemplo, NODO, 1234, posición de verificación) o latitud, longitud, mensaje. Para agregar nodos, coloque las etiquetas en el mensaje después de 'addNode', p. addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
@@ -358,7 +358,7 @@
     <string name="restriction_overlay_direction_text">Se aplica a la dirección de viaje:</string>
     <string name="quest_buildingColour_title">¿Qué color general tiene este edificio\?</string>
     <string name="quest_buildingPartColour_title">¿Qué color general tiene esta parte del edificio\?</string>
-    <string name="restriction_overlay_only_for">Sólo para: %s</string>
+    <string name="restriction_overlay_only_for">Sólo para: %1$s</string>
     <string name="pref_update_local_statistics">Actualizar las estadísticas al subir</string>
     <string name="pref_update_local_statistics_summary">La desactivación acelera la carga y detiene los mensajes de logros</string>
     <string name="pref_hide_overlay_quests">Ocultar las funciones específicas de la superposición</string>

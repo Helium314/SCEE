@@ -156,20 +156,20 @@
     <string name="quest_crossing_type_zebra">Zebra</string>
     <string name="quest_buildingType_elevator">Felvonó</string>
     <string name="custom_overlay_color_hint">Üresen hagyva minden azonos színnel jelenik meg</string>
-    <string name="custom_overlay_delete">Biztosan törlöd ezt: %s?</string>
+    <string name="custom_overlay_delete">Biztosan törlöd ezt: %1$s?</string>
     <string name="custom_overlay_filter_info">Szűrés részletei</string>
     <string name="custom_overlay_color_info">Színezés részletei</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Feltételes eltávolítása</string>
-    <string name="restriction_overlay_exceptions">Kivételek: %s</string>
+    <string name="restriction_overlay_exceptions">Kivételek: %1$s</string>
     <string name="restriction_overlay_title">Forgalmi korlátozások</string>
     <string name="restriction_overlay_show_details">Kapcsolat részleteinek megjelenítése</string>
     <string name="restriction_overlay_signed_switch">Van tábla vagy útburkolati jel</string>
     <string name="restriction_overlay_direction_text">Erre a menetirányra vonatkozik:</string>
     <string name="restriction_overlay_other_restrictions">A vonal többi korlátozása:</string>
-    <string name="tag_editor_last_edited">Legutóbb szerkesztett: %s</string>
+    <string name="tag_editor_last_edited">Legutóbb szerkesztett: %1$s</string>
     <string name="hide_button">Elrejtés</string>
     <string name="restriction_overlay_sign_stop_all_way">Állj! minden irányból</string>
-    <string name="tag_editor_duplicate_key">Duplikált %s kulcs változtatásának figyelmen kívül hagyása</string>
+    <string name="tag_editor_duplicate_key">Duplikált %1$s kulcs változtatásának figyelmen kívül hagyása</string>
     <string name="fork_about_title_repository">SCEE projekt kezdőlapja</string>
     <string name="insert_node">Pont beszúrása a vonalba</string>
     <string name="outside_downloaded_area_warning">Ez a pozíció kívül esik a letöltött területen. Folytatod?</string>
@@ -198,11 +198,11 @@
     <string name="custom_overlay_title">Egyéni rátét</string>
     <string name="enqueue_download">Indítás az aktuális keresés befejeződése után</string>
     <string name="tutorial_info_fork_message"><b>SCEE</b>\n\n Ez a StreetComplete módosított változata. Az OSM-et jól ismerő, tapasztalt felhasználók számára készült. Ez nagyobb kontrollt ad, de egyben nagyobb <i>felelősséget</i> is.\n Ez különösen vonatkozik a nyers címkék szerkesztésének és a csomópontok törlésének lehetőségére, de a kérdések elemeinek megválogatására is. Az SCEE-ben hozzáadott, <i>nem minden esetben megválaszolható</i> kérdések alapértelmezés szerint le vannak tiltva. Kérjük, rejtsd el őket, ha nem tudsz válaszolni rájuk, és <i>ne spameld a jegyzeteket</i>.\n\n Az SCEE alapból úgy van beállítva, hogy nagyon hasonlóan viselkedjen, mint a StreetComplete.</string>
-    <string name="restriction_overlay_relation_unsupported">Nem támogatott kapcsolattípus:\n%s</string>
+    <string name="restriction_overlay_relation_unsupported">Nem támogatott kapcsolattípus:\n%1$s</string>
     <string name="restriction_overlay_relation_incomplete">A korlátozási kapcsolat nem teljes, szükség van a környező terület letöltésére</string>
     <string name="quest_settings_osmose_level_high">Magas</string>
     <string name="restriction_overlay_select_way">Kattints a következő vonalra a térképen. A jelenlegi úttal közös pontban kell végződjön. Szükség esetén el kell vágni.</string>
-    <string name="restriction_overlay_only_for">Csak számukra: %s</string>
+    <string name="restriction_overlay_only_for">Csak számukra: %1$s</string>
     <string name="custom_overlay_add_button">Új egyéni</string>
     <string name="custom_overlay_dash_filter_hint">Szaggatott elem szűrés</string>
     <string name="quest_settings_osmose_level_title">Válaszd ki a letöltendő és megjelenítendő problémák súlyossági szintjét</string>
@@ -238,7 +238,7 @@
     <string name="quest_guidepost_sports_answer_simple_description">Ez csak egy egyszerű útjelző, konkrét sport nélkül.</string>
     <string name="quest_custom_quest_remove">Eltávolítás a listáról</string>
     <string name="quest_custom_quest_add_node">Pont hozzáadása</string>
-    <string name="quest_custom_quest_add_node_text">Hozzáadhatsz pontot ezekkel a címkékkel: %s</string>
+    <string name="quest_custom_quest_add_node_text">Hozzáadhatsz pontot ezekkel a címkékkel: %1$s</string>
     <string name="quest_guidepost_sports_horse">Lovaglás</string>
     <string name="quest_guidepost_sports_nordic_walking">Nordic walking</string>
     <string name="quest_guidepost_sports_ski">Síelés</string>
@@ -445,7 +445,7 @@
     <string name="quest_monitor_channel_name">Közeli kérdésfigyelő</string>
     <string name="create_custom_quest_button">Egyéni kérdés létrehozása</string>
     <string name="create_custom_quest_title_message">Add meg a megjelenítendő üzenetet</string>
-    <string name="move_node_of_other_relation">Ez a pont a következő nem multipoligon kapcsolatok tagja: %s</string>
+    <string name="move_node_of_other_relation">Ez a pont a következő nem multipoligon kapcsolatok tagja: %1$s</string>
     <string name="dialog_button_understood">Megértettem</string>
     <string name="close_note_checkbox">Jegyzet lezárása (csak akkor tedd, ha tényleg megoldottad a jegyzetet!)</string>
     <string name="closed_note_action_title">Lezártad</string>
@@ -524,7 +524,7 @@
     <string name="quest_monitor_error">Nem sikerült elindítani a figyelést, talán hiányzik egy engedély</string>
     <string name="custom_overlay_color_message">Válaszd ki a kulcs(ok)at, amely(ek)ből a színt vegyük. Megérti a regexet és az illeszkedő címkéket használja a szín kinyeréséhez. A színt az összes illeszkedő kulcs kulcsából és értékéből származtatja. Ha egy illeszkedő kulcs :left/right/both (balra/jobbra/mindkettő) értéket tartalmaz, akkor az út megfelelő oldalait fogja színezni, de a középvonalat nem. Ha nincs egyezés, a szín mindig piros, ami a hiányzó adatot jelzi. A reguláris kifejezések ismerete nagyon hasznos ehhez a funkcióhoz. \nHa a kifejezés nem regex, a címkék szerkesztésekor a '!' előtaggal kezdd a kívánt értéket. \n\nPélda: \n"surface" a surface=asphalt címkét azonos színnel ábrázolja és eltérővel a surface=concrete címkét\nA ".*surface" hasonló, de megjeleníti egy színnel a sidewalk:(left/right/both):surface=asphalt címkét és egy másikkal a cycleway:(left/right/both):surface=asphalt címkét</string>
     <string name="general_warning">Figyelem</string>
-    <string name="move_node_with_geometry">Ennek a pontnak a mozgatása módosítani fogja a következő vonalak vagy multipoligon kapcsolatok geometriáját: %s.\n Vedd figyelembe, hogy a változások nem lesznek azonnal láthatóak a háttérképen.</string>
+    <string name="move_node_with_geometry">Ennek a pontnak a mozgatása módosítani fogja a következő vonalak vagy multipoligon kapcsolatok geometriáját: %1$s.\n Vedd figyelembe, hogy a változások nem lesznek azonnal láthatóak a háttérképen.</string>
     <string name="move_node_message_external_source_addition">Vegye figyelembe, hogy a kérdés a pozíciója nem feltétlenül mozog együtt a ponttal.</string>
     <string name="pref_hide_keyboard_summary">A jegyzet létrehozása előtt, megnyitásnál elrejti a billentyűzetet (az elhelyezés ellenőrzése érdekében)</string>
     <string name="tree_custom_quest_import">Megadom</string>

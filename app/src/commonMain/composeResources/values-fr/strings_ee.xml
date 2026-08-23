@@ -102,7 +102,7 @@
     <string name="quest_railwayPlatformRef_title">Quel est le numéro du quai \?</string>
     <string name="quest_railwayPlatformRef_abc">ABC/123</string>
     <string name="quest_generic_answer_show_edit_tags">Afficher/éditer les tags</string>
-    <string name="tag_editor_last_edited">Dernière modification : %s</string>
+    <string name="tag_editor_last_edited">Dernière modification : %1$s</string>
     <string name="quest_private">C'est privé</string>
     <string name="quest_building_entrance_parking">Entrée de parking</string>
     <string name="quest_buildingType_elevator">Ascenseur</string>
@@ -138,7 +138,7 @@
     <string name="manage_access">Gérer l'accès…</string>
     <string name="add_access">Ajouter l'accès…</string>
     <string name="quest_monitor_channel_name_found">Quête à proximité trouvée</string>
-    <string name="custom_overlay_delete">Êtes-vous sûr de supprimer %s \?</string>
+    <string name="custom_overlay_delete">Êtes-vous sûr de supprimer %1$s \?</string>
     <string name="custom_overlay_highlight_missing">Mettre en surbrillance les données manquantes</string>
     <string name="custom_overlay_filter_info">Détails à filtrer</string>
     <string name="pref_delete_old_data_after_message">Supprimer les données OSM téléchargées âgées de plusieurs jours</string>
@@ -221,7 +221,7 @@
     <string name="quest_osmose_select_element">Sélectionner l'élément</string>
     <string name="quest_custom_quest_remove">Supprimer de la liste</string>
     <string name="quest_custom_quest_osmose_not_found">Entrée supprimée, suppression de la quête</string>
-    <string name="quest_custom_quest_add_node_text">Vous pouvez ajouter un nœud avec : %s</string>
+    <string name="quest_custom_quest_add_node_text">Vous pouvez ajouter un nœud avec : %1$s</string>
     <string name="quest_custom_quest_add_node">Ajouter un nœud</string>
     <string name="quest_benchMaterial_title">En quelle matière est-il \?</string>
     <string name="quest_poi_seating_title">POI : Places assises</string>
@@ -255,14 +255,14 @@
     <string name="quest_buildingType_transit_shelter">Abri de transport en commun</string>
     <string name="quest_buildingType_riding_hall">Manège d'équitation</string>
     <string name="quest_surface_value_metal_grid">Grille métallique</string>
-    <string name="tag_editor_duplicate_key">Ignorer le changement de clé dupliquée %s</string>
+    <string name="tag_editor_duplicate_key">Ignorer le changement de clé dupliquée %1$s</string>
     <string name="access_manager_message">Choisir les clés d'accès. N'oubliez d'indiquer seulement les accès précisé sur le terrain, et d'éviter autant que possible le marquage générique avec la clé "access</string>
     <string name="custom_overlay_dash_filter_hint">Filtrer les éléments en pointillés</string>
     <string name="custom_overlay_color_info">Détails à afficher en couleur</string>
     <string name="quest_monitor_running">Suivi de la localisation</string>
     <string name="quest_monitor_channel_name">Surveiller les quêtes à proximité</string>
     <string name="quest_monitor_found">%d quêtes à proximité, la plus proche :</string>
-    <string name="move_node_with_geometry">Le déplacement de ce nœud modifiera la géométrie des voies ou des relations multipolygonales suivantes : %s.
+    <string name="move_node_with_geometry">Le déplacement de ce nœud modifiera la géométrie des voies ou des relations multipolygonales suivantes : %1$s.
 \n Attention, les modifications ne seront pas immédiatement visibles sur le fond de carte.</string>
     <string name="pref_hide_keyboard_title">Masquer le clavier avant de créer une note</string>
     <string name="quest_monitor_active_request">La mise à jour en continue de la localisations augmente l'utilisation de la batterie. Lorsqu'il n'y a pas de localisation en continue, les localisations demandées par les autres applications sont toujours utilisées.</string>
@@ -281,7 +281,7 @@
     <string name="pref_manual_download_cache_summary">Si cette option est désactivée, seul les données de plus de 12 heures seront retéléchargées lors d'un téléchargement manuel</string>
     <string name="custom_overlay_add_button">Nouveau personnalisé</string>
     <string name="default_disabled_msg_poi_vacant">Cette "quête" affiche les commerces vacants avec un point gris. Cliquez sur le point pour afficher les détails et les réponses possibles.</string>
-    <string name="move_node_of_other_relation">Ce nœud fait partie des relations non multipolygonales suivantes : %s</string>
+    <string name="move_node_of_other_relation">Ce nœud fait partie des relations non multipolygonales suivantes : %1$s</string>
     <string name="insert_node_select_way">Sélectionnez une position sur le chemin</string>
     <string name="pref_show_nearby_quests_summary">Permettre de passer d'une quête à l'autre lorsqu'un formulaire de saisie de quête est affiché</string>
     <string name="quest_maxspeed_conditional_limited_enter_default">Sélectionnez la limite par défaut avant de choisir cette réponse</string>
@@ -351,11 +351,11 @@
     <string name="restriction_overlay_other_restrictions">Autres restrictions sur ce chemin :</string>
     <string name="create_relation_action_description">Vous avez créé une relation avec …</string>
     <string name="outside_downloaded_area_warning">Ce lieu est situé en dehors de la zone téléchargée. Poursuivre \?</string>
-    <string name="restriction_overlay_only_for">Seulement pour : %s</string>
+    <string name="restriction_overlay_only_for">Seulement pour : %1$s</string>
     <string name="restriction_overlay_show_details">Afficher les détails de la relation</string>
     <string name="restriction_overlay_relation_unsupported">Type de relation non supporté :
-\n%s</string>
-    <string name="restriction_overlay_exceptions">Exceptions : %s</string>
+\n%1$s</string>
+    <string name="restriction_overlay_exceptions">Exceptions : %1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Supprimer la condition</string>
     <string name="restriction_overlay_sign_stop_all_way">Stop (toutes voies)</string>
     <string name="restriction_overlay_title">Restrictions de circulation</string>

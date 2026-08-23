@@ -294,7 +294,7 @@
     <string name="quest_custom_quest_osmose_not_found">條目已刪除，正在移除任務</string>
     <string name="quest_custom_quest_remove">從清單中移除</string>
     <string name="quest_custom_quest_add_node">新增節點</string>
-    <string name="quest_custom_quest_add_node_text">你可以新增包含%s的節點</string>
+    <string name="quest_custom_quest_add_node_text">你可以新增包含%1$s的節點</string>
     <string name="quest_guidepost_sports_title">這個指標是為哪種運動設置的？</string>
     <string name="quest_guidepost_sports_note">如果有任何未包含在列出功能中的項目，請改以註解方式說明。</string>
     <string name="quest_guidepost_sports_answer_simple">這只是一個簡易的指標</string>
@@ -373,13 +373,13 @@
     <string name="quest_shelter_type_field_shelter">野外避難所</string>
     <string name="quest_shelter_type_is_weather_shelter">這是個通用的庇護所</string>
     <string name="restriction_overlay_title">交通規則</string>
-    <string name="restriction_overlay_exceptions">例外情況：:%s</string>
-    <string name="restriction_overlay_only_for">僅有：%s</string>
+    <string name="restriction_overlay_exceptions">例外情況：:%1$s</string>
+    <string name="restriction_overlay_only_for">僅有：%1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">移除條件限制</string>
     <string name="restriction_overlay_signed_switch">有標誌或道路標線</string>
     <string name="restriction_overlay_show_details">顯示關聯詳細資訊</string>
     <string name="restriction_overlay_relation_incomplete">交通規則關聯尚未完成，需下載週邊地區地圖</string>
-    <string name="restriction_overlay_relation_unsupported">不支援的關聯種類：\n%s</string>
+    <string name="restriction_overlay_relation_unsupported">不支援的關聯種類：\n%1$s</string>
     <string name="restriction_overlay_other_restrictions">其他在這條路上的交通規則限制：</string>
     <string name="hide_button">隱藏</string>
     <string name="access_width_limit">寬度</string>
@@ -446,7 +446,7 @@
     <string name="custom_overlay_title">自訂圖層</string>
     <string name="custom_overlay_highlight_missing">突顯缺少的資料</string>
     <string name="custom_overlay_add_button">新的圖層</string>
-    <string name="tag_editor_last_edited">上次編輯：%s</string>
+    <string name="tag_editor_last_edited">上次編輯：%1$s</string>
     <string name="create_custom_quest_button">新增自訂圖層</string>
     <string name="action_scee_quests">只顯示SCEE的任務</string>
     <string name="action_all_quests">顯示所有的任務</string>

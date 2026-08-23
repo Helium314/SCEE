@@ -133,12 +133,12 @@
     <string name="quest_sacScale_six">T6 - δύσκολη αλπική πεζοπορία</string>
     <string name="custom_overlay_color_info">Λεπτομέρειες χρωματισμού</string>
     <string name="hide_button">Απόκρυψη</string>
-    <string name="tag_editor_last_edited">Τελευταία επεξεργασία: %s</string>
-    <string name="tag_editor_duplicate_key">Αγνόηση αλλαγής διπλότυπου κλειδιού %s</string>
+    <string name="tag_editor_last_edited">Τελευταία επεξεργασία: %1$s</string>
+    <string name="tag_editor_duplicate_key">Αγνόηση αλλαγής διπλότυπου κλειδιού %1$s</string>
     <string name="restriction_overlay_sign_give_way">Παραχώρηση προτεραιότητας</string>
     <string name="restriction_overlay_sign_stop">Στοπ</string>
-    <string name="restriction_overlay_only_for">Μόνο για: %s</string>
-    <string name="restriction_overlay_exceptions">Εξαιρέσεις: %s</string>
+    <string name="restriction_overlay_only_for">Μόνο για: %1$s</string>
+    <string name="restriction_overlay_exceptions">Εξαιρέσεις: %1$s</string>
     <string name="restriction_overlay_show_details">Προβολή λεπτομερειών σχέσης</string>
     <string name="restriction_overlay_title">Κυκλοφοριακοί περιορισμοί</string>
     <string name="general_warning">Προειδοποίηση</string>
@@ -171,7 +171,7 @@
     <string name="pref_screen_data_management">Διαχείριση δεδομένων</string>
     <string name="pref_tile_maxzoom">Μέγιστη υποστηριζόμενη μεγέθυνση</string>
     <string name="insert_node">Εισαγωγή κόμβου στη γραμμή</string>
-    <string name="custom_overlay_delete">Πραγματικά διαγραφή του %s;</string>
+    <string name="custom_overlay_delete">Πραγματικά διαγραφή του %1$s;</string>
     <string name="custom_overlay_filter_info">Λεπτομέρειες φιλτραρίσματος</string>
     <string name="quest_buildingType_transit_shelter">Στέγαστρο συγκοινωνίας</string>
     <string name="quest_building_demolished">Είναι κατεδαφισμένο (ορατά ίχνη)</string>
@@ -210,7 +210,7 @@
     <string name="pref_dynamic_quest_creation_title">Δημιουργία αποστολών δυναμικά</string>
     <string name="quest_wheelchair_description_no_language">δεν ορίστηκε γλώσσα</string>
     <string name="quest_street_cabinet_traffic_control">Ελέγχου κυκλοφορίας</string>
-    <string name="quest_custom_quest_add_node_text">Μπορείτε να προσθέσετε κόμβο με: %s</string>
+    <string name="quest_custom_quest_add_node_text">Μπορείτε να προσθέσετε κόμβο με: %1$s</string>
     <string name="quest_destination_title">Ποιοί προορισμοί είναι σηματοδοτημένοι γι' αυτόν το δρόμο;</string>
     <string name="quest_contact_phone">Ποιός είναι ο αριθμός τηλεφώνου αυτού του μέρους;</string>
     <string name="quest_street_cabinet_postal_service">Ταχυδρομικής υπηρεσίας</string>
@@ -238,7 +238,7 @@
     <string name="close_note_checkbox">Κλείσιμο σημείωσης (κάντο μόνο αν έχεις πραγματικά λύσει τη σημείωση!)</string>
     <string name="manage_access">Διαχείριση πρόσβασης…</string>
     <string name="add_access">Προσθήκη πρόσβασης…</string>
-    <string name="restriction_overlay_relation_unsupported">Μη υποστηριζόμενο είδος σχέσης:\n%s</string>
+    <string name="restriction_overlay_relation_unsupported">Μη υποστηριζόμενο είδος σχέσης:\n%1$s</string>
     <string name="restriction_overlay_other_restrictions">Άλλοι περιορισμοί στη γραμμή:</string>
     <string name="restriction_overlay_signed_switch">Υπάρχει ταμπέλα ή οδική σήμανση</string>
 </resources>

@@ -118,7 +118,7 @@
     <string name="quest_custom_quest_title">任意クエスト:</string>
     <string name="quest_custom_quest_remove">一覧から削除</string>
     <string name="quest_custom_quest_add_node">ノードを追加</string>
-    <string name="quest_custom_quest_add_node_text">次のタグを付けてノードを追加できます: %s</string>
+    <string name="quest_custom_quest_add_node_text">次のタグを付けてノードを追加できます: %1$s</string>
     <string name="quest_benchMaterial_title">これは何の素材で作られていますか?</string>
     <string name="quest_material_wood">木材</string>
     <string name="quest_material_metal">金属</string>
@@ -320,8 +320,8 @@
     <string name="quest_parking_capacity_disabled_title">ここでは(身体)障者専用の駐車スペースに何台駐車できますか?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">存在するが、数は不明</string>
     <string name="quest_parking_orientation_title">自動車はどの向きで駐車できますか?</string>
-    <string name="tag_editor_last_edited">最終編集: %s</string>
-    <string name="tag_editor_duplicate_key">重複キー %s の変更を無視</string>
+    <string name="tag_editor_last_edited">最終編集: %1$s</string>
+    <string name="tag_editor_duplicate_key">重複キー %1$s の変更を無視</string>
     <string name="fork_about_title_repository">SCEE企画本元</string>
     <string name="enqueue_download">現在の検索が完了した後に開始</string>
     <string name="create_poi">POIを追加</string>
@@ -331,9 +331,9 @@
     <string name="create_custom_quest_title_message">表示されるメッセージを入力</string>
     <string name="general_warning">警告</string>
     <string name="dialog_button_understood">了解</string>
-    <string name="move_node_with_geometry">このノードの移動は、従属するウェイの配置やマルチポリゴンのリレーションを変化させます: %s。
+    <string name="move_node_with_geometry">このノードの移動は、従属するウェイの配置やマルチポリゴンのリレーションを変化させます: %1$s。
 \n いかなる変更も、背景の地図上で即座に視認可能にならないことを心得てください。</string>
-    <string name="move_node_of_other_relation">このノードは、非マルチポリゴンのリレーションに従属する部分です: %s</string>
+    <string name="move_node_of_other_relation">このノードは、非マルチポリゴンのリレーションに従属する部分です: %1$s</string>
     <string name="close_note_checkbox">メモを閉じる(メモが確実に解決する場合に、これを行ってください!)</string>
     <string name="closed_note_action_title">あなたはそれを閉じました</string>
     <string name="quest_trail_visibility_good_description">道や次の印は見失うことが少ないですが、ときどき探す必要があることもあります。地図持参が推奨され、基本的な方向感覚が必要です。</string>
@@ -412,13 +412,13 @@
     <string name="custom_overlay_highlight_missing">欠落データを強調表示</string>
     <string name="custom_overlay_color_info">色付け詳細</string>
     <string name="custom_overlay_filter_info">抽出詳細</string>
-    <string name="custom_overlay_delete">本当に %s を削除しますか?</string>
+    <string name="custom_overlay_delete">本当に %1$s を削除しますか?</string>
     <string name="custom_overlay_add_button">新規任意オーバーレイ</string>
-    <string name="restriction_overlay_exceptions">除外: %s</string>
-    <string name="restriction_overlay_only_for">指定: %s</string>
+    <string name="restriction_overlay_exceptions">除外: %1$s</string>
+    <string name="restriction_overlay_only_for">指定: %1$s</string>
     <string name="restriction_overlay_show_details">リレーションの詳細を表示</string>
     <string name="restriction_overlay_relation_unsupported">非対応のリレーションの種別:
-\n%s</string>
+\n%1$s</string>
     <string name="quest_monitor_channel_name">付近のクエスト監視器</string>
     <string name="quest_monitor_channel_name_found">付近のクエストが見つかりました</string>
     <string name="quest_monitor_running">場所を監視中</string>

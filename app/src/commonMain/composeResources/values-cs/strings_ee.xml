@@ -185,14 +185,14 @@
     <string name="quest_parking_capacity_disabled_title">Kolik je zde míst pro osoby se zdravotním postižením?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">Jsou zde, ale není jasný počet</string>
     <string name="quest_parking_orientation_title">Jakým směrem zde auta parkují?</string>
-    <string name="custom_overlay_delete">Opravdu smazat %s?</string>
-    <string name="restriction_overlay_exceptions">Výjimky: %s</string>
-    <string name="restriction_overlay_only_for">Pouze pro: %s</string>
+    <string name="custom_overlay_delete">Opravdu smazat %1$s?</string>
+    <string name="restriction_overlay_exceptions">Výjimky: %1$s</string>
+    <string name="restriction_overlay_only_for">Pouze pro: %1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Odstranit podmíněné</string>
     <string name="restriction_overlay_sign_give_way">Dej přednost v jízdě</string>
     <string name="restriction_overlay_sign_stop">Stop</string>
     <string name="hide_button">Skrýt</string>
-    <string name="tag_editor_last_edited">Naposledy upraveno: %s</string>
+    <string name="tag_editor_last_edited">Naposledy upraveno: %1$s</string>
     <string name="create_custom_quest_button">Vytvořit vlastní úkol</string>
     <string name="create_custom_quest_title_message">Uveďte zprávu co se má zobrazit</string>
     <string name="general_warning">Upozornění</string>
@@ -212,7 +212,7 @@
     <string name="pref_disable_navigation_mode_summary">Vypne režim který nakloní a automaticky otáčí s mapou</string>
     <string name="import_presets_overlays_replace">Nahradit</string>
     <string name="import_export_settings">Ostatní nastavení aplikace</string>
-    <string name="quest_custom_quest_add_node_text">Můžete přidat uzel/bod (node) s: %s</string>
+    <string name="quest_custom_quest_add_node_text">Můžete přidat uzel/bod (node) s: %1$s</string>
     <string name="quest_guidepost_sports_nordic_walking">Severská chůze</string>
     <string name="quest_guidepost_sports_title">Pro jaký sport je tento rozcestník určen?</string>
     <string name="import_presets_overlays_message">Přidat importované, nebo nahradit existující? Pokud vyberete nahradit, všechny momentálně existující budou odstraněny.</string>

@@ -184,9 +184,9 @@
     <string name="pref_update_local_statistics_summary">Вимкнення прискорює відправку та зупиняє повідомлення про досягнення</string>
     <string name="pref_main_menu_switch_presets_title">Кнопка перемикання заготовок у головному меню</string>
     <string name="quest_construction">Будується до…</string>
-    <string name="restriction_overlay_exceptions">Винятки: %s</string>
+    <string name="restriction_overlay_exceptions">Винятки: %1$s</string>
     <string name="access_manager_button_add_conditional">Додати умови</string>
-    <string name="restriction_overlay_only_for">Лише для: %s</string>
+    <string name="restriction_overlay_only_for">Лише для: %1$s</string>
     <string name="restriction_overlay_show_details">Показати деталі зв’язку</string>
     <string name="restriction_overlay_signed_switch">Існує знак або дорожня розмітка</string>
     <string name="restriction_overlay_other_restrictions">Інші обмеження цього шляху:</string>
@@ -216,7 +216,7 @@
     <string name="quest_poi_business_title">POI: Бізнес</string>
     <string name="quest_is_pharmacy_dispensing_title">Чи відпускає ця аптека всі ліки за рецептом\?</string>
     <string name="default_disabled_msg_poi_machine">Це завдання показує об’єкти POI, такі як банкомати, телефони чи торгові автомати, синіми крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
-    <string name="quest_custom_quest_add_node_text">Ви можете додати точку з: %s</string>
+    <string name="quest_custom_quest_add_node_text">Ви можете додати точку з: %1$s</string>
     <string name="default_disabled_msg_poi_business">Це завдання показує магазини, ресторани, лікарів і подібні POI у вигляді помаранчевих крапок. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
     <string name="quest_material_brick">Цегла</string>
     <string name="default_disabled_msg_poi_bike">Це завдання показує POI, пов’язані з велосипедом, фіолетовими крапками. Натисніть на крапку, щоб побачити деталі та інші відповіді.</string>
@@ -239,7 +239,7 @@
     <string name="access_manager_button_add">Додати</string>
     <string name="quest_maxspeed_conditional">Залежно від…</string>
     <string name="quest_healthcare_speciality_title">Які медичні спеціальності є у цьому закладі\?</string>
-    <string name="tag_editor_last_edited">Востаннє змінено: %s</string>
+    <string name="tag_editor_last_edited">Востаннє змінено: %1$s</string>
     <string name="quest_contact_website">Яка адреса сайту цього закладу\?</string>
     <string name="pref_show_gpx_button_title">Показувати кнопку нотаток GPX</string>
     <string name="quest_seating_street">На вулиці</string>
@@ -276,7 +276,7 @@
     <string name="quest_seating_balcony">На балконі (не на першому поверсі)</string>
     <string name="quest_seating_patio">У дворику (без даху, внутрішній двір)</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Скинути умови</string>
-    <string name="custom_overlay_delete">Справді видалити %s\?</string>
+    <string name="custom_overlay_delete">Справді видалити %1$s\?</string>
     <string name="enqueue_download">Почати після завершення поточного пошуку</string>
     <string name="quest_cuisine_add_more">Додати іншу кухню</string>
     <string name="ban_check_fails">Не вдалося пройти перевірку на заборонені версії. Можливо, Ви використовуєте застарілу версію, подумайте про оновлення.</string>
@@ -510,7 +510,7 @@
     <string name="outside_downloaded_area_warning">Ця позиція знаходиться за межами завантаженої території. Продовжити?</string>
     <string name="create_relation_action_description">Ви створили зв’язок із…</string>
     <string name="quest_guidepostName_title">Яка тут назва?</string>
-    <string name="restriction_overlay_relation_unsupported">Тип зв’язку не підтримується:\n%s</string>
+    <string name="restriction_overlay_relation_unsupported">Тип зв’язку не підтримується:\n%1$s</string>
     <string name="restriction_overlay_relation_incomplete">Зв’язок з обмеженнями неповний, потрібно завантажити навколишню територію</string>
     <string name="quest_healthcare_speciality_disabled_message">Цей квест вимагає знання тегів healthcare:specialty. Без цих знань виконати квест може бути дуже важко.</string>
     <string name="quest_tree_genus_title">Який рід або вид цього дерева?</string>
@@ -621,10 +621,10 @@
     <string name="custom_overlay_dash_filter_hint">Фільтр пунктирних елементів</string>
     <string name="custom_overlay_add_button">Новий шар</string>
     <string name="restriction_overlay_select_way">Клацніть наступний шлях на карті. Йому потрібен кінцевий вузол, спільний з поточним шляхом. Розділіть, якщо необхідно.</string>
-    <string name="tag_editor_duplicate_key">Ігнорування зміни дубліката ключа %s</string>
+    <string name="tag_editor_duplicate_key">Ігнорування зміни дубліката ключа %1$s</string>
     <string name="insert_node_select_way">Виберіть позицію на лінії</string>
-    <string name="move_node_with_geometry">Переміщення цієї точки змінить геометрію таких ліній або мультиполігональних зв’язків: %s.\nМайте на увазі, що будь-які зміни не будуть одразу видимими на фоновій карті.</string>
-    <string name="move_node_of_other_relation">Ця точка є частиною таких небагатополігональних зв’язків: %s</string>
+    <string name="move_node_with_geometry">Переміщення цієї точки змінить геометрію таких ліній або мультиполігональних зв’язків: %1$s.\nМайте на увазі, що будь-які зміни не будуть одразу видимими на фоновій карті.</string>
+    <string name="move_node_of_other_relation">Ця точка є частиною таких небагатополігональних зв’язків: %1$s</string>
     <string name="move_node_message_external_source_addition">Зверніть увагу, що позиція цього завдання може не змінюватися разом із точкою.</string>
     <string name="close_note_checkbox">Закрити нотатку (зробіть це лише якщо ви справді розгадали нотатку!)</string>
     <string name="closed_note_action_title">Закрита вами</string>

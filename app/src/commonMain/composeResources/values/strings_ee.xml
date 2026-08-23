@@ -251,7 +251,7 @@
     <string name="quest_custom_quest_message">Use for checking specific pre-defined elements or locations. You can also specify tags and add a node with them. To use it, load a file in the main settings menu, containing either `type,id,message` (e.g. NODE,1234,check position) or `latitude,longitude,message`. For adding nodes, put the tags in the message after 'addNode', e.g. addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
     <string name="quest_custom_quest_remove">Remove from list</string>
     <string name="quest_custom_quest_add_node">Add node</string>
-    <string name="quest_custom_quest_add_node_text">You can add a node with: %s</string>
+    <string name="quest_custom_quest_add_node_text">You can add a node with: %1$s</string>
 
     <!--barrier locked -->
     <string name="quest_barrier_locked_title">Is this barrier (usually) locked?</string>
@@ -707,19 +707,19 @@
     <string name="custom_overlay_dash_filter_hint">Dashed element filter</string>
     <string name="custom_overlay_color_info">Coloring details</string>
     <string name="custom_overlay_filter_info">Filtering details</string>
-    <string name="custom_overlay_delete">Really delete %s?</string>
+    <string name="custom_overlay_delete">Really delete %1$s?</string>
     <!-- custom_overlay_add_button should be short, so the button can be displayed in same line with the cancel button -->
     <string name="custom_overlay_add_button">New custom</string>
 
     <!-- restriction overlay -->
     <string name="restriction_overlay_title">Traffic restrictions</string>
-    <string name="restriction_overlay_exceptions">Exceptions: %s</string>
-    <string name="restriction_overlay_only_for">Only for: %s</string>
+    <string name="restriction_overlay_exceptions">Exceptions: %1$s</string>
+    <string name="restriction_overlay_only_for">Only for: %1$s</string>
     <string name="restriction_overlay_remove_conditional_restrictions">Remove conditional</string>
     <string name="restriction_overlay_signed_switch">There is a sign or road marking</string>
     <string name="restriction_overlay_show_details">Show relation details</string>
     <string name="restriction_overlay_relation_incomplete">Restriction relation is incomplete, download of surrounding area required</string>
-    <string name="restriction_overlay_relation_unsupported">Unsupported relation type:\n%s</string>
+    <string name="restriction_overlay_relation_unsupported">Unsupported relation type:\n%1$s</string>
     <string name="restriction_overlay_select_way">Click the next way on the map. It needs an end node in common with the current way. Split if necessary.</string>
     <string name="restriction_overlay_other_restrictions">Other restrictions on this way:</string>
     <string name="restriction_overlay_direction_text">Applies to travel direction:</string>
@@ -730,8 +730,8 @@
 
     <!-- other -->
     <string name="hide_button">Hide</string>
-    <string name="tag_editor_last_edited">Last edited: %s</string>
-    <string name="tag_editor_duplicate_key">Ignoring change of duplicate key "%s</string>
+    <string name="tag_editor_last_edited">Last edited: %1$s</string>
+    <string name="tag_editor_duplicate_key">Ignoring change of duplicate key "%1$s</string>
     <string name="tutorial_info_fork_message"><b>SCEE</b>\n\n
 This is a modified version of StreetComplete. It is intended for experienced users with advanced knowledge about OSM. It gives you more control, but also more <i>responsibility</i>.\n
 This especially applies to the possibility of editing raw tags and deleting nodes, but also for modification of element selection for quests.
@@ -751,10 +751,10 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="create_custom_quest_button">Create custom quest</string>
     <string name="create_custom_quest_title_message">Enter message to be shown</string>
     <string name="general_warning">Warning</string>
-    <string name="move_node_with_geometry">Moving this node will modify geometry of following ways or multipolygon relations: %s.\n
+    <string name="move_node_with_geometry">Moving this node will modify geometry of following ways or multipolygon relations: %1$s.\n
         Be aware that any changes will not be immediately visible on the background map.
     </string>
-    <string name="move_node_of_other_relation">This node is part of following non-multipolygon relations: %s</string>
+    <string name="move_node_of_other_relation">This node is part of following non-multipolygon relations: %1$s</string>
     <string name="dialog_button_understood">Understood</string>
     <string name="move_node_message_external_source_addition">Note that the position of this quest may not move with the node.</string>
     <string name="close_note_checkbox">Close note (only do this if you actually solve the note!)</string>

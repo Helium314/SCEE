@@ -78,7 +78,7 @@ fun AddConditionalDialog(
 
     ScrollableAlertDialog(
         onDismissRequest = onDismissRequest,
-        buttons = {
+        buttonRow = {
             TextButton(onDismissRequest) { Text(stringResource(R.string.cancel)) }
             TextButton({ onClickOk("$key:conditional", fullValue.text) }, enabled = isValid) {
                 Text(stringResource(R.string.ok))

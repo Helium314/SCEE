@@ -14,6 +14,7 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
+import de.westnordost.streetcomplete.data.download.Downloader.Companion.enqueuedDownloads
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.sync.createSyncNotification
 import kotlinx.serialization.json.Json
@@ -21,7 +22,7 @@ import kotlinx.serialization.json.Json
 class DownloadControllerAndroid(private val context: Context) : DownloadController {
     override fun download(bbox: BoundingBox, isUserInitiated: Boolean, enqueue: Boolean) {
         if (enqueue && DownloadWorker.downloading) {
-            DownloadWorker.enqueuedDownloads.add(bbox)
+            enqueuedDownloads.add(bbox)
             return
         }
         WorkManager.getInstance(context).enqueueUniqueWork(
@@ -79,7 +80,6 @@ class DownloadWorker(
         private const val ARG_IS_USER_INITIATED = "isUserInitiated"
         var downloading = false
 
-        val enqueuedDownloads = mutableListOf<BoundingBox>()
         fun createWorkRequest(bbox: BoundingBox, isUserInitiated: Boolean): OneTimeWorkRequest =
             OneTimeWorkRequestBuilder<DownloadWorker>()
                 .setExpedited(OutOfQuotaPolicy.DROP_WORK_REQUEST)

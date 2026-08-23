@@ -10,6 +10,8 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.quests.FullElementSelectionDialog
 import de.westnordost.streetcomplete.quests.getPrefixedFullElementSelectionPref
 import de.westnordost.streetcomplete.quests.getLabelSources
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.quest_settings_element_selection
 
 /** Quest type where each quest refers to one OSM element where the element selection is based on
  *  a simple [element filter expression][de.westnordost.streetcomplete.data.elementfilter.ElementFilterExpression].
@@ -22,10 +24,10 @@ abstract class OsmFilterQuestType<T> : OsmElementQuestType<T> {
 
     abstract val elementFilter: String
 
-    override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
+    override final fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
         mapData.filter(prefs.getString(getPrefixedFullElementSelectionPref(prefs), elementFilter)).asIterable()
 
-    override fun isApplicableTo(element: Element): Boolean = filter.matches(element)
+    override final fun isApplicableTo(element: Element): Boolean = filter.matches(element)
 
     override val hasQuestSettings: Boolean = true
 
@@ -33,7 +35,7 @@ abstract class OsmFilterQuestType<T> : OsmElementQuestType<T> {
         FullElementSelectionDialog(
             prefs,
             this.getPrefixedFullElementSelectionPref(prefs),
-            R.string.quest_settings_element_selection,
+            Res.string.quest_settings_element_selection,
             elementFilter,
             onDismissRequest
         )

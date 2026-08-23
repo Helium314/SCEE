@@ -7,9 +7,7 @@ import android.hardware.SensorManager
 import android.location.Location
 import android.os.Bundle
 import androidx.annotation.DrawableRes
-import androidx.annotation.UiThread
 import androidx.core.content.getSystemService
-import androidx.core.graphics.Insets
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesSource
 import de.westnordost.streetcomplete.data.edithistory.EditHistorySource
@@ -38,10 +36,12 @@ import de.westnordost.streetcomplete.screens.main.map.components.StyleableOverla
 import de.westnordost.streetcomplete.screens.main.map.components.TracksMapComponent
 import de.westnordost.streetcomplete.screens.main.map.maplibre.CameraPosition
 import de.westnordost.streetcomplete.screens.main.map.maplibre.MapImages
+import de.westnordost.streetcomplete.screens.main.map.maplibre.Padding
 import de.westnordost.streetcomplete.screens.main.map.maplibre.camera
 import de.westnordost.streetcomplete.screens.main.map.maplibre.toLatLon
-import de.westnordost.streetcomplete.screens.settings.loadCustomGeometryText
+import de.westnordost.streetcomplete.screens.settings.CUSTOM_GEOMETRY_FILE
 import de.westnordost.streetcomplete.screens.settings.loadGpxTrackPoints
+import de.westnordost.streetcomplete.ui.common.quest.Marker
 import de.westnordost.streetcomplete.util.ktx.currentDisplay
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.isLocationAvailable
@@ -50,6 +50,7 @@ import de.westnordost.streetcomplete.util.ktx.toLocation
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import de.westnordost.streetcomplete.util.location.FineLocationManager
 import de.westnordost.streetcomplete.util.location.LocationAvailabilityReceiver
+import de.westnordost.streetcomplete.util.logs.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -59,11 +60,12 @@ import org.maplibre.android.maps.MapLibreMap
 import org.maplibre.android.maps.Style
 import org.maplibre.android.style.layers.Property
 import org.maplibre.android.style.layers.PropertyFactory.visibility
+import java.io.File
 import kotlin.math.PI
 
 /** This is the map shown in the main view. It manages a map that shows the quest pins, quest
  *  geometry, overlays, tracks, location... */
-class MainMapFragment : MapFragment(), ShowsGeometryMarkers {
+class MainMapFragment : MapFragment() {
 
     private val questTypeOrderSource: QuestTypeOrderSource by inject()
     private val questTypeRegistry: QuestTypeRegistry by inject()
@@ -449,8 +451,8 @@ class MainMapFragment : MapFragment(), ShowsGeometryMarkers {
     //region Control focusing on and highlighting edit / quest / element
 
     /** Focus the view on the given geometry */
-    fun startFocus(geometry: ElementGeometry, insets: Insets) {
-        geometryMapComponent?.beginFocusGeometry(geometry, insets)
+    fun startFocus(geometry: ElementGeometry, padding: Padding?) {
+        geometryMapComponent?.beginFocusGeometry(geometry, padding)
     }
 
     /** End the focussing but do not return to position before focussing */
@@ -498,22 +500,14 @@ class MainMapFragment : MapFragment(), ShowsGeometryMarkers {
         selectedPinsMapComponent?.clear()
     }
 
-    override fun putMarkersForCurrentHighlighting(markers: Iterable<Marker>) {
+    fun setMarkersForCurrentHighlighting(markers: Iterable<Marker>) {
         viewLifecycleScope.launch(Dispatchers.Default) {
-            geometryMarkersMapComponent?.putAll(markers)
+            geometryMarkersMapComponent?.setAll(markers)
         }
     }
 
     fun setQuestOrder(reverse: Boolean) {
         questPinsManager?.setQuestOrder(reverse)
-    }
-
-    @UiThread override fun deleteMarkerForCurrentHighlighting(geometry: ElementGeometry) {
-        geometryMarkersMapComponent?.delete(geometry)
-    }
-
-    @UiThread override fun clearMarkersForCurrentHighlighting() {
-        geometryMarkersMapComponent?.clear()
     }
 
     //endregion
@@ -640,4 +634,10 @@ private fun <T> ArrayList<ArrayList<T>>.takeLastNested(n: Int): ArrayList<ArrayL
         sum += s
     }
     return this
+}
+
+private fun loadCustomGeometryText(context: Context): String? {
+    val file = context.getExternalFilesDir(null)?.let { File(it, CUSTOM_GEOMETRY_FILE) }
+    if (file?.exists() != true) return null
+    return file.readText()
 }

@@ -103,7 +103,7 @@ class OsmNoteQuestController(
 
     private fun createQuestForNote(note: Note): OsmNoteQuest? =
         if (note.shouldShowAsQuest(userDataSource.userId, showOnlyNotesPhrasedAsQuestions, reallyAllNotes, blockedUserIds, blockedUserNames)) {
-            createOsmNoteQuest(note.id, note.position)
+            OsmNoteQuest(note.id, note.position)
         } else {
             null
         }

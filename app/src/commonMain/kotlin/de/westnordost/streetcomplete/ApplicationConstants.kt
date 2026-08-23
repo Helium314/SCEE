@@ -138,6 +138,8 @@ object ApplicationConstants {
      */
     const val USE_TEST_API = false
 
+    const val MAX_OSM_TAG_VALUE_LENGTH = 255
+
     var DEBUG = false // not really a constant, but does not depend on debug build vs not any more, so we fake it
 
     lateinit var context: Context

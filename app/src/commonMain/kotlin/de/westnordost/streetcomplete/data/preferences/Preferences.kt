@@ -11,6 +11,7 @@ import com.russhwolf.settings.nullableString
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.messages.Message
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
+import de.westnordost.streetcomplete.osm.localized_name.LocalizedName
 import de.westnordost.streetcomplete.util.Mockable
 import de.westnordost.streetcomplete.util.ktx.putStringOrNull
 import kotlinx.datetime.LocalDate
@@ -193,7 +194,6 @@ class Preferences(val prefs: ObservableSettings) {
         prefs.addStringOrNullListener(WEEKLY_OSM_LAST_NOTIFIED_PUB_DATE) { callback() }
 
     // quest & overlay UI
-    var preferredLanguageForNames: String? by prefs.nullableString(PREFERRED_LANGUAGE_FOR_NAMES)
     var selectedEditTypePreset: Long by prefs.long(SELECTED_EDIT_TYPE_PRESET, 0L)
     var selectedOverlayName: String? by prefs.nullableString(SELECTED_OVERLAY)
 
@@ -221,6 +221,19 @@ class Preferences(val prefs: ObservableSettings) {
 
     fun <T> setLastPicked(serializer: KSerializer<List<T>>, key: String, values: List<T>) {
         prefs.putString(LAST_PICKED_PREFIX + key, Json.encodeToString(serializer, values))
+    }
+
+    var preferredLanguageForNames: String? by prefs.nullableString(PREFERRED_LANGUAGE_FOR_NAMES)
+
+    fun getLanguagesWithPreferredFirst(languages: List<String>): List<String> {
+        val languages = languages.distinct().toMutableList()
+        val preferredLanguageTag = preferredLanguageForNames
+        if (preferredLanguageTag != null) {
+            if (languages.remove(preferredLanguageTag)) {
+                languages.add(0, preferredLanguageTag)
+            }
+        }
+        return languages
     }
 
     // profile & statistics screen UI

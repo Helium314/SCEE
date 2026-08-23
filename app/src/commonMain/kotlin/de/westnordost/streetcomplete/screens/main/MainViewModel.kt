@@ -103,7 +103,6 @@ abstract class MainViewModel : ViewModel() {
     abstract val showOverlaySelector: StateFlow<Boolean>
     abstract val reverseQuestOrder: MutableStateFlow<Boolean>
     abstract val showMainMenuDialog: MutableState<Boolean>
-    abstract val showingBottomSheet: MutableStateFlow<Boolean>
     abstract val nearbyQuests: MutableStateFlow<Collection<Pair<Int, List<Quest>>>?>
 }
 

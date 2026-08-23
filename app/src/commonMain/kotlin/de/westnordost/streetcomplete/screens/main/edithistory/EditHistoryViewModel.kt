@@ -45,8 +45,6 @@ abstract class EditHistoryViewModel : ViewModel() {
     abstract fun undo(editKey: EditKey)
     abstract fun updateEdits()
 
-    abstract val featureDictionaryLazy: Lazy<FeatureDictionary>
-
     /* edit sidebar */
     // TODO could maybe be just a boolean in the composable when there's no communication between
     //      compose <-> fragment communication necessary anymore
@@ -65,7 +63,6 @@ data class EditItem(
 class EditHistoryViewModelImpl(
     private val mapDataSource: MapDataWithEditsSource,
     private val editHistoryController: EditHistoryController,
-    override val featureDictionaryLazy: Lazy<FeatureDictionary>,
     private val prefs: Preferences,
 ) : EditHistoryViewModel() {
 
@@ -178,7 +175,7 @@ class EditHistoryViewModelImpl(
             val sameDate = editDateTime.date == editAboveDateTime?.date
             val sameTime =
                 editDateTime.time.hour == editAboveDateTime?.time?.hour &&
-                editDateTime.time.minute == editAboveDateTime?.time?.minute
+                    editDateTime.time.minute == editAboveDateTime?.time?.minute
             editAboveDateTime = editDateTime
 
             EditItem(

@@ -10,13 +10,16 @@ import de.westnordost.streetcomplete.util.Listeners
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import kotlinx.atomicfu.locks.ReentrantLock
 import kotlinx.atomicfu.locks.withLock
+import kotlinx.io.files.FileSystem
+import kotlinx.io.files.Path
 import java.io.File
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class NoteEditsControllerImpl(
-    private val editsDB: NoteEditsDao
+    private val editsDB: NoteEditsDao,
+    private val fileSystem: FileSystem
 ) : NoteEditsController {
 
     private val listeners = Listeners<NoteEditsSource.Listener>()
@@ -29,7 +32,7 @@ class NoteEditsControllerImpl(
         position: LatLon,
         text: String?,
         imagePaths: List<String>,
-        track: List<Trackpoint>,
+        track: List<Trackpoint>?,
         isGpxNote: Boolean,
         context: Context?
     ) {
@@ -88,6 +91,9 @@ class NoteEditsControllerImpl(
 
     override fun markSynced(edit: NoteEdit, note: Note) {
         var markSyncedSuccess = false
+        for (imagePath in edit.imagePaths) {
+            fileSystem.delete(Path(imagePath), mustExist = false)
+        }
         lock.withLock {
             if (edit.noteId != note.id) {
                 editsDB.updateNoteId(edit.noteId, note.id)
@@ -119,6 +125,9 @@ class NoteEditsControllerImpl(
     }
 
     private fun delete(edit: NoteEdit): Boolean {
+        for (imagePath in edit.imagePaths) {
+            fileSystem.delete(Path(imagePath), mustExist = false)
+        }
         val deleteSuccess = lock.withLock { editsDB.delete(edit.id) }
         if (deleteSuccess) {
             onDeletedEdits(listOf(edit))
@@ -143,7 +152,7 @@ class NoteEditsControllerImpl(
         val path = context?.getExternalFilesDir(null) ?: return
         path.mkdirs()
         val fileName = "notes.gpx"
-        val gpxFile = File(path,fileName)
+        val gpxFile = File(path, fileName)
         if (gpxFile.createNewFile()) // if this file did not exist
             gpxFile.writeText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<gpx \n" +

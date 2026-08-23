@@ -35,6 +35,8 @@ import de.westnordost.streetcomplete.data.elementfilter.ParseException
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.quest_settings_element_selection
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
 import kotlinx.coroutines.Dispatchers
@@ -43,6 +45,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 import java.util.regex.PatternSyntaxException
 
 // restarts are typically necessary on changes of element selection because the filter is created by lazy
@@ -90,7 +94,7 @@ fun getPrefixedLabelSourcePref(questType: OsmElementQuestType<*>, prefs: Prefere
                 }
             }
         },
-        buttons = {
+        buttonRow = {
             ResetCancelOk(
                 onDismissRequest = onDismissRequest,
                 resetEnabled = prefs.contains(prefWithPrefix),
@@ -107,13 +111,13 @@ fun getPrefixedLabelSourcePref(questType: OsmElementQuestType<*>, prefs: Prefere
         FullElementSelectionDialog(
             prefs,
             questType.getPrefixedFullElementSelectionPref(prefs),
-            R.string.quest_settings_element_selection,
+            Res.string.quest_settings_element_selection,
             questType.elementFilter
         ) { showElementSelection = false }
 }
 
 /** for setting values of a single positive number */
-@Composable fun NumberSelectionDialog(prefs: Preferences, pref: String, defaultValue: Int, messageId: Int, onDismissRequest: () -> Unit) {
+@Composable fun NumberSelectionDialog(prefs: Preferences, pref: String, defaultValue: Int, messageId: StringResource, onDismissRequest: () -> Unit) {
     var text by remember {
         mutableStateOf(TextFieldValue(prefs.getInt(pref, defaultValue).toString()))
     }
@@ -137,7 +141,7 @@ fun getPrefixedLabelSourcePref(questType: OsmElementQuestType<*>, prefs: Prefere
                 )
             }
         },
-        buttons = {
+        buttonRow = {
             ResetCancelOk(
                 onDismissRequest = onDismissRequest,
                 resetEnabled = prefs.contains(pref),
@@ -160,7 +164,7 @@ fun getPrefixedLabelSourcePref(questType: OsmElementQuestType<*>, prefs: Prefere
     prefs: Preferences,
     pref: String,
     defaultValue: String,
-    messageId: Int,
+    messageId: StringResource,
     onDismissRequest: () -> Unit,
     onChanged: () -> Unit = { OsmQuestController.reloadQuestTypes() },
 ) {
@@ -187,7 +191,7 @@ fun getPrefixedLabelSourcePref(questType: OsmElementQuestType<*>, prefs: Prefere
                 )
             }
         },
-        buttons = {
+        buttonRow = {
             ResetCancelOk(
                 onDismissRequest = onDismissRequest,
                 resetEnabled = prefs.contains(pref),
@@ -209,7 +213,7 @@ fun getPrefixedLabelSourcePref(questType: OsmElementQuestType<*>, prefs: Prefere
  *  This will check validity of input and only allow saving selection can be parsed.
  */
 @Composable
-fun FullElementSelectionDialog(prefs: Preferences, pref: String, messageId: Int, defaultValue: String, onDismissRequest: () -> Unit) {
+fun FullElementSelectionDialog(prefs: Preferences, pref: String, messageId: StringResource, defaultValue: String, onDismissRequest: () -> Unit) {
     val checkPrefix = if (pref.endsWith("_full_element_selection")) "" else "nodes with "
     var text by remember {
         mutableStateOf(TextFieldValue(prefs.getString(pref, defaultValue.trimIndent())))
@@ -221,7 +225,7 @@ fun FullElementSelectionDialog(prefs: Preferences, pref: String, messageId: Int,
         content = {
             Column(modifier = Modifier.padding(horizontal = 12.dp)) {
                 Text(
-                    text = AnnotatedString.fromHtml(stringResource(messageId)),
+                    text = AnnotatedString.fromHtml(org.jetbrains.compose.resources.stringResource(messageId)),
                     style = MaterialTheme.typography.body1
                 )
                 TextField(
@@ -237,7 +241,7 @@ fun FullElementSelectionDialog(prefs: Preferences, pref: String, messageId: Int,
                     DiffButton(defaultValue) { text.text }
             }
         },
-        buttons = {
+        buttonRow = {
             ResetCancelOk(
                 onDismissRequest = onDismissRequest,
                 resetEnabled = prefs.contains(pref),
@@ -313,9 +317,9 @@ private fun DiffButton(defaultText: String, getCurrentText: () -> String) {
     prefs: Preferences,
     key: String,
     default: Boolean,
-    messageId: Int,
-    answerTrue: Int,
-    answerFalse: Int,
+    messageId: StringResource,
+    answerTrue: StringResource,
+    answerFalse: StringResource,
     onDismissRequest: () -> Unit
 ) {
     InfoDialog(

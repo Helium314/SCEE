@@ -123,5 +123,6 @@ class Downloader(
 
     companion object {
         const val TAG = "Download"
+        val enqueuedDownloads = mutableListOf<BoundingBox>()
     }
 }

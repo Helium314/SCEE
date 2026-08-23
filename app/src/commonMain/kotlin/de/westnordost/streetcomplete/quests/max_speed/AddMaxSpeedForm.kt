@@ -1,0 +1,165 @@
+package de.westnordost.streetcomplete.quests.max_speed
+
+import androidx.appcompat.app.AlertDialog
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import de.westnordost.streetcomplete.Prefs
+import de.westnordost.streetcomplete.R
+import de.westnordost.streetcomplete.data.meta.CountryInfo
+import de.westnordost.streetcomplete.data.osm.mapdata.Element
+import de.westnordost.streetcomplete.data.osm.osmquests.Answer
+import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
+import de.westnordost.streetcomplete.data.preferences.Preferences
+import de.westnordost.streetcomplete.osm.AddConditionalDialog
+import de.westnordost.streetcomplete.osm.maxspeed.ROADS_WHERE_SLOW_ZONE_IS_LIKELY
+import de.westnordost.streetcomplete.osm.maxspeed.Speed
+import de.westnordost.streetcomplete.quests.max_speed.MaxSpeedSign.Type.*
+import de.westnordost.streetcomplete.resources.*
+import de.westnordost.streetcomplete.ui.common.dialogs.AreYouSureDialog
+import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
+import de.westnordost.streetcomplete.ui.common.quest.QuestForm
+import de.westnordost.streetcomplete.ui.theme.extraLargeInput
+import de.westnordost.streetcomplete.ui.util.rememberSerializable
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
+
+@Composable
+fun AddMaxSpeedForm(
+    on: (QuestAction<Pair<MaxSpeedAnswer, Pair<String, String>?>>) -> Unit,
+    element: Element,
+    countryInfo: CountryInfo
+) {
+    val context = LocalContext.current
+    var maxSpeedAnswer by rememberSerializable { mutableStateOf<MaxSpeedAnswer?>(null) }
+    var confirmNoSign by remember { mutableStateOf(false) }
+    var confirmUnusualInput by remember { mutableStateOf(false) }
+    var confirmNoSignSlowZone by remember { mutableStateOf(false) }
+    val preferences: Preferences = koinInject()
+    var showConditionalDialog by remember { mutableStateOf(false) }
+
+    fun applySpeedLimitFormAnswer(answer: MaxSpeedAnswer, conditional: Pair<String, String>? = null) {
+        val maxSpeedSign = answer as? MaxSpeedSign
+        if (maxSpeedSign?.type == ZONE) {
+            lastInputSlowZone = maxSpeedSign.speed.value
+        }
+        on(Answer(answer to conditional))
+    }
+    fun addConditional() {
+        // first require selecting sth for normal limit
+        if (maxSpeedAnswer?.isComplete() != true) {
+            AlertDialog.Builder(context)
+                .setMessage(R.string.quest_maxspeed_conditional_limited_enter_default)
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+            return
+        }
+        showConditionalDialog = true
+    }
+
+    QuestForm(
+        on = on,
+        isComplete = maxSpeedAnswer?.isComplete() == true,
+        onClickOk = {
+            if (maxSpeedAnswer is MaxSpeedAnswer.NoSignWithRoadType) {
+                if (countryInfo.hasSlowZone && element.tags["highway"] in ROADS_WHERE_SLOW_ZONE_IS_LIKELY) {
+                    confirmNoSignSlowZone = true
+                } else {
+                    confirmNoSign = true
+                }
+            } else if ((maxSpeedAnswer as? MaxSpeedSign)?.isUnusualSpeed() == true) {
+                confirmUnusualInput = true
+            } else {
+                maxSpeedAnswer?.let { applySpeedLimitFormAnswer(it) }
+            }
+        },
+        otherAnswers = { listOfNotNull(
+            if (countryInfo.hasAdvisorySpeedLimitSign) {
+                AnswerItem(stringResource(Res.string.quest_maxspeed_answer_advisory_speed_limit)) {
+                    maxSpeedAnswer = MaxSpeedSign(Speed(null, countryInfo.speedUnits.first()), ADVISORY)
+                }
+            } else null,
+            if (preferences.getBoolean(Prefs.EXPERT_MODE, false))
+                AnswerItem(stringResource(Res.string.quest_maxspeed_conditional)) { addConditional() }
+            else null
+        ) }
+    ) {
+        MaxSpeedForm(
+            countryInfo = countryInfo,
+            highwayValue = element.tags["highway"]!!,
+            answer = maxSpeedAnswer,
+            onAnswer = { maxSpeedAnswer = it },
+            initialZoneSpeedValue = lastInputSlowZone,
+        )
+    }
+
+    if (confirmNoSign) {
+        AreYouSureDialog(
+            onDismissRequest = { confirmNoSign = false },
+            onConfirmed = { maxSpeedAnswer?.let { applySpeedLimitFormAnswer(it) } },
+            titleText = stringResource(Res.string.quest_maxspeed_answer_noSign_confirmation_title),
+            text = { Text(stringResource(Res.string.quest_maxspeed_answer_noSign_confirmation)) },
+            confirmButtonText = stringResource(Res.string.quest_maxspeed_answer_noSign_confirmation_positive)
+        )
+    }
+    if (confirmUnusualInput) {
+        AreYouSureDialog(
+            onDismissRequest = { confirmUnusualInput = false },
+            onConfirmed = { maxSpeedAnswer?.let { applySpeedLimitFormAnswer(it) } },
+            text = { Text(stringResource(Res.string.quest_maxspeed_unusualInput_confirmation_description)) }
+        )
+    }
+    if (confirmNoSignSlowZone) {
+        AreYouSureDialog(
+            onDismissRequest = { confirmNoSignSlowZone = false },
+            onConfirmed = { maxSpeedAnswer?.let { applySpeedLimitFormAnswer(it) } },
+            titleText = stringResource(Res.string.quest_maxspeed_answer_noSign_confirmation_title),
+            text = {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(stringResource(Res.string.quest_maxspeed_answer_noSign_confirmation))
+                    Text(stringResource(Res.string.quest_maxspeed_answer_noSign_info_zone))
+                    MaxSpeedZoneSign(countryInfo = countryInfo) {
+                        Text(
+                            text = lastInputSlowZone?.toString() ?: "××",
+                            style = MaterialTheme.typography.extraLargeInput.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                    }
+                }
+            },
+            confirmButtonText = stringResource(Res.string.quest_maxspeed_answer_noSign_confirmation_positive)
+        )
+    }
+    if (showConditionalDialog) {
+        AddConditionalDialog(
+            { showConditionalDialog = false },
+            listOf("maxspeed", "maxspeed:hgv", "maxspeed:psv", "maxspeed:bus"),
+            null,
+            true,
+            countryInfo,
+        ) { k, v ->
+            val speedText = v.substringBefore("@").trim()
+            val speedNumber = speedText.toIntOrNull() ?: return@AddConditionalDialog
+            val unit = (maxSpeedAnswer as? MaxSpeedSign)?.speed?.unit ?: return@AddConditionalDialog
+            val speed = Speed(speedNumber, unit)
+            val value = v.replaceFirst(speedText, speed.toOsmString())
+            applySpeedLimitFormAnswer(maxSpeedAnswer!!, k to value)
+        }
+    }
+}
+
+private var lastInputSlowZone: Int? = null

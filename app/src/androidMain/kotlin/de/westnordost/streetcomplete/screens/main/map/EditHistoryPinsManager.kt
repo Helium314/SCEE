@@ -20,6 +20,7 @@ import de.westnordost.streetcomplete.data.quest.ExternalSourceQuestKey
 import de.westnordost.streetcomplete.screens.main.edithistory.icon
 import de.westnordost.streetcomplete.screens.main.map.components.Pin
 import de.westnordost.streetcomplete.screens.main.map.components.PinsMapComponent
+import de.westnordost.streetcomplete.view.toAndroidResourceId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -97,7 +98,7 @@ class EditHistoryPinsManager(
         edits.mapIndexed { index, edit ->
             Pin(
                 edit.position,
-                edit.icon,
+                edit.icon!!.toAndroidResourceId()!!,
                 edit.toProperties(),
                 index // most recent first
             )

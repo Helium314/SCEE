@@ -45,3 +45,18 @@ fun Tags.mergeSides(key: String, postfix: String? = null) {
         remove("$key:right$post")
     }
 }
+
+// convert simple key = value pairs into tags, and understand simple filter expressions
+fun String.toTags(): Map<String, String> {
+    val tags = mutableMapOf<String, String>()
+    if (!contains('('))
+        split("\n", " and ").forEach { line ->
+            if (line.isBlank() || line.contains(" or ")) return@forEach
+            val kv = line.split("=", "!~", "~")
+            if (kv.size != 1 && kv.size != 2) return@forEach
+            if ('|' in kv[0] || '!' in kv[0] || '*' in kv[0]) return@forEach
+            if (kv.size == 1 || "!=" in line || '~' in line) tags[kv[0].trim()] = ""
+            else tags[kv[0].trim()] = kv[1].trim()
+        }
+    return tags
+}

@@ -4,12 +4,11 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.UiThread
 import com.google.gson.JsonObject
-import de.westnordost.streetcomplete.R
-import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPolygonsGeometry
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPolylinesGeometry
-import de.westnordost.streetcomplete.screens.main.map.Marker
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.preset_maki_circle
 import de.westnordost.streetcomplete.screens.main.map.createIconBitmap
 import de.westnordost.streetcomplete.screens.main.map.maplibre.MapImages
 import de.westnordost.streetcomplete.screens.main.map.maplibre.clear
@@ -17,6 +16,8 @@ import de.westnordost.streetcomplete.screens.main.map.maplibre.isArea
 import de.westnordost.streetcomplete.screens.main.map.maplibre.isPoint
 import de.westnordost.streetcomplete.screens.main.map.maplibre.toMapLibreGeometry
 import de.westnordost.streetcomplete.screens.main.map.maplibre.toPoint
+import de.westnordost.streetcomplete.ui.common.quest.Marker
+import de.westnordost.streetcomplete.view.toAndroidResourceId
 import de.westnordost.streetcomplete.util.ktx.toHexColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -34,6 +35,7 @@ import org.maplibre.android.style.sources.GeoJsonSource
 import org.maplibre.geojson.Feature
 import org.maplibre.geojson.FeatureCollection
 import androidx.core.graphics.toColorInt
+import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.util.ktx.toRgba
 
 /** Manages putting some generic geometry markers with an optional drawable on the map. I.e. to
@@ -53,8 +55,6 @@ class GeometryMarkersMapComponent(
         }
     }
     private val geometrySource = GeoJsonSource(SOURCE)
-
-    private val featuresByGeometry: MutableMap<ElementGeometry, List<Feature>> = HashMap()
 
     val layers: List<Layer> = listOf(
         FillLayer("geo-fill", SOURCE)
@@ -110,31 +110,28 @@ class GeometryMarkersMapComponent(
         map.style?.addSource(geometrySource)
     }
 
-    suspend fun putAll(markers: Iterable<Marker>) {
-        val icons = markers.map { it.icon ?: R.drawable.preset_maki_circle }
+    suspend fun setAll(markers: Iterable<Marker>) {
+
+        val icons = markers.map { it.icon ?: Res.drawable.preset_maki_circle }.mapNotNull { it.toAndroidResourceId() }
         mapImages.addOnce(icons) {
             val name = context.resources.getResourceEntryName(it)
             val sdf = name.startsWith("preset_")
             createIconBitmap(context, it, sdf) to sdf
         }
-        for (marker in markers) {
-            synchronized(this) {featuresByGeometry[marker.geometry] = marker.toFeatures(context.resources) }
-        }
-        withContext(Dispatchers.Main) { update() }
-    }
+        val features = markers.flatMap { it.toFeatures(context.resources) }
 
-    @UiThread fun delete(geometry: ElementGeometry) {
-        featuresByGeometry.remove(geometry)
-        update()
+        withContext(Dispatchers.Main) {
+            geometrySource.clear()
+            geometrySource.setGeoJson(FeatureCollection.fromFeatures(features))
+        }
     }
 
     @UiThread fun clear() {
-        featuresByGeometry.clear()
         geometrySource.clear()
     }
 
-    private fun update() = synchronized(this) {
-        geometrySource.setGeoJson(FeatureCollection.fromFeatures(featuresByGeometry.values.flatten()))
+    private fun update() {
+
     }
 
     companion object {
@@ -148,7 +145,7 @@ private fun Marker.toFeatures(resources: Resources): List<Feature> {
     // point marker or any marker with title or icon
     if (icon != null || title != null || geometry is ElementPointGeometry) {
         val p = JsonObject()
-        val mustHaveIcon = icon ?: R.drawable.preset_maki_circle
+        val mustHaveIcon = (icon ?: Res.drawable.preset_maki_circle).toAndroidResourceId()!!
         p.addProperty("icon", resources.getResourceEntryName(mustHaveIcon))
         if (title != null) {
             p.addProperty("label", title)

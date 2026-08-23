@@ -17,6 +17,8 @@ import io.ktor.http.encodeURLPathPart
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -31,7 +33,6 @@ class NoteEditsUploader(
     private val notesApi: NotesApiClient,
     private val tracksApi: TracksApiClient,
     private val imageUploader: PhotoServiceApiClient,
-    private val fileSystem: FileSystem,
 ) {
     var uploadedChangeListener: OnUploadedChangeListener? = null
 
@@ -54,7 +55,7 @@ class NoteEditsUploader(
         while (true) {
             val edit = noteEditsController.getOldestNeedingImagesActivation() ?: break
             // see uploadEdits
-            withContext(scope.coroutineContext) {
+            withContext(NonCancellable) {
                 imageUploader.activate(edit.noteId)
                 noteEditsController.markImagesActivated(edit.id)
             }
@@ -67,7 +68,7 @@ class NoteEditsUploader(
             /* the sync of local change -> API and its response should not be cancellable because
              * otherwise an inconsistency in the data would occur. E.g. a note could be uploaded
              * twice  */
-            withContext(scope.coroutineContext) { uploadEdit(edit) }
+            withContext(NonCancellable) { uploadEdit(edit) }
         }
     }
 
@@ -98,10 +99,6 @@ class NoteEditsUploader(
                 imageUploader.activate(note.id)
                 noteEditsController.markImagesActivated(note.id)
             }
-
-            for (imagePath in edit.imagePaths) {
-                fileSystem.delete(Path(imagePath), mustExist = false)
-            }
         } catch (e: ConflictException) {
             Log.d(TAG,
                 "Dropped a ${edit.action.name} to ${edit.noteId}" +
@@ -118,10 +115,6 @@ class NoteEditsUploader(
             } else {
                 noteController.delete(edit.noteId)
             }
-
-            for (imagePath in edit.imagePaths) {
-                fileSystem.delete(Path(imagePath), mustExist = false)
-            }
         }
     }
 
@@ -136,10 +129,10 @@ class NoteEditsUploader(
     }
 
     private suspend fun uploadAndGetAttachedTrackText(
-        trackpoints: List<Trackpoint>,
+        trackpoints: List<Trackpoint>?,
         noteText: String?
     ): String {
-        if (trackpoints.isEmpty()) return ""
+        if (trackpoints.isNullOrEmpty()) return ""
         val trackId = tracksApi.create(
             trackpoints = trackpoints,
             creator = ApplicationConstants.USER_AGENT,

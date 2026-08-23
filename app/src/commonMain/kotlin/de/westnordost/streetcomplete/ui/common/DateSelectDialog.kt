@@ -31,6 +31,7 @@ fun DateSelectDialog(
     title: (@Composable () -> Unit)? = null,
     years: IntRange = (initialDate.year - 10)..(initialDate.year + 10),
     locale: Locale = Locale.current,
+    dismissOnSelect: Boolean = true,
 ) {
     val dateFormatElements = remember(locale) { DateFormatElements.of(locale) }
     val datePickerState = rememberDatePickerState(
@@ -57,14 +58,14 @@ fun DateSelectDialog(
                 }
             }
         },
-        buttons = {
+        buttonRow = {
             TextButton(onClick = onDismissRequest) {
                 Text(stringResource(Res.string.cancel))
             }
             TextButton(
                 onClick = {
                     onSelect(datePickerState.date)
-                    onDismissRequest()
+                    if (dismissOnSelect) onDismissRequest()
                 }
             ) {
                 Text(stringResource(Res.string.ok))

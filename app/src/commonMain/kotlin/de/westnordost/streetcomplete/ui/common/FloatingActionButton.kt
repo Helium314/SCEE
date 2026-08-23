@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /** Same as the normal FloatingActionButton, but the FloatingActionButton from Material2 doesn't
@@ -38,6 +39,7 @@ fun FloatingActionButton(
     shape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
     border: BorderStroke? = null,
     colors: ButtonColors = FloatingActionButtonDefaults.buttonColors(),
+    fabSize: Dp = FabSize,
     content: @Composable () -> Unit,
 ) {
     @Suppress("NAME_SHADOWING")
@@ -57,7 +59,7 @@ fun FloatingActionButton(
         CompositionLocalProvider(LocalContentAlpha provides contentColor.alpha) {
             ProvideTextStyle(value = MaterialTheme.typography.button) {
                 Box(
-                    modifier = Modifier.defaultMinSize(minWidth = FabSize, minHeight = FabSize),
+                    modifier = Modifier.defaultMinSize(minWidth = fabSize, minHeight = fabSize),
                     contentAlignment = Alignment.Center
                 ) {
                     content()

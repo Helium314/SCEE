@@ -2,7 +2,7 @@ package de.westnordost.streetcomplete.quests.roof_orientation
 
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
-import de.westnordost.streetcomplete.quests.TestMapDataWithGeometry
+import de.westnordost.streetcomplete.testutils.TestMapDataWithGeometry
 import de.westnordost.streetcomplete.testutils.node
 import de.westnordost.streetcomplete.testutils.p
 import de.westnordost.streetcomplete.testutils.way

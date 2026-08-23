@@ -32,6 +32,7 @@ import de.westnordost.streetcomplete.screens.main.map.maplibre.toLatLon
 import de.westnordost.streetcomplete.util.getNameLabel
 import de.westnordost.streetcomplete.util.isDay
 import de.westnordost.streetcomplete.util.math.contains
+import de.westnordost.streetcomplete.view.toAndroidResourceId
 import kotlinx.atomicfu.locks.ReentrantLock
 import kotlinx.atomicfu.locks.withLock
 import kotlinx.coroutines.CoroutineScope
@@ -283,7 +284,7 @@ class QuestPinsManager(
         val props = if (label == null) quest.key.toProperties() else (quest.key.toProperties() + ("label" to label))
         val order = questTypeOrdersLock.withLock { questTypeOrders[quest.type] ?: 0 }
 
-        val pins = quest.markerLocations.map { Pin(it, quest.type.icon, props, order, geometry, color) }
+        val pins = quest.markerLocations.map { Pin(it, quest.type.icon.toAndroidResourceId()!!, props, order, geometry, color) }
         // storing importance in the quest requires the VisibleQuestsSource.cache to be invalidated on order change!
         // or what we do: clear quest.pins if the order changed
         quest.pins = pins

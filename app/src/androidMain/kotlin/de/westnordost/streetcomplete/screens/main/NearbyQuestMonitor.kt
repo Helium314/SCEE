@@ -63,7 +63,7 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
 
     private fun getQuestFoundNotification(size: Int, closest: Quest): Notification =
         NotificationCompat.Builder(this, FOUND_CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_notification)
+            .setSmallIcon(R.drawable.ic_app_notification)
             .setContentTitle(getString(R.string.quest_monitor_found, size))
             .setContentText(getRes(closest.type.title))
             .setContentIntent(intent(closest.position))
@@ -102,7 +102,7 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
             int.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             val pi = PendingIntentCompat.getActivity(applicationContext, 0, int, 0, true)
             val notification = NotificationCompat.Builder(this, MONITOR_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_notification)
+                .setSmallIcon(R.drawable.ic_app_notification)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.quest_monitor_running))
                 .setContentIntent(pi)

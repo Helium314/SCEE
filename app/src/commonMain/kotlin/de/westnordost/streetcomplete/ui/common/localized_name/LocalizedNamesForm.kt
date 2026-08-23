@@ -14,6 +14,7 @@ import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import de.westnordost.streetcomplete.ApplicationConstants.MAX_OSM_TAG_VALUE_LENGTH
 import de.westnordost.streetcomplete.osm.localized_name.LocalizedName
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.ButtonStyle
@@ -128,6 +130,7 @@ private fun LocalizedNameRow(
     val languageTag = localizedName.languageTag
 
     var nameState by remember { mutableStateOf(TextFieldValue(localizedName.name)) }
+    val isTooLong by remember { derivedStateOf { nameState.text.length > MAX_OSM_TAG_VALUE_LENGTH } }
     if (localizedName.name != nameState.text) {
         nameState = nameState.copy(text = localizedName.name)
     }
@@ -168,6 +171,7 @@ private fun LocalizedNameRow(
                 capitalization = if (Prefs.preferences.getBoolean(Prefs.CAPS_WORD_NAME_INPUT, false))
                     KeyboardCapitalization.Words else KeyboardCapitalization.Sentences
             ),
+            isError = isTooLong,
         )
 
         if (isDeleteVisible) {

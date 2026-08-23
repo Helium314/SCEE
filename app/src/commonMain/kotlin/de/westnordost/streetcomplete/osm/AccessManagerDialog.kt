@@ -169,7 +169,7 @@ fun AccessManagerDialog(
                 }
             }
         },
-        buttons = {
+        buttonRow = {
             TextButton(onClick = onDismissRequest) {
                 Text(stringResource(Res.string.cancel))
             }
@@ -308,7 +308,7 @@ private fun AccessValuesDialog(
                 }
             }
         },
-        buttons = {
+        buttonRow = {
             TextButton(onClick = onDismissRequest) {
                 Text(stringResource(Res.string.cancel))
             }

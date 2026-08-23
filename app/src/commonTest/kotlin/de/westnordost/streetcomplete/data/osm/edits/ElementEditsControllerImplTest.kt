@@ -52,7 +52,7 @@ class ElementEditsControllerImplTest {
         every { action.newElementsCount } returns NewElementsCount(1, 2, 3)
         every { action.elementKeys } returns elementKeys
 
-        ctrl.add(QUEST_TYPE, pGeom(), "test", action, true)
+        ctrl.add(QUEST_TYPE, pGeom(), "test", action, true, null)
 
         verifyAdd(ElementEdit(0, QUEST_TYPE, pGeom(), "test", nowAsEpochMilliseconds(), false, action, true))
     }

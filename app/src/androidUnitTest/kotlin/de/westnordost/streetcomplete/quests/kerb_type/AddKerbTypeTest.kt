@@ -3,7 +3,7 @@ package de.westnordost.streetcomplete.quests.kerb_type
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapChangesBuilder
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapEntryAdd
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapEntryDelete
-import de.westnordost.streetcomplete.quests.TestMapDataWithGeometry
+import de.westnordost.streetcomplete.testutils.TestMapDataWithGeometry
 import de.westnordost.streetcomplete.testutils.way
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -14,9 +14,11 @@ class AddKerbTypeTest {
     private val questType = AddKerbType()
 
     @Test fun `applicable to barrier kerb ways without kerb key`() {
-        val mapData = TestMapDataWithGeometry(listOf(
-            way(tags = mapOf("barrier" to "kerb"))
-        ))
+        val mapData = TestMapDataWithGeometry(
+            listOf(
+                way(tags = mapOf("barrier" to "kerb"))
+            )
+        )
         assertEquals(1, questType.getApplicableElements(mapData).toList().size)
     }
 

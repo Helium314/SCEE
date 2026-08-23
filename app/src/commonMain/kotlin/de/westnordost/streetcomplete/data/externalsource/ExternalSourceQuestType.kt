@@ -1,10 +1,14 @@
 package de.westnordost.streetcomplete.data.externalsource
 
+import androidx.compose.runtime.Composable
+import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.edits.ElementEdit
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditType
+import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
+import de.westnordost.streetcomplete.data.osm.osmquests.Action
 import de.westnordost.streetcomplete.util.countryboundaries.AllCountries
 import de.westnordost.streetcomplete.util.countryboundaries.Countries
 import de.westnordost.streetcomplete.data.quest.QuestType
@@ -22,6 +26,13 @@ import de.westnordost.streetcomplete.quests.questPrefix
 // do it very similar to OsmElementQuestType
 // for cleanup, each quest type should override deleteMetadataOlderThan, or old data will remain
 interface ExternalSourceQuestType : QuestType, ElementEditType {
+    @Composable
+    fun Form(
+        on: (Action) -> Unit,
+        quest: ExternalSourceQuest,
+        countryInfo: CountryInfo
+    )
+
     val highlightedElementsRadius: Double get() = 30.0
     fun getHighlightedElements(getMapData: () -> MapDataWithGeometry): Sequence<Element> = emptySequence()
     val enabledInCountries: Countries get() = AllCountries

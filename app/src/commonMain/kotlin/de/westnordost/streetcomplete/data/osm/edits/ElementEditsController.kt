@@ -20,10 +20,10 @@ import org.koin.core.component.inject
 import kotlinx.atomicfu.locks.ReentrantLock
 import kotlinx.atomicfu.locks.withLock
 
-interface ElementEditsController : ElementEditsSource, AddElementEditsController {
+interface ElementEditsController : ElementEditsSource {
 
     /** Add new unsynced edit to the to-be-uploaded queue */
-    override fun add(
+    fun add(
         type: ElementEditType,
         geometry: ElementGeometry,
         source: String,

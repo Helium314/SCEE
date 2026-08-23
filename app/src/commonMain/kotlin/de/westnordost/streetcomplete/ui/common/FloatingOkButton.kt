@@ -21,6 +21,9 @@ fun FloatingOkButton(
     modifier: Modifier = Modifier,
     visible: Boolean = true,
     enabled: Boolean = true,
+    content: @Composable () -> Unit = {
+        Icon(painterResource(Res.drawable.ic_check_32), stringResource(Res.string.ok))
+    }
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -30,12 +33,8 @@ fun FloatingOkButton(
     ) {
         FloatingActionButton(
             onClick = onClick,
-            enabled = enabled
-        ) {
-            Icon(
-                painter = painterResource(Res.drawable.ic_check_32),
-                contentDescription = stringResource(Res.string.ok),
-            )
-        }
+            enabled = enabled,
+            content = content
+        )
     }
 }

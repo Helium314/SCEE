@@ -1,0 +1,92 @@
+package de.westnordost.streetcomplete.quests.oneway
+
+import androidx.compose.runtime.Composable
+import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
+import de.westnordost.streetcomplete.data.meta.CountryInfo
+import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.Element
+import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
+import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
+import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement
+import de.westnordost.streetcomplete.osm.Tags
+import de.westnordost.streetcomplete.quests.FullElementSelectionDialog
+import de.westnordost.streetcomplete.quests.getPrefixedFullElementSelectionPref
+import de.westnordost.streetcomplete.quests.oneway.OnewayAnswer.*
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.*
+
+class AddOnewayBicycle : OsmElementQuestType<OnewayAnswer> {
+
+    /** default element selection (user editable via settings) */
+    private val elementFilter = """
+    ways with
+      (
+        highway = cycleway
+        or (highway ~ path|footway and bicycle ~ yes|designated)
+      )
+      and !oneway
+      and !oneway:bicycle
+      and area != yes
+      and junction != roundabout
+      and access !~ private|no
+""".trimIndent()
+
+    private val filter by lazy {
+        prefs
+            .getString(getPrefixedFullElementSelectionPref(prefs), elementFilter)
+            .toElementFilterExpression()
+    }
+
+    override val changesetComment = "Specify whether bicycle ways are one-ways"
+    override val wikiLink = "Key:oneway"
+    override val icon = Res.drawable.quest_bicycleway_oneway
+    override val title = Res.string.quest_onewayBicycle_title
+    override val hasMarkersAtEnds = true
+    override val achievements = listOf(EditTypeAchievement.BICYCLIST)
+    override val hint = Res.string.quest_arrow_tutorial
+    override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
+
+    override val hasQuestSettings: Boolean = true
+
+    @Composable
+    override fun QuestSettings(onDismissRequest: () -> Unit) {
+        FullElementSelectionDialog(
+            prefs,
+            getPrefixedFullElementSelectionPref(prefs),
+            Res.string.quest_settings_element_selection,
+            elementFilter,
+            onDismissRequest
+        )
+    }
+
+    override fun getApplicableElements(
+        mapData: MapDataWithGeometry
+    ): Iterable<Element> =
+        mapData.ways.filter { filter.matches(it) }
+
+    override fun isApplicableTo(element: Element): Boolean? =
+        if (filter.matches(element)) null else false
+
+    @Composable
+    override fun Form(on: (QuestAction<OnewayAnswer>) -> Unit, element: Element, geometry: ElementGeometry, countryInfo: CountryInfo) {
+        AddOnewayForm(on, geometry)
+    }
+
+    override fun applyAnswerTo(
+        answer: OnewayAnswer,
+        tags: Tags,
+        geometry: ElementGeometry,
+        timestampEdited: Long
+    ) {
+        val key =
+            if (tags["highway"] == "cycleway") "oneway"
+            else "oneway:bicycle"
+
+        tags[key] = when (answer) {
+            FORWARD -> "yes"
+            BACKWARD -> "-1"
+            NO_ONEWAY -> "no"
+        }
+    }
+}

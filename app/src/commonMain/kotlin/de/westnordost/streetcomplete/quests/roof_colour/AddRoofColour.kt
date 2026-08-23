@@ -57,6 +57,7 @@ class AddRoofColour : OsmFilterQuestType<RoofColour>() {
             on = on,
             items = RoofColour.entries,
             itemContent = { ImageWithLabel(it.getDrawable(ctx, iconResId).toPainter(), it.title) },
+            itemsPerRow = 4
         )
     }
 

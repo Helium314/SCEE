@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.Prefs
@@ -39,7 +38,6 @@ fun AddMaxSpeedForm(
     element: Element,
     countryInfo: CountryInfo
 ) {
-    val context = LocalContext.current
     var maxSpeedAnswer by rememberSerializable { mutableStateOf<MaxSpeedAnswer?>(null) }
     var confirmNoSign by remember { mutableStateOf(false) }
     var confirmUnusualInput by remember { mutableStateOf(false) }

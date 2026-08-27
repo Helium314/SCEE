@@ -10,6 +10,7 @@ import android.content.ServiceConnection
 import android.graphics.Color
 import android.graphics.PointF
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import android.view.KeyEvent
@@ -21,7 +22,8 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.AnyThread
 import androidx.annotation.UiThread
-import androidx.appcompat.app.AlertDialog
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,8 +66,6 @@ import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.mapdata.isWayComplete
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuest
-import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
-import de.westnordost.streetcomplete.data.osmnotes.edits.NotesWithEditsSource
 import de.westnordost.streetcomplete.data.osmtracks.Trackpoint
 import de.westnordost.streetcomplete.data.overlays.Overlay
 import de.westnordost.streetcomplete.data.preferences.Preferences
@@ -73,8 +73,6 @@ import de.westnordost.streetcomplete.data.quest.Quest
 import de.westnordost.streetcomplete.data.quest.QuestAutoSyncer
 import de.westnordost.streetcomplete.data.quest.QuestKey
 import de.westnordost.streetcomplete.data.quest.VisibleQuestsSource
-import de.westnordost.streetcomplete.data.visiblequests.LevelFilter
-import de.westnordost.streetcomplete.data.visiblequests.QuestsHiddenSource
 import de.westnordost.streetcomplete.osm.getDirection
 import de.westnordost.streetcomplete.osm.level.levelsIntersect
 import de.westnordost.streetcomplete.osm.level.parseLevelsOrNull
@@ -83,6 +81,10 @@ import de.westnordost.streetcomplete.quests.custom.CustomQuestList
 import de.westnordost.streetcomplete.quests.custom.FILENAME_CUSTOM_QUEST
 import de.westnordost.streetcomplete.quests.custom.readFromUriToExternalFile
 import de.westnordost.streetcomplete.quests.tree.FILENAME_TREES
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.cancel
+import de.westnordost.streetcomplete.resources.pref_custom_title
+import de.westnordost.streetcomplete.resources.pref_trees_title
 import de.westnordost.streetcomplete.screens.BaseActivity
 import de.westnordost.streetcomplete.screens.about.AboutActivity
 import de.westnordost.streetcomplete.screens.main.controls.LocationState
@@ -99,6 +101,7 @@ import de.westnordost.streetcomplete.screens.settings.SettingsActivity
 import de.westnordost.streetcomplete.screens.settings.custom_geometry_changed
 import de.westnordost.streetcomplete.screens.settings.gpx_track_changed
 import de.westnordost.streetcomplete.screens.user.UserActivity
+import de.westnordost.streetcomplete.ui.common.dialogs.AlertDialog
 import de.westnordost.streetcomplete.ui.common.feature.FeatureSearchDialog
 import de.westnordost.streetcomplete.ui.common.quest.MapClick
 import de.westnordost.streetcomplete.ui.common.quest.Marker
@@ -128,6 +131,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.stringResource
 import org.koin.android.ext.android.inject
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.activityScope
@@ -175,14 +179,10 @@ class MainActivity :
     private val prefs: Preferences by inject()
     private val visibleQuestsSource: VisibleQuestsSource by inject()
     private val mapDataWithEditsSource: MapDataWithEditsSource by inject()
-    private val notesSource: NotesWithEditsSource by inject()
-    private val questsHiddenSource: QuestsHiddenSource by inject()
     private val feedsUpdater: FeedsUpdater by inject()
     private val featureDictionary: Lazy<FeatureDictionary> by inject(named("FeatureDictionaryLazy"))
     private val mapAppLauncher: MapAppLauncher by inject()
-    private val levelFilter: LevelFilter by inject()
     private val countryBoundaries: Lazy<CountryBoundaries> by inject(named("CountryBoundariesLazy"))
-    private val osmQuestController: OsmQuestController by inject()
     private val customQuestList: CustomQuestList by inject()
 
     private lateinit var locationManager: FineLocationManager
@@ -201,6 +201,7 @@ class MainActivity :
     // for freezing the map while sidebar is open
     private var wasFollowingPosition: Boolean? = null
     private var wasNavigationMode: Boolean? = null
+    private val currentTextIntentUri = mutableStateOf<Uri?>(null)
 
     private val mapFragment: MainMapFragment? get() =
         supportFragmentManager.findFragmentByTag(TAG_MAP) as MainMapFragment?
@@ -381,6 +382,24 @@ class MainActivity :
                     codesOfDefaultFeatures = defaultFeatureIds.reversed()
                 )
             }
+            if (currentTextIntentUri.value != null) {
+                AlertDialog(
+                    onDismissRequest = { currentTextIntentUri.value = null },
+                    buttonRow = {
+                        TextButton({ currentTextIntentUri.value = null }) { Text(stringResource(Res.string.cancel)) }
+                        TextButton({
+                            readFromUriToExternalFile(currentTextIntentUri.value!!, FILENAME_CUSTOM_QUEST, this@MainActivity)
+                            customQuestList.reload()
+                            visibleQuestsSource.clearCache()
+                            currentTextIntentUri.value = null
+                        }) { Text(stringResource(Res.string.pref_custom_title)) }
+                        TextButton({
+                            readFromUriToExternalFile(currentTextIntentUri.value!!, FILENAME_TREES, this@MainActivity)
+                            currentTextIntentUri.value = null
+                        }) { Text(stringResource(Res.string.pref_trees_title)) }
+                    }
+                )
+            }
         } }
 
         observe(editHistoryViewModel.selectedEdit) { edit ->
@@ -505,18 +524,8 @@ class MainActivity :
     private fun handleIntent(intent: Intent) {
         if (intent.action != Intent.ACTION_VIEW) return
         val uri = intent.data ?: return
-        if (intent.type == "text/*") {
-            AlertDialog.Builder(this)
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(R.string.pref_custom_title) { _, _ ->
-                    readFromUriToExternalFile(uri, FILENAME_CUSTOM_QUEST, this)
-                    customQuestList.reload()
-                    visibleQuestsSource.clearCache()
-                }
-                .setNeutralButton(R.string.pref_trees_title) { _, _ ->
-                    readFromUriToExternalFile(uri, FILENAME_TREES, this)
-                }
-                .show()
+        if (intent.type?.startsWith("text/") == true) {
+            currentTextIntentUri.value = uri
         }
         viewModel.setUri(uri.toString())
     }

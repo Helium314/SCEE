@@ -1,6 +1,5 @@
 package de.westnordost.streetcomplete.screens.main
 
-import android.content.Intent
 import android.view.KeyEvent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -28,15 +27,10 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import de.westnordost.streetcomplete.ApplicationConstants
-import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuest
 import de.westnordost.streetcomplete.data.messages.Message
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
-import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuest
-import de.westnordost.streetcomplete.data.osmnotes.notequests.OsmNoteQuest
-import de.westnordost.streetcomplete.data.quest.Quest
 import de.westnordost.streetcomplete.data.user.UserLoginController
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.MainBottomSheet
@@ -333,7 +327,6 @@ fun MainScreen(
 
     if (viewModel.showMainMenuDialog.value) {
         val requester = remember { FocusRequester() } // necessary for receiving key event
-        val context = LocalContext.current
         MainMenuDialog(
             onDismissRequest = { viewModel.showMainMenuDialog.value = false },
             onClickProfile = onClickProfile,

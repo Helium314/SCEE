@@ -1,12 +1,7 @@
 package de.westnordost.streetcomplete.quests.crossing_markings
 
-import android.content.Context
-import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.graphics.drawable.toBitmap
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
@@ -23,8 +18,8 @@ import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.item_select.ImageWithLabel
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
+import de.westnordost.streetcomplete.util.image.toPainter
 import de.westnordost.streetcomplete.util.toResId
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
 
 class AddCrossingMarkings : OsmElementQuestType<Set<CrossingMarkings>> {
@@ -74,10 +69,11 @@ class AddCrossingMarkings : OsmElementQuestType<Set<CrossingMarkings>> {
     override fun Form(on: (QuestAction<Set<CrossingMarkings>>) -> Unit, element: Element, geometry: ElementGeometry, countryInfo: CountryInfo) {
         if (prefs.getBoolean(PREF_CROSSING_MARKING_EXTENDED, false)) {
             val ctx = LocalContext.current
+            val size = ctx.resources.displayMetrics.widthPixels / 4
             CrossingMarkingsForm(
                 on = on,
                 items = CrossingMarkings.entries.filter { it != CrossingMarkings.YES },
-                itemContent = { ImageWithLabel(BitmapPainter(fuckThisShit(it.imageRes!!, ctx).asImageBitmap()), stringResource(it.titleRes!!)) },
+                itemContent = { ImageWithLabel(ctx.getDrawable(it.imageRes!!.toResId(ctx))!!.toPainter(size), stringResource(it.titleRes!!)) },
             )
         } else {
             QuestForm(
@@ -120,9 +116,3 @@ class AddCrossingMarkings : OsmElementQuestType<Set<CrossingMarkings>> {
 }
 
 private const val PREF_CROSSING_MARKING_EXTENDED = "qs_AddCrossingMarkings_extended"
-
-// compose doesn't want layer drawables...
-private fun fuckThisShit(res: DrawableResource, ctx: Context): Bitmap {
-    val size = ctx.resources.displayMetrics.widthPixels / 4
-    return ctx.getDrawable(res.toResId(ctx))!!.toBitmap(size, size)
-}

@@ -645,7 +645,7 @@ val commonModule = module {
 
     //region about screen view models
 
-    viewModel<LogsViewModel> { LogsViewModelImpl(get()) }
+    viewModel<LogsViewModel> { LogsViewModelImpl(get(), get()) }
     viewModel<CreditsViewModel> { CreditsViewModelImpl(get()) }
     viewModel<ChangelogViewModel> { ChangelogViewModelImpl(get()) }
 

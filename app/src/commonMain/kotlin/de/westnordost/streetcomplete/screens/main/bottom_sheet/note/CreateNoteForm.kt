@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.compose.runtime.setValue
@@ -21,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.Prefs
+import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesSource
+import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osmtracks.Trackpoint
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.quests.note_comments.NoteForm
@@ -29,6 +32,7 @@ import de.westnordost.streetcomplete.ui.common.FloatingOkButton
 import de.westnordost.streetcomplete.ui.common.FloatingSmallerButton
 import de.westnordost.streetcomplete.ui.common.Pin
 import de.westnordost.streetcomplete.ui.common.bottom_sheet.BottomSheetFormScaffold
+import de.westnordost.streetcomplete.ui.common.dialogs.OutsideAreaDialog
 import de.westnordost.streetcomplete.ui.common.quest.QuestHeader
 import de.westnordost.streetcomplete.ui.theme.Dimensions
 import org.jetbrains.compose.resources.painterResource
@@ -43,14 +47,17 @@ fun CreateNoteForm(
     onLeaveNote: (noteText: String, noteImagePaths: List<String>, trackpoints: List<Trackpoint>?, isGpx: Boolean) -> Unit,
     onDismiss: () -> Unit,
     trackpoints: List<Trackpoint>?,
+    position: LatLon,
     modifier: Modifier = Modifier,
 ) {
     var noteText by rememberSaveable { mutableStateOf("") }
     var noteImagePaths by rememberSaveable { mutableStateOf(listOf<String>()) }
     var trackpointsDeleted by rememberSaveable { mutableStateOf(false) }
     val prefs: Preferences = koinInject()
+    val downloadedTilesSource: DownloadedTilesSource = koinInject()
     val hasGpxButton = prefs.getBoolean(Prefs.GPX_BUTTON, false)
     val swapGpxOsm = hasGpxButton && prefs.getBoolean(Prefs.SWAP_GPX_NOTE_BUTTONS, false)
+    var answer: (() -> Unit)? by remember { mutableStateOf(null) }
 
     val trackpoints = if (trackpointsDeleted) null else trackpoints
 
@@ -96,7 +103,7 @@ fun CreateNoteForm(
             fab = {
                 FloatingOkButton(
                     visible = noteText.isNotBlank(),
-                    onClick = { onLeaveNote(noteText.trim(), noteImagePaths, trackpoints, swapGpxOsm) },
+                    onClick = { answer = { onLeaveNote(noteText.trim(), noteImagePaths, trackpoints, swapGpxOsm) } },
                 ) {
                     if (hasGpxButton) Text(if (swapGpxOsm) "GPX" else "OSM")
                     else Icon(painterResource(Res.drawable.ic_check_32), stringResource(Res.string.ok))
@@ -106,11 +113,14 @@ fun CreateNoteForm(
                 if (hasGpxButton) {
                     FloatingSmallerButton(
                         visible = noteText.isNotBlank(),
-                        onClick = { onLeaveNote(noteText.trim(), noteImagePaths, trackpoints, !swapGpxOsm) },
+                        onClick = { answer = { onLeaveNote(noteText.trim(), noteImagePaths, trackpoints, !swapGpxOsm) } },
                         content = { Text(if (swapGpxOsm) "OSM" else "GPX") }
                     )
                 }
             },
         )
+    }
+    if (answer != null) {
+        OutsideAreaDialog(position, downloadedTilesSource, { answer?.invoke() }, { answer = null })
     }
 }

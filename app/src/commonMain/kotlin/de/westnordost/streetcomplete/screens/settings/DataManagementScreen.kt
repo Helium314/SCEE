@@ -1,32 +1,30 @@
 package de.westnordost.streetcomplete.screens.settings
 
 import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
-import android.text.InputType
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SwitchCompat
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.IconButton
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,11 +32,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
-import androidx.core.widget.doAfterTextChanged
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
@@ -48,6 +48,7 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestCont
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestTables
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestsHiddenTable
 import de.westnordost.streetcomplete.data.osmnotes.notequests.NoteQuestsHiddenTable
+import de.westnordost.streetcomplete.data.overlays.Overlay
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.presets.EditTypePreset
 import de.westnordost.streetcomplete.data.presets.EditTypePresetsController
@@ -59,12 +60,16 @@ import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeTable
 import de.westnordost.streetcomplete.quests.amenity_cover.AddAmenityCover
 import de.westnordost.streetcomplete.quests.custom.CustomQuest
 import de.westnordost.streetcomplete.quests.osmose.OsmoseDao
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.BackIcon
+import de.westnordost.streetcomplete.ui.common.CheckboxGroup
+import de.westnordost.streetcomplete.ui.common.TextField2
+import de.westnordost.streetcomplete.ui.common.dialogs.AlertDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.WheelPickerDialog
 import de.westnordost.streetcomplete.ui.common.settings.Preference
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
-import de.westnordost.streetcomplete.util.setViewWithDefaultPadding
 import de.westnordost.streetcomplete.util.getCustomOverlayIndices
 import de.westnordost.streetcomplete.util.getFakeCustomOverlays
 import de.westnordost.streetcomplete.util.getIndexedCustomOverlayPref
@@ -73,6 +78,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import java.io.BufferedWriter
 
@@ -94,6 +100,11 @@ fun DataManagementScreen(
     var showNetIntervalDialog by remember { mutableStateOf(false) }
     var showExportDialog by remember { mutableStateOf(false) }
     var showImportDialog by remember { mutableStateOf(false) }
+    var showRasterUrlDialog by remember { mutableStateOf(false) }
+    var exportPresets by remember { mutableStateOf<Uri?>(null) }
+    var exportOverlays by remember { mutableStateOf<Uri?>(null) }
+    var importPresets by remember { mutableStateOf<Uri?>(null) }
+    var importOverlays by remember { mutableStateOf<Uri?>(null) }
     var currentSetting by rememberSaveable { mutableStateOf("") }
     val exportPicker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode != Activity.RESULT_OK || it.data == null)
@@ -103,8 +114,8 @@ fun DataManagementScreen(
         when (currentSetting) {
             "settings" -> exportSettings(uri, activity)
             "hidden_quests" -> exportHidden(uri, activity, db)
-            "presets" -> exportPresets(uri, activity, db, editTypePresetsController, urlConfigController)
-            "overlays" -> exportOverlays(uri, activity, prefs)
+            "presets" -> exportPresets = uri
+            "overlays" -> exportOverlays = uri
         }
         currentSetting = ""
     }
@@ -117,14 +128,14 @@ fun DataManagementScreen(
             "settings" -> if (!importSettings(uri, activity, osmoseDao, externalSourceQuestController))
                 ctx.toast2(ctx.getString(R.string.import_error), Toast.LENGTH_LONG)
             "hidden_quests" -> importHidden(uri, activity, db, visibleEditTypeController)
-            "presets" -> importPresets(uri, activity, db, visibleEditTypeController)
-            "overlays" -> importOverlays(uri, activity)
+            "presets" -> importPresets = uri
+            "overlays" -> importOverlays = uri
         }
         currentSetting = ""
     }
     Column(Modifier.fillMaxSize()) {
         TopAppBar(
-            title = { Text(stringResource(R.string.pref_screen_data_management)) },
+            title = { Text(stringResource(Res.string.pref_screen_data_management)) },
             windowInsets = AppBarDefaults.topAppBarWindowInsets,
             navigationIcon = { IconButton(onClick = onClickBack) { BackIcon() } },
         )
@@ -138,48 +149,48 @@ fun DataManagementScreen(
                 )
         ) {
             SwitchPreference(
-                name = stringResource(R.string.pref_auto_download_title),
-                description = stringResource(R.string.pref_auto_download_summary),
+                name = stringResource(Res.string.pref_auto_download_title),
+                description = stringResource(Res.string.pref_auto_download_summary),
                 pref = Prefs.AUTO_DOWNLOAD,
                 default = true,
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_manual_download_cache_title),
-                description = stringResource(R.string.pref_manual_download_cache_summary),
+                name = stringResource(Res.string.pref_manual_download_cache_title),
+                description = stringResource(Res.string.pref_manual_download_cache_summary),
                 pref = Prefs.MANUAL_DOWNLOAD_OVERRIDE_CACHE,
                 default = true,
             )
             Preference(
-                name = stringResource(R.string.pref_tile_source_title),
-                onClick = { showRasterUrlDialog(ctx, Prefs.sharedPreferences) },
+                name = stringResource(Res.string.pref_tile_source_title),
+                onClick = { showRasterUrlDialog = true },
             )
             Preference(
-                name = stringResource(R.string.pref_delete_old_data_after),
+                name = stringResource(Res.string.pref_delete_old_data_after),
                 onClick = { showDeleteAfterDialog = true },
-                description = stringResource(R.string.pref_delete_old_data_after_summary, prefs.getInt(Prefs.DATA_RETAIN_TIME, 14))
+                description = stringResource(Res.string.pref_delete_old_data_after_summary, prefs.getInt(Prefs.DATA_RETAIN_TIME, 14))
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_update_local_statistics),
-                description = stringResource(R.string.pref_update_local_statistics_summary),
+                name = stringResource(Res.string.pref_update_local_statistics),
+                description = stringResource(Res.string.pref_update_local_statistics_summary),
                 pref = Prefs.UPDATE_LOCAL_STATISTICS,
                 default = true,
             )
             Preference(
-                name = stringResource(R.string.pref_gps_interval_title),
+                name = stringResource(Res.string.pref_gps_interval_title),
                 onClick = { showGpsIntervalDialog = true },
-                description = stringResource(R.string.pref_interval_summary, prefs.getInt(Prefs.GPS_INTERVAL, 0))
+                description = stringResource(Res.string.pref_interval_summary, prefs.getInt(Prefs.GPS_INTERVAL, 0))
             )
             Preference(
-                name = stringResource(R.string.pref_network_interval_title),
+                name = stringResource(Res.string.pref_network_interval_title),
                 onClick = { showNetIntervalDialog = true },
-                description = stringResource(R.string.pref_interval_summary, prefs.getInt(Prefs.NETWORK_INTERVAL, 5))
+                description = stringResource(Res.string.pref_interval_summary, prefs.getInt(Prefs.NETWORK_INTERVAL, 5))
             )
             Preference(
-                name = stringResource(R.string.pref_export),
+                name = stringResource(Res.string.pref_export),
                 onClick = { showExportDialog = true },
             )
             Preference(
-                name = stringResource(R.string.pref_import),
+                name = stringResource(Res.string.pref_import),
                 onClick = { showImportDialog = true },
             )
         }
@@ -191,8 +202,8 @@ fun DataManagementScreen(
                 onSelected = { prefs.putInt(Prefs.DATA_RETAIN_TIME, it) },
                 itemContent = { Text(it.toString()) },
                 selectedInitialValue = prefs.getInt(Prefs.DATA_RETAIN_TIME, 14),
-                title = { Text(stringResource(R.string.pref_delete_old_data_after)) },
-                text = { Text(stringResource(R.string.pref_delete_old_data_after_message)) }
+                title = { Text(stringResource(Res.string.pref_delete_old_data_after)) },
+                text = { Text(stringResource(Res.string.pref_delete_old_data_after_message)) }
             )
         }
         if (showGpsIntervalDialog) {
@@ -203,8 +214,8 @@ fun DataManagementScreen(
                 onSelected = { prefs.putInt(Prefs.GPS_INTERVAL, it) },
                 itemContent = { Text(it.toString()) },
                 selectedInitialValue = prefs.getInt(Prefs.GPS_INTERVAL, 0),
-                title = { Text(stringResource(R.string.pref_gps_interval_title)) },
-                text = { Text(stringResource(R.string.pref_interval_message)) }
+                title = { Text(stringResource(Res.string.pref_gps_interval_title)) },
+                text = { Text(stringResource(Res.string.pref_interval_message)) }
             )
         }
         if (showNetIntervalDialog) {
@@ -215,8 +226,8 @@ fun DataManagementScreen(
                 onSelected = { prefs.putInt(Prefs.NETWORK_INTERVAL, it) },
                 itemContent = { Text(it.toString()) },
                 selectedInitialValue = prefs.getInt(Prefs.NETWORK_INTERVAL, 0),
-                title = { Text(stringResource(R.string.pref_network_interval_title)) },
-                text = { Text(stringResource(R.string.pref_interval_message)) }
+                title = { Text(stringResource(Res.string.pref_network_interval_title)) },
+                text = { Text(stringResource(Res.string.pref_interval_message)) }
             )
         }
         if (showExportDialog)
@@ -226,12 +237,12 @@ fun DataManagementScreen(
                 items = listOf("hidden_quests", "presets","overlays","settings"),
                 getItemName = {
                     val id = when (it) {
-                        "settings" -> R.string.import_export_settings
-                        "hidden_quests" -> R.string.import_export_hidden_quests
-                        "presets" -> R.string.import_export_presets
-                        "overlays" -> R.string.import_export_custom_overlays
-                        else -> 0
-                    }
+                        "settings" -> Res.string.import_export_settings
+                        "hidden_quests" -> Res.string.import_export_hidden_quests
+                        "presets" -> Res.string.import_export_presets
+                        "overlays" -> Res.string.import_export_custom_overlays
+                        else -> null
+                    }!!
                     stringResource(id)
                 },
                 onItemSelected = {
@@ -243,7 +254,7 @@ fun DataManagementScreen(
                     currentSetting = it
                     exportPicker.launch(intent)
                 },
-                title = { Text(stringResource(R.string.pref_export)) }
+                title = { Text(stringResource(Res.string.pref_export)) }
             )
         if (showImportDialog)
             SimpleListPickerDialog(
@@ -252,12 +263,12 @@ fun DataManagementScreen(
                 items = listOf("hidden_quests", "presets","overlays","settings"),
                 getItemName = {
                     val id = when (it) {
-                        "settings" -> R.string.import_export_settings
-                        "hidden_quests" -> R.string.import_export_hidden_quests
-                        "presets" -> R.string.import_export_presets
-                        "overlays" -> R.string.import_export_custom_overlays
-                        else -> 0
-                    }
+                        "settings" -> Res.string.import_export_settings
+                        "hidden_quests" -> Res.string.import_export_hidden_quests
+                        "presets" -> Res.string.import_export_presets
+                        "overlays" -> Res.string.import_export_custom_overlays
+                        else -> null
+                    }!!
                     stringResource(id)
                 },
                 onItemSelected = {
@@ -268,8 +279,150 @@ fun DataManagementScreen(
                     currentSetting = it
                     importPicker.launch(intent)
                 },
-                title = { Text(stringResource(R.string.pref_import)) }
+                title = { Text(stringResource(Res.string.pref_import)) }
             )
+        if (showRasterUrlDialog) {
+            var maxZoom by remember { mutableStateOf(TextFieldValue(prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, ApplicationConstants.RASTER_DEFAULT_MAXZOOM).toString())) }
+            var hideLabels by remember { mutableStateOf(prefs.getBoolean(Prefs.NO_SATELLITE_LABEL, false)) }
+            var url  by remember { mutableStateOf(TextFieldValue(prefs.getString(Prefs.RASTER_TILE_URL, ApplicationConstants.RASTER_DEFAULT_URL))) }
+            AlertDialog(
+                onDismissRequest = { showRasterUrlDialog = false },
+                title = { Text(stringResource(Res.string.pref_tile_source_title)) },
+                buttonRow = {
+                    TextButton({
+                        prefs.remove(Prefs.RASTER_TILE_URL)
+                        prefs.remove(Prefs.RASTER_TILE_MAXZOOM)
+                        prefs.remove(Prefs.NO_SATELLITE_LABEL)
+                        showRasterUrlDialog = false
+                    }) { Text(stringResource(Res.string.action_reset)) }
+                    TextButton({ showRasterUrlDialog = false }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({
+                        prefs.putString(Prefs.RASTER_TILE_URL, url.text)
+                        prefs.putInt(Prefs.RASTER_TILE_MAXZOOM, maxZoom.text.toInt())
+                        prefs.putBoolean(Prefs.NO_SATELLITE_LABEL, hideLabels)
+
+                        // trigger the listener in MapFragment (if it exists)
+                        val map = prefs.getString(Prefs.THEME_BACKGROUND, "MAP")
+                        prefs.putString(Prefs.THEME_BACKGROUND, if (map == "MAP") "AERIAL" else "MAP")
+                        prefs.putString(Prefs.THEME_BACKGROUND, map)
+                        showRasterUrlDialog = false
+                    },
+                        enabled = maxZoom.text.toIntOrNull() != null && (url.text.contains("{x}") && url.text.contains("{y}")
+                            && (url.text.contains("{z}") || url.text.contains("{zoom}")))
+                            || url.text.contains("{bbox-epsg-3857}")
+                            || (url.text.contains("{bbox}") && url.text.contains("{proj}"))
+                    ) { Text(stringResource(Res.string.ok)) }
+                },
+                text = {
+                    Column {
+                        Text(stringResource(Res.string.pref_tile_source_message))
+                        TextField2(value = url, onValueChange = { url = it })
+                        Spacer(Modifier.size(6.dp))
+                        TextField2(
+                            value = maxZoom,
+                            onValueChange = { maxZoom = it },
+                            label = { Text(stringResource(Res.string.pref_tile_maxzoom)) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        )
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { hideLabels = !hideLabels }) {
+                            Text(stringResource(Res.string.pref_tile_source_hide_labels))
+                            Switch(hideLabels, { hideLabels = it })
+                        }
+                    }
+                }
+            )
+        }
+        if (exportPresets != null) {
+            val allPresets = mutableListOf<EditTypePreset>()
+            allPresets.add(EditTypePreset(0, stringResource(Res.string.quest_presets_default_name)))
+            allPresets.addAll(editTypePresetsController.getAll())
+            var selectedPresets by remember { mutableStateOf(setOf<EditTypePreset>()) }
+            AlertDialog(
+                onDismissRequest = { exportPresets = null },
+                title = { Text(stringResource(Res.string.import_export_presets_select)) },
+                text = {
+                    CheckboxGroup(
+                        options = allPresets,
+                        selectedOptions = selectedPresets,
+                        onSelectionsChange = { selectedPresets = it },
+                        itemContent = { Text(it.name) }
+                    )
+                },
+                buttonRow = {
+                    TextButton({ exportPresets = null }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({
+                        exportPresets(selectedPresets.map { it.id }, exportPresets!!, ctx.getActivity2()!!, db, urlConfigController)
+                        exportPresets = null
+                    }, enabled = selectedPresets.isNotEmpty()) { Text(stringResource(Res.string.ok)) }
+                }
+            )
+        }
+        if (exportOverlays != null) {
+            val allOverlays = getFakeCustomOverlays(prefs, ctx.resources, false)
+            var selectedOverlays by remember { mutableStateOf(setOf<Overlay>()) }
+            AlertDialog(
+                onDismissRequest = { exportOverlays = null },
+                title = { Text(stringResource(Res.string.import_export_presets_select)) },
+                text = {
+                    CheckboxGroup(
+                        options = allOverlays,
+                        selectedOptions = selectedOverlays,
+                        onSelectionsChange = { selectedOverlays = it },
+                        itemContent = { Text(it.changesetComment) }
+                    )
+                },
+                buttonRow = {
+                    TextButton({ exportOverlays = null }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({
+                        exportCustomOverlays(selectedOverlays.map { it.changesetComment }, exportOverlays!!, ctx.getActivity2()!!)
+                        exportOverlays = null
+                    }, enabled = selectedOverlays.isNotEmpty()) { Text(stringResource(Res.string.ok)) }
+                }
+            )
+        }
+        if (importPresets != null) {
+            val activity = ctx.getActivity2()!!
+            val lines = remember { importLinesAndCheck(importPresets!!, BACKUP_PRESETS, activity, db) }
+            if (lines.isEmpty())
+                importPresets = null
+            AlertDialog(
+                onDismissRequest = { importPresets = null },
+                text = { stringResource(Res.string.import_presets_overlays_message) },
+                title = { Text(stringResource(Res.string.pref_import)) },
+                buttonRow = {
+                    TextButton({ importPresets = null }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({
+                        importPresets(lines, true, db, visibleEditTypeController)
+                        importPresets = null
+                    }) { Text(stringResource(Res.string.import_presets_overlays_replace)) }
+                    TextButton({
+                        importPresets(lines, false, db, visibleEditTypeController)
+                        importPresets = null
+                    }) { Text(stringResource(Res.string.import_presets_overlays_add)) }
+                }
+            )
+        }
+        if (importOverlays != null) {
+            val activity = ctx.getActivity2()!!
+            AlertDialog(
+                onDismissRequest = { importOverlays = null },
+                text = { stringResource(Res.string.import_presets_overlays_message) },
+                title = { Text(stringResource(Res.string.pref_import)) },
+                buttonRow = {
+                    TextButton({ importOverlays = null }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({
+                        if (!importCustomOverlays(importOverlays!!, true, activity))
+                            activity.toast2(activity.getString(R.string.import_error), Toast.LENGTH_LONG)
+                        importOverlays = null
+                    }) { Text(stringResource(Res.string.import_presets_overlays_replace)) }
+                    TextButton({
+                        if (!importCustomOverlays(importOverlays!!, false, activity))
+                            activity.toast2(activity.getString(R.string.import_error), Toast.LENGTH_LONG)
+                        importOverlays = null
+                    }) { Text(stringResource(Res.string.import_presets_overlays_add)) }
+                }
+            )
+        }
     }
 }
 
@@ -291,62 +444,6 @@ val renamedQuests = mapOf(
 )
 fun String.renameUpdatedQuests() =
     renamedQuests.entries.fold(this) { acc, (old, new) -> acc.replace(old, new) }
-
-private fun showRasterUrlDialog(context: Context, prefs: SharedPreferences) {
-    var d: AlertDialog? = null
-    val currentUrl = prefs.getString(Prefs.RASTER_TILE_URL, ApplicationConstants.RASTER_DEFAULT_URL)!!
-    val urlText = EditText(context).apply {
-        setText(currentUrl)
-        doAfterTextChanged {
-            val t = it.toString()
-            d?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled =
-                (t.contains("{x}") && t.contains("{y}") && (t.contains("{z}") || t.contains("{zoom}")))
-                    || t.contains("{bbox-epsg-3857}")
-                    || (t.contains("{bbox}") && t.contains("{proj}"))
-        }
-    }
-    val hideLabelsSwitch = SwitchCompat(context).apply {
-        setText(R.string.pref_tile_source_hide_labels)
-        isChecked = prefs.getBoolean(Prefs.NO_SATELLITE_LABEL, false)
-    }
-    val maxZoom = EditText(context).apply {
-        inputType = InputType.TYPE_CLASS_NUMBER
-        setText(prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, ApplicationConstants.RASTER_DEFAULT_MAXZOOM).toString())
-    }
-    val layout = LinearLayout(context).apply {
-        orientation = LinearLayout.VERTICAL
-        addView(TextView(context).apply { setText(R.string.pref_tile_source_message) })
-        addView(urlText)
-        addView(TextView(context).apply { setText(R.string.pref_tile_maxzoom) })
-        addView(maxZoom)
-        addView(hideLabelsSwitch)
-    }
-    d = AlertDialog.Builder(context)
-        .setTitle(R.string.pref_tile_source_title)
-        .setViewWithDefaultPadding(layout)
-        .setNegativeButton(android.R.string.cancel, null)
-        .setNeutralButton(R.string.action_reset) { _, _ ->
-            prefs.edit {
-                remove(Prefs.RASTER_TILE_URL)
-                remove(Prefs.RASTER_TILE_MAXZOOM)
-                remove(Prefs.NO_SATELLITE_LABEL)
-            }
-        }
-        .setPositiveButton(android.R.string.ok) { _, _ ->
-            prefs.edit {
-                putString(Prefs.RASTER_TILE_URL, urlText.text.toString())
-                putInt(Prefs.RASTER_TILE_MAXZOOM, maxZoom.text.toString().toInt())
-                putBoolean(Prefs.NO_SATELLITE_LABEL, hideLabelsSwitch.isChecked)
-            }
-
-            // trigger the listener in MapFragment (if it exists)
-            val map = prefs.getString(Prefs.THEME_BACKGROUND, "MAP")
-            prefs.edit().putString(Prefs.THEME_BACKGROUND, if (map == "MAP") "AERIAL" else "MAP").apply()
-            prefs.edit().putString(Prefs.THEME_BACKGROUND, map).apply()
-        }
-        .create()
-    d.show()
-}
 
 private fun exportHidden(uri: Uri, activity: Activity, db: Database) {
     runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openOutputStream(uri)?.use { os ->
@@ -380,27 +477,6 @@ private fun exportHidden(uri: Uri, activity: Activity, db: Database) {
             it.write(hiddenExternalSourceQuests.joinToString("\n") + "\n")
         }
     } } }
-}
-
-private fun exportPresets(uri: Uri, activity: Activity, db: Database, editTypePresetsController: EditTypePresetsController, urlConfigController: UrlConfigController) {
-    val allPresets = mutableListOf<EditTypePreset>()
-    allPresets.add(EditTypePreset(0, activity.getString(R.string.quest_presets_default_name)))
-    allPresets.addAll(editTypePresetsController.getAll())
-    val array = allPresets.map { it.name }.toTypedArray()
-    val selectedPresets = mutableSetOf<Long>()
-    val d = AlertDialog.Builder(activity)
-        .setTitle(R.string.import_export_presets_select)
-        .setMultiChoiceItems(array, null) { di, which, isChecked ->
-            if (isChecked) selectedPresets.add(allPresets[which].id)
-            else selectedPresets.remove(allPresets[which].id)
-            (di as AlertDialog).getButton(Dialog.BUTTON_POSITIVE)?.isEnabled = selectedPresets.isNotEmpty()
-        }
-        .setNegativeButton(android.R.string.cancel, null)
-        .setPositiveButton(android.R.string.ok) { _, _ ->
-            exportPresets(selectedPresets, uri, activity, db, urlConfigController)
-        }
-        .show()
-    d.getButton(Dialog.BUTTON_POSITIVE)?.isEnabled = false
 }
 
 private fun exportPresets(ids: Collection<Long>, uri: Uri, activity: Activity, db: Database, urlConfigController: UrlConfigController) {
@@ -470,25 +546,6 @@ private fun settingsToJsonStream(settings: Map<String, Any?>, out: BufferedWrite
     out.appendLine( Json.encodeToString(stringSets))
 }
 
-private fun exportOverlays(uri: Uri, activity: Activity, scPrefs: Preferences) {
-    val allOverlays = getFakeCustomOverlays(scPrefs, activity.resources, false)
-    val array = allOverlays.map { it.changesetComment }.toTypedArray()
-    val selectedOverlays = mutableSetOf<String>()
-    val d = AlertDialog.Builder(activity)
-        .setTitle(R.string.import_export_custom_overlays_select)
-        .setMultiChoiceItems(array, null) { di, which, isChecked ->
-            if (isChecked) selectedOverlays.add(allOverlays[which].wikiLink!!)
-            else selectedOverlays.remove(allOverlays[which].wikiLink!!)
-            (di as AlertDialog).getButton(Dialog.BUTTON_POSITIVE)?.isEnabled = selectedOverlays.isNotEmpty()
-        }
-        .setNegativeButton(android.R.string.cancel, null)
-        .setPositiveButton(android.R.string.ok) { _, _ ->
-            exportCustomOverlays(selectedOverlays, uri, activity)
-        }
-        .show()
-    d.getButton(Dialog.BUTTON_POSITIVE)?.isEnabled = false
-}
-
 private fun exportCustomOverlays(indices: Collection<String>, uri: Uri, activity: Activity) {
     val prefs = Prefs.sharedPreferences
     val filterRegex = "custom_overlay_(?:${indices.joinToString("|")})_.*".toRegex()
@@ -513,15 +570,6 @@ private fun exportSettings(uri: Uri, activity: Activity) {
             && !it.startsWith("custom_overlay") // custom overlays are exported separately
     }
     activity.contentResolver?.openOutputStream(uri)?.use { it.bufferedWriter().use { settingsToJsonStream(settings, it) } }
-}
-
-private fun importOverlays(uri: Uri, activity: Activity) {
-    AlertDialog.Builder(activity)
-        .setTitle(R.string.pref_import)
-        .setMessage(R.string.import_presets_overlays_message)
-        .setPositiveButton(R.string.import_presets_overlays_replace) { _, _ -> if (!importCustomOverlays(uri, true, activity)) activity.toast2(activity.getString(R.string.import_error), Toast.LENGTH_LONG) }
-        .setNeutralButton(R.string.import_presets_overlays_add) { _, _ -> if (!importCustomOverlays(uri, false, activity)) activity.toast2(activity.getString(R.string.import_error), Toast.LENGTH_LONG) }
-        .show()
 }
 
 private fun importCustomOverlays(uri: Uri, replaceExisting: Boolean, activity: Activity): Boolean {
@@ -682,19 +730,6 @@ private fun importLinesAndCheck(uri: Uri, checkLine: String, activity: Activity,
 
 // when importing, names should be updated!
 private fun List<String>.renameUpdatedQuests() = map { it.renameUpdatedQuests() }
-
-private fun importPresets(uri: Uri, activity: Activity, db: Database, visibleEditTypeController: VisibleEditTypeController) {
-    val lines = importLinesAndCheck(uri, BACKUP_PRESETS, activity, db)
-    if (lines.isEmpty()) {
-        return
-    }
-    AlertDialog.Builder(activity)
-        .setTitle(R.string.pref_import)
-        .setMessage(R.string.import_presets_overlays_message)
-        .setPositiveButton(R.string.import_presets_overlays_replace) { _, _ -> importPresets(lines, true, db, visibleEditTypeController) }
-        .setNeutralButton(R.string.import_presets_overlays_add) { _, _ -> importPresets(lines, false, db, visibleEditTypeController) }
-        .show()
-}
 
 private fun importPresets(lines: List<String>, replaceExistingPresets: Boolean, db: Database, visibleEditTypeController: VisibleEditTypeController) {
     val lines = lines.renameUpdatedQuests()

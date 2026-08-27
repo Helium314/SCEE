@@ -84,6 +84,7 @@ fun MainBottomSheet(
                 onDismiss = onDismiss,
                 trackpoints = shownBottomSheet.trackpoints,
                 modifier = modifier,
+                position = mapPosition,
             )
         }
         is ShownBottomSheet.OsmNoteQuest -> {

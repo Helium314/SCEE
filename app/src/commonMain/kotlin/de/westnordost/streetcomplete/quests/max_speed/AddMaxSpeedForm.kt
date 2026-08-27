@@ -1,6 +1,5 @@
 package de.westnordost.streetcomplete.quests.max_speed
 
-import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
@@ -15,7 +14,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.Prefs
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.osmquests.Answer
@@ -27,6 +25,7 @@ import de.westnordost.streetcomplete.osm.maxspeed.Speed
 import de.westnordost.streetcomplete.quests.max_speed.MaxSpeedSign.Type.*
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.dialogs.AreYouSureDialog
+import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
 import de.westnordost.streetcomplete.ui.theme.extraLargeInput
@@ -55,17 +54,6 @@ fun AddMaxSpeedForm(
         }
         on(Answer(answer to conditional))
     }
-    fun addConditional() {
-        // first require selecting sth for normal limit
-        if (maxSpeedAnswer?.isComplete() != true) {
-            AlertDialog.Builder(context)
-                .setMessage(R.string.quest_maxspeed_conditional_limited_enter_default)
-                .setPositiveButton(android.R.string.ok, null)
-                .show()
-            return
-        }
-        showConditionalDialog = true
-    }
 
     QuestForm(
         on = on,
@@ -90,7 +78,7 @@ fun AddMaxSpeedForm(
                 }
             } else null,
             if (preferences.getBoolean(Prefs.EXPERT_MODE, false))
-                AnswerItem(stringResource(Res.string.quest_maxspeed_conditional)) { addConditional() }
+                AnswerItem(stringResource(Res.string.quest_maxspeed_conditional)) { showConditionalDialog = true }
             else null
         ) }
     ) {
@@ -145,19 +133,26 @@ fun AddMaxSpeedForm(
         )
     }
     if (showConditionalDialog) {
-        AddConditionalDialog(
-            { showConditionalDialog = false },
-            listOf("maxspeed", "maxspeed:hgv", "maxspeed:psv", "maxspeed:bus"),
-            null,
-            true,
-            countryInfo,
-        ) { k, v ->
-            val speedText = v.substringBefore("@").trim()
-            val speedNumber = speedText.toIntOrNull() ?: return@AddConditionalDialog
-            val unit = (maxSpeedAnswer as? MaxSpeedSign)?.speed?.unit ?: return@AddConditionalDialog
-            val speed = Speed(speedNumber, unit)
-            val value = v.replaceFirst(speedText, speed.toOsmString())
-            applySpeedLimitFormAnswer(maxSpeedAnswer!!, k to value)
+        if (maxSpeedAnswer?.isComplete() != true) {
+            InfoDialog(
+                { showConditionalDialog = false },
+                text = { Text(stringResource(Res.string.quest_maxspeed_conditional_limited_enter_default)) }
+            )
+        } else {
+            AddConditionalDialog(
+                { showConditionalDialog = false },
+                listOf("maxspeed", "maxspeed:hgv", "maxspeed:psv", "maxspeed:bus"),
+                null,
+                true,
+                countryInfo,
+            ) { k, v ->
+                val speedText = v.substringBefore("@").trim()
+                val speedNumber = speedText.toIntOrNull() ?: return@AddConditionalDialog
+                val unit = (maxSpeedAnswer as? MaxSpeedSign)?.speed?.unit ?: return@AddConditionalDialog
+                val speed = Speed(speedNumber, unit)
+                val value = v.replaceFirst(speedText, speed.toOsmString())
+                applySpeedLimitFormAnswer(maxSpeedAnswer!!, k to value)
+            }
         }
     }
 }

@@ -1,14 +1,5 @@
 package de.westnordost.streetcomplete.screens.settings
 
-import android.content.Context
-import android.os.Build
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +28,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
-import androidx.core.widget.doAfterTextChanged
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.ApplicationConstants.REFRESH_DATA_AFTER
 import de.westnordost.streetcomplete.Prefs
@@ -60,7 +50,6 @@ import org.koin.compose.koinInject
 import de.westnordost.streetcomplete.ui.common.settings.Select
 import de.westnordost.streetcomplete.util.ktx.getDisplayName
 import de.westnordost.streetcomplete.util.locale.NumberFormatter
-import de.westnordost.streetcomplete.util.setDefaultDialogPadding
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -315,12 +304,7 @@ fun SettingsScreen(
                 )
                 if (ApplicationConstants.DEBUG) {
                     Preference(
-                        name = "Debug log reader",
-                        onClick = { showOldLogReader(c) }
-                    )
-
-                    Preference(
-                        name = "Use temp debug logger",
+                        name = "Use temp debug logger (requires restart)",
                         onClick = { useDebugLogger(!useDebugLogger, prefs, databaseLogger) },
                     ) {
                         Switch(
@@ -410,68 +394,4 @@ private fun getLanguageDisplayName(languageTag: String): String? {
     if (languageTag.isEmpty()) return null
     val locale = Locale(languageTag)
     return locale.getDisplayName(locale) ?: languageTag
-}
-
-private fun showOldLogReader(context: Context) { // todo: repeats lines... is it the logger, or the dialog?
-    var reversed = false
-    var filter = ""
-    var maxLines = 200
-    val log = TextView(context)
-    var lines = TempLogger.getLog().take(maxLines)
-    log.setTextIsSelectable(true)
-    log.text = lines.joinToString("\n")
-    fun reloadText() {
-        val l = TempLogger.getLog()
-        lines = when {
-            filter.isNotBlank() && reversed -> l.asReversed().filter { line -> line.toString().contains(filter, true) }
-            filter.isNotBlank() -> l.filter { line -> line.toString().contains(filter, true) }
-            reversed -> l.asReversed()
-            else -> l
-        }.take(maxLines)
-        log.text = lines.joinToString("\n")
-    }
-    val scrollLog = ScrollView(context).apply {
-        addView(log)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            setOnScrollChangeListener { _, _, _, _, _ ->
-                if (log.bottom <= height + scrollY && lines.size >= maxLines) {
-                    maxLines *= 2
-                    reloadText()
-                }
-            }
-        }
-    }
-    val reverseButton = Button(context)
-    reverseButton.setText(R.string.pref_read_reverse_button)
-    reverseButton.setOnClickListener {
-        reversed = !reversed
-        reloadText()
-        scrollLog.scrollY = 0
-    }
-    val filterView = EditText(context).apply {
-        setHint(R.string.pref_read_filter_hint)
-        doAfterTextChanged {
-            filter = it.toString()
-            val previousCursorPosition = selectionStart
-            reloadText()
-            scrollLog.fullScroll(View.FOCUS_UP)
-            requestFocus() // focus is lost when scrolling it seems
-            setSelection(previousCursorPosition)
-        }
-        setDefaultDialogPadding() // not a dialog, but still suitable
-    }
-    val layout = LinearLayout(context).apply { orientation = LinearLayout.VERTICAL }
-    layout.addView(LinearLayout(context).apply {
-        addView(reverseButton)
-        addView(filterView)
-    }) // put this on top, or layout will need more work to keep this visible
-    layout.addView(scrollLog)
-    val d = AlertDialog.Builder(context)
-        .setTitle(R.string.pref_read_log_title)
-        .setView(layout) // not using default padding to allow longer log lines (looks ugly, but is very convenient)
-        .setPositiveButton(R.string.close, null)
-        .create()
-    d.show()
-    // maximize dialog size, because log lines are long
-    d.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
 }

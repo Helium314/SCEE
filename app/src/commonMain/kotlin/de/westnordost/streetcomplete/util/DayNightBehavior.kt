@@ -1,7 +1,13 @@
 package de.westnordost.streetcomplete
 
-enum class DayNightBehavior(val titleResId: Int) {
-    IGNORE(R.string.day_night_ignore),
-    PRIORITY(R.string.day_night_priority),
-    VISIBILITY(R.string.day_night_visibility)
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.resources.day_night_ignore
+import de.westnordost.streetcomplete.resources.day_night_priority
+import de.westnordost.streetcomplete.resources.day_night_visibility
+import org.jetbrains.compose.resources.StringResource
+
+enum class DayNightBehavior(val titleRes: StringResource) {
+    IGNORE(Res.string.day_night_ignore),
+    PRIORITY(Res.string.day_night_priority),
+    VISIBILITY(Res.string.day_night_visibility)
 }

@@ -129,7 +129,7 @@ fun BottomSheetFormScaffold(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .safeDrawingPadding()
-                    .padding(8.dp),
+                    .padding(horizontal = 8.dp, vertical = 32.dp),
                 content = { fab2() }
             )
         }

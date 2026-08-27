@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +30,7 @@ import de.westnordost.streetcomplete.osm.toTags
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.screens.settings.getActivity2
+import de.westnordost.streetcomplete.screens.settings.toast2
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.LocalElement
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
@@ -187,10 +187,7 @@ fun readFromUriToExternalFile(uri: Uri, filename: String, activity: Activity) {
             File(activity.getExternalFilesDir(null), filename).writeText(reader.readText())
         } }
     } catch (_: IOException) {
-        AlertDialog.Builder(activity)
-            .setMessage(R.string.pref_save_file_error)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
+        activity.toast2(activity.getString(R.string.pref_save_file_error))
     }
 }
 
@@ -200,9 +197,6 @@ fun writeFromExternalFileToUri(filename: String, uri: Uri, activity: Activity) {
             writer.write(File(activity.getExternalFilesDir(null), filename).readText())
         } }
     } catch (_: IOException) {
-        AlertDialog.Builder(activity)
-            .setMessage(R.string.pref_save_file_error)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
+        activity.toast2(activity.getString(R.string.pref_save_file_error))
     }
 }

@@ -5,13 +5,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalWindowInfo
 import de.westnordost.osmfeatures.Feature
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.Prefs
+import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesSource
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
@@ -27,6 +32,7 @@ import de.westnordost.streetcomplete.screens.main.bottom_sheet.note.animateFallD
 import de.westnordost.streetcomplete.screens.main.map.getIcon
 import de.westnordost.streetcomplete.screens.main.map.getTitle
 import de.westnordost.streetcomplete.ui.common.Pin
+import de.westnordost.streetcomplete.ui.common.dialogs.OutsideAreaDialog
 import de.westnordost.streetcomplete.ui.common.quest.Marker
 import de.westnordost.streetcomplete.ui.theme.Dimensions
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
@@ -50,6 +56,8 @@ fun AddPoiForm(
     val mapDataWithEditsSource: MapDataWithEditsSource = koinInject()
     val levelFilter: LevelFilter = koinInject()
     val featureDictionary: FeatureDictionary = koinInject()
+    val downloadedTilesSource: DownloadedTilesSource = koinInject()
+    var answer: (() -> Unit)? by remember { mutableStateOf(null) }
 
     // show similar elements on map
     LaunchedEffect(Unit) {
@@ -97,16 +105,20 @@ fun AddPoiForm(
         val prefs: Preferences = koinInject()
         EditTagsForm(
             onConfirmed = {
+                answer = {
                 val tags = feature.addTags.toMutableMap()
                 it.applyTo(tags)
                 val node = Node(0, position, tags)
                 onAdd(node)
                 if (feature.addTags != tags && !node.isPlace())
                     prefs.putString(Prefs.CREATE_NODE_LAST_TAGS_FOR_FEATURE + feature.id, Json.encodeToString(tags))
-                onDismiss()
+                onDismiss() }
             },
             onDismiss = onDismiss,
             originalElement = Node(0, position, feature.addTags)
         )
+    }
+    if (answer != null) {
+        OutsideAreaDialog(position, downloadedTilesSource, { answer?.invoke() }, { answer = null })
     }
 }

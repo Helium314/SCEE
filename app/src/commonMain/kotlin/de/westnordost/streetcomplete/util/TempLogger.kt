@@ -1,10 +1,15 @@
 package de.westnordost.streetcomplete.util
 
+import de.westnordost.streetcomplete.data.logs.LogLevel
+import de.westnordost.streetcomplete.data.logs.LogMessage
+import de.westnordost.streetcomplete.data.logs.LogsSource
+import de.westnordost.streetcomplete.data.logs.toChar
 import de.westnordost.streetcomplete.util.ktx.now
+import de.westnordost.streetcomplete.util.ktx.toInstant
 import de.westnordost.streetcomplete.util.logs.Logger
 import kotlinx.datetime.LocalDateTime
 
-object TempLogger : Logger {
+object TempLogger : Logger, LogsSource {
     override fun e(tag: String, message: String, exception: Throwable?) {
         if (exception == null) {
             synchronized(logLines) { log(LogLine('E', tag, message)) }
@@ -45,6 +50,42 @@ object TempLogger : Logger {
 
     /** returns a copy of [logLines] */
     fun getLog() = synchronized(logLines) { logLines.toList() }
+
+    override fun getLogs(
+        levels: Set<LogLevel>,
+        messageContains: String?,
+        newerThan: Long?,
+        olderThan: Long?
+    ): List<LogMessage> {
+        val charLevels = levels.mapTo(hashSetOf()) { it.toChar() }
+        return synchronized(logLines) {
+            logLines.asSequence().filter {
+                if (it.level !in charLevels) return@filter false
+                if (messageContains != null && !it.message.contains(messageContains, true))return@filter false
+                if (newerThan != null && it.time.toInstant().toEpochMilliseconds() < newerThan) return@filter false
+                if (olderThan != null && it.time.toInstant().toEpochMilliseconds() > olderThan) return@filter false
+                true
+            }.map { line ->
+                LogMessage(
+                    LogLevel.entries.first { it.toChar() == line.level },
+                    line.tag,
+                    line.message,
+                    null,
+                    line.time.toInstant().toEpochMilliseconds()
+                )
+            }.toList()
+        }
+    }
+
+    private val listeners = Listeners<LogsSource.Listener>()
+
+    override fun addListener(listener: LogsSource.Listener) {
+        listeners.add(listener)
+    }
+
+    override fun removeListener(listener: LogsSource.Listener) {
+        listeners.remove(listener)
+    }
 }
 
 data class LogLine(val level: Char, val tag: String, val message: String,) {

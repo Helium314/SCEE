@@ -5,10 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.BuildConfig
+import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.logs.LogMessage
 import de.westnordost.streetcomplete.data.logs.LogsFilters
 import de.westnordost.streetcomplete.data.logs.LogsSource
 import de.westnordost.streetcomplete.data.logs.format
+import de.westnordost.streetcomplete.data.preferences.Preferences
+import de.westnordost.streetcomplete.util.TempLogger
 import de.westnordost.streetcomplete.util.ktx.now
 import de.westnordost.streetcomplete.util.ktx.systemTimeNow
 import de.westnordost.streetcomplete.util.ktx.toEpochMilli
@@ -45,7 +48,10 @@ abstract class LogsViewModel : ViewModel() {
 @Stable
 class LogsViewModelImpl(
     private val logsSource: LogsSource,
+    private val prefs: Preferences
 ) : LogsViewModel() {
+
+    private val source get() = if (prefs.getBoolean(Prefs.TEMP_LOGGER, false)) TempLogger else logsSource
 
     override val filters = MutableStateFlow(LogsFilters(
         timestampNewerThan = LocalDateTime(systemTimeNow().toLocalDate(), LocalTime(0, 0, 0))
@@ -63,14 +69,15 @@ class LogsViewModelImpl(
                 }
             }
         }
-        logsSource.addListener(listener)
-        awaitClose { logsSource.removeListener(listener) }
+        val source = source
+        source.addListener(listener)
+        awaitClose { source.removeListener(listener) }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override val logs: StateFlow<List<LogMessage>> =
         filters.transformLatest { filters ->
-            val logs = logsSource
+            val logs = source
                 .getLogs(
                     levels = filters.levels,
                     messageContains = filters.messageContains,

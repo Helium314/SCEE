@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="pref_manual_download_cache_title">始终重新下载数据</string>
-    <string name="pref_delete_old_data_after_summary">%d 天</string>
+    <string name="pref_delete_old_data_after_summary">%1$d 天</string>
     <string name="quest_monitor_active_request">主动请求位置将增加电池使用量。不主动请求位置时，仍会使用其他应用请求的位置。</string>
     <string name="quest_healthcare_speciality_title">这里有哪些医疗专业？</string>
     <string name="quest_material_metal">金属</string>
@@ -44,7 +44,7 @@
     <string name="pref_read_log_title">日志阅读器</string>
     <string name="pref_tile_source_message">瓦片源的 URL 必须包含 {x}、{y} 以及 {z} 或 {zoom}。WMS 源需要支持 EPSG:3857 且 URL 必须包含 {bbox-epsg-3857} 或同时包含 {bbox} 和 {proj}。</string>
     <string name="pref_3d_buildings_title">显示 3D 建筑</string>
-    <string name="pref_recent_answers_first_min_lines_summary">如果表格超过 %d 行</string>
+    <string name="pref_recent_answers_first_min_lines_summary">如果表格超过 %1$d 行</string>
     <string name="pref_main_menu_grid">以网格形式显示所有主菜单项目</string>
     <string name="quest_settings_sidewalk_cycleway_distance_message">设置独立路径之间的最小距离，若低于此值，则不会显示此类任务</string>
     <string name="quest_service_building_type_pump">水泵站</string>
@@ -188,7 +188,7 @@
     <string name="pref_expert_mode_message">这将允许在 SCEE 中使用添加的任务，以及\n <li>编辑原始标签</li>\n <li>移动属于路径或关系的节点</li>\n <li>删除任意自由浮动的节点</li>\n <li>编辑应由注记屏蔽的要素</li>\n <li>在任何地方添加自由浮动节点</li>\n <li>改变任务的要素选择</li>\n\n 这仍然小于大多数其他编辑器所允许的范围，但不当使用可能会导致损坏数据，而这在 StreetComplete 中是可以避免的。请注意，启用专家模式后，您需要为自己的编辑显著承担更多责任。\n 请在当您拥有除 StreetComplete 之外的 OSM 经验并了解自己在做什么时，再启用此设置。</string>
     <string name="quest_is_pharmacy_dispensing_title">这家药房是否配发所有处方药？</string>
     <string name="import_error_db_version">导入错误：未知版本</string>
-    <string name="pref_interval_summary">%d 秒</string>
+    <string name="pref_interval_summary">%1$d 秒</string>
     <string name="quest_osmose_no_undo">您确定吗？此操作无法撤销！</string>
     <string name="pref_expert_mode_title">专家模式</string>
     <string name="quest_service_building_type_pressure">燃气调压</string>
@@ -322,7 +322,7 @@
     <string name="ban_check_fails">检查已禁止版本持续失败。您运行的可能是过时的版本，请考虑升级。</string>
     <string name="enqueue_download">在当前搜索完成后启动</string>
     <string name="create_poi">添加兴趣点（POI）</string>
-    <string name="quest_monitor_found">附近有 %d 个任务，距离最近：</string>
+    <string name="quest_monitor_found">附近有 %1$d 个任务，距离最近：</string>
     <string name="quest_monitor_error">无法开始监测，可能是权限问题</string>
     <string name="general_warning">警告</string>
     <string name="move_node_with_geometry">移动此节点将修改以下路径或多边形关系的几何形状：%1$s。

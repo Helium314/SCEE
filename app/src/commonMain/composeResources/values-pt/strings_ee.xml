@@ -108,7 +108,7 @@
     <string name="quest_utility_sewerage">Saneamento</string>
     <string name="quest_utility_power">Eletricidade</string>
     <string name="import_export_custom_overlays_select">Selecionar camadas para exportar</string>
-    <string name="pref_delete_old_data_after_summary">%d dias</string>
+    <string name="pref_delete_old_data_after_summary">%1$d dias</string>
     <string name="import_error">Erro ao importar</string>
     <string name="import_error_db_version">Erro ao importar: versão desconhecida</string>
     <string name="export_warning_db_version">Aviso: Versão da base de dados desconhecida, a importação pode falhar. Por favor peça para a aplicação ser atualizada.</string>
@@ -143,7 +143,7 @@
     <string name="quick_switch_map_background">Alternar entre vista do mapa / aérea</string>
     <string name="pref_way_direction">Mostrar direção dos caminhos</string>
     <string name="pref_gpx_track_download">Transferir área delimitada pelo caminho GPX</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Caso o formulário tenha mais do que %d linha(s)</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Caso o formulário tenha mais do que %1$d linha(s)</string>
     <string name="pref_recent_answers_first_min_lines_message">Move respostas recentes para cima se o formulário de resposta da missão contém mais do que as linhas indicadas de imagens</string>
     <string name="quest_material_concrete">Cimento</string>
     <string name="quest_swimmingPoolAvailability_title">Existe aqui uma piscina?</string>

@@ -127,7 +127,7 @@
     <string name="quest_roofColour_title">這棟建築的屋頂整體是什麼顏色？</string>
     <string name="quest_buildingPartColour_title">這棟建築的這部分整體是什麼顏色？</string>
     <string name="pref_custom_title">載入自訂任務檔案</string>
-    <string name="pref_delete_old_data_after_summary">%d 天</string>
+    <string name="pref_delete_old_data_after_summary">%1$d 天</string>
     <string name="pref_delete_old_data_after_message">刪除下載的 OSM 資料（若超過指定天數）</string>
     <string name="pref_read_reverse_button">復原</string>
     <string name="pref_quest_geometries_title">顯示任務幾何圖形</string>
@@ -143,7 +143,7 @@
     <string name="pref_caps_word_name_input">輸入名稱時將所有單字首字母大寫</string>
     <string name="pref_show_next_quest_summary">解決後立即顯示同一元素的下一個任務</string>
     <string name="pref_recent_answers_first_min_lines">將最新的答案移至前面</string>
-    <string name="pref_recent_answers_first_min_lines_summary">如果表單有超過 %d 行</string>
+    <string name="pref_recent_answers_first_min_lines_summary">如果表單有超過 %1$d 行</string>
     <string name="show_nearby_quests_disable">不要顯示附近的任務</string>
     <string name="show_nearby_quests_visible">只顯示已啟用的任務類型</string>
     <string name="show_nearby_quests_all_types">顯示所有類別的任務</string>
@@ -254,7 +254,7 @@
     <string name="quest_roofOrientation_across">與建築物較短的一側平行</string>
     <string name="quest_roofOrientation_title">屋頂脊線的方向是什麼？</string>
     <string name="pref_network_interval_title">網路位置更新間隔</string>
-    <string name="pref_interval_summary">%d 秒</string>
+    <string name="pref_interval_summary">%1$d 秒</string>
     <string name="pref_interval_message">更新間隔的秒數</string>
     <string name="restore_dialog_hint">你可以藉由長按復原鈕來手動選擇要復原的任務。</string>
     <string name="quest_settings_eligible_highways">設定任務允許的公路類型，以逗號分隔</string>
@@ -393,7 +393,7 @@
     <string name="create_poi">新增POI</string>
     <string name="insert_node">在路徑中插入節點</string>
     <string name="insert_node_select_way">選擇在這條路徑上的位置</string>
-    <string name="quest_monitor_found">%d 個附近的任務，最接近的是：</string>
+    <string name="quest_monitor_found">%1$d 個附近的任務，最接近的是：</string>
     <string name="quest_monitor_channel_name">偵測附近的任務</string>
     <string name="fixme_for_object">另一位用戶新增了fixme：</string>
     <string name="access_length_limit">長度</string>

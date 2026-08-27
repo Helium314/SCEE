@@ -30,7 +30,7 @@
     <string name="import_error">Σφάλμα εισαγωγής</string>
     <string name="import_export_hidden_quests">Κρυμμένες αποστολές</string>
     <string name="import_export_settings">Άλλες ρυθμίσεις εφαρμογής</string>
-    <string name="pref_delete_old_data_after_summary">%d μέρες</string>
+    <string name="pref_delete_old_data_after_summary">%1$d μέρες</string>
     <string name="pref_screen_quests">Αποστολές</string>
     <string name="pref_tile_source_hide_labels">Απόκρυψη ετικετών</string>
     <string name="pref_tile_source_message">Το URL των πλακιδίων πρέπει να περιλαμβάνει {x}, {y} και είτε {z} είτε {zoom}. Η WMS πηγή πρέπει να υποστηρίζει EPSG:3857 και το URL πρέπει να περιλαμβάνει είτε {bbox-epsg-3857} είτε και τα δύο από {bbox} και {proj}.</string>
@@ -206,7 +206,7 @@
     <string name="quest_material_stone">Πέτρα</string>
     <string name="quest_seating_sidewalk">Στο πεζοδρόμιο</string>
     <string name="quest_service_building_type_substation">Ηλεκτρικός υποσταθμός</string>
-    <string name="pref_interval_summary">%d δευτερόλεπτα</string>
+    <string name="pref_interval_summary">%1$d δευτερόλεπτα</string>
     <string name="pref_dynamic_quest_creation_title">Δημιουργία αποστολών δυναμικά</string>
     <string name="quest_wheelchair_description_no_language">δεν ορίστηκε γλώσσα</string>
     <string name="quest_street_cabinet_traffic_control">Ελέγχου κυκλοφορίας</string>

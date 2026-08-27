@@ -54,7 +54,7 @@
     <string name="pref_show_next_quest_summary">Zobrazí ďalšiu úlohu pre rovnaký objekt hneď po vyriešení aktuálnej</string>
     <string name="pref_hide_button_title">Zobraz tlačidlo na skrytie</string>
     <string name="pref_hide_button_summary">Stlačenie skryje úlohu dočasne, dlhé stlačenie skryje úlohu natrvalo</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Keď sú možnosti na %d riadkoch</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Keď sú možnosti na %1$d riadkoch</string>
     <string name="pref_recent_answers_first_min_lines_message">Presuň nedávne odpovede na začiatok, pokiaľ sú možnosti na takomto počte riadkov</string>
     <string name="pref_show_nearby_quests_title">Zobraz úlohy v blízkosti</string>
     <string name="show_nearby_quests_disable">Nezobrazuj blízke úlohy</string>
@@ -89,7 +89,7 @@
     <string name="export_warning_db_version">Varovanie: neznáma verzia databázy, import nemusí fungovať. Prosím aktualizuj aplikáciu.</string>
     <string name="pref_delete_old_data_after">Vymaž staré údaje po</string>
     <string name="pref_delete_old_data_after_message">Vymaž stiahnuté OSM dáta, pokiaľ sú staršie ako tento počet dní</string>
-    <string name="pref_delete_old_data_after_summary">%d dňoch</string>
+    <string name="pref_delete_old_data_after_summary">%1$d dňoch</string>
     <string name="day_night_visibility">Nezobrazovať úlohy nevhodné pre aktuálnu časť dňa</string>
     <string name="day_night_priority">Zvýšiť prioritu úloh vhodných pre daný čas dňa</string>
     <string name="pref_trees_title">Načítaj strom úloh zo súboru</string>

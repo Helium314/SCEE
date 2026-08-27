@@ -49,7 +49,7 @@
     <string name="pref_main_menu_grid">Zobrazit všechny prvky hlavního menu jako mřížku</string>
     <string name="pref_show_next_quest_summary">Zobrazit další úkoly pro stejný prvek hned po vyřešení</string>
     <string name="pref_hide_button_title">Zobrazit tlačítko na skrytí</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Pokud má formulář více než %d řádků</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Pokud má formulář více než %1$d řádků</string>
     <string name="show_nearby_quests_visible">Zobrazit pouze zapnuté úkoly</string>
     <string name="show_nearby_quests_all_types">Zobrazit všechny úkoly</string>
     <string name="show_nearby_quests_even_hidden">Zobrazit všechny, i skryté úkoly</string>
@@ -62,7 +62,7 @@
     <string name="pref_screen_quests">Úkoly</string>
     <string name="pref_delete_old_data_after">Smazat data starší než</string>
     <string name="pref_delete_old_data_after_message">Smazat stažené OSM data pokud jsou starší než tolik dní</string>
-    <string name="pref_delete_old_data_after_summary">%d dní</string>
+    <string name="pref_delete_old_data_after_summary">%1$d dní</string>
     <string name="pref_tile_source_message">URL adresa musí obsahovat {x}, {y} a {z}</string>
     <string name="pref_tile_source_hide_labels">Skrýt popisky</string>
     <string name="pref_tree_custom_quest_summary">Zobrazte si zprávu při zapínání úkolu pro více informací</string>

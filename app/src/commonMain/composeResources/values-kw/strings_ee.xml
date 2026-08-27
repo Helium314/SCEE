@@ -60,7 +60,7 @@
     <string name="pref_hide_button_title">Diskwedhes boton kudha</string>
     <string name="pref_hide_button_summary">Klyck kudha hwithrans yn servadow, klyck hir kudha yn fast</string>
     <string name="pref_recent_answers_first_min_lines">Gwaya gorthebow a-dhiskwedhes a-rag</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Mar form kavos moy es %d linen(now)</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Mar form kavos moy es %1$d linen(now)</string>
     <string name="pref_recent_answers_first_min_lines_message">Gwaya gorthebow a-dhiwedhes a-rag mar an form gorthyp hwithrans kavos moy es seul linennow a avenyow</string>
     <string name="pref_show_nearby_quests_title">Diskwedhes hwithransow yn ogas</string>
     <string name="pref_show_nearby_quests_summary">Gasa ow skwychella hwithransow yn ogas pan form hwithrans yw diskwedhys</string>
@@ -97,7 +97,7 @@
     <string name="export_warning_db_version">Gwarnyans: versyon sel dherivasow ankoth, ynporth ny wra oberi martesen. Mar pleg, peji rag an app bos nowedhys.</string>
     <string name="pref_delete_old_data_after">Dilea data koth wosa</string>
     <string name="pref_delete_old_data_after_message">Remova data OSM iskargys mar kottha es seul dedhyow</string>
-    <string name="pref_delete_old_data_after_summary">%d dedhyow</string>
+    <string name="pref_delete_old_data_after_summary">%1$d dedhyow</string>
     <string name="pref_trees_title">Karga restren hwithrans gwedhen</string>
     <string name="pref_custom_title">Karga restren hwithrans a-vusur</string>
     <string name="tree_custom_quest_import_export_message">Kavos restren devnydhys a-lemmyn po provia unn nowydh? Checkya an messach gallosegi hwithrans kelmys rag manylyon.</string>

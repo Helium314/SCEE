@@ -44,7 +44,7 @@
     <string name="pref_show_next_quest_title">Mostrar la següent missió immediatament</string>
     <string name="pref_hide_button_title">Mostrar botó per amagar la missió ràpidament</string>
     <string name="pref_hide_button_summary">Clicar-lo amaga la missió temporalment, però mantindre'l pressionat amaga la missió de forma permanent</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Sí el formulari té més de %d línia/línies</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Sí el formulari té més de %1$d línia/línies</string>
     <string name="pref_show_nearby_quests_title">Mostrar missions properes</string>
     <string name="pref_show_nearby_quests_summary">Et permet canviar cap a altres missions properes a la que estiguis responent si tens un formulari de missió visible</string>
     <string name="show_nearby_quests_disable">No mostrar missions properes</string>
@@ -70,7 +70,7 @@
     <string name="export_warning_db_version">Advertència: versió dol base de dades desconeguda, l'importació podria no funcionar. Si us plau, demani que s'actualitzi l'aplicació.</string>
     <string name="pref_delete_old_data_after">Eliminar dades antigues després de</string>
     <string name="pref_delete_old_data_after_message">Eliminar dades d'OSM descarregades si són antigues de més d'aquests dies d'antiguitat</string>
-    <string name="pref_delete_old_data_after_summary">%d dies</string>
+    <string name="pref_delete_old_data_after_summary">%1$d dies</string>
     <string name="tree_custom_quest_import">Proporcionar-lo</string>
     <string name="pref_tile_source_title">Font de tessel·les per l'imatgeria de satèl·lit/aèria</string>
     <string name="pref_tile_source_message">L'URL dol tessel·la ha de contenir {x}, {y} i {z}</string>
@@ -110,7 +110,7 @@
     <string name="resurvey_intervals_even_less_often">Demana-ho encara menys sovint</string>
     <string name="pref_gps_interval_title">Interval d'actualització de posició GPS</string>
     <string name="pref_network_interval_title">Interval d'actualització de posició de xarxa</string>
-    <string name="pref_interval_summary">%d segons</string>
+    <string name="pref_interval_summary">%1$d segons</string>
     <string name="pref_interval_message">Interval d'actualització en segons</string>
     <string name="quest_settings_element_selection">Selecciona quins elements són elegibles per a aquesta missió. <a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection">Llegeixi aquí</a> més informació sobre la sintaxi de selecció d'elements (l'enllaç s'obrirà en sun navegador web).</string>
     <string name="quest_settings_eligible_highways">Estableixi vies elegibles per a aquesta missió, separades per comes</string>
@@ -452,7 +452,7 @@
     <string name="insert_node">Inserir nou node a la via</string>
     <string name="create_poi">Afegir un nou POI aquí</string>
     <string name="insert_node_select_way">Selecciona una posició a la via</string>
-    <string name="quest_monitor_found">Hi han %d missions a prop, properes:</string>
+    <string name="quest_monitor_found">Hi han %1$d missions a prop, properes:</string>
     <string name="quest_monitor_channel_name">Monitor de missions a prop</string>
     <string name="quest_monitor_channel_name_found">Missió trobada a prop</string>
     <string name="quest_monitor_running">Supervisant ubicació</string>

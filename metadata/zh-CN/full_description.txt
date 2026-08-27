@@ -1,6 +1,6 @@
 SCEE 是 StreetComplete 的修改版，专为不满原版 StreetComplete 缺乏高级编辑功能的资深 OSM 用户打造。
 
-请注意，SCEE 不适合习惯舍弃警告信息而不阅读的用户！
+请注意，SCEE 不适合习惯于不阅读就忽略警告消息的用户！
 初次接触 OpenStreetMap 用户最好使用原版 StreetComplete：https://f-droid.org/zh_Hans/packages/de.westnordost.streetcomplete/
 
 SCEE 中新增功能测试程度远不及您在原版 StreetComplete 中使用的功能，因此可能会出现错误或意外行为。如果您遇到任何问题，请提交问题反馈。

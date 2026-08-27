@@ -27,7 +27,7 @@
     <string name="pref_get_photos_title">Teljes méretű fotók letöltése</string>
     <string name="pref_screen_display">Megjelenítés</string>
     <string name="pref_recent_answers_first_min_lines">Legutóbbi válaszok előre sorolása</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Ha az űrlap több mint %d sort tartalmaz</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Ha az űrlap több mint %1$d sort tartalmaz</string>
     <string name="pref_show_nearby_quests_title">Közeli kérdések megjelenítése</string>
     <string name="show_nearby_quests_disable">Ne jelenjenek meg a közeli kérdések</string>
     <string name="show_nearby_quests_visible">Csak az engedélyezett kérdéstípusok megjelenítése</string>
@@ -83,7 +83,7 @@
     <string name="import_error_db_version">Importálási hiba: ismeretlen verzió</string>
     <string name="pref_delete_old_data_after">Régi adatok törlése ennyi idő után</string>
     <string name="pref_delete_old_data_after_message">Távolítsa el a letöltött OSM-adatokat, ha azok régebbiek ennyi napnál</string>
-    <string name="pref_delete_old_data_after_summary">%d nap</string>
+    <string name="pref_delete_old_data_after_summary">%1$d nap</string>
     <string name="pref_custom_title">Egyéni kérdésfájl betöltése</string>
     <string name="pref_tile_source_title">Műholdkép/légi fotó csempeforrása</string>
     <string name="pref_tile_source_message">A csempe URL-jének tartalmaznia kell az {x}, {y} és {z} behelyettesítendő kódokat</string>
@@ -110,7 +110,7 @@
     <string name="pref_hide_overlay_quests">Rátétspecifikus kérdések elrejtése</string>
     <string name="theme_dark_contrast">Sötét (kontrasztosabb)</string>
     <string name="pref_network_interval_title">Hálózati pozíció frissítési időköz</string>
-    <string name="pref_interval_summary">%d másodperc</string>
+    <string name="pref_interval_summary">%1$d másodperc</string>
     <string name="pref_interval_message">Frissítési időköz másodpercben</string>
     <string name="quest_settings_element_selection">Állítsd be a kérdéshez tartozó elemeket. <a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection">Kattints ide</a> az elemkiválasztási szintaxis megnyitásához böngészőben.</string>
     <string name="quest_settings_eligible_highways">Állítsd be kérdéshez tartozó utakat vesszővel elválasztva</string>
@@ -441,7 +441,7 @@
     <string name="quest_sacScale_two_description">A terep helyenként meredek, és kicsúszásveszélyes lehet.</string>
     <string name="quest_sacScale_five_description">Kitett, technikás terep. Lehetnek benne meredek sziklamászások, és csúszásveszélyes gleccserek és hómezők.</string>
     <string name="quest_sacScale_six">T6 – veszélyes alpesi túraút</string>
-    <string name="quest_monitor_found">%d közeli kérdés, a legközelebbi:</string>
+    <string name="quest_monitor_found">%1$d közeli kérdés, a legközelebbi:</string>
     <string name="quest_monitor_channel_name">Közeli kérdésfigyelő</string>
     <string name="create_custom_quest_button">Egyéni kérdés létrehozása</string>
     <string name="create_custom_quest_title_message">Add meg a megjelenítendő üzenetet</string>

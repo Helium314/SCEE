@@ -119,8 +119,8 @@
     <string name="custom_overlay_title">Type de fond personnalisé</string>
     <string name="pref_category_mods">Paramètres SCEE</string>
     <string name="pref_screen_notes">Notes</string>
-    <string name="pref_interval_summary">%d secondes</string>
-    <string name="pref_delete_old_data_after_summary">%d jours</string>
+    <string name="pref_interval_summary">%1$d secondes</string>
+    <string name="pref_delete_old_data_after_summary">%1$d jours</string>
     <string name="pref_caps_word_name_input">Ajouter une majuscule à tous les noms lors de la saisie</string>
     <string name="pref_screen_data_management">Gestion des données</string>
     <string name="pref_show_next_quest_title">Montrer immédiatement la quête suivante</string>
@@ -184,7 +184,7 @@
     <string name="export_warning_db_version">Attention : la version de la base de données est inconnue, l'importation peut ne pas fonctionner. Veuillez demander une mise à jour de l'application.</string>
     <string name="tree_custom_quest_import">Importer</string>
     <string name="tree_custom_quest_export">Exporter</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Si le formulaire comporte plus de %d ligne(s)</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Si le formulaire comporte plus de %1$d ligne(s)</string>
     <string name="pref_search_more_languages_title">Rechercher des fonctions dans plus de langues</string>
     <string name="pref_search_more_languages_summary">Recherche les fonctions et affiche les résultats pour tous les systèmes et langue locale</string>
     <string name="advanced_resurvey_message_date">Au lieu d'utiliser les fréquences des relevés par défaut, relever les éléments avec les clés ci-dessus si la date de vérification est postérieur au :</string>
@@ -261,7 +261,7 @@
     <string name="custom_overlay_color_info">Détails à afficher en couleur</string>
     <string name="quest_monitor_running">Suivi de la localisation</string>
     <string name="quest_monitor_channel_name">Surveiller les quêtes à proximité</string>
-    <string name="quest_monitor_found">%d quêtes à proximité, la plus proche :</string>
+    <string name="quest_monitor_found">%1$d quêtes à proximité, la plus proche :</string>
     <string name="move_node_with_geometry">Le déplacement de ce nœud modifiera la géométrie des voies ou des relations multipolygonales suivantes : %1$s.
 \n Attention, les modifications ne seront pas immédiatement visibles sur le fond de carte.</string>
     <string name="pref_hide_keyboard_title">Masquer le clavier avant de créer une note</string>

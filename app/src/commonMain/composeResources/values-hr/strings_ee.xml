@@ -6,7 +6,7 @@
     <!-- Fuzzy -->
     <string name="pref_select_first_edit_summary">Omogućuje brže poništavanje riješenih zadataka, ali automatski pomiče kameru</string>
     <string name="pref_delete_old_data_after">Izbriši stare podatke nakon</string>
-    <string name="pref_delete_old_data_after_summary">%d dana</string>
+    <string name="pref_delete_old_data_after_summary">%1$d dana</string>
     <string name="quest_private">To je privatno</string>
     <!-- Fuzzy -->
     <string name="quest_surface_value_metal_grid">Metalna rešetka</string>
@@ -79,7 +79,7 @@
     <string name="pref_show_next_quest_summary">Prikaži slijedeći zadatak za isti element odmah nakon rješavanja</string>
     <string name="pref_hide_button_title">Prikaži tipku za brzo skrivanje</string>
     <string name="pref_hide_button_summary">Klik privremeno skriva zadatak, dok ga dugi klik skriva trajno</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Ako obrazac ima više od %d redaka</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Ako obrazac ima više od %1$d redaka</string>
     <string name="pref_recent_answers_first_min_lines_message">Pomakni nedavne odgovore na početak liste ako obrazac za odgovore zadatka ima više od ovoliko redaka slika</string>
     <string name="pref_show_nearby_quests_title">Prikaži zadatke u blizini</string>
     <string name="pref_show_nearby_quests_summary">Omogućuje odabir drugog zadataka u blizini prilikom prikaza samog zadatka</string>
@@ -152,7 +152,7 @@
     <string name="resurvey_intervals_even_less_often">Pitaj još rjeđe</string>
     <string name="pref_gps_interval_title">Interval ažuriranja GPS lokacije</string>
     <string name="pref_network_interval_title">Interval ažuriranja mrežne lokacije</string>
-    <string name="pref_interval_summary">%d sekundi</string>
+    <string name="pref_interval_summary">%1$d sekundi</string>
     <string name="pref_interval_message">Interval ažuriranja u sekundama</string>
     <string name="action_scee_quests">Prikaži samo SCEE zadatke</string>
     <string name="action_all_quests">Prikaži sve zadatke</string>
@@ -593,7 +593,7 @@
     <string name="create_poi">Dodaj POI</string>
     <string name="insert_node">Umetni čvor u liniju</string>
     <string name="insert_node_select_way">Odaberi poziciju na putu</string>
-    <string name="quest_monitor_found">%d zadatka u blizini, najbliže:</string>
+    <string name="quest_monitor_found">%1$d zadatka u blizini, najbliže:</string>
     <string name="quest_monitor_channel_name">Monitor zadataka u blizini</string>
     <string name="quest_monitor_channel_name_found">Pronađeni zadatak u blizini</string>
     <string name="quest_monitor_running">Mjesto praćenja</string>

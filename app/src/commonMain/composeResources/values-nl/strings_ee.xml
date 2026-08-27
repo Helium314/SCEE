@@ -27,7 +27,7 @@
     <string name="pref_recent_answers_first_min_lines">Verplaats recente antwoorden naar voren</string>
     <string name="pref_show_next_quest_title">Laat meteen de volgende vraag zien</string>
     <string name="pref_hide_button_summary">Klikken verbergt de vraag tijdelijk, lang klikken verbergt hem permanent</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Als het formulier meer dan %d regel(s) heeft</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Als het formulier meer dan %1$d regel(s) heeft</string>
     <string name="pref_show_nearby_quests_title">Toon vragen in de buurt</string>
     <string name="show_nearby_quests_disable">Toon geen vragen in de buurt</string>
     <string name="show_nearby_quests_distance">Toon vragen binnen deze afstand (beperkt tot 10 meter)</string>
@@ -48,7 +48,7 @@
     <string name="import_error">Fout bij importeren</string>
     <string name="pref_delete_old_data_after">Verwijder oude gegevens na</string>
     <string name="pref_delete_old_data_after_message">Verwijder gedownloade OSM-gegevens als deze ouder zijn dan dit aantal dagen</string>
-    <string name="pref_delete_old_data_after_summary">%d dagen</string>
+    <string name="pref_delete_old_data_after_summary">%1$d dagen</string>
     <string name="quest_settings_osmose_level_medium">Gemiddeld</string>
     <string name="quest_settings_osmose_level_low">Laag</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">Alle</string>

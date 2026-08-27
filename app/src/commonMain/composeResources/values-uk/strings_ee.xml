@@ -44,7 +44,7 @@
     <string name="pref_show_next_quest_summary">Відображати подальший пошук такого самого елемента одразу після виконання</string>
     <string name="pref_hide_button_summary">Клацання тимчасово приховує завдання, довге натискання — назавжди</string>
     <string name="pref_recent_answers_first_min_lines">Перемістити останні відповіді на передній план</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Якщо форма містить більше ніж %d рядків</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Якщо форма містить більше ніж %1$d рядків</string>
     <string name="pref_screen_display">Відображати</string>
     <string name="pref_way_direction_summary">Відображати стрілки на виділених лініях при відкритті завдання. Корисно, наприклад, при додаванні односторонніх шляхів.</string>
     <string name="pref_offset_fix_summary">Вони існують для того, щоб білі крапки були приховані значками завдань</string>
@@ -93,7 +93,7 @@
     <string name="export_warning_db_version">Попередження: версія бази даних невідома, імпорт може не працювати. Будь ласка, попросіть оновити додаток.</string>
     <string name="pref_delete_old_data_after">Видалити старі дані після</string>
     <string name="pref_delete_old_data_after_message">Видаліть завантажені дані OSM, якщо вони старіші за вказану кількість днів</string>
-    <string name="pref_delete_old_data_after_summary">%d днів</string>
+    <string name="pref_delete_old_data_after_summary">%1$d днів</string>
     <string name="pref_custom_title">Завантажити файл власного завдання</string>
     <string name="pref_tile_source_title">Джерело супутникових / аерофотознімків</string>
     <string name="pref_tile_source_message">URL-адреса джерела плиток повинна містити {x}, {y} та або {z}, або {zoom}. Джерело WMS повинно підтримувати EPSG:3857, а URL-адреса повинна містити або {bbox-epsg-3857}, або {bbox} і {proj}.</string>
@@ -116,7 +116,7 @@
     <string name="resurvey_intervals_even_less_often">Запитувати ще рідше</string>
     <string name="pref_gps_interval_title">Інтервал оновлення GPS-координат</string>
     <string name="pref_network_interval_title">Інтервал оновлення мережевого розташування</string>
-    <string name="pref_interval_summary">%d секунд</string>
+    <string name="pref_interval_summary">%1$d секунд</string>
     <string name="quest_settings_osmose_level_high">Високий</string>
     <string name="quest_settings_osmose_level_low">Низький</string>
     <string name="quest_settings_resurvey_all_opening_hours_title">Переглянути всі години роботи</string>
@@ -265,7 +265,7 @@
     <string name="quest_seating_veranda">На веранді/ґанку (крита, може бути трохи над землею)</string>
     <string name="quest_seating_terrace">На терасі (без даху, не внутрішній двір)</string>
     <string name="restriction_overlay_sign_give_way">Дати дорогу</string>
-    <string name="quest_monitor_found">%d завдань поблизу, найближче:</string>
+    <string name="quest_monitor_found">%1$d завдань поблизу, найближче:</string>
     <string name="quest_wheelchair_description_title">Вкажіть хоча б одну мову</string>
     <string name="quest_seating_garden">У саду</string>
     <string name="quest_construction_value">Вкажіть «construction=…» або залиште порожнім, якщо невідомо</string>

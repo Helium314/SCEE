@@ -18,7 +18,7 @@
     <string name="pref_show_next_quest_title">Näytä seuraava tehtävä heti</string>
     <string name="pref_hide_button_title">Näytä piilotuspainike</string>
     <string name="pref_hide_button_summary">Napautus piilottaa tehtävän väliaikaisesti, pitkä painallus piilottaa pysyvästi</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Jos lomakkeessa on yli %d riviä</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Jos lomakkeessa on yli %1$d riviä</string>
     <string name="pref_disable_navigation_mode_title">Poista navigointitila käytöstä</string>
     <string name="pref_disable_navigation_mode_summary">Poistaa käytöstä tilan, joka kallistaa ja kääntää karttaa automaattisesti</string>
     <string name="pref_export">Vie asetukset</string>

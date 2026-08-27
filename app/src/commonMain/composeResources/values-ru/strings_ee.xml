@@ -57,7 +57,7 @@
     <string name="pref_dynamic_quest_creation_summary">Квесты формируются при загрузке отображаемой области. Не быстро, зато сразу же отражаются изменения настроек квестов.</string>
     <string name="pref_dynamic_quest_creation_title">Формировать квесты динамически</string>
     <string name="pref_network_interval_title">Частота замера положения по сетям связи</string>
-    <string name="pref_interval_summary">%d секунд(-ы)</string>
+    <string name="pref_interval_summary">%1$d секунд(-ы)</string>
     <string name="pref_interval_message">Частота замера в секундах</string>
     <string name="quest_settings_osmose_level_high">Высокая</string>
     <string name="element_selection_button">Отбор элементов</string>
@@ -88,7 +88,7 @@
     <string name="access_weight_limit">Вес</string>
     <string name="access_length_limit">Длина</string>
     <string name="quest_monitor_channel_name">Отслеживание квестов неподалёку</string>
-    <string name="quest_monitor_found">Поблизости квестов: %d, ближайший:</string>
+    <string name="quest_monitor_found">Поблизости квестов: %1$d, ближайший:</string>
     <string name="access_time_limit">Время</string>
     <string name="access_width_limit">Ширина</string>
     <string name="access_manager_button_add_conditional">Добавить условие</string>
@@ -116,7 +116,7 @@
     <string name="export_warning_db_version">Внимание: версия базы данных неизвестна, импорт может не удаться. Попросите обновить приложение.</string>
     <string name="pref_delete_old_data_after">Удалять старые данные через</string>
     <string name="pref_delete_old_data_after_message">Удалять скачанные данные OSM, старше, чем столько дней</string>
-    <string name="pref_delete_old_data_after_summary">%d дня(-ей)</string>
+    <string name="pref_delete_old_data_after_summary">%1$d дня(-ей)</string>
     <string name="pref_tile_source_title">Источник космоснимков</string>
     <string name="pref_trees_title">Загрузить файл дерева квестов</string>
     <string name="tree_custom_quest_import">Передать</string>
@@ -244,7 +244,7 @@
     <string name="pref_save_photos_summary">Хранить полные версии фотографий, снятых для заметок, сохраняя данные EXIF</string>
     <string name="pref_quest_geometries_title">Показывать геометрию квеста</string>
     <string name="pref_offset_fix_summary">Сдвиг нужен, чтобы скрывать белые точки значками квестов</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Если в форме более %d линий</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Если в форме более %1$d линий</string>
     <string name="pref_recent_answers_first_min_lines_message">Передвигать недавние варианты в начало, когда форма ответа для квеста содержит строк с картинками больше, чем</string>
     <string name="show_nearby_quests_even_hidden">Показывать квесты всех типов, включая скрытые</string>
     <string name="pref_search_more_languages_summary">Поиск объектов покажет результаты как на местном, так и на языке, заданном в системе</string>

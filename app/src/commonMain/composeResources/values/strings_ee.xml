@@ -91,7 +91,7 @@
     <string name="pref_hide_button_title">Show hide button</string>
     <string name="pref_hide_button_summary">Click hides quest temporarily, long click hides permanently</string>
     <string name="pref_recent_answers_first_min_lines">Move recent answers to front</string>
-    <string name="pref_recent_answers_first_min_lines_summary">If form has more than %d line(s)</string>
+    <string name="pref_recent_answers_first_min_lines_summary">If form has more than %1$d line(s)</string>
     <string name="pref_recent_answers_first_min_lines_message">Move recent answers to front if the quest answer form has more than this many lines of images</string>
     <string name="pref_show_nearby_quests_title">Show nearby quests</string>
     <string name="pref_show_nearby_quests_summary">Allows switching nearby quests when a quest form is shown</string>
@@ -130,7 +130,7 @@
     <string name="export_warning_db_version">Warning: database version unknown, import may not work. Please ask for the app to be updated.</string>
     <string name="pref_delete_old_data_after">Delete old data after</string>
     <string name="pref_delete_old_data_after_message">Remove downloaded OSM data if older than this many days</string>
-    <string name="pref_delete_old_data_after_summary">%d days</string>
+    <string name="pref_delete_old_data_after_summary">%1$d days</string>
     <string name="pref_trees_title">Load tree quest file</string>
     <string name="pref_custom_title">Load custom quest file</string>
     <string name="tree_custom_quest_import_export_message">Get currently used file or provide a new one? Check the corresponding quest enable message for details.</string>
@@ -177,7 +177,7 @@
     <string name="resurvey_intervals_even_less_often">Ask even less often</string>
     <string name="pref_gps_interval_title">GPS location update interval</string>
     <string name="pref_network_interval_title">Network location update interval</string>
-    <string name="pref_interval_summary">%d seconds</string>
+    <string name="pref_interval_summary">%1$d seconds</string>
     <string name="pref_interval_message">Update interval in seconds</string>
     <string name="action_scee_quests">Show only SCEE quests</string>
     <string name="action_all_quests">Show all quests</string>
@@ -743,7 +743,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <string name="create_poi">Add POI</string>
     <string name="insert_node">Insert node into way</string>
     <string name="insert_node_select_way">Select a position on a way</string>
-    <string name="quest_monitor_found">%d quests nearby, closest:</string>
+    <string name="quest_monitor_found">%1$d quests nearby, closest:</string>
     <string name="quest_monitor_channel_name">Nearby Quest Monitor</string>
     <string name="quest_monitor_channel_name_found">Nearby Quest Found</string>
     <string name="quest_monitor_running">Monitoring location</string>

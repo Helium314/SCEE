@@ -29,7 +29,7 @@
     <string name="custom_overlay_title">Individuelles Overlay</string>
     <string name="pref_manual_download_cache_title">Daten immer neu herunterladen</string>
     <string name="quest_maxspeed_conditional">Hängt davon ab, ob…</string>
-    <string name="pref_delete_old_data_after_summary">%d Tagen</string>
+    <string name="pref_delete_old_data_after_summary">%1$d Tagen</string>
     <string name="quest_monitor_active_request">Aktives Anfordern von Standorten erhöht den Akkuverbrauch. Wenn keine aktive Standortanforderung erfolgt, werden die von anderen Apps angeforderten Standorte weiterhin verwendet.</string>
     <string name="quest_healthcare_speciality_title">Welche medizinischen Fachrichtungen gibt es an diesem Ort\?</string>
     <string name="quest_material_metal">Metall</string>
@@ -77,7 +77,7 @@
     <string name="quest_settings_eligible_highways">Lege die für diese Aufgabe berechtigten Straßen fest, durch Kommas getrennt</string>
     <string name="pref_read_log_title">Fehlerprotokoll</string>
     <string name="pref_tile_source_message">Die URL für die Kachelquelle muss {x}, {y} und entweder {z} oder {zoom} enthalten. Die WMS-Quelle muss EPSG:3857 unterstützen und die URL muss entweder {bbox-epsg-3857} oder sowohl {bbox} als auch {proj} enthalten.</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Wenn das Formular mehr als %d Zeile(n) hat</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Wenn das Formular mehr als %1$d Zeile(n) hat</string>
     <string name="pref_main_menu_grid">Alle Hauptmenüpunkte als Raster anzeigen</string>
     <string name="quest_settings_sidewalk_cycleway_distance_message">Lege den Mindestabstand zwischen den einzelnen Pfaden fest, bei Unterschreitung wird die Aufgabe nicht angezeigt</string>
     <string name="quest_service_building_type_pump">Wasser-Pumpstation</string>
@@ -220,7 +220,7 @@
     <string name="restriction_overlay_sign_give_way">Vorfahrt gewähren</string>
     <string name="pref_volume_zoom_title">Lautstärkeregler-Zoom</string>
     <string name="pref_tile_source_hide_labels">Labels ausblenden</string>
-    <string name="quest_monitor_found">%d Aufgaben in der Nähe, am nächsten:</string>
+    <string name="quest_monitor_found">%1$d Aufgaben in der Nähe, am nächsten:</string>
     <string name="quest_wheelchair_description_title">Fülle mindestens eine Sprache aus</string>
     <string name="quest_healthcare_speciality_disabled_message">Diese Aufgabe erfordert Kenntnisse über die healthcare:speciality-Tags. Ohne dieses Wissen kann die Aufgabe sehr schwierig zu lösen sein.</string>
     <string name="quest_private">Es ist privat</string>
@@ -283,7 +283,7 @@
     <string name="quest_is_pharmacy_dispensing_title">Gibt diese Apotheke alle verschreibungspflichtigen Arzneimittel ab\?</string>
     <string name="custom_overlay_dash_filter_hint">Filter mit gestricheltem Element</string>
     <string name="import_error_db_version">Fehler beim Importieren: unbekannte Version</string>
-    <string name="pref_interval_summary">%d Sekunden</string>
+    <string name="pref_interval_summary">%1$d Sekunden</string>
     <string name="quest_building_demolished">Es ist abgerissen (Überreste sichtbar)</string>
     <string name="restriction_overlay_sign_stop_all_way">Vollsperrung</string>
     <string name="quest_osmose_no_undo">Bist du sicher\? Das kann nicht rückgängig gemacht werden!</string>
@@ -540,7 +540,7 @@
     <string name="quest_crossing_marking_value_ladder">Leiter</string>
     <string name="quest_crossing_marking_value_dashes">Striche</string>
     <string name="quest_crossing_marking_value_dots">Punkte</string>
-    <string name="quest_crossing_marking_value_surface">Oberflächenmarkierung</string>
+    <string name="quest_crossing_marking_value_surface">Oberflächenmaterial</string>
     <string name="quest_crossing_marking_value_ladder_skewed">Leiter schräg</string>
     <string name="quest_crossing_marking_value_zebra_paired">Zebrastreifen gepaart</string>
     <string name="quest_crossing_marking_value_zebra_bicolour">Zebrastreifen zweifarbig</string>

@@ -18,7 +18,7 @@
     <string name="import_export_hidden_quests">Pencarian tersembunyi</string>
     <string name="pref_hide_button_summary">Klik menyembunyikan pencarian untuk sementara, klik lama menyembunyikan secara permanen</string>
     <string name="pref_main_menu_grid">Tampilkan semua item menu utama sebagai kisi</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Jika formulir memiliki lebih dari %d baris</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Jika formulir memiliki lebih dari %1$d baris</string>
     <string name="pref_save_gpx">Dapatkan catatan GPX dan foto serta trek yang dilampirkan</string>
     <string name="pref_files_not_found">Tidak ada file yang ditemukan</string>
     <string name="pref_gpx_track_provide">Pilih file GPX</string>
@@ -69,7 +69,7 @@
     <string name="pref_update_local_statistics">Perbarui statistik pada unggahan</string>
     <string name="import_presets_overlays_replace">Ganti</string>
     <string name="import_error">Kesalahan impor</string>
-    <string name="pref_delete_old_data_after_summary">%d hari</string>
+    <string name="pref_delete_old_data_after_summary">%1$d hari</string>
     <string name="pref_read_log_title">Pembaca log</string>
     <string name="pref_save_photos_title">Simpan foto yang digunakan untuk catatan</string>
     <string name="pref_get_photos_title">Dapatkan foto ukuran penuh</string>

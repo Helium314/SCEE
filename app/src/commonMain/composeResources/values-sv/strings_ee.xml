@@ -24,7 +24,7 @@
     <string name="pref_caps_word_name_input">Inled varje ord med versal när namn anges</string>
     <string name="action_scee_quests">Visa bara SCEE-uppdrag</string>
     <string name="pref_delete_old_data_after_message">Ta bort nedladdad OSM-data om äldre än så här många dagar</string>
-    <string name="pref_interval_summary">%d sekunder</string>
+    <string name="pref_interval_summary">%1$d sekunder</string>
     <string name="show_nearby_quests_all_types">Visa alla typer av uppdrag</string>
     <string name="quest_destination_all_lanes_button">Alla
 \nkörfält</string>
@@ -48,7 +48,7 @@
     <string name="pref_show_next_quest_title">Visa nästa uppdrag omedelbart</string>
     <string name="pref_show_next_quest_summary">Visa fler uppdrag för samma element direkt efter att ha löst</string>
     <string name="pref_delete_old_data_after">Radera gammal data efter</string>
-    <string name="pref_delete_old_data_after_summary">%d dagar</string>
+    <string name="pref_delete_old_data_after_summary">%1$d dagar</string>
     <string name="pref_export">Exportera inställningar</string>
     <string name="pref_import">Importera inställningar</string>
     <string name="import_export_hidden_quests">Dolda uppdrag</string>
@@ -83,7 +83,7 @@
     <string name="time_limited_from">Från</string>
     <string name="time_limited_to">Till</string>
     <string name="restriction_overlay_exceptions">Undantag: %1$s</string>
-    <string name="quest_monitor_found">%d uppdrag i närheten, närmast:</string>
+    <string name="quest_monitor_found">%1$d uppdrag i närheten, närmast:</string>
     <string name="quest_mapType_topo_description">En karta med topografisk bakgrund för t.ex. en historisk karta eller vandringskarta. Kartan innehåller konturlinjer.</string>
     <string name="quest_parking_capacity_disabled_title">Hur många parkeringsplatser för handikappade finns här?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">Det finns, men oklart antal</string>
@@ -160,7 +160,7 @@
     <string name="pref_create_custom_quest_title">Tillåt skapande av anpassade uppdrag</string>
     <string name="pref_way_direction_summary">Visa pilar på linjer som markeras när ett uppdrag öppnas. Användbart t.ex. när man lägger till enkelriktad väg.</string>
     <string name="pref_quest_geometries_title">Visa geometrier för uppdrag</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Om formulär har fler än %d rad(er)</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Om formulär har fler än %1$d rad(er)</string>
     <string name="show_nearby_quests_visible">Vissa bara aktiverade uppdragstyper</string>
     <string name="show_nearby_quests_even_hidden">Vissa alla typer och dolda uppdrag</string>
     <string name="pref_overlay_quick_selector_title">Visa snabbväljare för extralager</string>

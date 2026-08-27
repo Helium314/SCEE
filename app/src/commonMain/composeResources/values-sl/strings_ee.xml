@@ -59,7 +59,7 @@
     <string name="pref_hide_button_title">Prikaži gumb za skritje</string>
     <string name="pref_hide_button_summary">Kratek klik skrije cilj začasno, dolg klik skrije cilj za vedno</string>
     <string name="pref_recent_answers_first_min_lines">Premakni nedavne odgovore na začetek</string>
-    <string name="pref_recent_answers_first_min_lines_summary">Če ima vnos več kot %d vrstic</string>
+    <string name="pref_recent_answers_first_min_lines_summary">Če ima vnos več kot %1$d vrstic</string>
     <string name="pref_recent_answers_first_min_lines_message">Prestavi najkasnejše odgovore na vrh, če ima vprašalnik za odgovor več kot toliko vrstic slik</string>
     <string name="pref_show_nearby_quests_title">Prikaži bližnje cilje</string>
     <string name="pref_show_nearby_quests_summary">Dovoli preklapljanje med bližnjimi cilji med tem ko je vprašalnik odprt</string>
@@ -111,6 +111,6 @@
     <string name="resurvey_intervals_even_less_often">Vprašaj še redkeje</string>
     <string name="pref_gps_interval_title">Interval posodabljanja GPS lokacije</string>
     <string name="pref_network_interval_title">Interval posodabljanja omrežne lokacije</string>
-    <string name="pref_interval_summary">%d sekund</string>
+    <string name="pref_interval_summary">%1$d sekund</string>
     <string name="pref_interval_message">Interval posodabljanja v sekundah</string>
 </resources>

@@ -39,9 +39,44 @@ fun MultiValueQuestForm(
     minLengthForSuggestions: Int = 1,
     otherAnswers: @Composable (() -> List<AnswerItem>) = { emptyList() },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    hint: String? = null
+    hint: String? = null,
+    additionalButtons: @Composable (() -> Unit)? = null
 ) {
     var values by rememberSaveable { mutableStateOf(setOf<String>()) }
+
+    MultiValueQuestForm(
+        on,
+        values,
+        onValuesChange = { values = it },
+        addAnotherValueText,
+        modifier,
+        isOk,
+        simpleSuggestions,
+        prioritySuggestions,
+        minLengthForSuggestions,
+        otherAnswers,
+        keyboardOptions,
+        hint,
+        additionalButtons
+    )
+}
+
+@Composable
+fun MultiValueQuestForm(
+    on: (QuestAction<String>) -> Unit,
+    values: Set<String>,
+    onValuesChange: (Set<String>) -> Unit,
+    addAnotherValueText: StringResource,
+    modifier: Modifier = Modifier,
+    isOk: (String) -> Boolean = { true },
+    simpleSuggestions: Collection<String>? = null,
+    prioritySuggestions: (String) -> Collection<String>? = { null },
+    minLengthForSuggestions: Int = 1,
+    otherAnswers: @Composable (() -> List<AnswerItem>) = { emptyList() },
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    hint: String? = null,
+    additionalButtons: @Composable (() -> Unit)? = null
+) {
     var currentValue by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue()) }
     val isTooLong by remember { derivedStateOf { values.sumOf { it.length + 1 } + currentValue.text.length > MAX_OSM_TAG_VALUE_LENGTH } }
     val prefs: Preferences = koinInject()
@@ -76,11 +111,17 @@ fun MultiValueQuestForm(
                 startExpanded = true,
                 startExpandedWithoutFocus = true
             )
-            TextButton(
-                onClick = { values = values + currentValue.text.trim(); currentValue = TextFieldValue() }, // todo: show dropdown if minLengthForSuggestions is 0, also on start
-                enabled = currentValue.text.isNotBlank() && isOk(currentValue.text) && currentValue.text.trim() !in values
-            ) {
-                Text(stringResource(addAnotherValueText))
+            Column {
+                TextButton(
+                    onClick = {
+                        onValuesChange(values + currentValue.text.trim()); currentValue = TextFieldValue()
+                    }, // todo: show dropdown if minLengthForSuggestions is 0, also on start
+                    enabled = currentValue.text.isNotBlank() && isOk(currentValue.text) && currentValue.text.trim() !in values
+                ) {
+                    Text(stringResource(addAnotherValueText))
+                }
+
+                additionalButtons?.invoke()
             }
         }
     }

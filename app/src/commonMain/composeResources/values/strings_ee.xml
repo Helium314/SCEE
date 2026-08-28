@@ -690,6 +690,8 @@
     <string name="quest_evse_id_title">What is the EVSE ID of this charging station?</string>
     <string name="quest_evse_id_add_more">Add another EVSE ID</string>
     <string name="quest_evse_id_hint">e.g. DE*GCE*E1234567</string>
+    <string name="quest_evse_id_scan_more">Scan another EVSE ID</string>
+    <string name="quest_evse_id_scan_unknown_value">QR code not recognized. Please open an issue and attach an image of the QR code so we can add support.</string>
 
     <!-- new overlays -->
 
@@ -773,6 +775,7 @@ Out of the box SCEE is configured to behave very similar to StreetComplete.</str
     <!-- actually there are still SC translations available, as only the main string has been removed from SC. -->
     <string name="close">Close</string>
     <string name="fixme_for_object">Another person added a fixme:</string>
+    <string name="no_qr_code_handler">No QR code scanner found. Install a compatible app like Binary Eye and try again.</string>
     <string name="quest_roofOrientation_along">Parallel to the building’s longer side</string>
     <string name="quest_roofOrientation_across">Parallel to the building’s shorter side</string>
     <string name="quest_roofOrientation_title">How is the roof ridge oriented?</string>

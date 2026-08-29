@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import de.westnordost.streetcomplete.screens.settings.toast2
 import de.westnordost.streetcomplete.ui.util.rememberScreenAlignmentPopupPositionProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -43,7 +42,7 @@ fun ToastPopup(
      LaunchedEffect(text) {
          if (isInDialog) {
              // compose doesn't display that stuff on top of a dialog, so we fall back to the classic android toast
-             withContext(Dispatchers.Main) { ctx.toast2(text, Toast.LENGTH_LONG) }
+             withContext(Dispatchers.Main) { Toast.makeText(ctx, text, Toast.LENGTH_LONG).show() }
          } else {
              isVisible = true
              delay(duration)

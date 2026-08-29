@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.os.Build
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -204,7 +203,7 @@ fun QuestSettingsScreen(
                     ) {
                         Text(stringResource(Res.string.pref_quest_monitor_title))
                         Switch(enable, {
-                            val activity = ctx.getActivity2()!!
+                            val activity = ctx.getActivity()!!
                             if (!activity.hasPermission(ACCESS_FINE_LOCATION)) {
                                 enable = false
                                 ActivityCompat.requestPermissions(activity, arrayOf(ACCESS_FINE_LOCATION), 0)
@@ -258,19 +257,11 @@ fun QuestSettingsScreen(
 private fun Context.hasPermission(permission: String): Boolean =
     ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 
-fun Context.getActivity2(): ComponentActivity? {
+private fun Context.getActivity(): ComponentActivity? {
     val componentActivity = when (this) {
         is ComponentActivity -> this
-        is ContextWrapper -> baseContext.getActivity2()
+        is ContextWrapper -> baseContext.getActivity()
         else -> null
     }
     return componentActivity
-}
-
-fun Context.toast2(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, text, duration).show()
-}
-
-fun Context.toast2(text: Int, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, text, duration).show()
 }

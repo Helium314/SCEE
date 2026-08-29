@@ -3,6 +3,7 @@ package de.westnordost.streetcomplete.screens.main.bottom_sheet
 import android.content.res.Resources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -118,7 +119,11 @@ fun EditTagsForm(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) { // lazy column has infinite height, so we need a normal column
                     updatedTags.forEach { (k, v) ->
                         // todo: width is weird, why is 0.4 and 0.8 necessary to have almost equal widths? this has weird effect on AutoCompleteTextField dropdown
-                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
                             var key by remember { mutableStateOf(TextFieldValue(k)) }
                             var value by remember { mutableStateOf(TextFieldValue(v)) }
                             // deleting has some issues, try updating here
@@ -161,7 +166,6 @@ fun EditTagsForm(
                                 keyboardActions = KeyboardActions(onDone = { valueFocusRequester.requestFocus() }),
                                 singleLine = true,
                             )
-                            Spacer(Modifier.size(6.dp))
                             AutoCompleteTextField(
                                 value = value,
                                 onValueChange = {
@@ -191,15 +195,17 @@ fun EditTagsForm(
                             )
                         }
                     }
-                    val date = Date(originalElement.timestampEdited)
-                    val dateText = stringResource(Res.string.tag_editor_last_edited, DateFormat.getDateTimeInstance().format(date))
-                    val url = "https://www.openstreetmap.org/${originalElement.type.name.lowercase()}/${originalElement.id}/history"
-                    val text = buildAnnotatedString {
-                        withLink(LinkAnnotation.Url(url)) {
-                            append(dateText)
+                    if (originalElement.id != 0L) {
+                        val date = Date(originalElement.timestampEdited)
+                        val dateText = stringResource(Res.string.tag_editor_last_edited, DateFormat.getDateTimeInstance().format(date))
+                        val url = "https://www.openstreetmap.org/${originalElement.type.name.lowercase()}/${originalElement.id}/history"
+                        val text = buildAnnotatedString {
+                            withLink(LinkAnnotation.Url(url)) {
+                                append(dateText)
+                            }
                         }
+                        Text(text, Modifier.fillMaxWidth())
                     }
-                    Text(text, Modifier.fillMaxWidth())
                     FlowRow(Modifier.fillMaxWidth(), itemVerticalAlignment = Alignment.CenterVertically) {
                         IconButton(
                             { updatedTags += emptyEntry },

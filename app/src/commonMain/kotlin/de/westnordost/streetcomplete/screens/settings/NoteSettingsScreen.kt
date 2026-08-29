@@ -25,17 +25,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
 import de.westnordost.streetcomplete.data.osmnotes.notequests.getRawBlockList
 import de.westnordost.streetcomplete.data.preferences.Preferences
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.BackIcon
 import de.westnordost.streetcomplete.ui.common.dialogs.TextInputDialog
 import de.westnordost.streetcomplete.ui.common.settings.Preference
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
 import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import java.io.File
 import java.io.FileInputStream
@@ -49,7 +50,7 @@ fun NoteSettingsScreen(
 ) {
     Column(Modifier.fillMaxSize()) {
         TopAppBar(
-            title = { Text(stringResource(R.string.pref_screen_notes)) },
+            title = { Text(stringResource(Res.string.pref_screen_notes)) },
             windowInsets = AppBarDefaults.topAppBarWindowInsets,
             navigationIcon = { IconButton(onClick = onClickBack) { BackIcon() } },
         )
@@ -65,42 +66,42 @@ fun NoteSettingsScreen(
             var showHideNotesDialog by remember { mutableStateOf(false) }
             val ctx = LocalContext.current
             SwitchPreference(
-                name = stringResource(R.string.pref_show_gpx_button_title),
-                description = stringResource(R.string.pref_show_gpx_button_summary),
+                name = stringResource(Res.string.pref_show_gpx_button_title),
+                description = stringResource(Res.string.pref_show_gpx_button_summary),
                 pref = Prefs.GPX_BUTTON,
                 default = false,
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_swap_gpx_note_button),
+                name = stringResource(Res.string.pref_swap_gpx_note_button),
                 pref = Prefs.SWAP_GPX_NOTE_BUTTONS,
                 default = false,
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_hide_keyboard_title),
-                description = stringResource(R.string.pref_hide_keyboard_summary),
+                name = stringResource(Res.string.pref_hide_keyboard_title),
+                description = stringResource(Res.string.pref_hide_keyboard_summary),
                 pref = Prefs.HIDE_KEYBOARD_FOR_NOTE,
                 default = true,
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_really_all_notes_title),
-                description = stringResource(R.string.pref_really_all_notes_summary),
+                name = stringResource(Res.string.pref_really_all_notes_title),
+                description = stringResource(Res.string.pref_really_all_notes_summary),
                 pref = Prefs.REALLY_ALL_NOTES,
                 default = false,
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_create_custom_quest_title),
-                description = stringResource(R.string.pref_create_custom_quest_summary),
+                name = stringResource(Res.string.pref_create_custom_quest_title),
+                description = stringResource(Res.string.pref_create_custom_quest_summary),
                 pref = Prefs.CREATE_EXTERNAL_QUESTS,
                 default = false,
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_save_photos_title),
-                description = stringResource(R.string.pref_save_photos_summary),
+                name = stringResource(Res.string.pref_save_photos_title),
+                description = stringResource(Res.string.pref_save_photos_summary),
                 pref = Prefs.SAVE_PHOTOS,
                 default = false,
             )
             Preference(
-                name = stringResource(R.string.pref_hide_notes_title),
+                name = stringResource(Res.string.pref_hide_notes_title),
                 onClick = { showHideNotesDialog = true },
             )
             val gpxLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -146,7 +147,7 @@ fun NoteSettingsScreen(
                 output.close()
             }
             Preference(
-                name = stringResource(R.string.pref_save_gpx),
+                name = stringResource(Res.string.pref_save_gpx),
                 onClick = {
                     if (File(ctx.getExternalFilesDir(null), "notes.gpx").exists()) {
                         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
@@ -199,7 +200,7 @@ fun NoteSettingsScreen(
                 output.close()
             }
             Preference(
-                name = stringResource(R.string.pref_get_photos_title),
+                name = stringResource(Res.string.pref_get_photos_title),
                 onClick = {
                     val dir = File(ctx.getExternalFilesDir(null), "full_photos")
                     if (dir.exists() && dir.isDirectory && dir.list()?.isNotEmpty() == true) {
@@ -225,8 +226,8 @@ fun NoteSettingsScreen(
                         OsmQuestController.reloadQuestTypes()
                     },
                     singleLine = false,
-                    title = { Text(stringResource(R.string.pref_hide_notes_message)) },
-                    textInputLabel = { Text(stringResource(R.string.pref_hide_notes_hint)) },
+                    title = { Text(stringResource(Res.string.pref_hide_notes_message)) },
+                    textInputLabel = { Text(stringResource(Res.string.pref_hide_notes_hint)) },
                     text = blockList.joinToString(", ")
                 )
             }

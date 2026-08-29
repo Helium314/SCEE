@@ -32,7 +32,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
@@ -42,6 +41,7 @@ import de.westnordost.streetcomplete.data.importGpx
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeController
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.BackIcon
 import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
 import de.westnordost.streetcomplete.ui.common.settings.Preference
@@ -50,6 +50,8 @@ import io.ticofab.androidgpxparser.parser.GPXParser
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import java.io.File
 import java.io.IOException
@@ -66,7 +68,7 @@ fun DisplaySettingsScreen(
     var showGeometryDialog by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize()) {
         TopAppBar(
-            title = { Text(stringResource(R.string.pref_screen_display)) },
+            title = { Text(stringResource(Res.string.pref_screen_display)) },
             windowInsets = AppBarDefaults.topAppBarWindowInsets,
             navigationIcon = { IconButton(onClick = onClickBack) { BackIcon() } },
         )
@@ -80,21 +82,21 @@ fun DisplaySettingsScreen(
                 )
         ) {
             SwitchPreference(
-                name = stringResource(R.string.pref_way_direction),
-                description = stringResource(R.string.pref_way_direction_summary),
+                name = stringResource(Res.string.pref_way_direction),
+                description = stringResource(Res.string.pref_way_direction_summary),
                 default = false,
                 pref = Prefs.SHOW_WAY_DIRECTION
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_quest_geometries_title),
-                description = stringResource(R.string.pref_quest_geometries_summary),
+                name = stringResource(Res.string.pref_quest_geometries_title),
+                description = stringResource(Res.string.pref_quest_geometries_summary),
                 default = false,
                 pref = Prefs.QUEST_GEOMETRIES,
                 onCheckedChange = { visibleEditTypeController.onVisibilitiesChanged() }
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_offset_fix_title2),
-                description = stringResource(R.string.pref_offset_fix_summary),
+                name = stringResource(Res.string.pref_offset_fix_title2),
+                description = stringResource(Res.string.pref_offset_fix_summary),
                 default = false,
                 pref = Prefs.OFFSET_FIX,
                 onCheckedChange = {
@@ -109,24 +111,24 @@ fun DisplaySettingsScreen(
                 }
             )
             SwitchPreference(
-                name = stringResource(R.string.pref_show_solved_animation),
-                description = stringResource(R.string.pref_show_solved_animation_summary),
+                name = stringResource(Res.string.pref_show_solved_animation),
+                description = stringResource(Res.string.pref_show_solved_animation_summary),
                 default = true,
                 pref = Prefs.SHOW_SOLVED_ANIMATION
             )
             Preference(
-                name = stringResource(R.string.pref_background_type_select),
+                name = stringResource(Res.string.pref_background_type_select),
                 description = if (prefs.getString(Prefs.THEME_BACKGROUND, "MAP") == "MAP")
-                        stringResource(R.string.background_type_map)
-                    else stringResource(R.string.background_type_aerial_esri),
+                        stringResource(Res.string.background_type_map)
+                    else stringResource(Res.string.background_type_aerial_esri),
                 onClick = { showBackgroundDialog = true }
             )
             Preference(
-                name = stringResource(R.string.pref_gpx_track_title),
+                name = stringResource(Res.string.pref_gpx_track_title),
                 onClick = { showGpxDialog = true },
             )
             Preference(
-                name = stringResource(R.string.pref_custom_geometry_title),
+                name = stringResource(Res.string.pref_custom_geometry_title),
                 onClick = { showGeometryDialog = true },
             )
             if (showBackgroundDialog)
@@ -135,8 +137,8 @@ fun DisplaySettingsScreen(
                     items = listOf("MAP", "AERIAL"),
                     onItemSelected = { prefs.putString(Prefs.THEME_BACKGROUND, it) },
                     getItemName = {
-                        if (it == "MAP") stringResource(R.string.background_type_map)
-                        else stringResource(R.string.background_type_aerial_esri)
+                        if (it == "MAP") stringResource(Res.string.background_type_map)
+                        else stringResource(Res.string.background_type_aerial_esri)
                     },
                     selectedItem = prefs.getString(Prefs.THEME_BACKGROUND, "MAP")
                 )
@@ -173,9 +175,9 @@ fun DisplaySettingsScreen(
                 AlertDialog(
                     onDismissRequest = { showGpxDialog = false },
                     confirmButton = {
-                        TextButton(onClick = { showGpxDialog = false }) { Text(stringResource(R.string.close)) }
+                        TextButton(onClick = { showGpxDialog = false }) { Text(stringResource(Res.string.close)) }
                     },
-                    title = { Text(stringResource(R.string.pref_gpx_track_title))},
+                    title = { Text(stringResource(Res.string.pref_gpx_track_title))},
                     text = {
                         Column {
                             Button(
@@ -191,7 +193,7 @@ fun DisplaySettingsScreen(
                                     }
                                 },
                                 enabled = gpxFileExists
-                            ) { Text(stringResource(R.string.pref_gpx_track_download), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
+                            ) { Text(stringResource(Res.string.pref_gpx_track_download), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
                             Button(
                                 onClick = {
                                     val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -202,10 +204,10 @@ fun DisplaySettingsScreen(
                                     }
                                     launcher.launch(intent)
                                 }
-                            ) { Text(stringResource(R.string.pref_gpx_track_provide), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
+                            ) { Text(stringResource(Res.string.pref_gpx_track_provide), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
                             if (gpxFileExists)
                                 SwitchPreference(
-                                    name = stringResource(R.string.pref_gpx_track_enable),
+                                    name = stringResource(Res.string.pref_gpx_track_enable),
                                     default = false,
                                     pref = Prefs.SHOW_GPX_TRACK,
                                 )
@@ -236,12 +238,12 @@ fun DisplaySettingsScreen(
                 AlertDialog(
                     onDismissRequest = { showGeometryDialog = false },
                     confirmButton = {
-                        TextButton(onClick = { showGeometryDialog = false }) { Text(stringResource(R.string.close)) }
+                        TextButton(onClick = { showGeometryDialog = false }) { Text(stringResource(Res.string.close)) }
                     },
-                    title = { Text(stringResource(R.string.pref_custom_geometry_title))},
+                    title = { Text(stringResource(Res.string.pref_custom_geometry_title))},
                     text = {
                         Column {
-                            Text(stringResource(R.string.pref_custom_geometry_info))
+                            Text(stringResource(Res.string.pref_custom_geometry_info))
                             Button(
                                 onClick = {
                                     val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -250,10 +252,10 @@ fun DisplaySettingsScreen(
                                     }
                                     launcher.launch(intent)
                                 }
-                            ) { Text(stringResource(R.string.file_provide), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
+                            ) { Text(stringResource(Res.string.file_provide), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
                             if (fileExists)
                                 SwitchPreference(
-                                    name = stringResource(R.string.quest_enabled),
+                                    name = stringResource(Res.string.quest_enabled),
                                     default = false,
                                     pref = Prefs.SHOW_CUSTOM_GEOMETRY,
                                 )

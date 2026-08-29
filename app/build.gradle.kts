@@ -266,6 +266,8 @@ kotlin {
 
                 // parser for user-supplied GPX tracks
                 implementation("com.github.ticofab:android-gpx-parser:2.3.1")
+                // multiplatform alternative spatial-k is unusable, throws exception on deserializing
+                // java.lang.ClassNotFoundException: Didn't find class "nl.adaptivity.xmlutil.core.impl.idom.IDocument"
             }
         }
         iosMain {

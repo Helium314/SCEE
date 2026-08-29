@@ -680,4 +680,7 @@
     <string name="quest_tree_denotation_urban_description">Dentro de un núcleo de población</string>
     <string name="quest_tree_denotation_natural">Natural</string>
     <string name="quest_tree_denotation_natural_description">Fuera de un núcleo de población</string>
+    <string name="quest_evse_id_scan_more">Escanear otro cargador</string>
+    <string name="quest_evse_id_scan_unknown_value">No se reconoce el código QR. Por favor, abre una incidencia y adjunta una imagen del código QR para que podamos añadir compatibilidad.</string>
+    <string name="no_qr_code_handler">Falta escáner de QR. Por favor, instala una aplicación compatible como Binary Eye y reintenta.</string>
 </resources>

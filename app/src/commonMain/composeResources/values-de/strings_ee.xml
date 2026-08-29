@@ -57,7 +57,6 @@
     <string name="quest_seating_street">In einem Straßenbereich</string>
     <string name="quest_custom_quest_message">Verwende es, um spezifische vordefinierte Elemente oder Standorte zu überprüfen. Du kannst auch Tags spezifizieren und einen Knoten damit hinzufügen. Um es zu verwenden, lade eine Datei im Hauptmenü der Einstellungen, die entweder Typ, ID, Nachricht (z. B. NODE,1234,Position überprüfen) oder Breitengrad, Längengrad, Nachricht enthält. Für das Hinzufügen von Knoten gib die Tags in der Nachricht nach „addNode“ an, z. B. addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
     <string name="pref_recent_answers_first_min_lines_message">Verschiebe aktuelle Antworten nach vorne, wenn das Antwortformular der Aufgabe mehr als so viele Zeilen mit Bildern enthält</string>
-    <string name="pref_network_interval_title">Aktualisierungsintervall für den Netzwerkstandort</string>
     <string name="pref_custom_title">Benutzerdefinierte Aufgabendatei laden</string>
     <string name="quest_material_concrete">Beton</string>
     <string name="level_filter_hint">Leer lassen, um nicht getaggt anzuzeigen</string>
@@ -261,7 +260,7 @@
     <string name="show_nearby_quests_all_types">Alle Aufgabentypen anzeigen</string>
     <string name="access_weight_limit">Gewicht</string>
     <string name="import_export_presets_select">Wähle Vorlagen zum Exportieren</string>
-    <string name="pref_gps_interval_title">Aktualisierungsintervall für den GPS-Standort</string>
+    <string name="pref_location_interval_title">Aktualisierungsintervall für den GPS-Standort</string>
     <string name="import_presets_overlays_message">Importierte hinzufügen oder bestehende ersetzen? Wenn du „Ersetzen“ wählst, werden alle bereits vorhandenen Einträge entfernt.</string>
     <string name="add_access">Zugang hinzufügen…</string>
     <string name="pref_manual_download_cache_summary">Wenn diese Funktion deaktiviert ist, werden die Daten bei einem manuellen Download nicht erneut heruntergeladen, es sei denn, sie sind älter als 12 Stunden</string>

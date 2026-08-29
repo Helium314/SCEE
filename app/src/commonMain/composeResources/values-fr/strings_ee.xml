@@ -195,8 +195,7 @@
     <string name="day_night_visibility">Ne pas afficher les quêtes inadaptées au moment actuel de la journée</string>
     <string name="quest_settings_eligible_highways">Définissez les chemins concernés par cette quête, en les séparant par des virgules</string>
     <string name="quest_settings_sidewalk_cycleway_distance_message">Définir la distance minimale entre les chemins distincts ; si elle est inférieure, la quête ne sera pas affichée</string>
-    <string name="pref_gps_interval_title">Intervalle de mise à jour de la localisation GPS</string>
-    <string name="pref_network_interval_title">Intervalle de mise à jour de la localisation à partir du réseau</string>
+    <string name="pref_location_interval_title">Intervalle de mise à jour de la localisation GPS</string>
     <string name="restore_dialog_hint">Vous pouvez également choisir manuellement les quêtes à restaurer en appuyant longuement sur le bouton d'annulation.</string>
     <string name="pref_day_night_title">Filtrer les quêtes suivant le moment de la journée</string>
     <string name="pref_dynamic_quest_creation_title">Créer des quêtes dynamiquement</string>

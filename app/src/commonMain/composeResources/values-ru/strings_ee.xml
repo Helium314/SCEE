@@ -56,7 +56,6 @@
     <string name="pref_screen_data_management">Управление данными</string>
     <string name="pref_dynamic_quest_creation_summary">Квесты формируются при загрузке отображаемой области. Не быстро, зато сразу же отражаются изменения настроек квестов.</string>
     <string name="pref_dynamic_quest_creation_title">Формировать квесты динамически</string>
-    <string name="pref_network_interval_title">Частота замера положения по сетям связи</string>
     <string name="pref_interval_summary">%1$d секунд(-ы)</string>
     <string name="pref_interval_message">Частота замера в секундах</string>
     <string name="quest_settings_osmose_level_high">Высокая</string>
@@ -134,7 +133,7 @@
     <string name="pref_quest_settings_preset_title">Настройки квестов для предустановок</string>
     <string name="theme_dark_contrast">Тёмная (контрастная)</string>
     <string name="resurvey_intervals_even_less_often">Спрашивать ещё реже</string>
-    <string name="pref_gps_interval_title">Частота замера положения по GPS</string>
+    <string name="pref_location_interval_title">Частота замера положения по GPS</string>
     <string name="action_scee_quests">Показывать только квесты SCEE</string>
     <string name="quest_settings_reset">Сброс</string>
     <string name="pref_tree_custom_quest_summary">Подробности в сообщении при включении квеста</string>

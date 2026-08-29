@@ -135,6 +135,8 @@ import org.maplibre.compose.location.SystemSettingsLauncher
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.sqrt
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /** Controls the main view.
  *
@@ -460,7 +462,10 @@ class MainActivity :
                 mainBottomSheetViewModel.closeBottomSheet()
             }
         }
-        observe(locationProvider.updates(LocationRequest())) { locationEvent ->
+        val locationRequest = if (prefs.contains(Prefs.LOCATION_INTERVAL))
+            LocationRequest(minimumInterval = prefs.getInt(Prefs.LOCATION_INTERVAL, 0).seconds)
+        else LocationRequest()
+        observe(locationProvider.updates(locationRequest)) { locationEvent ->
             viewModel.locationState.value = when (locationEvent) {
                 is LocationEvent.Fix -> LocationState.UPDATING
                 is LocationEvent.Unavailable -> when (locationEvent.reason) {

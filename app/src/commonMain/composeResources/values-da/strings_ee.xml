@@ -115,7 +115,6 @@
     <string name="quest_settings_reset">Nulstil</string>
     <string name="quest_monitor_gps">Anmod aktivt om GPS-placeringer\?</string>
     <string name="quest_settings_per_preset_rescan">For at kunne anvende alle ændrede opgave-indstillinger korrekt, er det nødvendigt at scanne efter opgaver igen.</string>
-    <string name="pref_network_interval_title">Interval for opdatering af netværksplacering</string>
     <string name="restore_dialog_hint">Du kan også manuelt vælge, hvilke opgaver der skal gendannes, ved at trykke længe på fortryd-knappen.</string>
     <string name="pref_hide_overlay_quests">Skjul overlejrings-specifikke opgaver</string>
     <string name="theme_dark_contrast">Mørk (øget kontrast)</string>
@@ -126,7 +125,7 @@
     <string name="pref_quest_monitor_download">Downloade data, hvis det er nødvendigt\? Det kan forbruge meget data og batteri, og Android kan slå det fra af batteribesparende årsager.</string>
     <string name="pref_dynamic_quest_creation_title">Opret opgaver dynamisk</string>
     <string name="pref_dynamic_quest_creation_summary">Opgaver oprettes, når det viste område indlæses. Lidt langsomt, men anvender straks ændrede opgave-indstillinger.</string>
-    <string name="pref_gps_interval_title">Interval for opdatering af GPS-placering</string>
+    <string name="pref_location_interval_title">Interval for opdatering af GPS-placering</string>
     <string name="pref_interval_summary">%1$d sekunder</string>
     <string name="resurvey_intervals_even_less_often">Spørg endnu sjældnere</string>
     <string name="quest_monitor_search_radius_text">Indstil radius for søgning efter opgaver i nærheden. Bemærk, at opgaver med lidt større afstand også kan blive fundet. Steder med dårligere nøjagtighed end denne værdi ignoreres.</string>

@@ -109,7 +109,6 @@
     <string name="quest_monitor_active_request">A pozíció aktív kérése növeli az akkumulátorhasználatot. Ha nem kérsz aktívan helyadatokat, a más alkalmazások által kért helyadatok továbbra is használni tudja.</string>
     <string name="pref_hide_overlay_quests">Rátétspecifikus kérdések elrejtése</string>
     <string name="theme_dark_contrast">Sötét (kontrasztosabb)</string>
-    <string name="pref_network_interval_title">Hálózati pozíció frissítési időköz</string>
     <string name="pref_interval_summary">%1$d másodperc</string>
     <string name="pref_interval_message">Frissítési időköz másodpercben</string>
     <string name="quest_settings_element_selection">Állítsd be a kérdéshez tartozó elemeket. <a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection">Kattints ide</a> az elemkiválasztási szintaxis megnyitásához böngészőben.</string>
@@ -181,7 +180,7 @@
     <string name="pref_caps_word_name_input">Szavak nagybetűsítése nevek bevitelekor</string>
     <string name="import_presets_overlays_message">Hozzáadod az importáltakat, vagy cseréljük le a meglévőket? Ha a cserét választod, az összes meglévő el lesz távolítva.</string>
     <string name="export_warning_db_version">Figyelem: az adatbázis verziója ismeretlen, előfordulhat, hogy az importálás nem működik. Frissítsd az alkalmazást.</string>
-    <string name="pref_gps_interval_title">GPS-pozíció frissítési időköz</string>
+    <string name="pref_location_interval_title">GPS-pozíció frissítési időköz</string>
     <string name="create_poi">POI hozzáadása</string>
     <string name="pref_quest_monitor_download">Töltsön le adatokat, ha szükséges? Ez jelentősen fogyaszthatja az adatforgalmat és az akkumulátort, ezért az Android megakadályozhatja akkumulátorkímélés céljából.</string>
     <string name="resurvey_intervals_even_less_often">Kérdezzen rá még ritkábban</string>

@@ -95,8 +95,7 @@
     <string name="quest_monitor_gps">活発にGPS位置情報を要求しますか?</string>
     <string name="quest_monitor_net">活発にネットワーク位置情報を要求しますか?</string>
     <string name="pref_quest_monitor_download">必要に応じてデータをダウンロードしますか?　これは転送量と電池を激しく消費する可能性があり、電池を節約するためにAndroidによって使用できなくなる状態にされる可能性があります。</string>
-    <string name="pref_gps_interval_title">GPS位置情報を更新する間隔</string>
-    <string name="pref_network_interval_title">ネットワーク位置情報を更新する間隔</string>
+    <string name="pref_location_interval_title">GPS位置情報を更新する間隔</string>
     <string name="pref_interval_summary">%1$d 秒</string>
     <string name="pref_interval_message">更新間隔を秒単位で</string>
     <string name="quest_settings_reset">リセット</string>

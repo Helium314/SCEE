@@ -228,7 +228,7 @@
     <string name="day_night_visibility">不顯示不適合當前日間時間的任務</string>
     <string name="pref_quest_settings_preset_title">每個預設任務設定</string>
     <string name="pref_quest_settings_preset_summary">啟用後，任務設定僅對目前的任務預設有效</string>
-    <string name="pref_gps_interval_title">GPS 位置更新間隔</string>
+    <string name="pref_location_interval_title">GPS 位置更新間隔</string>
     <string name="pref_quest_monitor_download">需要時下載資料？這可能會大量消耗數據和電池，且可能因 Android 的省電機制而無法正常運作。</string>
     <string name="pref_hide_overlay_quests">隱藏僅限圖層的任務</string>
     <string name="theme_dark_contrast">深色（提高對比度）</string>
@@ -253,7 +253,6 @@
     <string name="quest_monitor_active_request">主動請求位置會增加電池消耗。若不主動請求位置，仍會使用其他應用程式請求的位置資料。</string>
     <string name="quest_roofOrientation_across">與建築物較短的一側平行</string>
     <string name="quest_roofOrientation_title">屋頂脊線的方向是什麼？</string>
-    <string name="pref_network_interval_title">網路位置更新間隔</string>
     <string name="pref_interval_summary">%1$d 秒</string>
     <string name="pref_interval_message">更新間隔的秒數</string>
     <string name="restore_dialog_hint">你可以藉由長按復原鈕來手動選擇要復原的任務。</string>

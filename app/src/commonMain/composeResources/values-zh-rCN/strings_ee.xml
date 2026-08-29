@@ -24,7 +24,6 @@
     <string name="quest_seating_street">街道区域</string>
     <string name="quest_custom_quest_message">用于检查特定的预先定义元素或位置。您还可以指定标签，并将其添加到节点中。要使用它，请在主设置菜单中加载一个文件，其中包含类型、ID、消息（例如：NODE,1234,检查位置）或经度、纬度、信息。添加节点时，将消息中的标签放在 "addNode "之后，例如 addNode amenity=restaurant, wheelchair=no,diet:vegetarian=yes</string>
     <string name="pref_recent_answers_first_min_lines_message">如果任务回答表格的图像行数超过此数值，则将最近的回答移至最前</string>
-    <string name="pref_network_interval_title">网络位置更新间隔</string>
     <string name="pref_custom_title">加载自定义任务文件</string>
     <string name="quest_material_concrete">水泥</string>
     <string name="pref_save_file_error">保存文件出错</string>
@@ -174,7 +173,7 @@
     <string name="default_disabled_msg_poi_fixme">此“任务”以红点显示 FixMes （默认情况下“是”和“继续”除外）。点击圆点可显示详细信息和其他回答。</string>
     <string name="show_nearby_quests_all_types">显示所有任务类型</string>
     <string name="import_export_presets_select">选择要导出的预设</string>
-    <string name="pref_gps_interval_title">GPS 定位更新间隔</string>
+    <string name="pref_location_interval_title">GPS 定位更新间隔</string>
     <string name="import_presets_overlays_message">添加导入的内容，还是替换现有内容？您如果选择 “替换”，则会删除所有现有内容。</string>
     <string name="pref_manual_download_cache_summary">禁用后，除非数据时效已超过 12 小时，否则手动下载时将不会重新下载数据</string>
     <string name="pref_quest_geometries_title">显示任务几何图形</string>

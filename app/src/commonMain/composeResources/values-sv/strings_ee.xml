@@ -62,8 +62,7 @@
     <string name="import_export_presets">Förinställningar</string>
     <string name="import_export_presets_select">Välj förinställningar att exportera</string>
     <string name="theme_dark_contrast">Mörkt (ökad kontrast)</string>
-    <string name="pref_gps_interval_title">Uppdateringsintervall för GPS-plats</string>
-    <string name="pref_network_interval_title">Uppdateringsintervall för nätverksplats</string>
+    <string name="pref_location_interval_title">Uppdateringsintervall för GPS-plats</string>
     <string name="pref_interval_message">Uppdateringsintervall i sekunder</string>
     <string name="restore_dialog_hint">Du kan även manuellt välja vilka uppdrag som ska återställas genom att långtrycka på ångra-knappen.</string>
     <string name="quest_settings_reset">Återställ</string>

@@ -109,8 +109,7 @@
     <string name="pref_hide_overlay_quests">Skrij cilje, specifične za vrhnji sloj</string>
     <string name="theme_dark_contrast">Temni način (povečan kontrast)</string>
     <string name="resurvey_intervals_even_less_often">Vprašaj še redkeje</string>
-    <string name="pref_gps_interval_title">Interval posodabljanja GPS lokacije</string>
-    <string name="pref_network_interval_title">Interval posodabljanja omrežne lokacije</string>
+    <string name="pref_location_interval_title">Interval posodabljanja GPS lokacije</string>
     <string name="pref_interval_summary">%1$d sekund</string>
     <string name="pref_interval_message">Interval posodabljanja v sekundah</string>
 </resources>

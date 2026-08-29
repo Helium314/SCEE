@@ -108,8 +108,7 @@
     <string name="quest_monitor_net">Sol·licitar activament ubicacions per xarxa?</string>
     <string name="theme_dark_contrast">Fosc (major contrast)</string>
     <string name="resurvey_intervals_even_less_often">Demana-ho encara menys sovint</string>
-    <string name="pref_gps_interval_title">Interval d'actualització de posició GPS</string>
-    <string name="pref_network_interval_title">Interval d'actualització de posició de xarxa</string>
+    <string name="pref_location_interval_title">Interval d'actualització de posició GPS</string>
     <string name="pref_interval_summary">%1$d segons</string>
     <string name="pref_interval_message">Interval d'actualització en segons</string>
     <string name="quest_settings_element_selection">Selecciona quins elements són elegibles per a aquesta missió. <a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection">Llegeixi aquí</a> més informació sobre la sintaxi de selecció d'elements (l'enllaç s'obrirà en sun navegador web).</string>

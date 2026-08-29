@@ -114,8 +114,7 @@
     <string name="pref_quest_monitor_download">Завантажувати дані за необхідності\? Це може призвести до значного споживання даних і заряду акумулятора, а також може бути заборонено Android з міркувань економії заряду акумулятора.</string>
     <string name="theme_dark_contrast">Темний (підвищена контрастність)</string>
     <string name="resurvey_intervals_even_less_often">Запитувати ще рідше</string>
-    <string name="pref_gps_interval_title">Інтервал оновлення GPS-координат</string>
-    <string name="pref_network_interval_title">Інтервал оновлення мережевого розташування</string>
+    <string name="pref_location_interval_title">Інтервал оновлення GPS-координат</string>
     <string name="pref_interval_summary">%1$d секунд</string>
     <string name="quest_settings_osmose_level_high">Високий</string>
     <string name="quest_settings_osmose_level_low">Низький</string>

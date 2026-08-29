@@ -150,8 +150,7 @@
     <string name="pref_hide_overlay_quests">Sakrij Zadatke koji također imaju svoj Nadsloj</string>
     <string name="theme_dark_contrast">Tamno (povećan kontrast)</string>
     <string name="resurvey_intervals_even_less_often">Pitaj još rjeđe</string>
-    <string name="pref_gps_interval_title">Interval ažuriranja GPS lokacije</string>
-    <string name="pref_network_interval_title">Interval ažuriranja mrežne lokacije</string>
+    <string name="pref_location_interval_title">Interval ažuriranja GPS lokacije</string>
     <string name="pref_interval_summary">%1$d sekundi</string>
     <string name="pref_interval_message">Interval ažuriranja u sekundama</string>
     <string name="action_scee_quests">Prikaži samo SCEE zadatke</string>

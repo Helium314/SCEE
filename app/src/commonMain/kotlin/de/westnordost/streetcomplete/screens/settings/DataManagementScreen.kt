@@ -176,9 +176,9 @@ fun DataManagementScreen(
                 default = true,
             )
             Preference(
-                name = stringResource(Res.string.pref_gps_interval_title),
+                name = stringResource(Res.string.pref_location_interval_title),
                 onClick = { showGpsIntervalDialog = true },
-                description = stringResource(Res.string.pref_interval_summary, prefs.getInt(Prefs.GPS_INTERVAL, 0))
+                description = stringResource(Res.string.pref_interval_summary, prefs.getInt(Prefs.LOCATION_INTERVAL, 0))
             )
             Preference(
                 name = stringResource(Res.string.pref_network_interval_title),
@@ -211,22 +211,10 @@ fun DataManagementScreen(
             WheelPickerDialog(
                 onDismissRequest = { showGpsIntervalDialog = false },
                 selectableValues = selectable,
-                onSelected = { prefs.putInt(Prefs.GPS_INTERVAL, it) },
+                onSelected = { prefs.putInt(Prefs.LOCATION_INTERVAL, it) },
                 itemContent = { Text(it.toString()) },
-                selectedInitialValue = prefs.getInt(Prefs.GPS_INTERVAL, 0),
-                title = { Text(stringResource(Res.string.pref_gps_interval_title)) },
-                text = { Text(stringResource(Res.string.pref_interval_message)) }
-            )
-        }
-        if (showNetIntervalDialog) {
-            val selectable = remember { (0..15).toList() + listOf(20, 25, 30, 45, 60, 90, 120) }
-            WheelPickerDialog(
-                onDismissRequest = { showNetIntervalDialog = false },
-                selectableValues = selectable,
-                onSelected = { prefs.putInt(Prefs.NETWORK_INTERVAL, it) },
-                itemContent = { Text(it.toString()) },
-                selectedInitialValue = prefs.getInt(Prefs.NETWORK_INTERVAL, 0),
-                title = { Text(stringResource(Res.string.pref_network_interval_title)) },
+                selectedInitialValue = prefs.getInt(Prefs.LOCATION_INTERVAL, 0),
+                title = { Text(stringResource(Res.string.pref_location_interval_title)) },
                 text = { Text(stringResource(Res.string.pref_interval_message)) }
             )
         }

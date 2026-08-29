@@ -175,8 +175,7 @@
     <!-- other settings -->
     <string name="theme_dark_contrast">Dark (increased contrast)</string>
     <string name="resurvey_intervals_even_less_often">Ask even less often</string>
-    <string name="pref_gps_interval_title">GPS location update interval</string>
-    <string name="pref_network_interval_title">Network location update interval</string>
+    <string name="pref_location_interval_title">Location update interval</string>
     <string name="pref_interval_summary">%1$d seconds</string>
     <string name="pref_interval_message">Update interval in seconds</string>
     <string name="action_scee_quests">Show only SCEE quests</string>

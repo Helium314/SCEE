@@ -36,7 +36,7 @@ class AddCuisine : OsmFilterQuestType<String>() {
     @Composable
     override fun Form(on: (QuestAction<String>) -> Unit, element: Element, geometry: ElementGeometry, countryInfo: CountryInfo) {
         if (suggestions.isEmpty())
-            suggestions.addAll(LocalContext.current.assets.open("cuisine/cuisineSuggestions.txt.txt").bufferedReader().readLines())
+            suggestions.addAll(LocalContext.current.assets.open("cuisine/cuisineSuggestions.txt").bufferedReader().readLines())
         MultiValueQuestForm(
             on,
             Res.string.quest_cuisine_add_more,

@@ -29,9 +29,14 @@ import de.westnordost.streetcomplete.ui.theme.largeInput
 import de.westnordost.streetcomplete.util.math.distanceTo
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import de.westnordost.streetcomplete.util.takeFavorites
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.exists
+import io.github.vinceglb.filekit.filesDir
+import io.github.vinceglb.filekit.readString
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import java.io.File
 import java.io.IOException
 import java.text.Normalizer
 import java.util.Locale
@@ -98,10 +103,11 @@ private fun loadTrees(context: Context) {
     // load from file, assuming format: <Genus/Species> (<localName>)
     //  assume species if it contains a space character
     try {
-        context.getExternalFilesDir(null)?.let { dir ->
-            treeSet.addAll(File(dir, FILENAME_TREES).readLines().mapNotNull { it.toTree(it.substringBefore(" (").contains(" ")) })
-        }
-    } catch (_: IOException) { } // file may not exist, so an exception is no surprise
+        if (treeFile.exists())
+            runBlocking {
+                treeSet.addAll(treeFile.readString().lines().mapNotNull { it.toTree(it.substringBefore(" (").contains(" ")) })
+            }
+    } catch (_: Exception) { } // file may not exist, so an exception is no surprise
 
     try {
         context.assets.open("tree/otherDataGenus.txt").bufferedReader().lineSequence().mapNotNullTo(treeSet) { it.toTree(false) }
@@ -137,7 +143,7 @@ private fun getTrees(fullSearch: String, lastPickedAnswers: List<String>): List<
     }.sortedBy { it.localName == null }.sortedBy { it.isSpecies }
 }
 
-const val FILENAME_TREES = "trees.csv"
+val treeFile = PlatformFile(FileKit.filesDir, "trees.csv")
 
 private fun getSelectedTree(input: String, lastPickedAnswers: List<String>): Tree? {
     return getTrees(input, lastPickedAnswers).firstOrNull { canonicalize(it.toDisplayString()) == canonicalize(input) }

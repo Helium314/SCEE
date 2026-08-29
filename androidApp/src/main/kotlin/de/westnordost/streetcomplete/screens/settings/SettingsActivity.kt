@@ -10,6 +10,7 @@ import com.russhwolf.settings.SettingsListener
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.screens.BaseActivity
 import de.westnordost.streetcomplete.ui.theme.AppTheme
+import de.westnordost.streetcomplete.util.ktx.loadFileKit
 import org.koin.android.ext.android.inject
 
 class SettingsActivity : BaseActivity() {
@@ -20,6 +21,7 @@ class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadFileKit()
 
         val launchQuestSelection = intent.getBooleanExtra(EXTRA_LAUNCH_QUEST_SETTINGS, false)
         val startDestination = if (launchQuestSelection) SettingsDestination.QuestSelection else null

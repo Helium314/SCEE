@@ -1,10 +1,5 @@
 package de.westnordost.streetcomplete.quests.custom
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,12 +7,10 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import de.westnordost.osmfeatures.FeatureDictionary
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.edits.ElementEdit
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuest
@@ -29,16 +22,21 @@ import de.westnordost.streetcomplete.data.osm.osmquests.Action
 import de.westnordost.streetcomplete.osm.toTags
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
-import de.westnordost.streetcomplete.screens.settings.getActivity2
-import de.westnordost.streetcomplete.screens.settings.toast2
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.LocalElement
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
 import de.westnordost.streetcomplete.util.nameAndLocationLabel
-import kotlinx.io.IOException
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.copyTo
+import io.github.vinceglb.filekit.dialogs.openFilePicker
+import io.github.vinceglb.filekit.dialogs.openFileSaver
+import io.github.vinceglb.filekit.exists
+import io.github.vinceglb.filekit.extension
+import io.github.vinceglb.filekit.nameWithoutExtension
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import java.io.File
 
 class CustomQuest(private val customQuestList: CustomQuestList) : ExternalSourceQuestType {
 
@@ -85,46 +83,31 @@ class CustomQuest(private val customQuestList: CustomQuestList) : ExternalSource
 
     @Composable
     override fun QuestSettings(onDismissRequest: () -> Unit) {
-        val context = LocalContext.current
-        val file = File(context.getExternalFilesDir(null), FILENAME_CUSTOM_QUEST)
-        val activity = LocalContext.current.getActivity2()!!
-        val customQuestList: CustomQuestList = koinInject()
-        val importIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "text/*"
+        val scope = rememberCoroutineScope { Dispatchers.IO }
+        fun import() {
+            scope.launch {
+                val file = FileKit.openFilePicker() ?: return@launch
+                file.copyTo(customQuestFile)
+            }
         }
-        val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            putExtra(Intent.EXTRA_TITLE, FILENAME_CUSTOM_QUEST)
-            type = "text/*"
-        }
-        val importFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode != Activity.RESULT_OK || it.data == null)
-                return@rememberLauncherForActivityResult
-            val uri = it.data?.data ?: return@rememberLauncherForActivityResult
-            readFromUriToExternalFile(uri, file.name, activity)
-            customQuestList.reload()
-            onDismissRequest()
-        }
-        val exportFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode != Activity.RESULT_OK || it.data == null)
-                return@rememberLauncherForActivityResult
-            val uri = it.data?.data ?: return@rememberLauncherForActivityResult
-            writeFromExternalFileToUri(file.name, uri, activity)
-            onDismissRequest()
+        fun export() {
+            scope.launch {
+                val file = FileKit.openFileSaver(customQuestFile.nameWithoutExtension, defaultExtension = customQuestFile.extension) ?: return@launch
+                customQuestFile.copyTo(file)
+            }
         }
         AlertDialog(
             onDismissRequest = onDismissRequest,
             buttons = {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    TextButton({ importFileLauncher.launch(importIntent) }) {
+                    TextButton({ import() }) {
                         Text(stringResource(Res.string.tree_custom_quest_import))
                     }
-                    if (file.exists())
-                        TextButton({ exportFileLauncher.launch(exportIntent) }) {
+                    if (customQuestFile.exists())
+                        TextButton({ export() }) {
                             Text(stringResource(Res.string.tree_custom_quest_export))
                         }
-                    TextButton(onDismissRequest) { Text(stringResource(android.R.string.cancel)) }
+                    TextButton(onDismissRequest) { Text(stringResource(Res.string.cancel)) }
                 }
             },
             title = { Text(stringResource(Res.string.pref_custom_title)) },
@@ -163,6 +146,7 @@ class CustomQuest(private val customQuestList: CustomQuestList) : ExternalSource
             answers = listOfNotNull(
                 AnswerItem(stringResource(Res.string.quest_custom_quest_remove)) {
                     questController.delete(quest.key)
+                    on(Action.TempHideQuest)
                 },
                 if (tagsText != null && pos != null) {
                     AnswerItem(stringResource(Res.string.quest_custom_quest_add_node)) {
@@ -178,25 +162,5 @@ class CustomQuest(private val customQuestList: CustomQuestList) : ExternalSource
             title = getTitle(),
             subtitle = getSubtitle()
         )
-    }
-}
-
-fun readFromUriToExternalFile(uri: Uri, filename: String, activity: Activity) {
-    try {
-        activity.contentResolver?.openInputStream(uri)?.use { it.bufferedReader().use { reader ->
-            File(activity.getExternalFilesDir(null), filename).writeText(reader.readText())
-        } }
-    } catch (_: IOException) {
-        activity.toast2(activity.getString(R.string.pref_save_file_error))
-    }
-}
-
-fun writeFromExternalFileToUri(filename: String, uri: Uri, activity: Activity) {
-    try {
-        activity.contentResolver?.openOutputStream(uri)?.use { it.bufferedWriter().use { writer ->
-            writer.write(File(activity.getExternalFilesDir(null), filename).readText())
-        } }
-    } catch (_: IOException) {
-        activity.toast2(activity.getString(R.string.pref_save_file_error))
     }
 }

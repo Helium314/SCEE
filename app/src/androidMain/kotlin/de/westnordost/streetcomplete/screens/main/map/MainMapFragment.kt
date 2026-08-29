@@ -39,16 +39,17 @@ import de.westnordost.streetcomplete.screens.main.map.maplibre.MapImages
 import de.westnordost.streetcomplete.screens.main.map.maplibre.Padding
 import de.westnordost.streetcomplete.screens.main.map.maplibre.camera
 import de.westnordost.streetcomplete.screens.main.map.maplibre.toLatLon
-import de.westnordost.streetcomplete.screens.settings.CUSTOM_GEOMETRY_FILE
+import de.westnordost.streetcomplete.screens.settings.customGeometryFile
 import de.westnordost.streetcomplete.screens.settings.loadGpxTrackPoints
 import de.westnordost.streetcomplete.ui.common.quest.Marker
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.toLatLon
 import de.westnordost.streetcomplete.util.ktx.toLocation
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
-import de.westnordost.streetcomplete.util.logs.Log
+import io.github.vinceglb.filekit.readString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
 import org.maplibre.android.geometry.LatLng
@@ -329,7 +330,7 @@ class MainMapFragment : MapFragment() {
     }
 
     fun loadCustomGeometry() {
-        val text = context?.let { loadCustomGeometryText(it) }
+        val text = runCatching { runBlocking { customGeometryFile.readString() } }.getOrNull()
         if (text == null || !prefs.getBoolean(Prefs.SHOW_CUSTOM_GEOMETRY, false)) customGeometryMapComponent?.clear()
         else customGeometryMapComponent?.set(text)
     }
@@ -632,10 +633,4 @@ private fun <T> ArrayList<ArrayList<T>>.takeLastNested(n: Int): ArrayList<ArrayL
         sum += s
     }
     return this
-}
-
-private fun loadCustomGeometryText(context: Context): String? {
-    val file = context.getExternalFilesDir(null)?.let { File(it, CUSTOM_GEOMETRY_FILE) }
-    if (file?.exists() != true) return null
-    return file.readText()
 }

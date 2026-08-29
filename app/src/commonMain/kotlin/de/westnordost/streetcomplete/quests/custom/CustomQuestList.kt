@@ -1,6 +1,6 @@
 package de.westnordost.streetcomplete.quests.custom
 
-import android.content.Context
+import android.net.Uri
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
@@ -14,60 +14,73 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.util.math.contains
 import de.westnordost.streetcomplete.util.Mockable
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.copyTo
+import io.github.vinceglb.filekit.createDirectories
+import io.github.vinceglb.filekit.exists
+import io.github.vinceglb.filekit.filesDir
+import io.github.vinceglb.filekit.parent
+import io.github.vinceglb.filekit.readString
+import io.github.vinceglb.filekit.sink
+import io.github.vinceglb.filekit.writeString
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.io.buffered
+import kotlinx.io.writeString
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.File
-import java.io.IOException
 import kotlin.Exception
 
 @Mockable
 class CustomQuestList : KoinComponent {
-    private val context: Context by inject()
+    private val scope = CoroutineScope(Dispatchers.IO)
     private val entriesById by lazy {
         // need to load by lazy, because there is a problem if mapDataWithEditsSource is accessed early
         val m = hashMapOf<String, CustomQuestEntry>()
         load(m)
         m
     }
-    private val path = context.getExternalFilesDir(null)
 
     private val mapDataWithEditsSource: MapDataWithEditsSource by inject()
     private val questTypeRegistry: QuestTypeRegistry by inject()
     private val questController: ExternalSourceQuestController by inject()
 
-    init {
-        val oldfile = File(path, FILENAME_OLD)
-        if (oldfile.exists())
-            oldfile.renameTo(File(path, FILENAME_CUSTOM_QUEST))
-    }
-
     fun reload() = load(entriesById)
 
+    fun readFromUri(uri: Uri) {
+        runBlocking { PlatformFile(uri).copyTo(customQuestFile) }
+        reload()
+    }
+
     fun load(m: MutableMap<String, CustomQuestEntry>) {
-        val file = File(path, FILENAME_CUSTOM_QUEST)
         m.clear()
-        if (!file.exists()) {
+        if (!customQuestFile.exists()) {
             try {
-                file.parentFile?.mkdirs()
-                file.createNewFile()
-            } catch (_: IOException) {
+                customQuestFile.parent()?.createDirectories()
+                runBlocking { customQuestFile.writeString("") }
+            } catch (_: Exception) {
                 // sometimes can't be created, don't show an error message in this case
                 return
             }
         }
-        m.putAll(file.readLines().asReversed().mapNotNull { line ->
-            val rawText = line.substringAfter(',').substringAfter(',')
-            val text = if (rawText.endsWith(",solved"))
-                    rawText.substringBeforeLast(',')
-                else rawText
-            val id = line.getId()
-            if (id == null) null
-            else
-                id to CustomQuestEntry(id).also {
-                    it.text = text
-                    it.solved = rawText.endsWith(",solved")
-                }
-        })
+        runBlocking {
+            m.putAll(customQuestFile.readString().lines().asReversed().mapNotNull { line ->
+                val rawText = line.substringAfter(',').substringAfter(',')
+                val text = if (rawText.endsWith(",solved"))
+                        rawText.substringBeforeLast(',')
+                    else rawText
+                val id = line.getId()
+                if (id == null) null
+                else
+                    id to CustomQuestEntry(id).also {
+                        it.text = text
+                        it.solved = rawText.endsWith(",solved")
+                    }
+            })
+        }
     }
 
     fun addEntry(element: Element, message: String) {
@@ -75,8 +88,7 @@ class CustomQuestList : KoinComponent {
         if (entriesById.containsKey(id)) return
         val entry = CustomQuestEntry(id).apply { text = message }
         entriesById[id] = entry
-        val file = File(path, FILENAME_CUSTOM_QUEST)
-        file.appendText("\n$id,$message")
+        customQuestFile.sink(true).buffered().writeString("\n$id,$message")
         getQuest(id)?.let { questController.addQuests(listOf(it)) }
     }
 
@@ -109,22 +121,23 @@ class CustomQuestList : KoinComponent {
     fun markSolved(id: String, solved: Boolean = true) {
         if (entriesById[id]?.solved == solved) return
         entriesById[id]?.solved = solved
-        val file = File(path, FILENAME_CUSTOM_QUEST)
-        val lines = file.readLines().toMutableList()
-        var lineToChange = -1
-        for (i in lines.indices) {
-            if (lines[i].getId() == id
-                && ((solved && !lines[i].endsWith(",solved"))
-                    || !solved && lines[i].endsWith(",solved"))
-            ) {
-                lineToChange = i
-                break
+        scope.launch {
+            val lines = customQuestFile.readString().lines().toMutableList()
+            var lineToChange = -1
+            for (i in lines.indices) {
+                if (lines[i].getId() == id
+                    && ((solved && !lines[i].endsWith(",solved"))
+                        || !solved && lines[i].endsWith(",solved"))
+                ) {
+                    lineToChange = i
+                    break
+                }
             }
-        }
-        if (lineToChange == -1) return // should not happen, but crashes also should not happen
-        lines[lineToChange] = if (solved) lines[lineToChange] + ",solved"
+            if (lineToChange == -1) return@launch // should not happen, but crashes also should not happen
+            lines[lineToChange] = if (solved) lines[lineToChange] + ",solved"
             else lines[lineToChange].substringBeforeLast(',')
-        file.writeText(lines.joinToString("\n"))
+            customQuestFile.writeString(lines.joinToString("\n"))
+        }
     }
 
 
@@ -136,8 +149,7 @@ class CustomQuestList : KoinComponent {
         if (idList.isEmpty()) return false
         val ids = idList.toMutableSet()
         val deletedAny = entriesById.keys.removeAll(ids)
-        val file = File(path, FILENAME_CUSTOM_QUEST)
-        val lines = file.readLines().toMutableList()
+        val lines = runBlocking { customQuestFile.readString() }.lines().toMutableList()
         val iterator = lines.iterator()
         while (iterator.hasNext()) {
             val id = iterator.next().getId()
@@ -147,7 +159,7 @@ class CustomQuestList : KoinComponent {
                 if (ids.isEmpty()) break
             }
         }
-        file.writeText(lines.joinToString("\n"))
+        runBlocking { customQuestFile.writeString(lines.joinToString("\n")) }
         return deletedAny
     }
 }
@@ -176,7 +188,6 @@ data class CustomQuestEntry(val id: String ) {
     var solved: Boolean = false
 }
 
-const val FILENAME_CUSTOM_QUEST = "custom_quest.csv"
-private const val FILENAME_OLD = "external.csv"
+val customQuestFile = PlatformFile(FileKit.filesDir, "custom_quest.csv")
 
 private val nodeWayRelation = "node|way|relation".toRegex(RegexOption.IGNORE_CASE)

@@ -73,9 +73,7 @@ import de.westnordost.streetcomplete.osm.level.levelsIntersect
 import de.westnordost.streetcomplete.osm.level.parseLevelsOrNull
 import de.westnordost.streetcomplete.osm.places.POPULAR_PLACE_FEATURE_IDS
 import de.westnordost.streetcomplete.quests.custom.CustomQuestList
-import de.westnordost.streetcomplete.quests.custom.FILENAME_CUSTOM_QUEST
-import de.westnordost.streetcomplete.quests.custom.readFromUriToExternalFile
-import de.westnordost.streetcomplete.quests.tree.FILENAME_TREES
+import de.westnordost.streetcomplete.quests.tree.AddTreeGenus
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.cancel
 import de.westnordost.streetcomplete.resources.pref_custom_title
@@ -104,6 +102,7 @@ import de.westnordost.streetcomplete.ui.theme.AppTheme
 import de.westnordost.streetcomplete.ui.theme.Dimensions
 import de.westnordost.streetcomplete.util.getSystemLocales
 import de.westnordost.streetcomplete.util.ktx.getLocationInWindow
+import de.westnordost.streetcomplete.util.ktx.loadFileKit
 import de.westnordost.streetcomplete.util.ktx.observe
 import de.westnordost.streetcomplete.util.ktx.toLatLon
 import de.westnordost.streetcomplete.util.ktx.toList
@@ -227,6 +226,7 @@ class MainActivity :
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate")
+        loadFileKit()
 
         val root = RelativeLayout(this)
         val compose = ComposeView(this)
@@ -363,13 +363,12 @@ class MainActivity :
                     buttonRow = {
                         TextButton({ currentTextIntentUri.value = null }) { Text(stringResource(Res.string.cancel)) }
                         TextButton({
-                            readFromUriToExternalFile(currentTextIntentUri.value!!, FILENAME_CUSTOM_QUEST, this@MainActivity)
-                            customQuestList.reload()
+                            customQuestList.readFromUri(currentTextIntentUri.value!!)
                             visibleQuestsSource.clearCache()
                             currentTextIntentUri.value = null
                         }) { Text(stringResource(Res.string.pref_custom_title)) }
                         TextButton({
-                            readFromUriToExternalFile(currentTextIntentUri.value!!, FILENAME_TREES, this@MainActivity)
+                            AddTreeGenus.readFromUri(currentTextIntentUri.value!!)
                             currentTextIntentUri.value = null
                         }) { Text(stringResource(Res.string.pref_trees_title)) }
                     }

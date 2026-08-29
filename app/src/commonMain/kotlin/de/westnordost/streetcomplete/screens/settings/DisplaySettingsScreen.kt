@@ -1,12 +1,7 @@
 package de.westnordost.streetcomplete.screens.settings
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.provider.OpenableColumns
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -46,15 +41,22 @@ import de.westnordost.streetcomplete.ui.common.BackIcon
 import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
 import de.westnordost.streetcomplete.ui.common.settings.Preference
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.copyTo
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.openFilePicker
+import io.github.vinceglb.filekit.exists
+import io.github.vinceglb.filekit.filesDir
+import io.github.vinceglb.filekit.readString
 import io.ticofab.androidgpxparser.parser.GPXParser
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import java.io.File
-import java.io.IOException
 
 @Composable
 fun DisplaySettingsScreen(
@@ -144,33 +146,13 @@ fun DisplaySettingsScreen(
                 )
             if (showGpxDialog) {
                 val ctx = LocalContext.current
-                val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                    val uri = it.data?.data
-                    if (it.resultCode != Activity.RESULT_OK || uri == null) {
-                        ctx.toast2(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
-                        return@rememberLauncherForActivityResult
-                    }
-                    ctx.getActivity2()?.contentResolver?.query(uri, null, null, null, null).use {
-                        if (it != null && it.moveToFirst()) {
-                            val idx = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                            if (idx >= 0 && !it.getString(idx).endsWith(".gpx")) {
-                                ctx.toast2(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
-                                return@rememberLauncherForActivityResult
-                            }
-                        }
-                    }
-                    try {
-                        ctx.getActivity2()?.contentResolver?.openInputStream(uri)?.use { it.bufferedReader().use { reader ->
-                            File(ctx.getExternalFilesDir(null), GPX_TRACK_FILE).writeText(reader.readText())
-                        } }
-                        gpx_track_changed = true
-                        showGpxDialog = false
-                        showGpxDialog = true
-                    } catch (e: IOException) {
-                        ctx.toast2(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
-                    }
+                suspend fun getFile() {
+                    val file = FileKit.openFilePicker(FileKitType.File(".gpx")) ?: return
+                    file.copyTo(gpxFile)
+                    gpx_track_changed = true
+                    showGpxDialog = false
+                    showGpxDialog = true
                 }
-                val gpxFileExists = ctx.getExternalFilesDir(null)?.let { File(it, GPX_TRACK_FILE) }?.exists() == true
                 val downloadController: DownloadController = koinInject()
                 AlertDialog(
                     onDismissRequest = { showGpxDialog = false },
@@ -192,20 +174,14 @@ fun DisplaySettingsScreen(
                                         }
                                     }
                                 },
-                                enabled = gpxFileExists
+                                enabled = gpxFile.exists()
                             ) { Text(stringResource(Res.string.pref_gpx_track_download), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
                             Button(
                                 onClick = {
-                                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                                        addCategory(Intent.CATEGORY_OPENABLE)
-                                        // actually the type should be application/gpx+xml, but often doesn't work
-                                        // for some phones only application/octet-stream works, for others it doesn't, so just allow everything
-                                        type = "*/*"
-                                    }
-                                    launcher.launch(intent)
+                                    scope.launch(Dispatchers.IO) { getFile() }
                                 }
                             ) { Text(stringResource(Res.string.pref_gpx_track_provide), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
-                            if (gpxFileExists)
+                            if (gpxFile.exists())
                                 SwitchPreference(
                                     name = stringResource(Res.string.pref_gpx_track_enable),
                                     default = false,
@@ -216,25 +192,13 @@ fun DisplaySettingsScreen(
                 )
             }
             if (showGeometryDialog) {
-                val ctx = LocalContext.current
-                val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                    val uri = it.data?.data
-                    if (it.resultCode != Activity.RESULT_OK || uri == null) {
-                        ctx.toast2(R.string.file_loading_error, Toast.LENGTH_LONG)
-                        return@rememberLauncherForActivityResult
-                    }
-                    try {
-                        ctx.getActivity2()?.contentResolver?.openInputStream(uri)?.use { it.bufferedReader().use { reader ->
-                            File(ctx.getExternalFilesDir(null), CUSTOM_GEOMETRY_FILE).writeText(reader.readText())
-                        } }
-                        custom_geometry_changed = true
-                        showGeometryDialog = false
-                        showGeometryDialog = true
-                    } catch (e: IOException) {
-                        ctx.toast2(R.string.file_loading_error, Toast.LENGTH_LONG)
-                    }
+                suspend fun getFile() {
+                    val file = FileKit.openFilePicker(FileKitType.File(".gpx")) ?: return
+                    file.copyTo(customGeometryFile)
+                    custom_geometry_changed = true
+                    showGeometryDialog = false
+                    showGeometryDialog = true
                 }
-                val fileExists = ctx.getExternalFilesDir(null)?.let { File(it, CUSTOM_GEOMETRY_FILE) }?.exists() == true
                 AlertDialog(
                     onDismissRequest = { showGeometryDialog = false },
                     confirmButton = {
@@ -246,14 +210,10 @@ fun DisplaySettingsScreen(
                             Text(stringResource(Res.string.pref_custom_geometry_info))
                             Button(
                                 onClick = {
-                                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                                        addCategory(Intent.CATEGORY_OPENABLE)
-                                        type = "*/*"
-                                    }
-                                    launcher.launch(intent)
+                                    scope.launch(Dispatchers.IO) { getFile() }
                                 }
                             ) { Text(stringResource(Res.string.file_provide), Modifier.fillMaxWidth(), textAlign = TextAlign.Center) }
-                            if (fileExists)
+                            if (customGeometryFile.exists())
                                 SwitchPreference(
                                     name = stringResource(Res.string.quest_enabled),
                                     default = false,
@@ -271,15 +231,14 @@ fun loadGpxTrackPoints(context: Context, complain: Boolean = false): List<LatLon
     // load gpx file as one long track, no matter how it's stored internally (for now)
     // <trkpt lat="..." lon="..."><ele>...</ele></trkpt>
     // <wpt lon="..." lat="...">
-    val gpxFile = context.getExternalFilesDir(null)?.let { File(it, GPX_TRACK_FILE) }
-    if (gpxFile?.exists() != true) {
+    if (!gpxFile.exists()) {
         if (complain)
             context.toast2(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
         return null
     }
 
-    val gpxPoints = runCatching {
-        GPXParser().parse(gpxFile.inputStream()).tracks.map { track ->
+    val gpxPoints = runCatching { runBlocking {
+        GPXParser().parse(gpxFile.readString().byteInputStream()).tracks.map { track ->
             track.trackSegments.map { segment ->
                 segment.trackPoints
             }
@@ -290,7 +249,7 @@ fun loadGpxTrackPoints(context: Context, complain: Boolean = false): List<LatLon
                     longitude = trackPoint.longitude
                 )
             }
-    }.getOrNull()
+    } }.getOrNull()
 
     if ((gpxPoints?.size ?: 0) < 2) {
         context.toast2(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
@@ -299,8 +258,8 @@ fun loadGpxTrackPoints(context: Context, complain: Boolean = false): List<LatLon
     return gpxPoints
 }
 
-private const val GPX_TRACK_FILE = "display_track.gpx"
-const val CUSTOM_GEOMETRY_FILE = "customGeometry.geojson"
+private val gpxFile = PlatformFile(FileKit.filesDir, "display_track.gpx")
+val customGeometryFile = PlatformFile(FileKit.filesDir, "customGeometry.geojson")
 
 var gpx_track_changed = false
 var custom_geometry_changed = false

@@ -76,13 +76,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import java.text.DateFormat
 import java.util.Date
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -114,6 +114,7 @@ fun EditTagsForm(
     val lastFeature = remember { featureDictionary.byTags(updatedTags).isSuggestion(false).find().firstOrNull() }
     val keySuggestions = remember { getKeySuggestions(lastFeature?.id, updatedTags, prefs, resources).toList() }
 
+    if (shownQuest == null) // better don't show behind the quest form, can still interact with some parts!
     BottomSheetFormScaffold(
         content = {
             ProvideTextStyle(MaterialTheme.typography.body1) {
@@ -211,20 +212,21 @@ fun EditTagsForm(
                                 ).firstOrNull()
                                 ?.let { prefs.getString(Prefs.CREATE_NODE_LAST_TAGS_FOR_FEATURE + it, "") }
                                 ?.let { Json.decodeFromString(it) }
-                            } catch (e: Exception) { null }
+                            } catch (_: Exception) { null }
                             if (previousTagsForFeature?.isNotEmpty() == true && previousTagsForFeature != originalElement.tags)
                                 IconButton({ updatedTags = previousTagsForFeature.toSortedMap() }, Modifier.size(56.dp)) {
                                     Icon(painterResource(Res.drawable.ic_undo_24), "redo", modifier = Modifier.scale(-0.7f, 0.7f))
                                 }
                         }
 
-                        var quests by remember { mutableStateOf(runBlocking { osmQuestController.createNonPoiQuestsForElement(questElement, geometry) }) }
                         val scope = rememberCoroutineScope { Dispatchers.IO }
                         var questsJob by remember { mutableStateOf<Job?>(null) }
+                        var quests by remember { mutableStateOf<List<OsmQuest>>(emptyList()) }
+                        LaunchedEffect(Unit) { quests = osmQuestController.createNonPoiQuestsForElement(originalElement.copy(tags = updatedTags, timestampEdited = nowAsEpochMilliseconds()), geometry) }
                         LaunchedEffect(updatedTags) {
                             questsJob?.cancel()
                             questsJob = scope.launch {
-                                delay(1000)
+                                delay(500.milliseconds)
                                 quests = osmQuestController.createNonPoiQuestsForElement(originalElement.copy(tags = updatedTags, timestampEdited = nowAsEpochMilliseconds()), geometry)
                             }
                         }

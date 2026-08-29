@@ -21,20 +21,24 @@ import de.westnordost.streetcomplete.data.overlays.OverlayColor
 import de.westnordost.streetcomplete.data.overlays.OverlayStyle
 import de.westnordost.streetcomplete.data.elementfilter.ParseException
 import de.westnordost.streetcomplete.data.meta.CountryInfo
+import de.westnordost.streetcomplete.data.osm.edits.create.CreateNodeAction
 import de.westnordost.streetcomplete.data.osm.edits.delete.DeletePoiNodeAction
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.overlays.Action
 import de.westnordost.streetcomplete.data.overlays.Edit
 import de.westnordost.streetcomplete.data.overlays.OverlayAction
 import de.westnordost.streetcomplete.data.preferences.Preferences
+import de.westnordost.streetcomplete.osm.toTags
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
+import de.westnordost.streetcomplete.screens.main.bottom_sheet.EditTagsForm
 import de.westnordost.streetcomplete.ui.common.overlay.OverlayForm
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.ConfirmDeleteDialog
 import de.westnordost.streetcomplete.util.getCurrentCustomOverlayPref
 import de.westnordost.streetcomplete.util.getNameLabel
 import de.westnordost.streetcomplete.util.ktx.isArea
+import de.westnordost.streetcomplete.util.logs.Log
 import org.jetbrains.compose.resources.stringResource
 import kotlin.collections.iterator
 import kotlin.math.abs
@@ -45,12 +49,12 @@ class CustomOverlay(val prefs: Preferences) : Overlay {
     override val icon = Res.drawable.ic_custom_overlay
     override val changesetComment = "Edit user-defined element selection"
     override val wikiLink: String = "Tags"
-    override val isCreateNodeEnabled get() = prefs.getString(Prefs.CUSTOM_OVERLAY_IDX_FILTER, "").startsWith("nodes")
+    override val isCreateNodeEnabled get() = prefs.getString(getCurrentCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_FILTER, prefs), "").startsWith("nodes")
 
     override fun getStyledElements(mapData: MapDataWithGeometry): Sequence<Pair<Element, OverlayStyle>> {
         val filter = try {
             prefs.getString(getCurrentCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_FILTER, prefs), "").toElementFilterExpression()
-        } catch (e: ParseException) { return emptySequence() }
+        } catch (_: ParseException) { return emptySequence() }
         val colorKeyPref = prefs.getString(getCurrentCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, prefs), "").let {
             if (it.startsWith("!")) it.substringAfter("!")
             else it
@@ -72,40 +76,45 @@ class CustomOverlay(val prefs: Preferences) : Overlay {
 
     @Composable
     override fun Form(on: (OverlayAction) -> Unit, element: Element?, geometry: ElementGeometry, countryInfo: CountryInfo) {
-        /* todo if element == null
-        showInBottomSheet(CreatePoiFragment.createWithPrefill(prefs.getString(Prefs.CUSTOM_OVERLAY_IDX_FILTER, "")!!.substringAfter("with ")))
-         */
         var confirmDeleteNode by remember { mutableStateOf<Node?>(null) }
-        OverlayForm(
-            on,
-            false,
-            false,
-            { },
-            otherAnswers = { listOfNotNull(
-                if (element is Node) {
-                    AnswerItem(stringResource(Res.string.quest_generic_answer_does_not_exist)) {
-                        confirmDeleteNode = element
-                    }
-                } else null
-            ) },
-        ) {
-            val colorKeyPref = prefs.getString(getCurrentCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, prefs), "")
-            val colorKeySelector = try {
-                val actualColorKeyPref = if (colorKeyPref.startsWith("!"))
-                    colorKeyPref.substringAfter("!")
-                else colorKeyPref
-                actualColorKeyPref.takeIf { it.isNotEmpty() }?.toRegex()
-            } catch (_: Exception) { null }
-            val colorTags = if (colorKeySelector != null)
-                    element?.tags?.filter { it.key.matches(colorKeySelector) }
+        if (element == null) {
+            val initialTags = remember { prefs.getString(getCurrentCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_FILTER, prefs), "").substringAfter("with ").toTags() }
+            Log.i("test", "inti $initialTags from ")
+            EditTagsForm(
+                onConfirmed = { on(Edit(CreateNodeAction(geometry.center, initialTags))) },
+                onDismiss = { on(Action.Dismiss) },
+                originalElement = Node(0, geometry.center, initialTags)
+            )
+        } else {
+            OverlayForm(
+                on = on,
+                isComplete = false,
+                hasChanges = false,
+                onClickOk = { },
+                otherAnswers = { listOfNotNull(
+                    if (element is Node) {
+                        AnswerItem(stringResource(Res.string.quest_generic_answer_does_not_exist)) {
+                            confirmDeleteNode = element
+                        }
+                    } else null
+                ) },
+            ) {
+                val colorKeyPref = prefs.getString(getCurrentCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, prefs), "")
+                val colorKeySelector = try {
+                    val actualColorKeyPref = if (colorKeyPref.startsWith("!"))
+                        colorKeyPref.substringAfter("!")
+                    else colorKeyPref
+                    actualColorKeyPref.takeIf { it.isNotEmpty() }?.toRegex()
+                } catch (_: Exception) { null }
+                val colorTags = if (colorKeySelector != null)
+                    element.tags.filter { it.key.matches(colorKeySelector) }
                 else null
-            if (colorTags != null)
+                if (colorTags != null)
                 Text(colorTags.entries.sortedBy { it.key }.joinToString("\n") { "${it.key} = ${it.value}" })
-            if (element != null) {
                 TextButton({
                     if (colorKeyPref.startsWith("!") && !colorKeyPref.contains(' '))
                         focusKey = colorKeyPref
-                    on(Action.EditTags) // todo: this is also in "...", need to remove it
+                    on(Action.EditTags)
                 }) {
                     Text(stringResource(Res.string.quest_generic_answer_show_edit_tags))
                 }

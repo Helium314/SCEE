@@ -187,7 +187,7 @@ fun OverlayCustomizer(
                     DropdownButton(
                         items = icons,
                         onSelectedItem = { icon = it.name },
-                        itemContent = { Image(painterResource(it), null, modifier = Modifier.width(56.dp)) },
+                        itemContent = { Image(painterResource(it), null, modifier = Modifier.width(48.dp)) },
                         selectedItem = icons.firstOrNull { it.name == icon } ?: Res.drawable.ic_custom_overlay,
                     )
                     TextField2(

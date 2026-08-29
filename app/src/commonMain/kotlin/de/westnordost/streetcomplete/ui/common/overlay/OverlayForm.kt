@@ -99,7 +99,6 @@ fun OverlayForm(
 
     @Composable
     fun createDefaultOtherAnswers(): List<AnswerItem> {
-        // todo: not if edit tags
         val result = ArrayList<AnswerItem>()
         val element = LocalElement.current
         if (element != null) {

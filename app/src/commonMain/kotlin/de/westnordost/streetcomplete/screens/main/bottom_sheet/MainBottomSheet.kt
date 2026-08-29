@@ -32,12 +32,9 @@ import de.westnordost.streetcomplete.screens.main.bottom_sheet.note.CreateNoteFo
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.overlay.OverlayFormContainer
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.quest.OsmQuestFormContainer
 import de.westnordost.streetcomplete.ui.common.dialogs.SurveyConfirmationDialog
-import de.westnordost.streetcomplete.ui.common.quest.LocalElement
 import de.westnordost.streetcomplete.ui.common.quest.LocalGetOffsetCallback
 import de.westnordost.streetcomplete.ui.common.quest.LocalMapMarkersCallback
 import de.westnordost.streetcomplete.ui.common.quest.LocalMapMetersPerDp
-import de.westnordost.streetcomplete.ui.common.quest.LocalMapRotation
-import de.westnordost.streetcomplete.ui.common.quest.LocalMapTilt
 import de.westnordost.streetcomplete.ui.common.quest.Marker
 import de.westnordost.streetcomplete.util.math.PositionOnWay
 import org.jetbrains.compose.resources.DrawableResource
@@ -171,13 +168,6 @@ fun MainBottomSheet(
                     } else {
                         confirmEdit = PendingEdit(shownBottomSheet.quest.type, shownBottomSheet.quest.geometry, action)
                     }
-                },
-                onAddNode = {
-                    viewModel.submitEdit(
-                        elementEditType = shownBottomSheet.quest.type,
-                        geometry = ElementPointGeometry(it.position),
-                        elementEditAction = CreateNodeAction(it.position, it.tags)
-                    )
                 },
                 onLeaveNote = { noteText, noteImagePaths, isGpx ->
                     viewModel.createNote(

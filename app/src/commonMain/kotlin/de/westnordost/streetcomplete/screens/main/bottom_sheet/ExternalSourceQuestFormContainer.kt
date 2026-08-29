@@ -17,6 +17,7 @@ import de.westnordost.streetcomplete.data.meta.CountryInfos
 import de.westnordost.streetcomplete.data.meta.get
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditAction
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
+import de.westnordost.streetcomplete.data.osm.edits.create.CreateNodeAction
 import de.westnordost.streetcomplete.data.osm.edits.delete.DeletePoiNodeAction
 import de.westnordost.streetcomplete.data.osm.edits.move.MoveNodeAction
 import de.westnordost.streetcomplete.data.osm.edits.split_way.SplitWayAction
@@ -71,7 +72,6 @@ import org.koin.compose.koinInject
 fun ExternalSourceQuestFormContainer(
     onDismiss: () -> Unit,
     onEdit: (action: ElementEditAction) -> Unit,
-    onAddNode: (node: Node) -> Unit,
     onLeaveNote: (noteText: String, noteImagePaths: List<String>, isGpx: Boolean) -> Unit,
     onHideQuest: (tempHide: Boolean) -> Unit,
     quest: ExternalSourceQuest,
@@ -116,7 +116,7 @@ fun ExternalSourceQuestFormContainer(
             Action.EditTags -> state = QuestFormState2.EditTags
             Action.ManageAccess -> showAccessManager = true
             Action.UnderConstruction -> showConstructionDialog = true
-            is AddNode -> onAddNode(action.node)
+            is AddNode -> onEdit(CreateNodeAction(action.node.position, action.node.tags))
             is EditElement -> onEdit(action.update)
         }
     }

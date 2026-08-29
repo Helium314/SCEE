@@ -1,7 +1,11 @@
 package de.westnordost.streetcomplete.screens.main
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
+import android.graphics.Color
 import android.graphics.PointF
+import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import android.view.KeyEvent
@@ -13,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.AnyThread
 import androidx.annotation.UiThread
+import androidx.appcompat.app.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.getValue
@@ -32,6 +37,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import androidx.lifecycle.lifecycleScope
+import de.westnordost.osmfeatures.Feature
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.osmfeatures.GeometryType
 import de.westnordost.streetcomplete.ApplicationConstants
@@ -90,7 +96,6 @@ import de.westnordost.streetcomplete.screens.settings.SettingsActivity
 import de.westnordost.streetcomplete.screens.settings.custom_geometry_changed
 import de.westnordost.streetcomplete.screens.settings.gpx_track_changed
 import de.westnordost.streetcomplete.screens.user.UserActivity
-import de.westnordost.streetcomplete.ui.common.dialogs.AlertDialog
 import de.westnordost.streetcomplete.ui.common.feature.FeatureSearchDialog
 import de.westnordost.streetcomplete.ui.common.quest.MapClick
 import de.westnordost.streetcomplete.ui.common.quest.Marker
@@ -104,6 +109,7 @@ import de.westnordost.streetcomplete.util.ktx.toLatLon
 import de.westnordost.streetcomplete.util.ktx.toList
 import de.westnordost.streetcomplete.util.ktx.toOffset
 import de.westnordost.streetcomplete.util.ktx.toast
+import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.area
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import de.westnordost.streetcomplete.util.math.enlargedBy
@@ -352,7 +358,7 @@ class MainActivity :
                 )
             }
             if (currentTextIntentUri.value != null) {
-                AlertDialog(
+                de.westnordost.streetcomplete.ui.common.dialogs.AlertDialog(
                     onDismissRequest = { currentTextIntentUri.value = null },
                     buttonRow = {
                         TextButton({ currentTextIntentUri.value = null }) { Text(stringResource(Res.string.cancel)) }

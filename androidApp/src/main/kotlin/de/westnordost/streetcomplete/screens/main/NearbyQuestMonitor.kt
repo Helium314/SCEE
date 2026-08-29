@@ -36,7 +36,6 @@ import de.westnordost.streetcomplete.data.quest.Quest
 import de.westnordost.streetcomplete.data.quest.VisibleQuestsSource
 import de.westnordost.streetcomplete.util.buildGeoUri
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
-import de.westnordost.streetcomplete.util.ktx.toLatLon
 import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.logs.Log
 import de.westnordost.streetcomplete.util.math.distanceTo
@@ -103,7 +102,7 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
             val pi = PendingIntentCompat.getActivity(applicationContext, 0, int, 0, true)
             val notification = NotificationCompat.Builder(this, MONITOR_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_app_notification)
-                .setContentTitle(getString(R.string.app_name))
+                .setContentTitle(if (ApplicationConstants.DEBUG) "SCEE Dev" else "SCEE")
                 .setContentText(getString(R.string.quest_monitor_running))
                 .setContentIntent(pi)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
@@ -143,8 +142,9 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
             if (download) {
                 // check whether surrounding area should be downloaded
                 if (downloader.isDownloadInProgress) return // download already running
-                val activeNetworkInfo = getSystemService<ConnectivityManager>()?.activeNetworkInfo ?: return
-                if (!activeNetworkInfo.isConnected) return // we are not connected
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
+                        && getSystemService<ConnectivityManager>()?.activeNetworkInfo?.isConnected == false)
+                    return // we are not connected (or we're not allowed to check)
                 val ignoreOlderThan = nowAsEpochMilliseconds() - dataRetainTime
                 val tile = loc.enclosingTilePos(ApplicationConstants.DOWNLOAD_TILE_ZOOM).toTilesRect()
                 if (downloadedTilesSource.contains(tile, ignoreOlderThan)) return // we already have the area
@@ -175,10 +175,7 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
         super.onDestroy()
         locationManager.removeUpdates(this)
         NotificationManagerCompat.from(this).cancel(FOUND_NOTIFICATION_ID)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            stopForeground(STOP_FOREGROUND_REMOVE)
-        else
-            stopForeground(true) // why the fuck can't it detect that the non-deprecated alternative is not available below N?
+        stopForeground(STOP_FOREGROUND_REMOVE)
         running = false
     }
     companion object {
@@ -191,3 +188,5 @@ private const val MONITOR_NOTIFICATION_ID = 759743090
 private const val FOUND_NOTIFICATION_ID = 16540685
 private const val MONITOR_CHANNEL_ID = "quest_monitor"
 private const val FOUND_CHANNEL_ID = "quest_found"
+
+private fun Location.toLatLon() = LatLon(longitude, longitude)

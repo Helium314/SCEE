@@ -34,7 +34,7 @@ suspend fun createSyncNotification(context: Context, cancelIntent: PendingIntent
 
     return NotificationCompat.Builder(context, ApplicationConstants.NOTIFICATIONS_CHANNEL_SYNC)
         .setSmallIcon(R.drawable.ic_app_notification)
-        .setContentTitle(getString(Res.string.app_name))
+        .setContentTitle(if (ApplicationConstants.DEBUG) "SCEE Dev" else "SCEE")
         .setTicker(getString(Res.string.notification_syncing))
         .setOngoing(true)
         .setCategory(NotificationCompat.CATEGORY_PROGRESS)

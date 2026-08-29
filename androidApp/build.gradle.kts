@@ -9,12 +9,26 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+repositories {
+    google()
+    mavenCentral()
+    // for com.github.ticofab:android-gpx-parser
+    maven { url = uri("https://www.jitpack.io") }
+}
+
 android {
     namespace = "de.westnordost.streetcomplete.app"
     compileSdk = 37
 
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
     defaultConfig {
-        applicationId = "de.westnordost.streetcomplete"
+        applicationId = "de.westnordost.streetcomplete.expert"
         minSdk = 25
         targetSdk = 37
         versionCode = appVersionCode

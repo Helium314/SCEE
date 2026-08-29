@@ -26,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,6 +35,7 @@ import de.westnordost.streetcomplete.data.osmtracks.Trackpoint
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.screens.main.bottom_sheet.note.rememberTrackpointsPainter
+import de.westnordost.streetcomplete.screens.settings.fullSizePhotosDir
 import de.westnordost.streetcomplete.ui.common.dialogs.ConfirmDiscardDialog
 import de.westnordost.streetcomplete.ui.util.photo.compressPhotoAndOverwrite
 import de.westnordost.streetcomplete.ui.util.photo.createOpenCameraSettings
@@ -44,6 +44,8 @@ import de.westnordost.streetcomplete.ui.util.photo.rememberHasCamera
 import de.westnordost.streetcomplete.util.image.fileBitmapPainter
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.copyTo
+import io.github.vinceglb.filekit.createDirectories
 import io.github.vinceglb.filekit.dialogs.compose.rememberCameraPickerLauncher
 import io.github.vinceglb.filekit.name
 import io.github.vinceglb.filekit.path
@@ -54,7 +56,6 @@ import kotlinx.io.files.FileSystem
 import kotlinx.io.files.Path
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import java.io.File
 
 /** Form in which you can leave a note, with images */
 @OptIn(ExperimentalComposeUiApi::class)
@@ -75,7 +76,6 @@ fun NoteForm(
     onCloseCheck: (Boolean) -> Unit = {},
 ) {
     val prefs: Preferences = koinInject()
-    val externalFiles = LocalContext.current.getExternalFilesDir(null)
     val hasCamera = rememberHasCamera()
     var path by rememberSaveable { mutableStateOf<String?>(null) }
     val coroutineScope = rememberCoroutineScope()
@@ -83,10 +83,10 @@ fun NoteForm(
         val path2 = path ?: return@rememberCameraPickerLauncher
         coroutineScope.launch(Dispatchers.IO) {
             if (file != null) {
-                if (prefs.getBoolean(Prefs.SAVE_PHOTOS, false) && externalFiles != null) {
-                    val target = File(externalFiles.absolutePath + File.separator + "full_photos", file.name)
-                    target.parentFile?.mkdirs()
-                    File(file.path).copyTo(target)
+                if (prefs.getBoolean(Prefs.SAVE_PHOTOS, false)) {
+                    val target = PlatformFile(fullSizePhotosDir, file.name)
+                    fullSizePhotosDir.createDirectories()
+                    file.copyTo(target)
                 }
                 FileKit.compressPhotoAndOverwrite(PlatformFile(path2))
                 onImagePathsChange(imagePaths + path2)

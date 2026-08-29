@@ -1,10 +1,5 @@
 package de.westnordost.streetcomplete.screens.settings
 
-import android.app.Activity
-import android.content.Intent
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -22,25 +17,41 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import de.westnordost.streetcomplete.Prefs
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
 import de.westnordost.streetcomplete.data.osmnotes.notequests.getRawBlockList
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.BackIcon
+import de.westnordost.streetcomplete.ui.common.ToastPopup
 import de.westnordost.streetcomplete.ui.common.dialogs.TextInputDialog
 import de.westnordost.streetcomplete.ui.common.settings.Preference
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.delete
+import io.github.vinceglb.filekit.dialogs.openFileSaver
+import io.github.vinceglb.filekit.exists
+import io.github.vinceglb.filekit.extension
+import io.github.vinceglb.filekit.filesDir
+import io.github.vinceglb.filekit.isDirectory
+import io.github.vinceglb.filekit.list
+import io.github.vinceglb.filekit.name
+import io.github.vinceglb.filekit.readString
+import io.github.vinceglb.filekit.sink
+import io.github.vinceglb.filekit.source
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.io.asInputStream
+import kotlinx.io.asOutputStream
+import kotlinx.io.buffered
 import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import java.io.File
-import java.io.FileInputStream
-import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -48,6 +59,8 @@ import java.util.zip.ZipOutputStream
 fun NoteSettingsScreen(
     onClickBack: () -> Unit,
 ) {
+    val scope = rememberCoroutineScope { Dispatchers.IO }
+    var error by remember { mutableStateOf<StringResource?>(null) }
     Column(Modifier.fillMaxSize()) {
         TopAppBar(
             title = { Text(stringResource(Res.string.pref_screen_notes)) },
@@ -64,7 +77,6 @@ fun NoteSettingsScreen(
                 )
         ) {
             var showHideNotesDialog by remember { mutableStateOf(false) }
-            val ctx = LocalContext.current
             SwitchPreference(
                 name = stringResource(Res.string.pref_show_gpx_button_title),
                 description = stringResource(Res.string.pref_show_gpx_button_summary),
@@ -104,35 +116,29 @@ fun NoteSettingsScreen(
                 name = stringResource(Res.string.pref_hide_notes_title),
                 onClick = { showHideNotesDialog = true },
             )
-            val gpxLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode != Activity.RESULT_OK || it.data == null)
-                    return@rememberLauncherForActivityResult
-                val uri = it.data?.data ?: return@rememberLauncherForActivityResult
-                val output = ctx.getActivity2()?.contentResolver?.openOutputStream(uri) ?: return@rememberLauncherForActivityResult
-                val os = output.buffered()
+            suspend fun saveGpxNotes(file: PlatformFile) {
+                val os = file.sink().buffered().asOutputStream()
                 try {
                     // read gpx and extract images
-                    val filesDir = ctx.getExternalFilesDir(null)
-                    val gpxFile = File(filesDir, "notes.gpx")
-                    val files = mutableListOf(gpxFile)
-                    val gpxText = gpxFile.readText(Charsets.UTF_8)
-                    val picturesDir = File(filesDir, "Pictures")
+                    val files = mutableListOf(gpxNotesFile)
+                    val gpxText = gpxNotesFile.readString()
+                    val picturesDir = FileKit.filesDir
                     // get all files in pictures dir and check whether they occur in gpxText
-                    if (picturesDir.isDirectory) {
-                        picturesDir.walk().forEach {
-                            if (!it.isDirectory && gpxText.contains(it.name))
+                    if (picturesDir.isDirectory()) {
+                        picturesDir.list().forEach {
+                            if (!it.isDirectory() && it.extension == "jpg" && gpxText.contains(it.name))
                                 files.add(it)
                         }
                     }
-                    filesDir?.walk()?.forEach {
-                        if (it.name.startsWith("track_") && it.name.endsWith(".gpx") && gpxText.contains(it.name))
+                    gpxNotesDir.list().forEach {
+                        if (it.name.startsWith("track_") && it.extension == "gpx" && gpxText.contains(it.name))
                             files.add(it)
                     }
 
                     // write files to zip
                     val zipStream = ZipOutputStream(os)
                     files.forEach {
-                        val fileStream = FileInputStream(it).buffered()
+                        val fileStream = it.source().buffered().asInputStream().buffered()
                         zipStream.putNextEntry(ZipEntry(it.name))
                         fileStream.copyTo(zipStream, 1024)
                         fileStream.close()
@@ -140,52 +146,44 @@ fun NoteSettingsScreen(
                     }
                     zipStream.close()
                     files.forEach { it.delete() }
-                } catch (e: IOException) {
-                    ctx.toast2(ctx.getString(R.string.pref_save_file_error), Toast.LENGTH_LONG)
+                } catch (_: Exception) {
+                    error = Res.string.pref_save_file_error
                 }
                 os.close()
-                output.close()
             }
             Preference(
                 name = stringResource(Res.string.pref_save_gpx),
                 onClick = {
-                    if (File(ctx.getExternalFilesDir(null), "notes.gpx").exists()) {
-                        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                            addCategory(Intent.CATEGORY_OPENABLE)
-                            putExtra(Intent.EXTRA_TITLE, "notes.zip")
-                            type = "application/zip"
+                    if (gpxNotesFile.exists()) {
+                        scope.launch {
+                            val file = FileKit.openFileSaver("notes", defaultExtension = "zip")
+                            if (file != null) saveGpxNotes(file)
                         }
-                        gpxLauncher.launch(intent)
                     } else {
-                        ctx.toast2(ctx.getString(R.string.pref_files_not_found), Toast.LENGTH_LONG)
+                        error = Res.string.pref_files_not_found
                     }
                 },
             )
-            val photoLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode != Activity.RESULT_OK || it.data == null)
-                    return@rememberLauncherForActivityResult
-                val uri = it.data?.data ?: return@rememberLauncherForActivityResult
-                val output = ctx.getActivity2()?.contentResolver?.openOutputStream(uri) ?: return@rememberLauncherForActivityResult
-                val os = output.buffered()
+            suspend fun saveFullSizePhotos(file: PlatformFile) {
+                val os = file.sink().buffered().asOutputStream()
                 try {
-                    val filesDir = ctx.getExternalFilesDir(null)
-                    val files = mutableListOf<File>()
-                    val picturesDir = File(filesDir, "full_photos")
+                    val files = mutableListOf<PlatformFile>()
+                    val picturesDir = fullSizePhotosDir
                     // get all files in pictures dir
-                    if (picturesDir.isDirectory) {
-                        picturesDir.walk().forEach {
-                            if (!it.isDirectory) files.add(it)
+                    if (picturesDir.isDirectory()) {
+                        picturesDir.list().forEach {
+                            if (!it.isDirectory()) files.add(it)
                         }
                     }
                     else { // we checked for this, but better be sure
-                        ctx.toast2(ctx.getString(R.string.pref_files_not_found), Toast.LENGTH_LONG)
-                        return@rememberLauncherForActivityResult
+                        error = Res.string.pref_files_not_found
+                        return
                     }
 
                     // write files to zip
                     val zipStream = ZipOutputStream(os)
                     files.forEach {
-                        val fileStream = FileInputStream(it).buffered()
+                        val fileStream = it.source().buffered().asInputStream().buffered()
                         zipStream.putNextEntry(ZipEntry(it.name))
                         fileStream.copyTo(zipStream, 1024)
                         fileStream.close()
@@ -193,25 +191,21 @@ fun NoteSettingsScreen(
                     }
                     zipStream.close()
                     files.forEach { it.delete() }
-                } catch (e: IOException) {
-                    ctx.toast2(ctx.getString(R.string.pref_save_file_error), Toast.LENGTH_LONG)
+                } catch (e: Exception) {
+                    error = Res.string.pref_save_file_error
                 }
                 os.close()
-                output.close()
             }
             Preference(
                 name = stringResource(Res.string.pref_get_photos_title),
                 onClick = {
-                    val dir = File(ctx.getExternalFilesDir(null), "full_photos")
-                    if (dir.exists() && dir.isDirectory && dir.list()?.isNotEmpty() == true) {
-                        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                            addCategory(Intent.CATEGORY_OPENABLE)
-                            putExtra(Intent.EXTRA_TITLE, "full_photos.zip")
-                            type = "application/zip"
+                    if (fullSizePhotosDir.exists() && fullSizePhotosDir.isDirectory() && fullSizePhotosDir.list().isNotEmpty()) {
+                        scope.launch {
+                            val file = FileKit.openFileSaver("full_photos", defaultExtension = "zip")
+                            if (file != null) saveFullSizePhotos(file)
                         }
-                        photoLauncher.launch(intent)
                     } else {
-                        ctx.toast2(ctx.getString(R.string.pref_files_not_found), Toast.LENGTH_LONG)
+                        error = Res.string.pref_files_not_found
                     }
                 },
             )
@@ -233,4 +227,12 @@ fun NoteSettingsScreen(
             }
         }
     }
+    if (error != null)
+        ToastPopup({ error = null }, stringResource(error!!))
 }
+
+val gpxNotesDir = PlatformFile(FileKit.filesDir, "gpx_notes")
+
+val gpxNotesFile = PlatformFile(gpxNotesDir, "notex.gpx")
+
+val fullSizePhotosDir = PlatformFile(FileKit.filesDir, "full_photos")

@@ -1,6 +1,5 @@
 package de.westnordost.streetcomplete.data.osmnotes.edits
 
-import android.content.Context
 import de.westnordost.streetcomplete.data.osm.mapdata.ElementIdUpdate
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osmnotes.Note
@@ -14,8 +13,7 @@ interface NoteEditsController : NoteEditsSource {
         text: String? = null,
         imagePaths: List<String> = emptyList(),
         track: List<Trackpoint>? = null,
-        isGpxNote: Boolean = false,
-        context: Context? = null
+        isGpxNote: Boolean = false
     )
 
     fun getOldestNeedingImagesActivation(): NoteEdit?

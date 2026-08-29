@@ -56,7 +56,7 @@ fun QuickSettingsDropdown(
         }
         DropdownMenuItem(onClick = {
                 onDismissRequest()
-                prefs.prefs.putString(Prefs.THEME_BACKGROUND, if (prefs.getString(Prefs.THEME_BACKGROUND, "MAP") == "MAP") "AERIAL" else "MAP")
+                prefs.putString(Prefs.THEME_BACKGROUND, if (prefs.getString(Prefs.THEME_BACKGROUND, "MAP") == "MAP") "AERIAL" else "MAP")
             })
         {
             Text(text = stringResource(Res.string.quick_switch_map_background))

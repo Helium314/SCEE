@@ -225,7 +225,7 @@ class MainMapFragment : MapFragment() {
         viewLifecycleOwner.lifecycle.addObserver(tracksMapComponent!!)
 
         pinsMapComponent = PinsMapComponent(context, context.contentResolver, map, mapImages!!, prefs, ::onClickPin)
-        geometryMapComponent = FocusGeometryMapComponent(context.contentResolver, map, prefs.prefs)
+        geometryMapComponent = FocusGeometryMapComponent(context.contentResolver, map, prefs)
         viewLifecycleOwner.lifecycle.addObserver(geometryMapComponent!!)
 
         styleableOverlayMapComponent = StyleableOverlayMapComponent(context, map, mapImages!!, fingerRadius, ::onClickElement)
@@ -279,7 +279,7 @@ class MainMapFragment : MapFragment() {
         restoreMapState()
         centerCurrentPositionIfFollowing()
 
-        questPinsManager = QuestPinsManager(map, pinsMapComponent!!, questTypeOrderSource, questTypeRegistry, visibleQuestsSource, prefs.prefs, mapDataSource, selectedOverlaySource)
+        questPinsManager = QuestPinsManager(map, pinsMapComponent!!, questTypeOrderSource, questTypeRegistry, visibleQuestsSource, prefs, mapDataSource, selectedOverlaySource)
         questPinsManager!!.isVisible = pinMode == PinMode.QUESTS
         viewLifecycleOwner.lifecycle.addObserver(questPinsManager!!)
 
@@ -290,7 +290,7 @@ class MainMapFragment : MapFragment() {
         styleableOverlayManager = StyleableOverlayManager(map, styleableOverlayMapComponent!!, mapDataSource, selectedOverlaySource, levelFilter)
         viewLifecycleOwner.lifecycle.addObserver(styleableOverlayManager!!)
 
-        downloadedAreaManager = DownloadedAreaManager(downloadedAreaMapComponent!!, downloadedTilesSource, prefs.prefs)
+        downloadedAreaManager = DownloadedAreaManager(downloadedAreaMapComponent!!, downloadedTilesSource, prefs)
         viewLifecycleOwner.lifecycle.addObserver(downloadedAreaManager!!)
 
         onSelectedOverlayChanged()

@@ -165,7 +165,7 @@ fun UiSettingsScreen(
     if (showRotateAngleDialog)
         TextInputDialog(
             onDismissRequest = { showRotateAngleDialog = false },
-            onConfirmed = { prefs.prefs.putFloat(Prefs.ROTATE_ANGLE_THRESHOLD, it.toFloatOrNull() ?: 1.5f) },
+            onConfirmed = { prefs.putFloat(Prefs.ROTATE_ANGLE_THRESHOLD, it.toFloatOrNull() ?: 1.5f) },
             text = prefs.getFloat(Prefs.ROTATE_ANGLE_THRESHOLD, 1.5f).toString(),
             title = { Text(stringResource(Res.string.pref_rotate_angle_threshold_title)) },
             //textInputLabel = { Text(stringResource(Res.string.pref_search_more_languages_summary)) },
@@ -190,7 +190,7 @@ fun UiSettingsScreen(
             buttonRow = {
                 TextButton({ showNearbyQuestDialog = false }) { Text(stringResource(Res.string.cancel)) }
                 TextButton({
-                    prefs.prefs.putFloat(Prefs.SHOW_NEARBY_QUESTS_DISTANCE, (distance.text.toFloatOrNull() ?: 0f)
+                    prefs.putFloat(Prefs.SHOW_NEARBY_QUESTS_DISTANCE, (distance.text.toFloatOrNull() ?: 0f)
                         .coerceAtLeast(0.0f).coerceAtMost(10.0f))
                     showNearbyQuestDialog = false
                 }) { Text(stringResource(Res.string.ok)) }

@@ -34,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.core.content.edit
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.ConflictAlgorithm
@@ -107,10 +106,10 @@ fun DataManagementScreen(
     var showExportDialog by remember { mutableStateOf(false) }
     var showImportDialog by remember { mutableStateOf(false) }
     var showRasterUrlDialog by remember { mutableStateOf(false) }
-    var exportPresets by remember { mutableStateOf<PlatformFile?>(null) }
-    var exportOverlays by remember { mutableStateOf<PlatformFile?>(null) }
-    var importPresets by remember { mutableStateOf<PlatformFile?>(null) }
-    var importOverlays by remember { mutableStateOf<PlatformFile?>(null) }
+    var exportPresetsFile by remember { mutableStateOf<PlatformFile?>(null) }
+    var exportOverlaysFile by remember { mutableStateOf<PlatformFile?>(null) }
+    var importPresetsFile by remember { mutableStateOf<PlatformFile?>(null) }
+    var importOverlaysFile by remember { mutableStateOf<PlatformFile?>(null) }
     var currentError by remember { mutableStateOf<StringResource?>(null) }
     Column(Modifier.fillMaxSize()) {
         TopAppBar(
@@ -203,13 +202,13 @@ fun DataManagementScreen(
                 buttonRow = { TextButton({ showExportDialog = false }) { Text(stringResource(Res.string.cancel)) } },
                 text = {
                     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Button({ saveFile("settings") { exportSettings(it) } }, Modifier.fillMaxWidth())
+                        Button({ saveFile("settings") { exportSettings(it, prefs) } }, Modifier.fillMaxWidth())
                             { Text(stringResource(Res.string.import_export_settings)) }
                         Button({ saveFile("hidden_quests") { exportHidden(it, db) } }, Modifier.fillMaxWidth())
                             { Text(stringResource(Res.string.import_export_hidden_quests)) }
-                        Button({ saveFile("presets") { exportPresets = it } }, Modifier.fillMaxWidth())
+                        Button({ saveFile("presets") { exportPresetsFile = it } }, Modifier.fillMaxWidth())
                             { Text(stringResource(Res.string.import_export_presets)) }
-                        Button({ saveFile("overlays") { exportOverlays = it } }, Modifier.fillMaxWidth())
+                        Button({ saveFile("overlays") { exportOverlaysFile = it } }, Modifier.fillMaxWidth())
                             { Text(stringResource(Res.string.import_export_custom_overlays)) }
                     }
                 }
@@ -226,13 +225,13 @@ fun DataManagementScreen(
                 buttonRow = { TextButton({ showImportDialog = false }) { Text(stringResource(Res.string.cancel)) } },
                 text = {
                     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Button({ loadFile { if (!importSettings(it, osmoseDao, externalSourceQuestController)) currentError = Res.string.import_error } }, Modifier.fillMaxWidth())
+                        Button({ loadFile { if (!importSettings(it, osmoseDao, externalSourceQuestController, prefs)) currentError = Res.string.import_error } }, Modifier.fillMaxWidth())
                         { Text(stringResource(Res.string.import_export_settings)) }
                         Button({ loadFile { importHidden(it, db, visibleEditTypeController) { currentError = it } } }, Modifier.fillMaxWidth())
                         { Text(stringResource(Res.string.import_export_hidden_quests)) }
-                        Button({ loadFile { importPresets = it } }, Modifier.fillMaxWidth())
+                        Button({ loadFile { importPresetsFile = it } }, Modifier.fillMaxWidth())
                         { Text(stringResource(Res.string.import_export_presets)) }
-                        Button({ loadFile { importOverlays = it } }, Modifier.fillMaxWidth())
+                        Button({ loadFile { importOverlaysFile = it } }, Modifier.fillMaxWidth())
                         { Text(stringResource(Res.string.import_export_custom_overlays)) }
                     }
                 }
@@ -289,13 +288,13 @@ fun DataManagementScreen(
                 }
             )
         }
-        if (exportPresets != null) {
+        if (exportPresetsFile != null) {
             val allPresets = mutableListOf<EditTypePreset>()
             allPresets.add(EditTypePreset(0, stringResource(Res.string.quest_presets_default_name)))
             allPresets.addAll(editTypePresetsController.getAll())
             var selectedPresets by remember { mutableStateOf(setOf<EditTypePreset>()) }
             AlertDialog(
-                onDismissRequest = { exportPresets = null },
+                onDismissRequest = { exportPresetsFile = null },
                 title = { Text(stringResource(Res.string.import_export_presets_select)) },
                 text = {
                     CheckboxGroup(
@@ -306,19 +305,19 @@ fun DataManagementScreen(
                     )
                 },
                 buttonRow = {
-                    TextButton({ exportPresets = null }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({ exportPresetsFile = null }) { Text(stringResource(Res.string.cancel)) }
                     TextButton({
-                        exportPresets(selectedPresets.map { it.id }, exportPresets!!, db, urlConfigController)
-                        exportPresets = null
+                        exportPresets(selectedPresets.map { it.id }, exportPresetsFile!!, db, urlConfigController, prefs)
+                        exportPresetsFile = null
                     }, enabled = selectedPresets.isNotEmpty()) { Text(stringResource(Res.string.ok)) }
                 }
             )
         }
-        if (exportOverlays != null) {
+        if (exportOverlaysFile != null) {
             val allOverlays = getFakeCustomOverlays(prefs, false)
             var selectedOverlays by remember { mutableStateOf(setOf<Overlay>()) }
             AlertDialog(
-                onDismissRequest = { exportOverlays = null },
+                onDismissRequest = { exportOverlaysFile = null },
                 title = { Text(stringResource(Res.string.import_export_presets_select)) },
                 text = {
                     CheckboxGroup(
@@ -329,51 +328,51 @@ fun DataManagementScreen(
                     )
                 },
                 buttonRow = {
-                    TextButton({ exportOverlays = null }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({ exportOverlaysFile = null }) { Text(stringResource(Res.string.cancel)) }
                     TextButton({
-                        exportCustomOverlays(selectedOverlays.map { it.name }, exportOverlays!!)
-                        exportOverlays = null
+                        exportCustomOverlays(selectedOverlays.map { it.name }, exportOverlaysFile!!, prefs)
+                        exportOverlaysFile = null
                     }, enabled = selectedOverlays.isNotEmpty()) { Text(stringResource(Res.string.ok)) }
                 }
             )
         }
-        if (importPresets != null) {
-            val lines = remember { importLinesAndCheck(importPresets!!, BACKUP_PRESETS, db) { currentError = it } }
+        if (importPresetsFile != null) {
+            val lines = remember { importLinesAndCheck(importPresetsFile!!, BACKUP_PRESETS, db) { currentError = it } }
             if (lines.isEmpty())
-                importPresets = null
+                importPresetsFile = null
             AlertDialog(
-                onDismissRequest = { importPresets = null },
+                onDismissRequest = { importPresetsFile = null },
                 text = { stringResource(Res.string.import_presets_overlays_message) },
                 title = { Text(stringResource(Res.string.pref_import)) },
                 buttonRow = {
-                    TextButton({ importPresets = null }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({ importPresetsFile = null }) { Text(stringResource(Res.string.cancel)) }
                     TextButton({
-                        importPresets(lines, true, db, visibleEditTypeController)
-                        importPresets = null
+                        importPresets(lines, true, db, visibleEditTypeController, prefs)
+                        importPresetsFile = null
                     }) { Text(stringResource(Res.string.import_presets_overlays_replace)) }
                     TextButton({
-                        importPresets(lines, false, db, visibleEditTypeController)
-                        importPresets = null
+                        importPresets(lines, false, db, visibleEditTypeController, prefs)
+                        importPresetsFile = null
                     }) { Text(stringResource(Res.string.import_presets_overlays_add)) }
                 }
             )
         }
-        if (importOverlays != null) {
+        if (importOverlaysFile != null) {
             AlertDialog(
-                onDismissRequest = { importOverlays = null },
+                onDismissRequest = { importOverlaysFile = null },
                 text = { stringResource(Res.string.import_presets_overlays_message) },
                 title = { Text(stringResource(Res.string.pref_import)) },
                 buttonRow = {
-                    TextButton({ importOverlays = null }) { Text(stringResource(Res.string.cancel)) }
+                    TextButton({ importOverlaysFile = null }) { Text(stringResource(Res.string.cancel)) }
                     TextButton({
-                        if (!importCustomOverlays(importOverlays!!, true))
+                        if (!importCustomOverlays(importOverlaysFile!!, true, prefs))
                             currentError = Res.string.import_error
-                        importOverlays = null
+                        importOverlaysFile = null
                     }) { Text(stringResource(Res.string.import_presets_overlays_replace)) }
                     TextButton({
-                        if (!importCustomOverlays(importOverlays!!, false))
+                        if (!importCustomOverlays(importOverlaysFile!!, false, prefs))
                             currentError = Res.string.import_error
-                        importOverlays = null
+                        importOverlaysFile = null
                     }) { Text(stringResource(Res.string.import_presets_overlays_add)) }
                 }
             )
@@ -432,7 +431,7 @@ private fun exportHidden(file: PlatformFile, db: Database) {
     } } }
 }
 
-private fun exportPresets(ids: Collection<Long>, file: PlatformFile, db: Database, urlConfigController: UrlConfigController) {
+private fun exportPresets(ids: Collection<Long>, file: PlatformFile, db: Database, urlConfigController: UrlConfigController, prefs: Preferences) {
     val version = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
 
     val presetString = ids.joinToString(",")
@@ -451,7 +450,7 @@ private fun exportPresets(ids: Collection<Long>, file: PlatformFile, db: Databas
             c.getLong(VisibleEditTypeTable.Columns.VISIBILITY).toString()
     }
     val perPresetQuestSetting = "\\d+_qs_.+".toRegex()
-    val questSettings = Prefs.sharedPreferences.all.filterKeys { it.matches(perPresetQuestSetting) && it.substringBefore('_').toLongOrNull() in ids }
+    val questSettings = prefs.all.filterKeys { it.matches(perPresetQuestSetting) && it.substringBefore('_').toLongOrNull() in ids }
 
     runBlocking { withContext(Dispatchers.IO) { file.sink().buffered().use {
         it.writeText(version.toString())
@@ -467,14 +466,13 @@ private fun exportPresets(ids: Collection<Long>, file: PlatformFile, db: Databas
 }
 
 // this will ignore settings with value null, but should be fine
-@Suppress("UNCHECKED_CAST") // it is checked... but whatever (except string set, because not allowed to check for that)
+@Suppress("UNCHECKED_CAST") // it is checked... but whatever
 private fun settingsToString(settings: Map<String, Any?>): String {
     val booleans = settings.filterValues { it is Boolean } as Map<String, Boolean>
     val ints = settings.filterValues { it is Int } as Map<String, Int>
     val longs = settings.filterValues { it is Long } as Map<String, Long>
     val floats = settings.filterValues { it is Float } as Map<String, Float>
     val strings = settings.filterValues { it is String } as Map<String, String>
-    val stringSets = settings.filterValues { it is Set<*> } as Map<String, Set<String>>
     // now write
     val sb = StringBuilder()
     sb.appendLine("boolean settings")
@@ -491,14 +489,10 @@ private fun settingsToString(settings: Map<String, Any?>): String {
     sb.appendLine()
     sb.appendLine("string settings")
     sb.appendLine( Json.encodeToString(strings))
-    sb.appendLine()
-    sb.appendLine("string set settings")
-    sb.appendLine( Json.encodeToString(stringSets))
     return sb.toString()
 }
 
-private fun exportCustomOverlays(indices: Collection<String>, file: PlatformFile) {
-    val prefs = Prefs.sharedPreferences
+private fun exportCustomOverlays(indices: Collection<String>, file: PlatformFile, prefs: Preferences) {
     val filterRegex = "custom_overlay_(?:${indices.joinToString("|")})_.*".toRegex()
     val settings = prefs.all.filterKeys { filterRegex.matches(it) }.toMutableMap()
     settings[Prefs.CUSTOM_OVERLAY_INDICES] = indices.joinToString(",")
@@ -510,9 +504,9 @@ private fun exportCustomOverlays(indices: Collection<String>, file: PlatformFile
     } } }
 }
 
-private fun exportSettings(file: PlatformFile) {
+private fun exportSettings(file: PlatformFile, prefs: Preferences) {
     val perPresetQuestSetting = "\\d+_qs_.+".toRegex()
-    val settings = Prefs.sharedPreferences.all.filterKeys {
+    val settings = prefs.all.filterKeys {
         !it.contains("TangramPinsSpriteSheet") // this is huge and gets generated if missing anyway
             && !it.contains("TangramIconsSpriteSheet") // this is huge and gets generated if missing anyway
             && it != Preferences.OAUTH2_ACCESS_TOKEN // login
@@ -523,38 +517,35 @@ private fun exportSettings(file: PlatformFile) {
     runBlocking { withContext(Dispatchers.IO) { file.sink().buffered().use { it.writeText(settingsToString(settings)) } } }
 }
 
-private fun importCustomOverlays(file: PlatformFile, replaceExisting: Boolean): Boolean {
+private fun importCustomOverlays(file: PlatformFile, replaceExisting: Boolean, prefs: Preferences): Boolean {
     if (!file.exists()) return false
     val lines = runBlocking { withContext(Dispatchers.IO) {
         file.source().buffered().use { it.readString().lines() }
     } }
     if (lines.first() != "overlays") return false
-    val prefs = Prefs.sharedPreferences
     return if (replaceExisting) {
         // first remove old overlays
         // this is necessary because otherwise overlay may remain, but hidden due to not in indices pref
-        prefs.edit { prefs.all.keys.forEach { if (it.startsWith("custom_overlay")) remove(it) } }
+        prefs.all.keys.forEach { if (it.startsWith("custom_overlay")) prefs.remove(it) }
 
-        val result = readToSettings(lines.subList(1, lines.size))
+        val result = readToSettings(lines.subList(1, lines.size), prefs)
         // update in case of old data
         if (prefs.contains("custom_overlay_filter") || prefs.contains("custom_overlay_color_key")) {
             val indices = if (prefs.contains(Prefs.CUSTOM_OVERLAY_INDICES)) getCustomOverlayIndices(prefs) else emptyList()
             val newIndex = indices.maxOrNull() ?: 0
-            prefs.edit {
-                if (prefs.contains("custom_overlay_filter"))
-                    putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_FILTER, newIndex), prefs.getString("custom_overlay_filter", "")!!)
-                if (prefs.contains("custom_overlay_color_key"))
-                    putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, newIndex), prefs.getString("custom_overlay_color_key", "")!!)
-                remove("custom_overlay_filter")
-                remove("custom_overlay_color_key")
-                putString(Prefs.CUSTOM_OVERLAY_INDICES, (indices + newIndex).sorted().joinToString(","))
-            }
+            if (prefs.contains("custom_overlay_filter"))
+                prefs.putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_FILTER, newIndex), prefs.getString("custom_overlay_filter", "")!!)
+            if (prefs.contains("custom_overlay_color_key"))
+                prefs.putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, newIndex), prefs.getString("custom_overlay_color_key", "")!!)
+            prefs.remove("custom_overlay_filter")
+            prefs.remove("custom_overlay_color_key")
+            prefs.putString(Prefs.CUSTOM_OVERLAY_INDICES, (indices + newIndex).sorted().joinToString(","))
         }
         result
     }
     else {
         val customOverlayRegex = "custom_overlay_(\\d+)_".toRegex()
-        val indices = getCustomOverlayIndices(prefs).toMutableSet()
+        val indices: MutableSet<Int> = getCustomOverlayIndices(prefs).toMutableSet()
         val offset = indices.maxOrNull()?.let { it + 1 } ?: 0
         val newLines = lines.mapNotNull { line ->
             if (line == "overlays") return@mapNotNull null
@@ -566,43 +557,38 @@ private fun importCustomOverlays(file: PlatformFile, replaceExisting: Boolean): 
                 "custom_overlay_${newIndex}_"
             }
         }
-        val result = readToSettings(newLines)
-        prefs.edit {
-            // update in case of old data
-            if (prefs.contains("custom_overlay_filter") || prefs.contains("custom_overlay_color_key")) {
-                val oldOverlayIndex = if (indices.contains(offset)) indices.max() + 1 else offset
-                indices.add(oldOverlayIndex)
-                if (prefs.contains("custom_overlay_filter"))
-                    putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_FILTER, oldOverlayIndex), prefs.getString("custom_overlay_filter", "")!!)
-                if (prefs.contains("custom_overlay_color_key"))
-                    putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, oldOverlayIndex), prefs.getString("custom_overlay_color_key", "")!!)
-                remove("custom_overlay_filter")
-                remove("custom_overlay_color_key")
-            }
-            // set updated indices
-            putString(Prefs.CUSTOM_OVERLAY_INDICES, indices.sorted().joinToString(","))
+        val result = readToSettings(newLines, prefs)
+        // update in case of old data
+        if (prefs.contains("custom_overlay_filter") || prefs.contains("custom_overlay_color_key")) {
+            val oldOverlayIndex = if (indices.contains(offset)) indices.max() + 1 else offset
+            indices.add(oldOverlayIndex)
+            if (prefs.contains("custom_overlay_filter"))
+                prefs.putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_FILTER, oldOverlayIndex), prefs.getString("custom_overlay_filter", "")!!)
+            if (prefs.contains("custom_overlay_color_key"))
+                prefs.putString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, oldOverlayIndex), prefs.getString("custom_overlay_color_key", "")!!)
+            prefs.remove("custom_overlay_filter")
+            prefs.remove("custom_overlay_color_key")
         }
+        // set updated indices
+        prefs.putString(Prefs.CUSTOM_OVERLAY_INDICES, indices.sorted().joinToString(","))
         result
     }
 }
 
-private fun readToSettings(list: List<String>): Boolean {
+private fun readToSettings(list: List<String>, prefs: Preferences): Boolean {
     val i = list.iterator()
-    val e = Prefs.sharedPreferences.edit()
     try {
         while (i.hasNext()) {
             val next = i.next()
             if (next.isBlank()) continue
             when (next) {
-                "boolean settings" -> Json.decodeFromString<Map<String, Boolean>>(i.next()).forEach { e.putBoolean(it.key, it.value) }
-                "int settings" -> Json.decodeFromString<Map<String, Int>>(i.next()).forEach { e.putInt(it.key, it.value) }
-                "long settings" -> Json.decodeFromString<Map<String, Long>>(i.next()).forEach { e.putLong(it.key, it.value) }
-                "float settings" -> Json.decodeFromString<Map<String, Float>>(i.next()).forEach { e.putFloat(it.key, it.value) }
-                "string settings" -> Json.decodeFromString<Map<String, String>>(i.next()).forEach { e.putString(it.key, it.value) }
-                "string set settings" -> Json.decodeFromString<Map<String, Set<String>>>(i.next()).forEach { e.putStringSet(it.key, it.value) }
+                "boolean settings" -> Json.decodeFromString<Map<String, Boolean>>(i.next()).forEach { prefs.putBoolean(it.key, it.value) }
+                "int settings" -> Json.decodeFromString<Map<String, Int>>(i.next()).forEach { prefs.putInt(it.key, it.value) }
+                "long settings" -> Json.decodeFromString<Map<String, Long>>(i.next()).forEach { prefs.putLong(it.key, it.value) }
+                "float settings" -> Json.decodeFromString<Map<String, Float>>(i.next()).forEach { prefs.putFloat(it.key, it.value) }
+                "string settings" -> Json.decodeFromString<Map<String, String>>(i.next()).forEach { prefs.putString(it.key, it.value) }
             }
         }
-        e.apply()
         return true
     } catch (e: Exception) {
         return false
@@ -690,7 +676,13 @@ private fun importLinesAndCheck(file: PlatformFile, checkLine: String, db: Datab
 // when importing, names should be updated!
 private fun List<String>.renameUpdatedQuests() = map { it.renameUpdatedQuests() }
 
-private fun importPresets(lines: List<String>, replaceExistingPresets: Boolean, db: Database, visibleEditTypeController: VisibleEditTypeController) {
+private fun importPresets(
+    lines: List<String>,
+    replaceExistingPresets: Boolean,
+    db: Database,
+    visibleEditTypeController: VisibleEditTypeController,
+    prefs: Preferences
+) {
     val lines = lines.renameUpdatedQuests()
     val presets = mutableListOf<Array<Any?>>()
     val orders = mutableListOf<Array<Any?>>()
@@ -780,25 +772,22 @@ private fun importPresets(lines: List<String>, replaceExistingPresets: Boolean, 
 
     // database stuff successful, update preferences
     if (replaceExistingPresets) {
-        val prefs = Prefs.sharedPreferences
-        prefs.edit {
-            // remove all per-preset quest settings for proper replace
-            prefs.all.keys.filter { qsRegex.containsMatchIn(it) }.forEach { remove(it) }
-            // set selected preset to default, because previously selected may not exist any more
-            putLong(Preferences.SELECTED_EDIT_TYPE_PRESET, 0)
-        }
+        // remove all per-preset quest settings for proper replace
+        prefs.all.keys.filter { qsRegex.containsMatchIn(it) }.forEach { prefs.remove(it) }
+        // set selected preset to default, because previously selected may not exist any more
+        prefs.putLong(Preferences.SELECTED_EDIT_TYPE_PRESET, 0)
     }
-    readToSettings(questSettingsLines)
+    readToSettings(questSettingsLines, prefs)
 
     visibleEditTypeController.setVisibilities(emptyMap()) // reload stuff
 }
 
-private fun importSettings(file: PlatformFile, osmoseDao: OsmoseDao, externalSourceQuestController: ExternalSourceQuestController): Boolean {
+private fun importSettings(file: PlatformFile, osmoseDao: OsmoseDao, externalSourceQuestController: ExternalSourceQuestController, prefs: Preferences): Boolean {
     if (!file.exists()) return false
     val lines = runBlocking { withContext(Dispatchers.IO) {
         file.source().buffered().use { it.readString().lines().renameUpdatedQuests() }
     } }
-    val r = readToSettings(lines)
+    val r = readToSettings(lines, prefs)
     osmoseDao.reloadIgnoredItems()
     externalSourceQuestController.invalidate()
     return r

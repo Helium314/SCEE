@@ -146,7 +146,7 @@ class PinsMapComponent(
                 circleStrokeColor("#aaaaaa"),
                 circleRadius(5f),
                 circleStrokeWidth(1f),
-                circleTranslate(arrayOf(0f, if (prefs.prefs.getBoolean(Prefs.OFFSET_FIX, false)) 0f else -8f)), // so that it hides behind the pin
+                circleTranslate(arrayOf(0f, if (prefs.getBoolean(Prefs.OFFSET_FIX, false)) 0f else -8f)), // so that it hides behind the pin
                 circleTranslateAnchor(Property.CIRCLE_TRANSLATE_ANCHOR_VIEWPORT),
             ),
         CircleLayer("pin-quest-dot-layer", DOT_SOURCE)

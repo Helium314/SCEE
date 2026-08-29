@@ -190,7 +190,7 @@ fun QuestSettingsScreen(
                     prefs.putBoolean(Prefs.QUEST_MONITOR_GPS, gps)
                     prefs.putBoolean(Prefs.QUEST_MONITOR_NET, net)
                     prefs.putBoolean(Prefs.QUEST_MONITOR_DOWNLOAD, download)
-                    prefs.prefs.putFloat(Prefs.QUEST_MONITOR_RADIUS, radius.text.toFloatOrNull() ?: 50f)
+                    prefs.putFloat(Prefs.QUEST_MONITOR_RADIUS, radius.text.toFloatOrNull() ?: 50f)
                     questMonitorDialog = false
                 }, enabled = radius.text.toFloatOrNull() != null) { Text(stringResource(Res.string.ok)) }
             },

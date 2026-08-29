@@ -2,7 +2,6 @@ package de.westnordost.streetcomplete.screens.main.map
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.russhwolf.settings.ObservableSettings
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.DayNightBehavior
 import de.westnordost.streetcomplete.Prefs
@@ -14,6 +13,7 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementPointGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.ElementType
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuest
 import de.westnordost.streetcomplete.data.overlays.SelectedOverlaySource
+import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.quest.DayNightCycle
 import de.westnordost.streetcomplete.data.quest.OsmNoteQuestKey
 import de.westnordost.streetcomplete.data.quest.OsmQuestKey
@@ -58,7 +58,7 @@ class QuestPinsManager(
     private val questTypeOrderSource: QuestTypeOrderSource,
     private val questTypeRegistry: QuestTypeRegistry,
     private val visibleQuestsSource: VisibleQuestsSource,
-    private val prefs: ObservableSettings,
+    private val prefs: Preferences,
     private val mapDataSource: MapDataWithEditsSource,
     private val selectedOverlaySource: SelectedOverlaySource,
 ) : DefaultLifecycleObserver {

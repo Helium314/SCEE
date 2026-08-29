@@ -11,7 +11,6 @@ import com.russhwolf.settings.nullableString
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.messages.Message
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
-import de.westnordost.streetcomplete.osm.localized_name.LocalizedName
 import de.westnordost.streetcomplete.util.Mockable
 import de.westnordost.streetcomplete.util.ktx.putStringOrNull
 import kotlinx.datetime.LocalDate
@@ -55,11 +54,14 @@ class Preferences(val prefs: ObservableSettings) {
     fun getString(key: String, default: String) = prefs.getString(key, default)
     fun putString(key: String, value: String) = prefs.putString(key, value)
     fun getLong(key: String, default: Long) = prefs.getLong(key, default)
+    fun putLong(key: String, value: Long) = prefs.putLong(key, value)
     fun getInt(key: String, default: Int) = prefs.getInt(key, default)
     fun putInt(key: String, value: Int) = prefs.putInt(key, value)
     fun getFloat(key: String, default: Float) = prefs.getFloat(key, default)
+    fun putFloat(key: String, value: Float) = prefs.putFloat(key, value)
     fun remove(key: String) = prefs.remove(key)
     fun contains(key: String) = prefs.contains(key)
+    val all: Map<String, *> get() = Prefs.sharedPreferences.all
 
     var expertMode: Boolean by prefs.boolean(Prefs.EXPERT_MODE, false)
     var showQuickSettings: Boolean by prefs.boolean(Prefs.QUICK_SETTINGS, false)

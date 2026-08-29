@@ -1,6 +1,5 @@
 package de.westnordost.streetcomplete.util
 
-import android.content.SharedPreferences
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.russhwolf.settings.ObservableSettings
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.meta.CountryInfo
@@ -311,9 +309,7 @@ fun getFakeCustomOverlays(prefs: Preferences, onlyIfExpertMode: Boolean = true):
 }
 
 fun getIndexedCustomOverlayPref(pref: String, index: Int) = pref.replace("idx", index.toString())
-fun getCurrentCustomOverlayPref(pref: String, prefs: ObservableSettings) = getIndexedCustomOverlayPref(pref, prefs.getInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, 0))
-fun getCustomOverlayIndices(prefs: SharedPreferences) = prefs.getString(Prefs.CUSTOM_OVERLAY_INDICES, "0")!!
-    .split(",").mapNotNull { it.toIntOrNull() }
+fun getCurrentCustomOverlayPref(pref: String, prefs: Preferences) = getIndexedCustomOverlayPref(pref, prefs.getInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, 0))
 fun getCustomOverlayIndices(prefs: Preferences) = prefs.getString(Prefs.CUSTOM_OVERLAY_INDICES, "0")
     .split(",").mapNotNull { it.toIntOrNull() }
 

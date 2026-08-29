@@ -9,7 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
-import com.russhwolf.settings.ObservableSettings
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.elementfilter.ElementFilterExpression
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
@@ -27,6 +26,7 @@ import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.overlays.Action
 import de.westnordost.streetcomplete.data.overlays.Edit
 import de.westnordost.streetcomplete.data.overlays.OverlayAction
+import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.overlay.OverlayForm
@@ -39,7 +39,7 @@ import org.jetbrains.compose.resources.stringResource
 import kotlin.collections.iterator
 import kotlin.math.abs
 
-class CustomOverlay(val prefs: ObservableSettings) : Overlay {
+class CustomOverlay(val prefs: Preferences) : Overlay {
 
     override val title = Res.string.custom_overlay_title
     override val icon = Res.drawable.ic_custom_overlay

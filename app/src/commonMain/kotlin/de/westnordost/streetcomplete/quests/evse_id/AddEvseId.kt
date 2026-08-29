@@ -1,10 +1,12 @@
 package de.westnordost.streetcomplete.quests.evse_id
 
-import android.widget.Toast
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.core.net.toUri
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
@@ -21,6 +23,7 @@ import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.ui.common.ToastPopup
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.MultiValueQuestQrScanForm
 import de.westnordost.streetcomplete.util.countryboundaries.NoCountriesExcept
@@ -33,20 +36,6 @@ import io.ktor.http.HttpMethod
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
-
-val urlPrefixToQueryParameter = mapOf(
-    "http://m.intercharge.eu/qr" to "evseid",
-    "https://charge.elli.eco/" to "evseid",
-    "https://e-mobility.lidl.de/qr" to "evseid",
-    "https://smatrics.com/start-charging" to "evseId",
-    "https://www.aral-pulse.de/webshop/details" to "evseid",
-)
-val urlPrefixesWithEvseIdAsPath = arrayOf(
-    "https://laden.enercity.de/",
-    "https://pay.chargedrive.com/",
-    "https://qr.on-charge.com/",
-    "www.chargepoint-services.com/",
-)
 
 class AddEvseId : OsmElementQuestType<String> {
 
@@ -104,32 +93,33 @@ class AddEvseId : OsmElementQuestType<String> {
 
     @Composable
     override fun Form(on: (QuestAction<String>) -> Unit, element: Element, geometry: ElementGeometry, countryInfo: CountryInfo) {
+        var showScanUnknownValueToast by remember { mutableStateOf(false) }
         val composableScope = rememberCoroutineScope()
-        val context = LocalContext.current
-
-        val scanUnknownValueToastText = stringResource(Res.string.quest_evse_id_scan_unknown_value)
 
         MultiValueQuestQrScanForm(
-            on,
+            on = on,
             addAnotherValueText = Res.string.quest_evse_id_add_more,
             scanAnotherValueText = Res.string.quest_evse_id_scan_more,
             otherAnswers = { listOf(AnswerItem(stringResource(Res.string.quest_generic_answer_noSign)) { on(Answer("ref:signed=no")) }) },
             isOk = { EVSE_REGEX.matches(it) },
-            onQrCodeParsed = {
-                value: String, addValue: (String?) -> Unit ->
-                    composableScope.launch {
-                        val result = parseQrCodeValue(value)
+            onQrCodeParsed = { value: String, addValue: (String?) -> Unit ->
+                composableScope.launch {
+                    val result = parseQrCodeValue(value)
 
-                        if (result != null) {
-                            addValue(result)
-                        } else {
-                            Toast.makeText(context, scanUnknownValueToastText, Toast.LENGTH_LONG).show()
-                        }
-                    }
+                    if (result != null) addValue(result)
+                    else showScanUnknownValueToast = true
+                }
             },
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters),
             hint = stringResource(Res.string.quest_evse_id_hint)
         )
+
+        if (showScanUnknownValueToast) {
+            ToastPopup(
+                onDismissRequest = { showScanUnknownValueToast = false },
+                text = stringResource(Res.string.quest_evse_id_scan_unknown_value),
+            )
+        }
     }
 
     override fun applyAnswerTo(
@@ -156,7 +146,21 @@ class AddEvseId : OsmElementQuestType<String> {
 }
 
 private val EVSE_REGEX = Regex("(?i)^[A-Z]{2}\\*?[A-Z0-9]{3}\\*?E(?!\\*)[A-Z0-9*]{1,31}$")
-private val EVSE_REGEX_IN_TEXT = Regex("(?i)[A-Z]{2}\\*?[A-Z0-9]{3}\\*?E(?!\\*)[A-Z0-9*]{1,31}")
+private val EVSE_REGEX_IN_TEXT = Regex("(?i)\\b[A-Z]{2}\\*[A-Z0-9]{3}\\*E(?!\\*)[A-Z0-9*]{1,31}\\b")
+
+private val urlPrefixToQueryParameter = mapOf(
+    "http://m.intercharge.eu/qr" to "evseid",
+    "https://charge.elli.eco/" to "evseid",
+    "https://e-mobility.lidl.de/qr" to "evseid",
+    "https://smatrics.com/start-charging" to "evseId",
+    "https://www.aral-pulse.de/webshop/details" to "evseid",
+)
+private val urlPrefixesWithEvseIdAsPath = arrayOf(
+    "https://laden.enercity.de/",
+    "https://pay.chargedrive.com/",
+    "https://qr.on-charge.com/",
+    "www.chargepoint-services.com/",
+)
 
 private suspend fun followRedirect(url: String): String? {
     val client = HttpClient { followRedirects = false }

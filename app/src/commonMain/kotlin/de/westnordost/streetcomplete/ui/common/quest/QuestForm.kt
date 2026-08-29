@@ -298,7 +298,7 @@ fun HideButton(onHide: () -> Unit, onTempHide: () -> Unit) {
     if (prefs.getBoolean(Prefs.SHOW_HIDE_BUTTON, false))
         FloatingSmallerButton(
             onClick = onTempHide,
-            modifier = Modifier.combinedClickable(onLongClick = onHide, onClick = onTempHide)
+            onLongClick = onHide
         ) {
             Text(stringResource(Res.string.hide_button))
         }

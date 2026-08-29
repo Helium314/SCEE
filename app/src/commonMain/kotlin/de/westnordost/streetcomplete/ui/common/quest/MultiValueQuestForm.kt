@@ -1,7 +1,10 @@
 package de.westnordost.streetcomplete.ui.common.quest
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -14,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.ApplicationConstants.MAX_OSM_TAG_VALUE_LENGTH
 import de.westnordost.streetcomplete.data.osm.osmquests.Answer
 import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
@@ -88,28 +92,41 @@ fun MultiValueQuestForm(
         onClickOk = {
             val vals = if (currentValue.text.isBlank()) values else values + currentValue.text.trim()
             vals.forEach { prefs.addLastPicked(questType.name, it) }
-            on(Answer(vals.joinToString(";")))
+            on(Answer(vals.sorted().joinToString(";")))
         },
         modifier = modifier,
         otherAnswers = otherAnswers,
     ) {
         Column {
-            Text(values.joinToString(";")) // todo: actually it should be easy to let the user select a value to change it
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                values.forEach {
+                    Button({
+                        val new = if (currentValue.text.isNotBlank() && isOk(currentValue.text)) (values + currentValue.text) - it
+                        else values + it
+                        currentValue = TextFieldValue(it)
+                        onValuesChange(new)
+                    }) { Text(it) }
+                }
+            }
             AutoCompleteTextField(
                 value = currentValue,
                 onValueChange = { currentValue = it },
-                suggestions = prioritySuggestions(currentValue.text).orEmpty() +
+                suggestions = (prioritySuggestions(currentValue.text).orEmpty() +
                     prefs.getLastPicked<String>(questType.name).takeFavorites(20, 50, 1) +
                     simpleSuggestions
                         ?.takeIf { currentValue.text.length >= minLengthForSuggestions }
                         ?.filter { it.startsWith(currentValue.text, ignoreCase = true) }
-                        .orEmpty(),
+                        .orEmpty()).distinct(),
                 textStyle = MaterialTheme.typography.largeInput,
                 isError = isTooLong,
                 keyboardOptions = keyboardOptions,
                 placeholder = hint?.let { { Text(it) } },
                 startExpanded = true,
-                startExpandedWithoutFocus = true
+                startExpandedWithoutFocus = true,
+                onSelectedSuggestion = {
+                    if (currentValue.text.isNotBlank() && isOk(currentValue.text) && currentValue.text.trim() !in values)
+                        onValuesChange(values + currentValue.text.trim()); currentValue = TextFieldValue()
+                }
             )
             Column {
                 TextButton(

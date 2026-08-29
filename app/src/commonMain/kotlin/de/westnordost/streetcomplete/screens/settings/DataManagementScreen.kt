@@ -331,7 +331,7 @@ fun DataManagementScreen(
                 buttonRow = {
                     TextButton({ exportOverlays = null }) { Text(stringResource(Res.string.cancel)) }
                     TextButton({
-                        exportCustomOverlays(selectedOverlays.map { it.changesetComment }, exportOverlays!!)
+                        exportCustomOverlays(selectedOverlays.map { it.name }, exportOverlays!!)
                         exportOverlays = null
                     }, enabled = selectedOverlays.isNotEmpty()) { Text(stringResource(Res.string.ok)) }
                 }

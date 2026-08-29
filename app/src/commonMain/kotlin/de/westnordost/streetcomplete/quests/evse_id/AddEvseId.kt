@@ -43,6 +43,7 @@ class AddEvseId : OsmElementQuestType<String> {
     override val title = Res.string.quest_evse_id_title
     override val wikiLink = "Key:ref:EU:EVSE"
     override val changesetComment = "Add EVSE ID (ref:EU:EVSE)"
+    override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
     override val enabledInCountries = NoCountriesExcept(
         "AT","BE","BG","CH","CY","CZ","DE","DK","EE","ES","FI","FR","GR","HR",
         "HU","IE","IT","LT","LU","LV","MT","NL","PL","PT","RO","SE","SI","SK"

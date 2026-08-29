@@ -9,6 +9,7 @@ import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.osmquests.Action
+import de.westnordost.streetcomplete.data.osm.osmquests.ExternalAction
 import de.westnordost.streetcomplete.util.countryboundaries.AllCountries
 import de.westnordost.streetcomplete.util.countryboundaries.Countries
 import de.westnordost.streetcomplete.data.quest.QuestType
@@ -28,7 +29,7 @@ import de.westnordost.streetcomplete.quests.questPrefix
 interface ExternalSourceQuestType : QuestType, ElementEditType {
     @Composable
     fun Form(
-        on: (Action) -> Unit,
+        on: (ExternalAction) -> Unit,
         quest: ExternalSourceQuest,
         countryInfo: CountryInfo
     )

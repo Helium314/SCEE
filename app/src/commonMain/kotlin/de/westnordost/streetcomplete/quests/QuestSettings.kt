@@ -19,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.input.TextFieldValue
@@ -30,13 +29,11 @@ import com.github.difflib.text.DiffRowGenerator
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.Prefs
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.elementfilter.ParseException
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
-import de.westnordost.streetcomplete.resources.Res
-import de.westnordost.streetcomplete.resources.quest_settings_element_selection
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
 import kotlinx.coroutines.Dispatchers
@@ -78,7 +75,7 @@ fun getPrefixedLabelSourcePref(questType: OsmElementQuestType<*>, prefs: Prefere
         content = {
             Column(modifier = Modifier.padding(horizontal = 12.dp)) {
                 Text(
-                    text = AnnotatedString.fromHtml(stringResource(R.string.quest_settings_dot_labels_message)),
+                    text = AnnotatedString.fromHtml(stringResource(Res.string.quest_settings_dot_labels_message)),
                     style = MaterialTheme.typography.body1
                 )
                 TextField(
@@ -90,7 +87,7 @@ fun getPrefixedLabelSourcePref(questType: OsmElementQuestType<*>, prefs: Prefere
                 Button({
                     showElementSelection = true
                 }, modifier = Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.element_selection_button))
+                    Text(stringResource(Res.string.element_selection_button))
                 }
             }
         },
@@ -263,21 +260,22 @@ fun FullElementSelectionDialog(prefs: Preferences, pref: String, messageId: Stri
     resetEnabled: Boolean,
     onReset: () -> Unit,
     okEnabled: Boolean,
-    onOk: () -> Unit
+    onOk: () -> Unit,
+    okRes: StringResource = Res.string.ok
 ) {
     TextButton(
         onClick = { onReset(); onDismissRequest() },
         enabled = resetEnabled,
         modifier = Modifier.padding(end = 16.dp)
     ) {
-        Text(stringResource(R.string.quest_settings_reset))
+        Text(stringResource(Res.string.quest_settings_reset))
     }
-    TextButton(onDismissRequest) { Text(stringResource(android.R.string.cancel)) }
+    TextButton(onDismissRequest) { Text(stringResource(Res.string.cancel)) }
     TextButton(
         onClick = { onOk(); onDismissRequest() },
         enabled = okEnabled
     ) {
-        Text(stringResource(android.R.string.ok))
+        Text(stringResource(okRes))
     }
 }
 
@@ -287,7 +285,7 @@ private fun DiffButton(defaultText: String, getCurrentText: () -> String) {
     Button({
         showDialog = true
     }, modifier = Modifier.fillMaxWidth()) {
-        Text(stringResource(R.string.quest_settings_highlight_changes_button))
+        Text(stringResource(Res.string.quest_settings_highlight_changes_button))
     }
     if (showDialog) {
         val drg = DiffRowGenerator.create()

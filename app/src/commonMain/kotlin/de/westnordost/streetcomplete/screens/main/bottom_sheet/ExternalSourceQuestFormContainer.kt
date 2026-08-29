@@ -27,11 +27,13 @@ import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.osmquests.Action
+import de.westnordost.streetcomplete.data.osm.osmquests.AddNode
+import de.westnordost.streetcomplete.data.osm.osmquests.EditElement
+import de.westnordost.streetcomplete.data.osm.osmquests.ExternalAction
 import de.westnordost.streetcomplete.osm.AccessManagerDialog
 import de.westnordost.streetcomplete.osm.ConstructionDialog
 import de.westnordost.streetcomplete.osm.places.applyReplacePlaceTo
 import de.westnordost.streetcomplete.osm.places.getPlaceAsDisused
-import de.westnordost.streetcomplete.quests.custom.CustomQuestList
 import de.westnordost.streetcomplete.quests.shop_type.ShopGoneDialog
 import de.westnordost.streetcomplete.quests.shop_type.ShopType
 import de.westnordost.streetcomplete.quests.shop_type.ShopTypeAnswer
@@ -69,6 +71,7 @@ import org.koin.compose.koinInject
 fun ExternalSourceQuestFormContainer(
     onDismiss: () -> Unit,
     onEdit: (action: ElementEditAction) -> Unit,
+    onAddNode: (node: Node) -> Unit,
     onLeaveNote: (noteText: String, noteImagePaths: List<String>, isGpx: Boolean) -> Unit,
     onHideQuest: (tempHide: Boolean) -> Unit,
     quest: ExternalSourceQuest,
@@ -99,7 +102,7 @@ fun ExternalSourceQuestFormContainer(
     // markers shown are per-form
     LaunchedEffect(state) { onSetMapMarkers(emptyList()) }
 
-    fun onAction(action: Action) {
+    fun onAction(action: ExternalAction) {
         when (action) {
             Action.Dismiss -> onDismiss()
             Action.LeaveNote -> state = QuestFormState2.LeaveNote
@@ -113,6 +116,8 @@ fun ExternalSourceQuestFormContainer(
             Action.EditTags -> state = QuestFormState2.EditTags
             Action.ManageAccess -> showAccessManager = true
             Action.UnderConstruction -> showConstructionDialog = true
+            is AddNode -> onAddNode(action.node)
+            is EditElement -> onEdit(action.update)
         }
     }
 
@@ -232,7 +237,6 @@ fun ExternalSourceQuestFormContainer(
         )
     }
     if (confirmCantSay) {
-        val customQuestList: CustomQuestList = koinInject()
         CantSayDialog(
             onDismissRequest = { confirmCantSay = false },
             onLeaveNote = { state = QuestFormState2.LeaveNote },

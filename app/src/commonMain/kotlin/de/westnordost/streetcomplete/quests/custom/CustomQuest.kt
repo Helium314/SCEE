@@ -7,7 +7,11 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import de.westnordost.osmfeatures.FeatureDictionary
@@ -18,10 +22,14 @@ import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestCont
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestType
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
+import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.osmquests.Action
+import de.westnordost.streetcomplete.data.osm.osmquests.AddNode
+import de.westnordost.streetcomplete.data.osm.osmquests.ExternalAction
 import de.westnordost.streetcomplete.osm.toTags
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
+import de.westnordost.streetcomplete.screens.main.bottom_sheet.EditTagsForm
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.LocalElement
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
@@ -116,7 +124,7 @@ class CustomQuest(private val customQuestList: CustomQuestList) : ExternalSource
     }
 
     @Composable
-    override fun Form(on: (Action) -> Unit, quest: ExternalSourceQuest, countryInfo: CountryInfo) {
+    override fun Form(on: (ExternalAction) -> Unit, quest: ExternalSourceQuest, countryInfo: CountryInfo) {
         val questController: ExternalSourceQuestController = koinInject()
         val mapDataSource: MapDataWithEditsSource = koinInject()
         val entry = customQuestList.getEntry(quest.key.id) ?: return
@@ -141,26 +149,33 @@ class CustomQuest(private val customQuestList: CustomQuestList) : ExternalSource
             } ?: LocalElement.current?.let { element ->
                 nameAndLocationLabel(element, featureDictionary)
             }
-        QuestForm(
-            on,
-            answers = listOfNotNull(
-                AnswerItem(stringResource(Res.string.quest_custom_quest_remove)) {
-                    questController.delete(quest.key)
-                    on(Action.TempHideQuest)
+        var addNode by remember { mutableStateOf(false) }
+        if (!addNode) {
+            QuestForm(
+                on,
+                answers = listOfNotNull(
+                    AnswerItem(stringResource(Res.string.quest_custom_quest_remove)) {
+                        questController.delete(quest.key)
+                        on(Action.TempHideQuest)
+                    },
+                    if (tagsText != null && pos != null) {
+                        AnswerItem(stringResource(Res.string.quest_custom_quest_add_node)) { addNode = true }
+                    } else null
+                ),
+                title = getTitle(),
+                subtitle = getSubtitle()
+            )
+        } else {
+            EditTagsForm(
+                onConfirmed = {
+                    val tags = tags.toMutableMap()
+                    it.applyTo(tags)
+                    val node = Node(0, pos, tags)
+                    on(AddNode(node))
                 },
-                if (tagsText != null && pos != null) {
-                    AnswerItem(stringResource(Res.string.quest_custom_quest_add_node)) {
-/*todo                        val f = CreatePoiFragment.createWithPrefill(tagsText, pos, quest.key)
-                        parentFragmentManager.commit {
-                            replace(id, f, "bottom_sheet")
-                            addToBackStack("bottom_sheet")
-                        }
-                        (activity as? MainActivity)?.offsetPos(p)
-*/                    }
-                } else null
-            ),
-            title = getTitle(),
-            subtitle = getSubtitle()
-        )
+                onDismiss = { addNode = false },
+                originalElement = Node(0, pos!!, tags!!)
+            )
+        }
     }
 }

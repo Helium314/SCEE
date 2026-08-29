@@ -1,101 +1,148 @@
 package de.westnordost.streetcomplete.quests.osmose
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuest
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
+import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
+import de.westnordost.streetcomplete.data.osm.edits.update_tags.UpdateElementTagsAction
+import de.westnordost.streetcomplete.data.osm.mapdata.ElementKey
 import de.westnordost.streetcomplete.data.osm.osmquests.Action
+import de.westnordost.streetcomplete.data.osm.osmquests.EditElement
+import de.westnordost.streetcomplete.data.osm.osmquests.ExternalAction
+import de.westnordost.streetcomplete.data.preferences.Preferences
+import de.westnordost.streetcomplete.quests.questPrefix
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
+import de.westnordost.streetcomplete.screens.main.bottom_sheet.EditTagsForm
+import de.westnordost.streetcomplete.ui.common.dialogs.AlertDialog
+import de.westnordost.streetcomplete.ui.common.dialogs.ConfirmationDialog
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.LocalElement
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
 import de.westnordost.streetcomplete.util.nameAndLocationLabel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-/*
-@SuppressLint("SetTextI18n") // android studio complains, but that's element type and id and probably should not be translated
-class OsmoseForm2 : AbstractExternalSourceQuestForm() {
 
-    private val osmoseDao: OsmoseDao by inject()
-
-    private val issue: OsmoseIssue? by lazy {
-        val key = questKey as ExternalSourceQuestKey
-        osmoseDao.getIssue(key.id)
+@Composable
+fun OsmoseForm(on: (ExternalAction) -> Unit, quest: ExternalSourceQuest) {
+    val osmoseDao: OsmoseDao = koinInject()
+    val questController: ExternalSourceQuestController = koinInject()
+    val issue = remember { osmoseDao.getIssue(quest.key.id) }
+    if (issue == null) {
+        questController.delete(quest.key)
+        on(Action.TempHideQuest)
+        return
     }
+    //if (issue.elements.size > 1) viewLifecycleScope.launch { highlightElements() } todo
+    val featureDictionary: FeatureDictionary = koinInject()
+    var confirmFalsePositive by remember { mutableStateOf(false) }
+    var editTags by remember { mutableStateOf(false) }
+    var elementToEdit by remember { mutableStateOf<ElementKey?>(null) }
+    var showIgnoreDialog by remember { mutableStateOf(false) }
+    if (elementToEdit != null) {
+        val mapDataSource: MapDataWithEditsSource = koinInject()
+        val element = mapDataSource.get(elementToEdit!!.type, elementToEdit!!.id)
+        if (element == null) elementToEdit = null
+        else EditTagsForm(
+            { on(EditElement(UpdateElementTagsAction(element, it))); osmoseDao.setDone(issue.uuid) },
+            { elementToEdit = null },
+            element
+        )
+    }
+    if (elementToEdit == null) {
+        QuestForm(
+            on,
+            answers = listOfNotNull(
+                if (issue.elements.isEmpty()) null else
+                    AnswerItem(stringResource(Res.string.quest_generic_answer_show_edit_tags)) {
+                        editTags = true
+                    },
+                AnswerItem(stringResource(Res.string.quest_osmose_false_positive)) {
+                    confirmFalsePositive = true
+                }
+            ),
+            otherAnswers = { listOf(
+                AnswerItem(stringResource(Res.string.quest_osmose_hide_type)) { showIgnoreDialog = true },
+                AnswerItem(stringResource(Res.string.quest_osmose_delete_this_issue)) {
+                    questController.delete(quest.key)
+                    on(Action.TempHideQuest)
+                },
+            ) },
+            title = stringResource(Res.string.quest_osmose_title) + " ${issue.title}",
+            subtitle = LocalElement.current?.let { element ->
+                nameAndLocationLabel(element, featureDictionary)
+            }
+        ) {
+            Text(stringResource(Res.string.quest_osmose_message_for_element, "${issue.item}/${issue.itemClass}", issue.subtitle))
+            if (confirmFalsePositive) {
+                ConfirmationDialog(
+                    { confirmFalsePositive = false },
+                    // todo: do some kind of edit, so it can be undone? the edit could be deleted on upload (see also ExternalSourceModule commented stuff)
+                    { osmoseDao.setAsFalsePositive(issue.uuid); on(Action.TempHideQuest) },
+                    title = { Text(stringResource(Res.string.quest_osmose_false_positive)) },
+                    confirmButtonText = stringResource(Res.string.quest_generic_confirmation_yes),
+                    text = { Text(stringResource(Res.string.quest_osmose_no_undo)) }
+                )
+            }
 
-    private val questController: ExternalSourceQuestController by inject()
-
-    override val buttonPanelAnswers by lazy {
-        val issue = issue
-        if (issue == null) emptyList()
-        else
-        listOfNotNull(
-            if (issue.elements.isEmpty()) null
-            else if (issue.elements.size == 1) {
-                val e = mapDataSource.get(issue.elements.single().type, issue.elements.single().id)
-                if (e == null) null
-                else
-                    AnswerItem(R.string.quest_generic_answer_show_edit_tags) { editTags(e) }
-            } else {
-                val elements = issue.elements.mapNotNull { mapDataSource.get(it.type, it.id) }
-                if (elements.isEmpty()) null
-                else
-                    AnswerItem(R.string.quest_generic_answer_show_edit_tags) {
-                        val l = LinearLayout(requireContext()).apply { orientation = LinearLayout.VERTICAL }
-                        var d: AlertDialog? = null
-                        elements.forEach { e ->
-                            l.addView(Button(requireContext()).apply {
-                                text = "${e.type} ${e.id}"
-                                setOnClickListener {
-                                    editTags(e)
-                                    d?.dismiss()
-                                }
-                            })
-                        }
-                        d = AlertDialog.Builder(requireContext())
-                            .setTitle(R.string.quest_osmose_select_element)
-                            .setViewWithDefaultPadding(l)
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .create()
-                        d?.show()
+        }
+    }
+    if (editTags) {
+        if (issue.elements.size == 1) {
+            elementToEdit = issue.elements.single()
+            editTags = false
+        }
+        AlertDialog(
+            onDismissRequest = { editTags = false },
+            buttonRow = { TextButton({ editTags = false }) { Text(stringResource(Res.string.cancel)) } },
+            title = { Text(stringResource(Res.string.quest_osmose_select_element)) },
+            text = {
+                Column {
+                    issue.elements.forEach {
+                        TextButton({ elementToEdit = it; editTags = false }) { Text("${it.type} ${it.id}") }
                     }
-            },
-            AnswerItem(R.string.quest_osmose_false_positive) {
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.quest_osmose_false_positive)
-                    .setMessage(R.string.quest_osmose_no_undo)
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(R.string.quest_generic_confirmation_yes) { _,_ ->
-                        osmoseDao.setAsFalsePositive(issue.uuid)
-                        tempHideQuest() // will still not be shown again, as osmoseDao doesn't create a quest from that any more
-                        // todo: do some kind of edit, so it can be undone? the edit could be deleted on upload (see also ExternalSourceModule commented stuff)
-                    }
-                    .show()
+                }
             }
         )
     }
-
-    override val contentLayoutResId = R.layout.quest_osmose_custom_quest
-    private val binding by contentViewBinding(QuestOsmoseCustomQuestBinding::bind)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val issue = issue
-        if (issue == null) {
-            context?.toast(R.string.quest_custom_quest_osmose_not_found)
-            questController.delete(questKey as ExternalSourceQuestKey)
-            return
+    if (showIgnoreDialog) {
+        val prefs: Preferences = koinInject()
+        fun addToIgnoreList(item: String) {
+            val types = prefs.getString(questPrefix(prefs) + PREF_OSMOSE_ITEMS, OSMOSE_DEFAULT_IGNORED_ITEMS)
+                .split("§§")
+                .mapNotNull { if (it.isNotBlank()) it.trim() else null }
+                .toMutableSet()
+            types.add(item)
+            prefs.putString(questPrefix(prefs) + PREF_OSMOSE_ITEMS,types.sorted().joinToString("§§"))
+            osmoseDao.reloadIgnoredItems()
+            questController.invalidate()
+            on(Action.TempHideQuest)
         }
-        binding.description.text = resources.getString(R.string.quest_osmose_message_for_element, "${issue.item}/${issue.itemClass}", issue.subtitle)
-
-        if (issue.elements.size > 1) viewLifecycleScope.launch { highlightElements() }
-        updateButtonPanel()
+        AlertDialog(
+            onDismissRequest = { showIgnoreDialog = false },
+            buttonRow = { TextButton({ showIgnoreDialog = false }) { Text(stringResource(Res.string.cancel)) } },
+            title = { Text(stringResource(Res.string.quest_osmose_hide_type)) },
+            text = {
+                Column {
+                    TextButton({ addToIgnoreList(issue.item.toString()) }) { Text("item: ${issue.item}") }
+                    TextButton({ addToIgnoreList("${issue.item}/${issue.itemClass}") }) { Text("item/class: ${issue.item}/${issue.itemClass}") }
+                    if (issue.subtitle.isNotBlank())
+                        TextButton({ addToIgnoreList(issue.subtitle) }) { Text("subtitle: ${issue.subtitle}") }
+                }
+            }
+        )
     }
+}
 
-    override fun getTitleString() = resources.getString(R.string.quest_osmose_title) + " ${issue?.title}"
-
+/*
     private fun highlightElements() {
         val issue = issue ?: return
         val elementsAndGeometry = issue.elements.mapNotNull { mapDataSource.get(it.type, it.id) }.mapNotNull { e -> mapDataSource.getGeometry(e.type, e.id)?.let { e to it } }
@@ -114,60 +161,4 @@ class OsmoseForm2 : AbstractExternalSourceQuestForm() {
             Marker(it.second, null, "${it.first.type} ${it.first.id}")
         })
     }
-
-    override val otherAnswers: List<AnswerItem> by lazy { listOfNotNull(
-        AnswerItem(R.string.quest_osmose_hide_type) { showIgnoreDialog() },
-        AnswerItem(R.string.quest_osmose_delete_this_issue) {
-            questController.delete(questKey as ExternalSourceQuestKey)
-        },
-    )
-    }
-
-    private fun showIgnoreDialog() {
-        val issue = issue ?: return
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.quest_osmose_hide_type)
-            .setItems(listOfNotNull("item: ${issue.item}", "item/class: ${issue.item}/${issue.itemClass}", "subtitle: ${issue.subtitle}".takeIf { issue.subtitle.isNotBlank() }).toTypedArray()) { _, i ->
-                when (i) {
-                    0 -> issue.item.toString()
-                    1 -> "${issue.item}/${issue.itemClass}"
-                    2 -> issue.subtitle
-                    else -> null
-                }?.let { addToIgnoreList(it) }
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
-    }
-
-    private fun addToIgnoreList(item: String) {
-        val types = prefs.getString(questPrefix(prefs) + PREF_OSMOSE_ITEMS, OSMOSE_DEFAULT_IGNORED_ITEMS)
-            .split("§§")
-            .mapNotNull { if (it.isNotBlank()) it.trim() else null }
-            .toMutableSet()
-        types.add(item)
-        prefs.putString(questPrefix(prefs) + PREF_OSMOSE_ITEMS,types.sorted().joinToString("§§"))
-        osmoseDao.reloadIgnoredItems()
-        questController.invalidate()
-    }
-}
-*/
-
-// todo: finish it
-@Composable
-fun OsmoseForm(on: (Action) -> Unit, quest: ExternalSourceQuest) {
-    val osmoseDao: OsmoseDao = koinInject()
-    val issue = osmoseDao.getIssue(quest.key.id)!!
-    val questController: ExternalSourceQuestController = koinInject()
-    val featureDictionary: FeatureDictionary = koinInject()
-    QuestForm(
-        on,
-        answers = listOf<AnswerItem>(),
-        otherAnswers = { listOf<AnswerItem>() },
-        title = stringResource(Res.string.quest_osmose_title) + " ${issue.title}",
-        subtitle = LocalElement.current?.let { element ->
-            nameAndLocationLabel(element, featureDictionary)
-        },
-    ) {
-        Text(stringResource(Res.string.quest_osmose_message_for_element, "${issue.item}/${issue.itemClass}", issue.subtitle))
-    }
-}
+ */

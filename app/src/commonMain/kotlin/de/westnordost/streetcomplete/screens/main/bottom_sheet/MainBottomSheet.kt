@@ -172,6 +172,13 @@ fun MainBottomSheet(
                         confirmEdit = PendingEdit(shownBottomSheet.quest.type, shownBottomSheet.quest.geometry, action)
                     }
                 },
+                onAddNode = {
+                    viewModel.submitEdit(
+                        elementEditType = shownBottomSheet.quest.type,
+                        geometry = ElementPointGeometry(it.position),
+                        elementEditAction = CreateNodeAction(it.position, it.tags)
+                    )
+                },
                 onLeaveNote = { noteText, noteImagePaths, isGpx ->
                     viewModel.createNote(
                         position = shownBottomSheet.quest.geometry.center,

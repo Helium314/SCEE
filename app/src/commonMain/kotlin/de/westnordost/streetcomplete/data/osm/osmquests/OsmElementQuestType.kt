@@ -3,9 +3,11 @@ package de.westnordost.streetcomplete.data.osm.osmquests
 import androidx.compose.runtime.Composable
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.edits.ElementEditType
+import de.westnordost.streetcomplete.data.osm.edits.update_tags.UpdateElementTagsAction
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.util.countryboundaries.AllCountries
 import de.westnordost.streetcomplete.util.countryboundaries.Countries
 import de.westnordost.streetcomplete.data.quest.QuestType
@@ -127,7 +129,7 @@ interface OsmElementQuestType<T> : QuestType, ElementEditType {
 
 sealed interface QuestAction<out T>
 @JvmInline value class Answer<T>(val value: T): QuestAction<T>
-enum class Action : QuestAction<Nothing> {
+enum class Action : QuestAction<Nothing>, ExternalAction {
     /** Just close the quest form */
     Dismiss,
     /** User can't answer the quest */
@@ -153,5 +155,9 @@ enum class Action : QuestAction<Nothing> {
     /** User wants to state that the highway is under construction */
     UnderConstruction
 }
+
+sealed interface ExternalAction
+data class AddNode(val node: Node): ExternalAction
+data class EditElement(val update: UpdateElementTagsAction): ExternalAction
 
 private val labelList = listOf("label")

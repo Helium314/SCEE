@@ -17,26 +17,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.osm.edits.ElementEdit
 import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuest
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestType
 import de.westnordost.streetcomplete.data.meta.CountryInfo
-import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
-import de.westnordost.streetcomplete.data.osm.mapdata.Element
-import de.westnordost.streetcomplete.data.osm.osmquests.Action
+import de.westnordost.streetcomplete.data.osm.osmquests.ExternalAction
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
 import de.westnordost.streetcomplete.quests.questPrefix
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import de.westnordost.streetcomplete.quests.ResetCancelOk
-import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.dialogs.ConfirmationDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
+import org.jetbrains.compose.resources.stringResource
 
 class OsmoseQuest(private val osmoseDao: OsmoseDao) : ExternalSourceQuestType {
 
@@ -86,7 +82,7 @@ class OsmoseQuest(private val osmoseDao: OsmoseDao) : ExternalSourceQuestType {
     override val source = "osmose"
 
     @Composable
-    override fun Form(on: (Action) -> Unit, quest: ExternalSourceQuest, countryInfo: CountryInfo) {
+    override fun Form(on: (ExternalAction) -> Unit, quest: ExternalSourceQuest, countryInfo: CountryInfo) {
         OsmoseForm(on, quest)
     }
 
@@ -112,29 +108,29 @@ class OsmoseQuest(private val osmoseDao: OsmoseDao) : ExternalSourceQuestType {
                     OsmQuestController.reloadQuestTypes() // actually this is doing a bit more than necessary, but whatever
                 }
             },
-            title = { Text(stringResource(R.string.quest_osmose_title)) },
+            title = { Text(stringResource(Res.string.quest_osmose_title)) },
             text = {
                 Column {
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable { high = !high }) {
                         Checkbox(high, { high = it })
-                        Text(stringResource(R.string.quest_settings_osmose_level_high))
+                        Text(stringResource(Res.string.quest_settings_osmose_level_high))
                     }
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable { medium = !medium }) {
                         Checkbox(medium, { medium = it })
-                        Text(stringResource(R.string.quest_settings_osmose_level_medium))
+                        Text(stringResource(Res.string.quest_settings_osmose_level_medium))
                     }
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable { low = !low }) {
                         Checkbox(low, { low = it })
-                        Text(stringResource(R.string.quest_settings_osmose_level_low))
+                        Text(stringResource(Res.string.quest_settings_osmose_level_low))
                     }
                     Button({ showTypeEditDialog = true }, Modifier.fillMaxWidth()) {
-                        Text(stringResource(R.string.quest_osmose_settings_items))
+                        Text(stringResource(Res.string.quest_osmose_settings_items))
                     }
                     SwitchPreference(
-                        name = stringResource(R.string.quest_osmose_use_app_language),
+                        name = stringResource(Res.string.quest_osmose_use_app_language),
                         pref = PREF_OSMOSE_APP_LANGUAGE,
                         default = false,
-                        description = stringResource(R.string.quest_osmose_use_app_language_information),
+                        description = stringResource(Res.string.quest_osmose_use_app_language_information),
                     )
                 }
             }
@@ -159,7 +155,8 @@ class OsmoseQuest(private val osmoseDao: OsmoseDao) : ExternalSourceQuestType {
                             prefs.putString(pref, items.filterNot { it in itemsForRemoval }.joinToString("§§"))
                             osmoseDao.reloadIgnoredItems()
                             OsmQuestController.reloadQuestTypes()
-                        }
+                        },
+                        okRes = Res.string.delete_confirmation
                     )
                 },
                 content = {
@@ -170,7 +167,7 @@ class OsmoseQuest(private val osmoseDao: OsmoseDao) : ExternalSourceQuestType {
                             LaunchedEffect(checked) {
                                 if (checked) itemsForRemoval += item else itemsForRemoval -= item
                             }
-                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { checked = !checked }) {
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable { checked = !checked }) {
                                 Checkbox(checked, { checked = it })
                                 Text(item)
                             }

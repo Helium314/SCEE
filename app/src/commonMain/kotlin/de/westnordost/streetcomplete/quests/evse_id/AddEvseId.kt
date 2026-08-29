@@ -1,9 +1,14 @@
 package de.westnordost.streetcomplete.quests.evse_id
 
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.core.net.toUri
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
@@ -14,14 +19,21 @@ import de.westnordost.streetcomplete.data.osm.mapdata.filter
 import de.westnordost.streetcomplete.data.osm.osmquests.Answer
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
-import de.westnordost.streetcomplete.util.countryboundaries.NoCountriesExcept
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.CITIZEN
 import de.westnordost.streetcomplete.osm.Tags
-import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
+import de.westnordost.streetcomplete.resources.Res
+import de.westnordost.streetcomplete.ui.common.ToastPopup
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
-import de.westnordost.streetcomplete.ui.common.quest.MultiValueQuestForm
+import de.westnordost.streetcomplete.ui.common.quest.MultiValueQuestQrScanForm
+import de.westnordost.streetcomplete.util.countryboundaries.NoCountriesExcept
 import de.westnordost.streetcomplete.util.math.contains
+import io.ktor.client.HttpClient
+import io.ktor.client.request.request
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
 
@@ -81,14 +93,33 @@ class AddEvseId : OsmElementQuestType<String> {
 
     @Composable
     override fun Form(on: (QuestAction<String>) -> Unit, element: Element, geometry: ElementGeometry, countryInfo: CountryInfo) {
-        MultiValueQuestForm(
-            on,
-            Res.string.quest_evse_id_add_more,
+        var showScanUnknownValueToast by remember { mutableStateOf(false) }
+        val composableScope = rememberCoroutineScope()
+
+        MultiValueQuestQrScanForm(
+            on = on,
+            addAnotherValueText = Res.string.quest_evse_id_add_more,
+            scanAnotherValueText = Res.string.quest_evse_id_scan_more,
             otherAnswers = { listOf(AnswerItem(stringResource(Res.string.quest_generic_answer_noSign)) { on(Answer("ref:signed=no")) }) },
             isOk = { EVSE_REGEX.matches(it) },
+            onQrCodeParsed = { value: String, addValue: (String?) -> Unit ->
+                composableScope.launch {
+                    val result = parseQrCodeValue(value)
+
+                    if (result != null) addValue(result)
+                    else showScanUnknownValueToast = true
+                }
+            },
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters),
             hint = stringResource(Res.string.quest_evse_id_hint)
         )
+
+        if (showScanUnknownValueToast) {
+            ToastPopup(
+                onDismissRequest = { showScanUnknownValueToast = false },
+                text = stringResource(Res.string.quest_evse_id_scan_unknown_value),
+            )
+        }
     }
 
     override fun applyAnswerTo(
@@ -115,3 +146,67 @@ class AddEvseId : OsmElementQuestType<String> {
 }
 
 private val EVSE_REGEX = Regex("(?i)^[A-Z]{2}\\*?[A-Z0-9]{3}\\*?E(?!\\*)[A-Z0-9*]{1,31}$")
+private val EVSE_REGEX_IN_TEXT = Regex("(?i)\\b[A-Z]{2}\\*[A-Z0-9]{3}\\*E(?!\\*)[A-Z0-9*]{1,31}\\b")
+
+private val urlPrefixToQueryParameter = mapOf(
+    "http://m.intercharge.eu/qr" to "evseid",
+    "https://charge.elli.eco/" to "evseid",
+    "https://e-mobility.lidl.de/qr" to "evseid",
+    "https://smatrics.com/start-charging" to "evseId",
+    "https://www.aral-pulse.de/webshop/details" to "evseid",
+)
+private val urlPrefixesWithEvseIdAsPath = arrayOf(
+    "https://laden.enercity.de/",
+    "https://pay.chargedrive.com/",
+    "https://qr.on-charge.com/",
+    "www.chargepoint-services.com/",
+)
+
+private suspend fun followRedirect(url: String): String? {
+    val client = HttpClient { followRedirects = false }
+    val response: HttpResponse = client.request(url) {
+        method = HttpMethod.Head
+    }
+    return response.headers[HttpHeaders.Location]
+}
+
+// Some of the QR codes contain a URL that is missing the protocol.
+private fun normalizeUrl(url: String): String = if (url.startsWith("http")) url else "https://$url"
+
+private fun getUrlQueryParameter(url: String, queryParameter: String): String? {
+    val uri = normalizeUrl(url).toUri()
+    return uri.getQueryParameter(queryParameter)
+}
+
+private fun getUrlPath(url: String): String? {
+    val uri = normalizeUrl(url).toUri()
+    return uri.path?.replace("/", "")
+}
+
+private suspend fun parseQrCodeValue(value: String): String? {
+    urlPrefixToQueryParameter.forEach { (urlPrefix, queryParameter) ->
+        if (value.startsWith(urlPrefix))
+            return getUrlQueryParameter(value, queryParameter)
+    }
+
+    urlPrefixesWithEvseIdAsPath.forEach { urlPrefix ->
+        if (value.startsWith(urlPrefix))
+            return getUrlPath(value)
+    }
+
+    if (value.startsWith("https://chrg.me")) {
+        val redirectedLocation = followRedirect(value) ?: return null
+        return getUrlQueryParameter(redirectedLocation, "evseId")
+    }
+
+    arrayOf("evseid", "evseId").forEach { queryParameter ->
+        val maybeEvseId = getUrlQueryParameter(value, queryParameter)
+        if (maybeEvseId != null && EVSE_REGEX.matches(maybeEvseId)) return maybeEvseId
+    }
+
+    val regexMatch = EVSE_REGEX_IN_TEXT.find(value)
+    if (regexMatch != null)
+        return regexMatch.value
+
+    return null
+}

@@ -5,7 +5,7 @@ import de.westnordost.streetcomplete.quests.roof_shape.RoofShape
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.*
 
-enum class RoofColour(override val osmValue: String, override val androidValue: String?) :
+enum class RoofColour(override val osmValue: String, override val hexValue: String?) :
     OsmColour {
     // Top used roof colours
     DARK_GREY("darkgrey", "#a9a9a9"),

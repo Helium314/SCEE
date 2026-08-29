@@ -33,7 +33,7 @@ import de.westnordost.streetcomplete.screens.main.map.maplibre.toLatLon
 import de.westnordost.streetcomplete.util.getNameLabel
 import de.westnordost.streetcomplete.util.isDay
 import de.westnordost.streetcomplete.util.math.contains
-import de.westnordost.streetcomplete.util.name
+import de.westnordost.streetcomplete.util.ktx.name
 import de.westnordost.streetcomplete.view.toAndroidResourceId
 import kotlinx.atomicfu.locks.ReentrantLock
 import kotlinx.atomicfu.locks.withLock

@@ -47,6 +47,7 @@ import de.westnordost.streetcomplete.ui.common.dialogs.ConfirmationDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
 import de.westnordost.streetcomplete.ui.ktx.tryOpenUri
+import de.westnordost.streetcomplete.util.ktx.name
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

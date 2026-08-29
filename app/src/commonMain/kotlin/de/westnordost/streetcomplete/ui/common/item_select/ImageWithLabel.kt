@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.TextAlign
@@ -27,6 +28,7 @@ fun ImageWithLabel(
     modifier: Modifier = Modifier,
     imageRotation: Float? = null,
     imageSize: DpSize? = null,
+    colorFilter: ColorFilter? = null,
 ) {
     Column(
         modifier = modifier,
@@ -41,6 +43,7 @@ fun ImageWithLabel(
                     .clip(MaterialTheme.shapes.medium)
                     .conditional(imageSize != null) { size(imageSize!!) }
                     .conditional(imageRotation != null) { rotate(imageRotation!!) },
+                colorFilter = colorFilter,
             )
         }
         if (label != null) {

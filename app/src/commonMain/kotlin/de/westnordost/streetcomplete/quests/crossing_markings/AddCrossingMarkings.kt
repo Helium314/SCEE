@@ -1,5 +1,6 @@
 package de.westnordost.streetcomplete.quests.crossing_markings
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
@@ -19,8 +20,10 @@ import de.westnordost.streetcomplete.ui.common.item_select.ImageWithLabel
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
 import de.westnordost.streetcomplete.util.image.toPainter
-import de.westnordost.streetcomplete.util.toResId
+import de.westnordost.streetcomplete.util.ktx.name
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
+import kotlin.collections.set
 
 class AddCrossingMarkings : OsmElementQuestType<Set<CrossingMarkings>> {
 
@@ -116,3 +119,15 @@ class AddCrossingMarkings : OsmElementQuestType<Set<CrossingMarkings>> {
 }
 
 private const val PREF_CROSSING_MARKING_EXTENDED = "qs_AddCrossingMarkings_extended"
+
+private fun drawableResId(name: String, context: Context): Int {
+    nameToId[name]?.let { return it }
+    val id = context.resources.getIdentifier(name, "drawable", context.packageName)
+    require(id != 0) { "drawable $name not found"}
+    nameToId[name] = id
+    return id
+}
+
+private fun DrawableResource.toResId(context: Context): Int = drawableResId(name, context)
+
+private val nameToId = hashMapOf<String, Int>()

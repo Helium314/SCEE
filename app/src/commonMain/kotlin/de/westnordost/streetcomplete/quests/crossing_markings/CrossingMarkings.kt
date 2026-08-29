@@ -5,6 +5,10 @@ import de.westnordost.streetcomplete.resources.*
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
+// todo
+//  current resources are layerDrawables, which compose refuses to understand
+//  so either we'd need to adjust drawables, or stack Images
+//  stacking images looks ok sometimes, but e.g. when zebra is involved it's just brokem
 enum class CrossingMarkings(
     val osmValue: String,
     val imageRes: DrawableResource?,

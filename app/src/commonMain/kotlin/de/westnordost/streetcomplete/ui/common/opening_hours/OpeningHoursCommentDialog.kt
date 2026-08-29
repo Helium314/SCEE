@@ -74,14 +74,18 @@ import kotlin.text.replace
                 ) {
                     Text(stringResource(Res.string.quest_openingHours_comment_description))
                 }
-                AutoCompleteTextField(
-                    value = comment,
-                    onValueChange = { comment = if (comment.text.contains("\"")) TextFieldValue(it.text.replace("\"", "")) else it },
-                    isError = isTooLong,
-                    suggestions = lastPicked,
-                    startExpanded = true,
-                    startExpandedWithoutFocus = true
-                )
+                CompositionLocalProvider(
+                    LocalTextStyle provides MaterialTheme.typography.body1
+                ) {
+                    AutoCompleteTextField(
+                        value = comment,
+                        onValueChange = { comment = if (comment.text.contains("\"")) TextFieldValue(it.text.replace("\"", "")) else it },
+                        isError = isTooLong,
+                        suggestions = lastPicked,
+                        startExpanded = true,
+                        startExpandedWithoutFocus = true
+                    )
+                }
             }
         },
     )

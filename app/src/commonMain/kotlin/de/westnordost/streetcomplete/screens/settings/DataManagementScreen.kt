@@ -31,7 +31,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -316,8 +315,7 @@ fun DataManagementScreen(
             )
         }
         if (exportOverlays != null) {
-            val ctx = LocalContext.current
-            val allOverlays = getFakeCustomOverlays(prefs, ctx.resources, false)
+            val allOverlays = getFakeCustomOverlays(prefs, false)
             var selectedOverlays by remember { mutableStateOf(setOf<Overlay>()) }
             AlertDialog(
                 onDismissRequest = { exportOverlays = null },

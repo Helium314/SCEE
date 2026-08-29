@@ -1,16 +1,14 @@
 package de.westnordost.streetcomplete.util
 
 import android.content.SharedPreferences
-import android.content.res.Resources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Switch
@@ -31,7 +29,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.russhwolf.settings.ObservableSettings
 import de.westnordost.streetcomplete.Prefs
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
@@ -56,9 +53,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
@@ -76,7 +75,7 @@ fun OverlayCustomizer(
     var showColorInfo by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope { Dispatchers.IO }
     val prefs: Preferences = koinInject()
-    val indices = remember { getCustomOverlayIndices(prefs).sorted() }
+    val indices: List<Int> = remember { getCustomOverlayIndices(prefs).sorted() }
     val icons = remember {
         LinkedHashSet<DrawableResource>(questTypeRegistry.size).apply {
             add(Res.drawable.ic_custom_overlay)
@@ -153,9 +152,8 @@ fun OverlayCustomizer(
     LaunchedEffect(filterNodes, filterWays, filterRelations, filterText, colorKey, dashFilter) {
         enableOk = checkIsOK()
     }
-    val scroll = rememberScrollState()
 
-    ScrollableAlertDialog( // todo: not scrollable for some reason, no matter whether scroll is on dialog or on content column
+    ScrollableAlertDialog(
         onDismissRequest = onDismiss,
         buttonRow = {
             if (index in indices)
@@ -184,7 +182,8 @@ fun OverlayCustomizer(
         },
         title = { Text(stringResource(Res.string.custom_overlay_title)) },
         content = {
-            Column(modifier = Modifier.scrollable(scroll, Orientation.Vertical)) { //
+            val scroll = rememberScrollState()
+            Column(modifier = Modifier.verticalScroll(scroll)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     DropdownButton(
                         items = icons,
@@ -288,7 +287,7 @@ fun OverlayCustomizer(
 // title is invalid resId 0
 // name and wikiLink are the overlay index as stored in shared preferences
 // changesetComment is the overlay title
-fun getFakeCustomOverlays(prefs: Preferences, res: Resources, onlyIfExpertMode: Boolean = true): List<Overlay> {
+fun getFakeCustomOverlays(prefs: Preferences, onlyIfExpertMode: Boolean = true): List<Overlay> {
     if (onlyIfExpertMode && !prefs.getBoolean(Prefs.EXPERT_MODE, false)) return emptyList()
     return prefs.getString(Prefs.CUSTOM_OVERLAY_INDICES, "0").split(",").mapNotNull { index ->
         val i = index.toIntOrNull() ?: return@mapNotNull null
@@ -297,7 +296,7 @@ fun getFakeCustomOverlays(prefs: Preferences, res: Resources, onlyIfExpertMode: 
             @Composable
             override fun Form(on: (OverlayAction) -> Unit, element: Element?, geometry: ElementGeometry, countryInfo: CountryInfo) {}
             override val changesetComment = prefs.getString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_NAME, i), "")
-                .ifBlank { res.getString(R.string.custom_overlay_title) } // displayed overlay name
+                .ifBlank { runBlocking { getString(Res.string.custom_overlay_title) } } // displayed overlay name
             override val icon = Res.allDrawableResources[prefs.getString(getIndexedCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_ICON, i), "ic_custom_overlay")]
                 ?: Res.drawable.ic_custom_overlay
             override val title = fakeStringResource // use invalid resource placeholder

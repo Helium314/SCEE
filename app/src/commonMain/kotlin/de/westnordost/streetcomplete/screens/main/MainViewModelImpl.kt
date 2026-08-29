@@ -231,7 +231,7 @@ class MainViewModelImpl(
             visibleEditTypeSource.isVisible(it)
                 && eeAllowed // expert mode on, or SC overlay
                 && it.javaClass.simpleName != "CustomOverlay" // custom overlay added separately
-        } + getFakeCustomOverlays(prefs, ApplicationConstants.context.resources)
+        } + getFakeCustomOverlays(prefs)
 
     override val selectedOverlay: StateFlow<Overlay?> = callbackFlow {
         send(selectedOverlayController.selectedOverlay)

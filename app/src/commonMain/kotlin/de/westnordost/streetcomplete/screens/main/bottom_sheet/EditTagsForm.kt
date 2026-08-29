@@ -2,6 +2,7 @@ package de.westnordost.streetcomplete.screens.main.bottom_sheet
 
 import android.content.res.Resources
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -55,15 +56,11 @@ import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuest
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
 import de.westnordost.streetcomplete.data.preferences.Preferences
-import de.westnordost.streetcomplete.resources.Res
-import de.westnordost.streetcomplete.resources.ic_add_24
-import de.westnordost.streetcomplete.resources.ic_undo_24
-import de.westnordost.streetcomplete.resources.tag_editor_last_edited
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.FloatingOkButton
 import de.westnordost.streetcomplete.ui.common.auto_complete_text.AutoCompleteTextField
 import de.westnordost.streetcomplete.ui.common.bottom_sheet.BottomSheetFormScaffold
 import de.westnordost.streetcomplete.ui.common.dialogs.ConfirmDiscardDialog
-import de.westnordost.streetcomplete.ui.common.opening_hours.DeleteRowButton
 import de.westnordost.streetcomplete.ui.common.quest.LocalElement
 import de.westnordost.streetcomplete.ui.common.quest.LocalIsTagEditor
 import de.westnordost.streetcomplete.ui.common.quest.LocalQuestType
@@ -121,7 +118,7 @@ fun EditTagsForm(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) { // lazy column has infinite height, so we need a normal column
                     updatedTags.forEach { (k, v) ->
                         // todo: width is weird, why is 0.4 and 0.8 necessary to have almost equal widths? this has weird effect on AutoCompleteTextField dropdown
-                        Row(modifier = Modifier.fillMaxWidth()) {
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                             var key by remember { mutableStateOf(TextFieldValue(k)) }
                             var value by remember { mutableStateOf(TextFieldValue(v)) }
                             // deleting has some issues, try updating here
@@ -178,14 +175,19 @@ fun EditTagsForm(
                                 startExpanded = true,
                                 singleLine = true,
                             )
-                            DeleteRowButton(
-                                onClick = {
-                                    if (value.text.isNotEmpty()) {
-                                        value = TextFieldValue()
-                                        updatedTags += key.text to ""
-                                    }
-                                    else updatedTags -= key.text
-                                }
+                            Icon(
+                                painter = painterResource(Res.drawable.ic_delete_24),
+                                contentDescription = stringResource(Res.string.quest_openingHours_delete),
+                                modifier = Modifier.size(32.dp).combinedClickable(
+                                    onClick = {
+                                        if (value.text.isNotEmpty()) {
+                                            value = TextFieldValue()
+                                            updatedTags += key.text to ""
+                                        }
+                                        else updatedTags -= key.text
+                                    },
+                                    onLongClick = { updatedTags -= key.text }
+                                )
                             )
                         }
                     }

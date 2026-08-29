@@ -1,6 +1,7 @@
 package de.westnordost.streetcomplete.quests.osmose
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuest
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
@@ -99,19 +101,20 @@ fun OsmoseForm(on: (ExternalAction) -> Unit, quest: ExternalSourceQuest) {
         if (issue.elements.size == 1) {
             elementToEdit = issue.elements.single()
             editTags = false
-        }
-        AlertDialog(
-            onDismissRequest = { editTags = false },
-            buttonRow = { TextButton({ editTags = false }) { Text(stringResource(Res.string.cancel)) } },
-            title = { Text(stringResource(Res.string.quest_osmose_select_element)) },
-            text = {
-                Column {
-                    issue.elements.forEach {
-                        TextButton({ elementToEdit = it; editTags = false }) { Text("${it.type} ${it.id}") }
+        } else {
+            AlertDialog(
+                onDismissRequest = { editTags = false },
+                buttonRow = { TextButton({ editTags = false }) { Text(stringResource(Res.string.cancel)) } },
+                title = { Text(stringResource(Res.string.quest_osmose_select_element)) },
+                text = {
+                    Column {
+                        issue.elements.forEach {
+                            TextButton({ elementToEdit = it; editTags = false }, Modifier.fillMaxWidth()) { Text("${it.type} ${it.id}") }
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
     if (showIgnoreDialog) {
         val prefs: Preferences = koinInject()

@@ -9,7 +9,6 @@
     <string name="pref_hide_notes_message">Εισαγωγή ονομάτων χρηστών ή IDs για αγνόηση</string>
     <string name="pref_show_gpx_button_title">Εμφάνιση κουμπιού σημείωσης GPX</string>
     <string name="pref_show_gpx_button_summary">Σε αντίθεση με τις σημειώσεις OSM, η προσθήκη μιας σημείωσης GPX δε θα κρύψει καμία αποστολή στην συγκεκριμένη τοποθεσία</string>
-    <string name="pref_hide_keyboard_title">Απόκρυψη πληκτρολογίου πριν την δημιουργία σημείωσης</string>
     <string name="pref_really_all_notes_title">“Εμφάνιση όλων των σημειώσεων“ εννοεί ΟΛΕΣ τις σημειώσεις</string>
     <string name="pref_files_not_found">Δε βρέθηκαν αρχεία</string>
     <string name="pref_gpx_track_provide">Επιλέξτε αρχείο GPX</string>

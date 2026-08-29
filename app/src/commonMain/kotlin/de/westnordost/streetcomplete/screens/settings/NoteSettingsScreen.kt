@@ -89,12 +89,6 @@ fun NoteSettingsScreen(
                 default = false,
             )
             SwitchPreference(
-                name = stringResource(Res.string.pref_hide_keyboard_title),
-                description = stringResource(Res.string.pref_hide_keyboard_summary),
-                pref = Prefs.HIDE_KEYBOARD_FOR_NOTE,
-                default = true,
-            )
-            SwitchPreference(
                 name = stringResource(Res.string.pref_really_all_notes_title),
                 description = stringResource(Res.string.pref_really_all_notes_summary),
                 pref = Prefs.REALLY_ALL_NOTES,

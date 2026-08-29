@@ -8,8 +8,6 @@
     <string name="pref_read_log_save">Збереження повного журналу у файл</string>
     <string name="pref_screen_notes">Нотатки</string>
     <string name="pref_hide_notes_title">Приховати нотатки певних користувачів</string>
-    <string name="pref_hide_keyboard_title">Приховати клавіатуру перед створенням нотатки</string>
-    <string name="pref_hide_keyboard_summary">Приховує клавіатуру, коли вона відкрита до того, як нотатка фактично створена (щоб можна було переглянути позицію)</string>
     <string name="pref_read_reverse_button">Назад</string>
     <string name="pref_hide_notes_message">Уведіть імена користувачів або ідентифікатори для ігнорування</string>
     <string name="pref_swap_gpx_note_button">Поміняти місцями кнопки нотаток OSM та GPX</string>
@@ -114,7 +112,7 @@
     <string name="pref_quest_monitor_download">Завантажувати дані за необхідності\? Це може призвести до значного споживання даних і заряду акумулятора, а також може бути заборонено Android з міркувань економії заряду акумулятора.</string>
     <string name="theme_dark_contrast">Темний (підвищена контрастність)</string>
     <string name="resurvey_intervals_even_less_often">Запитувати ще рідше</string>
-    <string name="pref_location_interval_title">Інтервал оновлення GPS-координат</string>
+    <string name="pref_location_interval_title">Інтервал оновлення місцезнаходження</string>
     <string name="pref_interval_summary">%1$d секунд</string>
     <string name="quest_settings_osmose_level_high">Високий</string>
     <string name="quest_settings_osmose_level_low">Низький</string>
@@ -131,7 +129,7 @@
     <string name="pref_export">Експорт налаштувань</string>
     <string name="import_export_presets_select">Виберіть заготовки для експорту</string>
     <string name="quest_monitor_search_radius_text">Встановити радіус пошуку завдань поблизу. Зауважте, що завдання з дещо більшою відстанню також можуть бути знайдені. Локації з точністю нижче цього значення ігноруються.</string>
-    <string name="quest_monitor_active_request">Активний запит місцезнаходжень збільшує витрату заряду акумулятора. Якщо ви не запитуєте місця розташування активно, місця розташування, запитані іншими програмами, все одно будуть використовуватися.</string>
+    <string name="quest_monitor_active_request">Активний запит місцезнаходження збільшує витрату заряду акумулятора. Якщо ви не запитуєте місця розташування активно, місця розташування, запитані іншими програмами, все одно будуть використовуватися.</string>
     <string name="restore_dialog_hint">Ви також можете вручну вибрати, які завдання відновити, затиснувши кнопку скасування.</string>
     <string name="quest_settings_reset">Скидання</string>
     <string name="quest_settings_element_selection">Встановіть елементи, що підходять для цього завдання. &lt;a href=\"https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection\"&gt;Натисніть тут&lt;/a&gt;, щоб відкрити інформацію про синтаксис виділення елементів у браузері.</string>
@@ -670,4 +668,7 @@
     <string name="quest_tree_denotation_urban_description">У межах населеного пункту</string>
     <string name="quest_tree_denotation_natural">Природа</string>
     <string name="quest_tree_denotation_natural_description">За межами населеного пункту</string>
+    <string name="quest_evse_id_scan_more">Відсканувати інший EVSE ID</string>
+    <string name="quest_evse_id_scan_unknown_value">QR-код не розпізнано. Будь ласка, створіть задачу та додайте зображення QR-коду, щоб ми могли реалізувати підтримку.</string>
+    <string name="no_qr_code_handler">Не знайдено сканера QR-кодів. Встановіть сумісний додаток, наприклад Binary Eye, і спробуйте ще раз.</string>
 </resources>

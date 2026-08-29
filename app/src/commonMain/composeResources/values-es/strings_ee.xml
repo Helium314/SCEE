@@ -16,12 +16,10 @@
     <string name="pref_hide_notes_title">Ocultar notas de usuarios específicos</string>
     <string name="pref_hide_notes_hint">Usar comas para separar nombres de usuario o IDs</string>
     <string name="pref_hide_notes_message">Insertar nombres de usuario o IDs a ignorar</string>
-    <string name="pref_hide_keyboard_title">Ocultar teclado antes de crear nota</string>
     <string name="pref_read_log_title">Lector de registros</string>
     <string name="pref_read_log_save">Guardar registro completo en archivo</string>
     <string name="pref_show_gpx_button_title">Mostrar botón de nota GPX</string>
     <string name="pref_swap_gpx_note_button">Intercambiar botones de nota OSM y GPX</string>
-    <string name="pref_hide_keyboard_summary">Oculta el teclado cuando está abierto antes de que se cree la nota (para permitir volver a ver la posición)</string>
     <string name="pref_save_gpx">Obtenga notas GPX y fotos y pistas adjuntas</string>
     <string name="pref_save_photos_summary">Almacenar versiones de tamaño completo de fotos tomadas mientras creaba notas, sin borrar los datos EXIF</string>
     <string name="pref_get_photos_title">Obtener fotos de tamaño completo</string>
@@ -285,7 +283,7 @@
     <string name="pref_way_direction_summary">Muestra flechas en las líneas resaltadas al abrir una tarea. Útil, p. al agregar oneway.</string>
     <string name="pref_volume_zoom_summary">Zoom usando los botones de volumen</string>
     <string name="pref_hide_button_summary">El click oculta la misión temporalmente, el click largo oculta la misión de forma permanente</string>
-    <string name="pref_location_interval_title">Intervalo de actualización de ubicación GPS</string>
+    <string name="pref_location_interval_title">El intervalo de actualización de la ubicación</string>
     <string name="restore_dialog_hint">También puede elegir manualmente qué tareas restaurar presionando prolongadamente el botón de deshacer.</string>
     <string name="quest_settings_element_selection">Establecer elementos elegibles para esta tarea. <a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection">Haga clic aquí</a> para abrir información sobre la sintaxis de selección de elementos en un navegador.</string>
     <string name="quick_switch_map_background">Alternar fondo aéreo/mapa</string>

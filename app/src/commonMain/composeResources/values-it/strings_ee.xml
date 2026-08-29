@@ -123,7 +123,6 @@
     <string name="pref_save_photos_title">Salva foto utilizzate per le note</string>
     <string name="pref_save_photos_summary">Salva le foto utilizzate per le note nella qualità originale, senza eliminare i dati EXIF</string>
     <string name="pref_way_direction">Mostra direzione dei percorsi</string>
-    <string name="pref_hide_keyboard_title">Nascondi la tastiera dopo aver creato la nota</string>
     <string name="pref_way_direction_summary">Mostra delle frecce nelle linee selezionate quando apri una domanda. Utile per le strade a senso unico</string>
     <string name="pref_quest_geometries_title">Mostra la geometria della missione</string>
     <string name="pref_quest_geometries_summary">Evidenzia strade e aree che hanno missioni</string>
@@ -144,7 +143,6 @@
     <string name="pref_show_quick_settings_title">Mostra tasto impostazioni rapide</string>
     <string name="pref_show_next_quest_title">Mostra immediatamente la prossima missione</string>
     <string name="pref_swap_gpx_note_button">Inverti i bottoni per le note OSM e GPX</string>
-    <string name="pref_hide_keyboard_summary">Nasconde la tastiera quando aperta prima della creazione della nota (per permettere la visualizzazione della posizione)</string>
     <string name="pref_create_custom_quest_summary">...utilizzata come alternativa alle note. Questa può essere usata per avere note salvate localmente visibili sulla mappa. È necessario abilitare le quest personalizzate prima di procedere</string>
     <string name="pref_offset_fix_title2">Rimuovi offset dei pallini bianchi</string>
     <string name="pref_offset_fix_summary">Servono per coprire i puntini bianchi con i segnaposto delle missioni</string>

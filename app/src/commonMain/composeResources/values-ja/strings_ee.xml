@@ -185,12 +185,10 @@
     <string name="quest_shelter_type_field_shelter">動物（たとえば馬）向けの避難設備</string>
     <string name="pref_category_mods">SCEE設定</string>
     <string name="pref_way_direction_summary">クエストを開くときに、強調された線の上に矢印を表示します。例えば、一方通行を追加するときに役立ちます。</string>
-    <string name="pref_hide_keyboard_title">メモ作成前にキーボードを非表示</string>
     <string name="pref_hide_button_title">非表示ボタンを表示</string>
     <string name="pref_select_first_edit_summary">敏速に元に戻せますが、表示範囲は自動的に動きます</string>
     <string name="pref_create_custom_quest_summary">…メモを残す代わりに。これは、地図上に表示される端末内に保存されたメモとして使用でます。任意クエストを有効にする必要があります。</string>
     <string name="pref_gpx_track_download">GPX経路が存在する領域をダウンロード</string>
-    <string name="pref_hide_keyboard_summary">(位置の確認を可能にするため、)実際に作成されたメモを開く前にキーボードを非表示にする</string>
     <string name="pref_recent_answers_first_min_lines_message">クエスト回答枠にこの数以上の画像がある場合、最近の回答を前方に移動します</string>
     <string name="pref_show_quick_settings_title">クイック設定ボタンを表示</string>
     <string name="pref_search_more_languages_summary">地物検索は全てのシステムと地域の言語で表示されます</string>

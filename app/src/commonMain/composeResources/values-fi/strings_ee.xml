@@ -64,8 +64,6 @@
     <string name="pref_swap_gpx_note_button">Vaihda OSM- ja GPX-huomautuspainikkeita</string>
     <string name="pref_files_not_found">Tiedostoja ei löytynyt</string>
     <string name="pref_create_custom_quest_title">Salli mukautettujen pyyntöjen luominen</string>
-    <string name="pref_hide_keyboard_title">Piilota näppäimistö ennen huomautuksen luomista</string>
-    <string name="pref_hide_keyboard_summary">Piilottaa näppäimistön, kun se avataan ennen nuotin tosiasiallista luomista (jotta mahdollistaa paikan uudelleennäkeminen)</string>
     <string name="pref_save_gpx">Hanki GPX-huomautukset, liitteenä olevat kuvat ja säikeet</string>
     <string name="pref_save_file_error">Virhe tallennettaessa tiedostoa</string>
     <string name="pref_get_photos_title">Hanki täysikokoisia valokuvia</string>

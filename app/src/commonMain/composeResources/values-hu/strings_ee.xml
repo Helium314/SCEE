@@ -19,7 +19,6 @@
     <string name="pref_hide_notes_message">Add meg a mellőzendő felhasználóneveket vagy ID-ket</string>
     <string name="pref_show_gpx_button_title">GPX-megjegyzés gomb megjelenítése</string>
     <string name="pref_swap_gpx_note_button">OSM- és GPX-jegyzet gombok felcserélése</string>
-    <string name="pref_hide_keyboard_title">Billentyűzet elrejtése a jegyzet létrehozása előtt</string>
     <string name="pref_save_gpx">GPX-megjegyzések és csatolt fényképek és nyomvonalak letöltése</string>
     <string name="pref_files_not_found">Fájl nem található</string>
     <string name="pref_save_photos_title">A jegyzetekhez használt fényképek mentése</string>
@@ -525,7 +524,6 @@
     <string name="general_warning">Figyelem</string>
     <string name="move_node_with_geometry">Ennek a pontnak a mozgatása módosítani fogja a következő vonalak vagy multipoligon kapcsolatok geometriáját: %1$s.\n Vedd figyelembe, hogy a változások nem lesznek azonnal láthatóak a háttérképen.</string>
     <string name="move_node_message_external_source_addition">Vegye figyelembe, hogy a kérdés a pozíciója nem feltétlenül mozog együtt a ponttal.</string>
-    <string name="pref_hide_keyboard_summary">A jegyzet létrehozása előtt, megnyitásnál elrejti a billentyűzetet (az elhelyezés ellenőrzése érdekében)</string>
     <string name="tree_custom_quest_import">Megadom</string>
     <string name="tree_custom_quest_export">Lekérem</string>
     <string name="tree_custom_quest_import_export_message">Lekéred a jelenleg használt fájlt vagy megadsz egy újat? A részletekért nézd meg a megfelelő kérdés engedélyezési üzenetét.</string>

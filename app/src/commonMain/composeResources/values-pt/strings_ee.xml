@@ -9,7 +9,6 @@
     <string name="pref_save_gpx">Obter notas GPX e fotografias e trajetos anexados</string>
     <string name="pref_save_photos_title">Guardar fotografias utilizadas para notas</string>
     <string name="pref_hide_notes_hint">Utilizar vírgulas para separar nomes de utilizador ou IDs</string>
-    <string name="pref_hide_keyboard_summary">Oculta o teclado quando aberto antes de a nota ser efetivamente criada (para permitir uma nova visualização da posição)</string>
     <string name="pref_category_mods">Definições do SCEE</string>
     <string name="pref_create_custom_quest_summary">...como alternativa a deixar uma nota. Isto pode ser usado como uma nota armazenada localmente e visível no mapa. Nota que terás de ativar as missões personalizadas.</string>
     <string name="pref_files_not_found">Nenhum ficheiro encontrado</string>
@@ -26,7 +25,6 @@
 \n Por favor, habilite esta configuração apenas se você tiver experiência com OSM fora do StreetComplete e entender o que está fazendo. </string>
     <string name="pref_expert_mode_title">Modo de especialista</string>
     <string name="pref_expert_mode_summary">Ativar capacidades avançadas de edição</string>
-    <string name="pref_hide_keyboard_title">Ocultar o teclado antes de criar uma nota</string>
     <string name="pref_screen_notes">Notas</string>
     <string name="pref_read_log_save">Guardar o registo completo em ficheiro</string>
     <string name="pref_show_gpx_button_summary">Ao contrário das notas do OSM, adicionar um GPX não irá esconder nenhuma missão no local afetado</string>

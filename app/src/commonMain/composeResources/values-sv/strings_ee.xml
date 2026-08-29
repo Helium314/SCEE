@@ -145,7 +145,6 @@
     <string name="quest_settings_sidewalk_cycleway_distance_message">Ställ in minsta avstånd från separata vägar, om lägre kommer uppdraget inte att visas</string>
     <string name="quest_settings_dot_labels_message">Ställ in vilka taggar som ska användas för etiketten, i given ordning. En tom sträng kommer aldrig visa några etiketter, "label" kommer att visa StreetCompletes standardnamnetikett genom att använda namn, brand, ref, local_ref och operator.</string>
     <string name="pref_show_gpx_button_summary">Att lägga till en GPX-anteckning kommer, till skillnad från vad som är fallet med OSM-anteckningar, inte att dölja några uppdrag på platsen ifråga</string>
-    <string name="pref_hide_keyboard_title">Dölj tangentbord innan skapande av anteckning</string>
     <string name="pref_save_gpx">Hämta GPX-anteckningar och bifogade foton och spår</string>
     <string name="pref_create_custom_quest_summary">…som alternativ till att lämna en anteckning. Detta kan används som en lokalt sparad anteckning synlig på kartan. Observera att du måste aktivera anpassade uppdrag.</string>
     <string name="pref_get_photos_title">Hämta foton i fullstorlek</string>
@@ -272,7 +271,6 @@
     <string name="tag_editor_duplicate_key">Ignorerar ändring av dublettnyckel %1$s</string>
     <string name="fork_about_title_repository">SCEE-projektets hem</string>
     <string name="insert_node">Lägg till nod på denna väg</string>
-    <string name="pref_hide_keyboard_summary">Döljer tangentbordet när det är öppet före anteckningen faktiskt skapas (för att möjliggöra att se positionen igen)</string>
     <string name="pref_offset_fix_summary">De existerar för att vita punkter ska döljas av uppdragsnålar</string>
     <string name="pref_quest_settings_preset_title">Uppdragsinställningar per försinställning</string>
     <string name="pref_quest_settings_preset_summary">När detta är aktiverat så är uppdragsinställningar giltiga endast för nuvarande uppdragsförinställning</string>

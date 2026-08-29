@@ -10,7 +10,6 @@
     <string name="pref_save_gpx">Hent GPX-bemærkninger og vedhæftede fotos og spor</string>
     <string name="pref_save_photos_title">Gem fotos, der bruges til bemærkninger</string>
     <string name="pref_hide_notes_hint">Brug komma til at adskille brugernavne eller ID'er</string>
-    <string name="pref_hide_keyboard_summary">Skjuler tastaturet, når det er åbent, før bemærkningen faktisk er oprettet (for at gøre det muligt at se positionen igen)</string>
     <string name="pref_category_mods">SCEE indstillinger</string>
     <string name="pref_create_custom_quest_summary">…som alternativ til at efterlade en bemærkning. Dette kan bruges som en lokalt gemt bemærkning, der er synlig på kortet. Bemærk, at du skal aktivere brugerdefinerede opgaver.</string>
     <string name="pref_files_not_found">Ingen filer fundet</string>
@@ -22,7 +21,6 @@
     <string name="pref_expert_mode_summary">Aktivér avancerede redigeringsfunktioner</string>
     <string name="pref_save_photos_summary">Gem billeder i fuld størrelse, der er taget under oprettelse af bemærkninger, uden at slette EXIF-data</string>
     <string name="pref_way_direction">Vis retning på linjestrenge</string>
-    <string name="pref_hide_keyboard_title">Skjul tastaturet før oprettelse af bemærkning</string>
     <string name="pref_screen_notes">Bemærkninger</string>
     <string name="pref_read_log_save">Gem fuld log til fil</string>
     <string name="pref_way_direction_summary">Viser pile på fremhævede linjer, når du åbner en opgave. F.eks. nyttigt når du tilføjer ensretning.</string>

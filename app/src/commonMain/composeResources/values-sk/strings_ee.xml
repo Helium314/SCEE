@@ -20,8 +20,6 @@
     <string name="pref_show_gpx_button_title">Zobraz tlačidlo na GPX poznámku</string>
     <string name="pref_show_gpx_button_summary">Na rozdiel od OSM poznámok, pridanie GPX poznámky neskryje žiadnu úlohu v danej lokalite</string>
     <string name="pref_swap_gpx_note_button">Vymeň tlačidlá OSM a GPX poznámok</string>
-    <string name="pref_hide_keyboard_title">Skryť klávesnicu pred pridaním poznámky</string>
-    <string name="pref_hide_keyboard_summary">Skryje klávesnicu, keď je zobrazená, predtým než je poznámka vytvorená (pre umožnenie kontroly pozície)</string>
     <string name="pref_save_gpx">Exportuj GPX poznámky, fotografie a trasy</string>
     <string name="pref_save_file_error">Chyba pri ukladaní súboru</string>
     <string name="pref_files_not_found">Nenašli sa žiadne súbory</string>

@@ -204,7 +204,6 @@
     <string name="access_time_limit">Čas</string>
     <string name="quest_buildingType_barn">Stodola</string>
     <string name="pref_hide_notes_message">Zadejte uživatelské jména nebo ID která budou ignorována</string>
-    <string name="pref_hide_keyboard_title">Skrýt klávesnici před vytvářením poznámky</string>
     <string name="pref_way_direction">Zobrazovat u cest jejich směr</string>
     <string name="pref_gpx_track_loading_error">Nepodařilo se načíst GPX soubor</string>
     <string name="pref_screen_ui">Uživatelské rozhraní</string>
@@ -279,7 +278,6 @@
     <string name="quest_service_building_monitoring_station">Pozorovací stanice</string>
     <string name="quest_service_building_other">Jiná servisní budova</string>
     <string name="quest_seating_terrace">Na terase (nezastřešené, NE na nádvoří)</string>
-    <string name="pref_hide_keyboard_summary">Skryje klávesnici než je poznámka doopravdy vytvořena (umožní ověření pozice)</string>
     <string name="quest_monitor_net">Aktivně se dožadovat pozice získané na bázi připojení k síti?</string>
     <string name="quest_monitor_active_request">Aktivní dožadování se pozice zvýší využití baterky.</string>
     <string name="pref_hide_overlay_quests">Skrýt úkoly specifické pro překryvnou vrstvu</string>

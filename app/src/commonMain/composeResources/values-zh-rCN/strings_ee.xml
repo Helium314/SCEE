@@ -61,7 +61,6 @@
     <string name="default_disabled_msg_poi_other">这个“任务”将消防栓、观景点或厕所等杂项兴趣点显示为黄点。点击圆点可显示详细信息和其他回答。</string>
     <string name="day_night_priority">提高适合当前日间时段任务的优先级</string>
     <string name="quest_settings_fixme_title">选择要忽略的 fixme 值</string>
-    <string name="pref_hide_keyboard_summary">在实际创建注记之前隐藏要打开键盘（以便重新查看位置）</string>
     <string name="quest_settings_resurvey_all_opening_hours_message">重新调查所有开放时间，包括 SCEE 无法理解的值？您可能需要使用标签编辑器输入正确的值。</string>
     <string name="quest_service_building_type_reservoir">储水容器</string>
     <string name="quest_osmose_message">这些任务是从 Osmose 服务下载的，以表示 OSM 数据的潜在问题。只有在任务设置中选择了至少一个严重等级时，才会下载。
@@ -214,7 +213,6 @@
     <string name="default_disabled_msg_poi_bike">该“任务”将与自行车相关的兴趣点显示为紫色圆点。点击圆点可显示详细信息和其他回答。</string>
     <string name="quest_monitor_search_radius_text">设置附近任务的搜索半径。注意，距离稍远的任务也可能被找到。精度低于此值的地点将被忽略。</string>
     <string name="quest_osmose_settings_items">变更要忽略的项目类型</string>
-    <string name="pref_hide_keyboard_title">创建注记前隐藏键盘</string>
     <string name="pref_auto_download_summary">自动下载附近区域的数据</string>
     <string name="pref_screen_notes">注记</string>
     <string name="quest_material_wood">木材</string>

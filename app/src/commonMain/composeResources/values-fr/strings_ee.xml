@@ -263,10 +263,8 @@
     <string name="quest_monitor_found">%1$d quêtes à proximité, la plus proche :</string>
     <string name="move_node_with_geometry">Le déplacement de ce nœud modifiera la géométrie des voies ou des relations multipolygonales suivantes : %1$s.
 \n Attention, les modifications ne seront pas immédiatement visibles sur le fond de carte.</string>
-    <string name="pref_hide_keyboard_title">Masquer le clavier avant de créer une note</string>
     <string name="quest_monitor_active_request">La mise à jour en continue de la localisations augmente l'utilisation de la batterie. Lorsqu'il n'y a pas de localisation en continue, les localisations demandées par les autres applications sont toujours utilisées.</string>
     <string name="level_filter_message">Saisir la valeur du niveau ou filtrer à l'aide de &gt; and &lt;. Utiliser * pour faire correspondre tous les éléments contenant une clé de niveau permise</string>
-    <string name="pref_hide_keyboard_summary">Cache le clavier lorsqu'il est ouvert avant que la note ne soit créée (pour permettre de revoir la position géographique de la note)</string>
     <string name="quest_settings_level_title">Afficher cette quête pour :</string>
     <string name="quest_settings_dot_labels_message">Définir les attributs à utiliser dans l'ordre donné pour la désignation. Une chaîne vide n'affichera aucune désignation, "label" affichera l'étiquette par défaut du nom de StreetComplete en utilisant name, brand, ref, local_ref et operator.</string>
     <string name="pref_quest_geometries_title">Afficher en surbrillance les chemins et zone avec une quête</string>

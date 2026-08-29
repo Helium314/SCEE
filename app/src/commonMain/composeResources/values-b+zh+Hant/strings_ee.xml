@@ -14,7 +14,6 @@
     <string name="pref_show_next_quest_title">立即顯示下一個任務</string>
     <string name="pref_show_gpx_button_summary">相比回報OSM註解，新增GPX節點則不會隱藏附近地點的任何任務</string>
     <string name="pref_swap_gpx_note_button">滑動OSM與GPX節點按鈕</string>
-    <string name="pref_hide_keyboard_title">新增註記前隱藏鍵盤</string>
     <string name="quest_disused">已經廢棄</string>
     <string name="pref_save_file_error">儲存檔案時發生錯誤</string>
     <string name="quest_private">是私人的</string>
@@ -43,7 +42,6 @@
     <string name="pref_hide_notes_hint">使用逗號分隔使用者名稱或ID</string>
     <string name="pref_hide_notes_message">輸入要忽略的使用者名稱或ID</string>
     <string name="pref_save_gpx">取得 GPX 備註及附加的照片和軌跡</string>
-    <string name="pref_hide_keyboard_summary">在註記真正建立之前，隱藏鍵盤（以便重新查看位置）</string>
     <string name="pref_save_photos_title">儲存用於註記的照片</string>
     <string name="pref_offset_fix_title2">移除白點的偏移位置</string>
     <string name="pref_gpx_track_loading_error">載入 GPX 軌跡檔案時發生錯誤</string>

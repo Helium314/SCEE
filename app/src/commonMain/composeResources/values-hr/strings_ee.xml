@@ -37,8 +37,6 @@
     <string name="pref_show_gpx_button_title">Prikaži tipku za GPX bilješke</string>
     <string name="pref_show_gpx_button_summary">Za razliku od OSM bilješki, dodavanjem GPX bilješke neće se sakriti nijedan zadatak na zahvaćenoj lokaciji</string>
     <string name="pref_swap_gpx_note_button">Zamijeni pozicije tipki za OSM i GPX bilješke</string>
-    <string name="pref_hide_keyboard_title">Sakrij tipkovnicu prije kreiranja bilješke</string>
-    <string name="pref_hide_keyboard_summary">Skriva tipkovnicu kada je otvorena prije nego što se bilješka stvarno stvori (kako bi se omogućio ponovni pregled pozicije)</string>
     <string name="pref_really_all_notes_title">“Prikaži sve bilješke“ zaista znači SVE bilješke</string>
     <string name="pref_really_all_notes_summary">Kada tražiš prikaz svih bilješki, prikaži čak i bilješke koje si sam stvorio (ili komentirao)</string>
     <string name="pref_save_gpx">Dohvati GPX bilješke i priložene fotografije i tragove</string>

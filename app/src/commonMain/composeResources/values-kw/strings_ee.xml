@@ -15,8 +15,6 @@
     <string name="pref_show_gpx_button_title">Diskwedhes boton noten GPX</string>
     <string name="pref_show_gpx_button_summary">Erbynn notennow OSM, ow keworra noten GPX ny vydh kudha neb hwithrans y'n tyller mennys</string>
     <string name="pref_swap_gpx_note_button">keschanjya botonyow noten OSM ha GPX</string>
-    <string name="pref_hide_keyboard_title">Kudha bysowek dherag ow gul noten</string>
-    <string name="pref_hide_keyboard_summary">Kudha an bysowek pan ygor dherag an noten yw gwrys yn hwir (rag gasa dasgweles a le)</string>
     <string name="pref_really_all_notes_title">“Diskwedhes oll notennow“ a styr OLL notennow</string>
     <string name="pref_really_all_notes_summary">Pan ow govyn rag diskwedhes oll notennow, diskwedhes notennow hwath gwrys (po kampollys war) gans dha honan</string>
     <string name="pref_save_gpx">Kavos notennow GPX ha skeusennow ha lerghow stag</string>

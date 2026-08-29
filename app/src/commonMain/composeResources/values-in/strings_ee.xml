@@ -5,8 +5,6 @@
     <string name="pref_hide_notes_title">Sembunyikan catatan dari pengguna tertentu</string>
     <string name="pref_show_gpx_button_title">Tampilkan tombol catatan GPX</string>
     <string name="pref_swap_gpx_note_button">Tukar tombol catatan OSM dan GPX</string>
-    <string name="pref_hide_keyboard_title">Sembunyikan keyboard sebelum membuat catatan</string>
-    <string name="pref_hide_keyboard_summary">Sembunyikan keyboard saat membuka sebelum catatan benar-benar dibuat (agar posisi dapat dilihat kembali)</string>
     <string name="pref_category_mods">Pengaturan SCEE</string>
     <string name="pref_hide_notes_message">Masukkan nama pengguna atau ID yang hendak diabaikan</string>
     <string name="pref_show_gpx_button_summary">Berlawanan dengan catatan OSM, menambahkan catatan GPX tidak akan menyembunyikan pencarian apa pun di lokasi yang terpengaruh</string>

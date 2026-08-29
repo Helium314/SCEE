@@ -14,7 +14,6 @@
     <string name="pref_show_gpx_button_title">Показывать кнопку Заметка с GPX</string>
     <string name="pref_show_gpx_button_summary">В отличие от заметок OSM, добавление GPX не будет прятать квесты в указанном месте</string>
     <string name="pref_swap_gpx_note_button">Поменять кнопки заметки OSM и с GPX</string>
-    <string name="pref_hide_keyboard_title">Скрыть клавиатуру до создания заметки</string>
     <string name="pref_save_gpx">Запросить заметки с GPX и приложенные фото и треки</string>
     <string name="pref_save_file_error">Ошибка при сохранении файла</string>
     <string name="pref_files_not_found">Файлов не найдено</string>
@@ -238,7 +237,6 @@
 \n
 \n Хотя другие редакторы позволяют больше, не осторожность может привести к порче данных, невозможной в StreetComplete. Имейте в виду, что включая режим эксперта Вы несёте существенно больше ответственности за свои правки.
 \n Включайте данный режим только при наличии опыта работы с OSM помимо StreetComplete и, если Вы понимаете что делаете. </string>
-    <string name="pref_hide_keyboard_summary">Скрывает клавиатуру до момента создания заметки (для проверки положения)</string>
     <string name="pref_create_custom_quest_summary">…вместо размещения заметки. Будет полезно в качестве хранимой на устройстве отметки на карте. Для этого необходимо включить собственные квесты.</string>
     <string name="pref_save_photos_summary">Хранить полные версии фотографий, снятых для заметок, сохраняя данные EXIF</string>
     <string name="pref_quest_geometries_title">Показывать геометрию квеста</string>

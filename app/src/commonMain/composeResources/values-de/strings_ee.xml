@@ -12,7 +12,6 @@
     <string name="pref_hide_notes_hint">Benutzernamen oder IDs durch Komma trennen</string>
     <string name="pref_show_gpx_button_title">Schaltfläche für GPX-Hinweis anzeigen</string>
     <string name="pref_swap_gpx_note_button">Knöpfe für OSM- und GPX-Hinweise vertauschen</string>
-    <string name="pref_hide_keyboard_title">Tastatur vor dem Erstellen eines Hinweises ausblenden</string>
     <string name="pref_files_not_found">Keine Dateien gefunden</string>
     <string name="pref_read_log_save">Vollständige Logdatei speichern</string>
     <string name="pref_save_photos_title">Fotos speichern, die für Hinweise aufgenommen wurden</string>
@@ -97,7 +96,6 @@
     <string name="quest_destination_add_more">Weiteres Ziel hinzufügen</string>
     <string name="quest_settings_fixme_title">Zu ignorierende FixMe-Werte auswählen</string>
     <string name="restriction_overlay_only_for">Nur für: %1$s</string>
-    <string name="pref_hide_keyboard_summary">Blendet die Tastatur aus, wenn sie geöffnet ist, bevor der Hinweis tatsächlich erstellt wird (um eine erneute Ansicht der Position zu ermöglichen)</string>
     <string name="quest_disabled_msg_railway_platform_ref">Beachte, dass im Wiki nicht ganz klar ist, welches Tag am besten zu verwenden ist und es daher dem Benutzer überlassen bleibt. Wähle zwischen „ref“ (Standard) und „local_ref“ in den Aufgabeneinstellungen.
 \nWenn es zwei Gleise entlang einer Plattform gibt, verwende durch Semikolon getrennte Werte, z. B. 2;3</string>
     <string name="quest_monitor_channel_name_found">Aufgabe in der Nähe gefunden</string>

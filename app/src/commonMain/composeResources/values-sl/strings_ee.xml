@@ -14,8 +14,6 @@
     <string name="pref_show_gpx_button_title">Prikaži gumb za GPX opombe</string>
     <string name="pref_show_gpx_button_summary">Za razliko od OSM opomb, dodajanje GPX opombe ne bo skrilo nobenih ciljev na tej lokaciji</string>
     <string name="pref_swap_gpx_note_button">Zamenjaj gumbe za OSM in GPX opombe</string>
-    <string name="pref_hide_keyboard_title">Skrij tipkovnico pred ustvarjanjem opombe</string>
-    <string name="pref_hide_keyboard_summary">Skrije tipkovnico, kadar je ta odprta, preden je opomba dejansko ustvarjena (za ponovni pregled lokacije)</string>
     <string name="pref_really_all_notes_title">Prikaži vse opombe" pomeni VSE opombe</string>
     <string name="pref_really_all_notes_summary">Ko zahtevate prikaz vseh opomb, prikaži tudi opombe, ki ste jih ustvarili sami (ali pa ste na njih pustili komentar)</string>
     <string name="pref_save_gpx">Pridobi GPX opombe in pripete fotografije in poti</string>

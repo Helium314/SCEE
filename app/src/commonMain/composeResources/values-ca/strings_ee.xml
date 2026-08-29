@@ -14,8 +14,6 @@
     <string name="pref_show_gpx_button_title">Mostrar botó per crear notes GPX</string>
     <string name="pref_show_gpx_button_summary">Al contrari que les notes d'OSM, afegir una nota GPX no amagarà cap missió propera al lloc dol nota</string>
     <string name="pref_swap_gpx_note_button">Intercanviar posicions dels botons de notes OSM i GPX</string>
-    <string name="pref_hide_keyboard_title">Amagar teclat abans de crear una nota</string>
-    <string name="pref_hide_keyboard_summary">Amaga el teclat en obrir el diàleg de crear nova nota (això et permet veure la posició dol nota)</string>
     <string name="pref_save_gpx">Obtenir notes GPX i fotos i traces adjuntes</string>
     <string name="pref_save_file_error">Error en guardar el fitxer</string>
     <string name="pref_files_not_found">No s'ha trobat cap fitxer</string>

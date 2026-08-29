@@ -1,7 +1,5 @@
 package de.westnordost.streetcomplete.screens.settings
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -26,10 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import de.westnordost.streetcomplete.Prefs
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.download.DownloadController
 import de.westnordost.streetcomplete.data.download.Downloader
 import de.westnordost.streetcomplete.data.importGpx
@@ -38,6 +34,7 @@ import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.visiblequests.VisibleEditTypeController
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.BackIcon
+import de.westnordost.streetcomplete.ui.common.ToastPopup
 import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
 import de.westnordost.streetcomplete.ui.common.settings.Preference
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
@@ -57,6 +54,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun DisplaySettingsScreen(
@@ -107,7 +105,7 @@ fun DisplaySettingsScreen(
                     val new = if (old == "MAP") "AERIAL" else "MAP"
                     prefs.putString(Prefs.THEME_BACKGROUND, new)
                     scope.launch {
-                        delay(100)
+                        delay(100.milliseconds)
                         prefs.putString(Prefs.THEME_BACKGROUND, old)
                     }
                 }
@@ -145,7 +143,6 @@ fun DisplaySettingsScreen(
                     selectedItem = prefs.getString(Prefs.THEME_BACKGROUND, "MAP")
                 )
             if (showGpxDialog) {
-                val ctx = LocalContext.current
                 suspend fun getFile() {
                     val file = FileKit.openFilePicker(FileKitType.File(".gpx")) ?: return
                     file.copyTo(gpxFile)
@@ -154,6 +151,7 @@ fun DisplaySettingsScreen(
                     showGpxDialog = true
                 }
                 val downloadController: DownloadController = koinInject()
+                var error by remember { mutableStateOf(false) }
                 AlertDialog(
                     onDismissRequest = { showGpxDialog = false },
                     confirmButton = {
@@ -164,7 +162,7 @@ fun DisplaySettingsScreen(
                         Column {
                             Button(
                                 onClick = {
-                                    val points = loadGpxTrackPoints(ctx, true) ?: return@Button
+                                    val points = loadGpxTrackPoints({ error = true }, true) ?: return@Button
                                     GlobalScope.launch {
                                         val import = importGpx(points, true, 10.0).getOrNull()
                                         import?.downloadBBoxes?.let {
@@ -190,6 +188,8 @@ fun DisplaySettingsScreen(
                         }
                     },
                 )
+                if (error)
+                    ToastPopup({ error = false }, stringResource(Res.string.pref_gpx_track_loading_error), isInDialog = true)
             }
             if (showGeometryDialog) {
                 suspend fun getFile() {
@@ -227,13 +227,12 @@ fun DisplaySettingsScreen(
     }
 }
 
-fun loadGpxTrackPoints(context: Context, complain: Boolean = false): List<LatLon>? {
+fun loadGpxTrackPoints(onError: () -> Unit, complain: Boolean = false): List<LatLon>? {
     // load gpx file as one long track, no matter how it's stored internally (for now)
     // <trkpt lat="..." lon="..."><ele>...</ele></trkpt>
     // <wpt lon="..." lat="...">
     if (!gpxFile.exists()) {
-        if (complain)
-            context.toast2(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
+        if (complain) onError()
         return null
     }
 
@@ -252,7 +251,7 @@ fun loadGpxTrackPoints(context: Context, complain: Boolean = false): List<LatLon
     } }.getOrNull()
 
     if ((gpxPoints?.size ?: 0) < 2) {
-        context.toast2(R.string.pref_gpx_track_loading_error, Toast.LENGTH_LONG)
+        onError()
         return null
     }
     return gpxPoints

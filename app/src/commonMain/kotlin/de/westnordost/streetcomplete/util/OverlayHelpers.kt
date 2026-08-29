@@ -2,7 +2,6 @@ package de.westnordost.streetcomplete.util
 
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -27,7 +26,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -47,9 +45,9 @@ import de.westnordost.streetcomplete.data.overlays.OverlayStyle
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.allDrawableResources
 import de.westnordost.streetcomplete.resources.*
-import de.westnordost.streetcomplete.screens.settings.toast2
 import de.westnordost.streetcomplete.ui.common.DropdownButton
 import de.westnordost.streetcomplete.ui.common.TextField2
+import de.westnordost.streetcomplete.ui.common.ToastPopup
 import de.westnordost.streetcomplete.ui.common.dialogs.ConfirmationDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
@@ -58,7 +56,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.StringResource
@@ -118,14 +115,12 @@ fun OverlayCustomizer(
     }
     var enableOk by rememberSaveable { mutableStateOf(false) }
     var toastyJob: Job? by remember { mutableStateOf(null) }
-//    var toastMessage by remember { mutableStateOf<String?>(null) }
-    val ctx = LocalContext.current
+    var toastMessage by remember { mutableStateOf<String?>(null) }
     fun delayedToast(message: String?) {
         toastyJob?.cancel()
         toastyJob = scope.launch {
             delay(3000)
-            withContext(Dispatchers.Main) { ctx.toast2("Error: $message", Toast.LENGTH_LONG) }
-//            toastMessage = "Error: $message"
+            toastMessage = "Error: $message"
         }
     }
     fun checkIsOK(): Boolean {
@@ -285,9 +280,8 @@ fun OverlayCustomizer(
             text = { Text(stringResource(Res.string.custom_overlay_color_message)) }
         )
     }
-     // the toast appears behind the dialog, so it's completely useless...
-//    if (toastMessage != null)
-//        ToastPopup({ toastMessage = null }, toastMessage!!)
+    if (toastMessage != null)
+        ToastPopup({ toastMessage = null }, toastMessage!!, isInDialog = true)
 }
 
 // creates dummy overlays for the custom overlay, so they can be displayed to the user

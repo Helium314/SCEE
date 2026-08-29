@@ -5,5 +5,3 @@ import androidx.core.util.TypedValueCompat
 
 /** return the number of pixels for the given density independent pixels */
 fun Resources.dpToPx(dp: Number): Float = TypedValueCompat.dpToPx(dp.toFloat(), displayMetrics)
-
-fun Resources.spToPx(sp: Number): Float = TypedValueCompat.spToPx(sp.toFloat(), displayMetrics)

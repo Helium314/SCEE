@@ -1,7 +1,5 @@
 package de.westnordost.streetcomplete.quests
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRowScope
@@ -16,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.input.TextFieldValue
@@ -34,17 +32,17 @@ import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpressio
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmFilterQuestType
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
 import de.westnordost.streetcomplete.resources.*
+import de.westnordost.streetcomplete.ui.common.ToastPopup
 import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import java.util.regex.PatternSyntaxException
+import kotlin.time.Duration.Companion.seconds
 
 // restarts are typically necessary on changes of element selection because the filter is created by lazy
 // quests settings should follow the pattern: qs_<quest_name>_<something>, e.g. "qs_AddLevel_more_levels"
@@ -216,7 +214,9 @@ fun FullElementSelectionDialog(prefs: Preferences, pref: String, messageId: Stri
         mutableStateOf(TextFieldValue(prefs.getString(pref, defaultValue.trimIndent())))
     }
     var isOk by remember { mutableStateOf(true) }
-    val ctx = LocalContext.current
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope { Dispatchers.IO }
+    var toastyJob: Job? by remember { mutableStateOf(null) }
     ScrollableAlertDialog(
         onDismissRequest = onDismissRequest,
         content = {
@@ -228,7 +228,13 @@ fun FullElementSelectionDialog(prefs: Preferences, pref: String, messageId: Stri
                 TextField(
                     value = text,
                     onValueChange = {
-                        isOk = checkText(it.text, checkPrefix, ctx)
+                        toastyJob?.cancel()
+                        isOk = checkText(it.text, checkPrefix) {
+                            toastyJob = scope.launch {
+                                delay(3.seconds)
+                                errorMessage = "Error: $it"
+                            }
+                        }
                         text = it
                     },
                     modifier = Modifier.fillMaxWidth(),
@@ -253,6 +259,8 @@ fun FullElementSelectionDialog(prefs: Preferences, pref: String, messageId: Stri
             )
         },
     )
+    if (errorMessage != null)
+        ToastPopup({ errorMessage = null }, errorMessage!!, isInDialog = true)
 }
 
 @Composable fun FlowRowScope.ResetCancelOk(
@@ -358,17 +366,16 @@ private fun checkValueText(text: String) =
 // relax a little bit? but e.g. A-Z is very uncommon and might lead to mistakes
 private val elementSelectionRegex = "[a-z\\d_=!?\"~*\\[\\]()|:.,<>\\s+-]+".toRegex()
 // toasting is not Multiplatform...
-private fun checkText(text: String, checkPrefix: String, context: Context): Boolean {
+private fun checkText(text: String, checkPrefix: String, delayedToast: (String?) -> Unit): Boolean {
     val isValidFilterExpression by lazy {
         try {
             (checkPrefix + text).toElementFilterExpression()
-            toastyJob?.cancel()
             true
         } catch(e: ParseException) {
-            delayedToast(e.message, context)
+            delayedToast(e.message)
             false
         } catch(e: PatternSyntaxException) {
-            delayedToast(e.message, context)
+            delayedToast(e.message)
             false
         }
     }
@@ -377,13 +384,4 @@ private fun checkText(text: String, checkPrefix: String, context: Context): Bool
         && text.count { c -> c == '('} == text.count { c -> c == ')'}
         && (text.contains('=') || text.contains('~') || text.contains('!'))
         && isValidFilterExpression
-}
-
-private var toastyJob: Job? = null
-private fun delayedToast(message: String?, context: Context) {
-    toastyJob?.cancel()
-    toastyJob = GlobalScope.launch(Dispatchers.IO) {
-        delay(3000)
-        withContext(Dispatchers.Main) { Toast.makeText(context, "Error: $message", Toast.LENGTH_LONG).show() }
-    }
 }

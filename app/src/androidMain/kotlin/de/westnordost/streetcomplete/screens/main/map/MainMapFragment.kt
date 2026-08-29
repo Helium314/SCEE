@@ -3,12 +3,14 @@ package de.westnordost.streetcomplete.screens.main.map
 import android.content.Context
 import android.graphics.PointF
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.core.content.getSystemService
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import de.westnordost.streetcomplete.Prefs
+import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.download.tiles.DownloadedTilesSource
 import de.westnordost.streetcomplete.data.edithistory.EditHistorySource
 import de.westnordost.streetcomplete.data.edithistory.EditKey
@@ -45,6 +47,7 @@ import de.westnordost.streetcomplete.ui.common.quest.Marker
 import de.westnordost.streetcomplete.util.ktx.dpToPx
 import de.westnordost.streetcomplete.util.ktx.toLatLon
 import de.westnordost.streetcomplete.util.ktx.toLocation
+import de.westnordost.streetcomplete.util.ktx.toast
 import de.westnordost.streetcomplete.util.ktx.viewLifecycleScope
 import io.github.vinceglb.filekit.readString
 import kotlinx.coroutines.Dispatchers
@@ -324,7 +327,7 @@ class MainMapFragment : MapFragment() {
     //endregion
     fun loadGpxTrack() {
         val gpxPoints = if (prefs.getBoolean(Prefs.SHOW_GPX_TRACK, false))
-            loadGpxTrackPoints(requireContext()) ?: emptyList()
+            loadGpxTrackPoints({ requireContext().toast(R.string.pref_gpx_track_loading_error,  Toast.LENGTH_LONG) }) ?: emptyList()
         else emptyList()
         tracksMapComponent?.setGpxTrack(gpxPoints)
     }

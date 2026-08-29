@@ -88,7 +88,7 @@ class CustomQuestList : KoinComponent {
         if (entriesById.containsKey(id)) return
         val entry = CustomQuestEntry(id).apply { text = message }
         entriesById[id] = entry
-        customQuestFile.sink(true).buffered().writeString("\n$id,$message")
+        customQuestFile.sink(true).buffered().use { it.writeString("\n$id,$message") }
         getQuest(id)?.let { questController.addQuests(listOf(it)) }
     }
 

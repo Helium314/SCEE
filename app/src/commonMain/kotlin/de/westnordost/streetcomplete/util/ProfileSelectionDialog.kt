@@ -1,8 +1,10 @@
 package de.westnordost.streetcomplete.util
 
-import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmQuestController
 import de.westnordost.streetcomplete.data.preferences.Preferences
@@ -11,6 +13,7 @@ import de.westnordost.streetcomplete.data.presets.EditTypePresetsController
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_presets_default_name
 import de.westnordost.streetcomplete.resources.quest_settings_per_preset_rescan
+import de.westnordost.streetcomplete.ui.common.ToastPopup
 import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -31,8 +34,7 @@ import org.koin.compose.koinInject
         if (questPreset.id == editTypePresetsController.selectedId)
             selected = index
     }
-    val ctx = LocalContext.current
-    val toastText = stringResource(Res.string.quest_settings_per_preset_rescan)
+    var showRescanMessage by remember { mutableStateOf(false) }
     SimpleListPickerDialog(
         onDismissRequest,
         presets,
@@ -40,7 +42,7 @@ import org.koin.compose.koinInject
             if (prefs.getBoolean(Prefs.QUEST_SETTINGS_PER_PRESET, false)) {
                 OsmQuestController.reloadQuestTypes()
                 if (!prefs.getBoolean(Prefs.DYNAMIC_QUEST_CREATION, false))
-                    Toast.makeText(ctx, toastText, Toast.LENGTH_LONG).show()
+                    showRescanMessage = true
             }
             // launch in background, because this can block for quite a while if database is occupied
             GlobalScope.launch(Dispatchers.IO) { editTypePresetsController.selectedId = it.id }
@@ -48,4 +50,10 @@ import org.koin.compose.koinInject
         selectedItem = presets.getOrNull(selected),
         getItemName = { it.name }
     )
+    if (showRescanMessage)
+        ToastPopup(
+            onDismissRequest = { showRescanMessage = false},
+            text = stringResource(Res.string.quest_settings_per_preset_rescan),
+            isInDialog = true
+        )
 }

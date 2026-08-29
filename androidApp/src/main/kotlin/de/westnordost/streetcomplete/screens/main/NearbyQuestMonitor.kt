@@ -117,7 +117,7 @@ class NearbyQuestMonitor : Service(), LocationListener, KoinComponent {
             if (prefs.getBoolean(Prefs.QUEST_MONITOR_GPS, false))
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, prefs.getInt(Prefs.LOCATION_INTERVAL, 0) * 1000L, 0.0f, this)
             if (prefs.getBoolean(Prefs.QUEST_MONITOR_NET, false))
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, prefs.getInt(Prefs.NETWORK_INTERVAL, 5) * 1000L, 0.0f, this)
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, prefs.getInt(Prefs.LOCATION_INTERVAL, 5) * 1000L, 0.0f, this)
             locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0L, 0.0f, this)
         } catch (e: SecurityException) {
             // there is some foreground issue, and of course location permissions

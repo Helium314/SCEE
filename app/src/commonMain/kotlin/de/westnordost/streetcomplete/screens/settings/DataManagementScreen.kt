@@ -1,18 +1,14 @@
 package de.westnordost.streetcomplete.screens.settings
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -21,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AppBarDefaults
+import androidx.compose.material.Button
 import androidx.compose.material.IconButton
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
@@ -30,7 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
-import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.ConflictAlgorithm
 import de.westnordost.streetcomplete.data.Database
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuestController
@@ -65,8 +61,8 @@ import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.BackIcon
 import de.westnordost.streetcomplete.ui.common.CheckboxGroup
 import de.westnordost.streetcomplete.ui.common.TextField2
+import de.westnordost.streetcomplete.ui.common.ToastPopup
 import de.westnordost.streetcomplete.ui.common.dialogs.AlertDialog
-import de.westnordost.streetcomplete.ui.common.dialogs.SimpleListPickerDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.WheelPickerDialog
 import de.westnordost.streetcomplete.ui.common.settings.Preference
 import de.westnordost.streetcomplete.ui.common.settings.SwitchPreference
@@ -74,15 +70,27 @@ import de.westnordost.streetcomplete.util.getCustomOverlayIndices
 import de.westnordost.streetcomplete.util.getFakeCustomOverlays
 import de.westnordost.streetcomplete.util.getIndexedCustomOverlayPref
 import de.westnordost.streetcomplete.util.logs.Log
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.dialogs.openFilePicker
+import io.github.vinceglb.filekit.dialogs.openFileSaver
+import io.github.vinceglb.filekit.exists
+import io.github.vinceglb.filekit.sink
+import io.github.vinceglb.filekit.source
+import io.ktor.utils.io.core.writeText
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlinx.io.buffered
+import kotlinx.io.readLine
+import kotlinx.io.readString
+import kotlinx.io.writeString
 import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import java.io.BufferedWriter
 
-// todo: there is still a lot of non-compose in here, but that's for later...
 @Composable
 fun DataManagementScreen(
     onClickBack: () -> Unit,
@@ -94,45 +102,17 @@ fun DataManagementScreen(
     val visibleEditTypeController: VisibleEditTypeController = koinInject()
     val osmoseDao: OsmoseDao = koinInject()
     val externalSourceQuestController: ExternalSourceQuestController = koinInject()
-    val ctx = LocalContext.current
+    val scope = rememberCoroutineScope { Dispatchers.IO }
     var showDeleteAfterDialog by remember { mutableStateOf(false) }
     var showGpsIntervalDialog by remember { mutableStateOf(false) }
-    var showNetIntervalDialog by remember { mutableStateOf(false) }
     var showExportDialog by remember { mutableStateOf(false) }
     var showImportDialog by remember { mutableStateOf(false) }
     var showRasterUrlDialog by remember { mutableStateOf(false) }
-    var exportPresets by remember { mutableStateOf<Uri?>(null) }
-    var exportOverlays by remember { mutableStateOf<Uri?>(null) }
-    var importPresets by remember { mutableStateOf<Uri?>(null) }
-    var importOverlays by remember { mutableStateOf<Uri?>(null) }
-    var currentSetting by rememberSaveable { mutableStateOf("") }
-    val exportPicker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode != Activity.RESULT_OK || it.data == null)
-            return@rememberLauncherForActivityResult
-        val uri = it.data?.data ?: return@rememberLauncherForActivityResult
-        val activity = ctx.getActivity2() ?: return@rememberLauncherForActivityResult
-        when (currentSetting) {
-            "settings" -> exportSettings(uri, activity)
-            "hidden_quests" -> exportHidden(uri, activity, db)
-            "presets" -> exportPresets = uri
-            "overlays" -> exportOverlays = uri
-        }
-        currentSetting = ""
-    }
-    val importPicker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode != Activity.RESULT_OK || it.data == null)
-            return@rememberLauncherForActivityResult
-        val uri = it.data?.data ?: return@rememberLauncherForActivityResult
-        val activity = ctx.getActivity2() ?: return@rememberLauncherForActivityResult
-        when (currentSetting) {
-            "settings" -> if (!importSettings(uri, activity, osmoseDao, externalSourceQuestController))
-                ctx.toast2(ctx.getString(R.string.import_error), Toast.LENGTH_LONG)
-            "hidden_quests" -> importHidden(uri, activity, db, visibleEditTypeController)
-            "presets" -> importPresets = uri
-            "overlays" -> importOverlays = uri
-        }
-        currentSetting = ""
-    }
+    var exportPresets by remember { mutableStateOf<PlatformFile?>(null) }
+    var exportOverlays by remember { mutableStateOf<PlatformFile?>(null) }
+    var importPresets by remember { mutableStateOf<PlatformFile?>(null) }
+    var importOverlays by remember { mutableStateOf<PlatformFile?>(null) }
+    var currentError by remember { mutableStateOf<StringResource?>(null) }
     Column(Modifier.fillMaxSize()) {
         TopAppBar(
             title = { Text(stringResource(Res.string.pref_screen_data_management)) },
@@ -181,11 +161,6 @@ fun DataManagementScreen(
                 description = stringResource(Res.string.pref_interval_summary, prefs.getInt(Prefs.LOCATION_INTERVAL, 0))
             )
             Preference(
-                name = stringResource(Res.string.pref_network_interval_title),
-                onClick = { showNetIntervalDialog = true },
-                description = stringResource(Res.string.pref_interval_summary, prefs.getInt(Prefs.NETWORK_INTERVAL, 5))
-            )
-            Preference(
                 name = stringResource(Res.string.pref_export),
                 onClick = { showExportDialog = true },
             )
@@ -218,57 +193,52 @@ fun DataManagementScreen(
                 text = { Text(stringResource(Res.string.pref_interval_message)) }
             )
         }
-        if (showExportDialog)
-            SimpleListPickerDialog(
+        if (showExportDialog) {
+            fun saveFile(name: String, onSave: (PlatformFile) -> Unit) = scope.launch {
+                val file = FileKit.openFileSaver(name, defaultExtension = "txt")
+                if (file != null) onSave(file)
+                showExportDialog = false
+            }
+            AlertDialog(
                 onDismissRequest = { showExportDialog = false },
-                showButtons = false,
-                items = listOf("hidden_quests", "presets","overlays","settings"),
-                getItemName = {
-                    val id = when (it) {
-                        "settings" -> Res.string.import_export_settings
-                        "hidden_quests" -> Res.string.import_export_hidden_quests
-                        "presets" -> Res.string.import_export_presets
-                        "overlays" -> Res.string.import_export_custom_overlays
-                        else -> null
-                    }!!
-                    stringResource(id)
-                },
-                onItemSelected = {
-                    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                        addCategory(Intent.CATEGORY_OPENABLE)
-                        putExtra(Intent.EXTRA_TITLE, "$it.txt")
-                        type = "application/text"
+                buttonRow = { TextButton({ showExportDialog = false }) { Text(stringResource(Res.string.cancel)) } },
+                text = {
+                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Button({ saveFile("settings") { exportSettings(it) } }, Modifier.fillMaxWidth())
+                            { Text(stringResource(Res.string.import_export_settings)) }
+                        Button({ saveFile("hidden_quests") { exportHidden(it, db) } }, Modifier.fillMaxWidth())
+                            { Text(stringResource(Res.string.import_export_hidden_quests)) }
+                        Button({ saveFile("presets") { exportPresets = it } }, Modifier.fillMaxWidth())
+                            { Text(stringResource(Res.string.import_export_presets)) }
+                        Button({ saveFile("overlays") { exportOverlays = it } }, Modifier.fillMaxWidth())
+                            { Text(stringResource(Res.string.import_export_custom_overlays)) }
                     }
-                    currentSetting = it
-                    exportPicker.launch(intent)
-                },
-                title = { Text(stringResource(Res.string.pref_export)) }
+                }
             )
-        if (showImportDialog)
-            SimpleListPickerDialog(
+        }
+        if (showImportDialog) {
+            fun loadFile(onLoad: (PlatformFile) -> Unit) = scope.launch {
+                val file = FileKit.openFilePicker()
+                if (file != null) onLoad(file)
+                showImportDialog = false
+            }
+            AlertDialog(
                 onDismissRequest = { showImportDialog = false },
-                showButtons = false,
-                items = listOf("hidden_quests", "presets","overlays","settings"),
-                getItemName = {
-                    val id = when (it) {
-                        "settings" -> Res.string.import_export_settings
-                        "hidden_quests" -> Res.string.import_export_hidden_quests
-                        "presets" -> Res.string.import_export_presets
-                        "overlays" -> Res.string.import_export_custom_overlays
-                        else -> null
-                    }!!
-                    stringResource(id)
-                },
-                onItemSelected = {
-                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                        addCategory(Intent.CATEGORY_OPENABLE)
-                        type = "*/*" // can't select text file if setting to application/text
+                buttonRow = { TextButton({ showImportDialog = false }) { Text(stringResource(Res.string.cancel)) } },
+                text = {
+                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Button({ loadFile { if (!importSettings(it, osmoseDao, externalSourceQuestController)) currentError = Res.string.import_error } }, Modifier.fillMaxWidth())
+                        { Text(stringResource(Res.string.import_export_settings)) }
+                        Button({ loadFile { importHidden(it, db, visibleEditTypeController) { currentError = it } } }, Modifier.fillMaxWidth())
+                        { Text(stringResource(Res.string.import_export_hidden_quests)) }
+                        Button({ loadFile { importPresets = it } }, Modifier.fillMaxWidth())
+                        { Text(stringResource(Res.string.import_export_presets)) }
+                        Button({ loadFile { importOverlays = it } }, Modifier.fillMaxWidth())
+                        { Text(stringResource(Res.string.import_export_custom_overlays)) }
                     }
-                    currentSetting = it
-                    importPicker.launch(intent)
-                },
-                title = { Text(stringResource(Res.string.pref_import)) }
+                }
             )
+        }
         if (showRasterUrlDialog) {
             var maxZoom by remember { mutableStateOf(TextFieldValue(prefs.getInt(Prefs.RASTER_TILE_MAXZOOM, ApplicationConstants.RASTER_DEFAULT_MAXZOOM).toString())) }
             var hideLabels by remember { mutableStateOf(prefs.getBoolean(Prefs.NO_SATELLITE_LABEL, false)) }
@@ -339,13 +309,14 @@ fun DataManagementScreen(
                 buttonRow = {
                     TextButton({ exportPresets = null }) { Text(stringResource(Res.string.cancel)) }
                     TextButton({
-                        exportPresets(selectedPresets.map { it.id }, exportPresets!!, ctx.getActivity2()!!, db, urlConfigController)
+                        exportPresets(selectedPresets.map { it.id }, exportPresets!!, db, urlConfigController)
                         exportPresets = null
                     }, enabled = selectedPresets.isNotEmpty()) { Text(stringResource(Res.string.ok)) }
                 }
             )
         }
         if (exportOverlays != null) {
+            val ctx = LocalContext.current
             val allOverlays = getFakeCustomOverlays(prefs, ctx.resources, false)
             var selectedOverlays by remember { mutableStateOf(setOf<Overlay>()) }
             AlertDialog(
@@ -362,15 +333,14 @@ fun DataManagementScreen(
                 buttonRow = {
                     TextButton({ exportOverlays = null }) { Text(stringResource(Res.string.cancel)) }
                     TextButton({
-                        exportCustomOverlays(selectedOverlays.map { it.changesetComment }, exportOverlays!!, ctx.getActivity2()!!)
+                        exportCustomOverlays(selectedOverlays.map { it.changesetComment }, exportOverlays!!)
                         exportOverlays = null
                     }, enabled = selectedOverlays.isNotEmpty()) { Text(stringResource(Res.string.ok)) }
                 }
             )
         }
         if (importPresets != null) {
-            val activity = ctx.getActivity2()!!
-            val lines = remember { importLinesAndCheck(importPresets!!, BACKUP_PRESETS, activity, db) }
+            val lines = remember { importLinesAndCheck(importPresets!!, BACKUP_PRESETS, db) { currentError = it } }
             if (lines.isEmpty())
                 importPresets = null
             AlertDialog(
@@ -391,7 +361,6 @@ fun DataManagementScreen(
             )
         }
         if (importOverlays != null) {
-            val activity = ctx.getActivity2()!!
             AlertDialog(
                 onDismissRequest = { importOverlays = null },
                 text = { stringResource(Res.string.import_presets_overlays_message) },
@@ -399,18 +368,20 @@ fun DataManagementScreen(
                 buttonRow = {
                     TextButton({ importOverlays = null }) { Text(stringResource(Res.string.cancel)) }
                     TextButton({
-                        if (!importCustomOverlays(importOverlays!!, true, activity))
-                            activity.toast2(activity.getString(R.string.import_error), Toast.LENGTH_LONG)
+                        if (!importCustomOverlays(importOverlays!!, true))
+                            currentError = Res.string.import_error
                         importOverlays = null
                     }) { Text(stringResource(Res.string.import_presets_overlays_replace)) }
                     TextButton({
-                        if (!importCustomOverlays(importOverlays!!, false, activity))
-                            activity.toast2(activity.getString(R.string.import_error), Toast.LENGTH_LONG)
+                        if (!importCustomOverlays(importOverlays!!, false))
+                            currentError = Res.string.import_error
                         importOverlays = null
                     }) { Text(stringResource(Res.string.import_presets_overlays_add)) }
                 }
             )
         }
+        if (currentError != null)
+            ToastPopup({ currentError = null }, stringResource(currentError!!))
     }
 }
 
@@ -433,81 +404,73 @@ val renamedQuests = mapOf(
 fun String.renameUpdatedQuests() =
     renamedQuests.entries.fold(this) { acc, (old, new) -> acc.replace(old, new) }
 
-private fun exportHidden(uri: Uri, activity: Activity, db: Database) {
-    runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openOutputStream(uri)?.use { os ->
-        val version = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
-        if (version > LAST_KNOWN_DB_VERSION)
-            activity.toast2(activity.getString(R.string.export_warning_db_version), Toast.LENGTH_LONG)
+private fun exportHidden(file: PlatformFile, db: Database) {
+    val version = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
 
-        val hiddenOsmQuests = db.query(OsmQuestsHiddenTable.NAME) { c ->
-            c.getLong(OsmQuestsHiddenTable.Columns.ELEMENT_ID).toString() + "," +
-                c.getString(OsmQuestsHiddenTable.Columns.ELEMENT_TYPE) + "," +
-                c.getString(OsmQuestsHiddenTable.Columns.QUEST_TYPE) + "," +
-                c.getLong(OsmQuestsHiddenTable.Columns.TIMESTAMP)
-        }
-        val hiddenNotes = db.query(NoteQuestsHiddenTable.NAME) { c->
-            c.getLong(NoteQuestsHiddenTable.Columns.NOTE_ID).toString() + "," +
-                c.getLong(NoteQuestsHiddenTable.Columns.TIMESTAMP)
-        }
-        val hiddenExternalSourceQuests = db.query(ExternalSourceQuestTables.NAME_HIDDEN) { c ->
-            c.getString(ExternalSourceQuestTables.Columns.SOURCE) + "," +
-                c.getString(ExternalSourceQuestTables.Columns.ID) + "," +
-                c.getLong(ExternalSourceQuestTables.Columns.TIMESTAMP)
-        }
+    val hiddenOsmQuests = db.query(OsmQuestsHiddenTable.NAME) { c ->
+        c.getLong(OsmQuestsHiddenTable.Columns.ELEMENT_ID).toString() + "," +
+            c.getString(OsmQuestsHiddenTable.Columns.ELEMENT_TYPE) + "," +
+            c.getString(OsmQuestsHiddenTable.Columns.QUEST_TYPE) + "," +
+            c.getLong(OsmQuestsHiddenTable.Columns.TIMESTAMP)
+    }
+    val hiddenNotes = db.query(NoteQuestsHiddenTable.NAME) { c->
+        c.getLong(NoteQuestsHiddenTable.Columns.NOTE_ID).toString() + "," +
+            c.getLong(NoteQuestsHiddenTable.Columns.TIMESTAMP)
+    }
+    val hiddenExternalSourceQuests = db.query(ExternalSourceQuestTables.NAME_HIDDEN) { c ->
+        c.getString(ExternalSourceQuestTables.Columns.SOURCE) + "," +
+            c.getString(ExternalSourceQuestTables.Columns.ID) + "," +
+            c.getLong(ExternalSourceQuestTables.Columns.TIMESTAMP)
+    }
 
-        os.bufferedWriter().use {
-            it.write(version.toString())
-            it.write("\n\n$BACKUP_HIDDEN_OSM_QUESTS\n")
-            it.write(hiddenOsmQuests.joinToString("\n"))
-            it.write("\n\n$BACKUP_HIDDEN_NOTES\n")
-            it.write(hiddenNotes.joinToString("\n"))
-            it.write("\n\n$BACKUP_HIDDEN_OTHER_QUESTS\n")
-            it.write(hiddenExternalSourceQuests.joinToString("\n") + "\n")
-        }
+    runBlocking { withContext(Dispatchers.IO) { file.sink().buffered().use {
+        it.writeText(version.toString())
+        it.writeText("\n\n$BACKUP_HIDDEN_OSM_QUESTS\n")
+        it.writeText(hiddenOsmQuests.joinToString("\n"))
+        it.writeText("\n\n$BACKUP_HIDDEN_NOTES\n")
+        it.writeText(hiddenNotes.joinToString("\n"))
+        it.writeText("\n\n$BACKUP_HIDDEN_OTHER_QUESTS\n")
+        it.writeText(hiddenExternalSourceQuests.joinToString("\n") + "\n")
     } } }
 }
 
-private fun exportPresets(ids: Collection<Long>, uri: Uri, activity: Activity, db: Database, urlConfigController: UrlConfigController) {
-    runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openOutputStream(uri)?.use { os ->
-        val version = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
-        if (version > LAST_KNOWN_DB_VERSION)
-            activity.toast2(activity.getString(R.string.export_warning_db_version), Toast.LENGTH_LONG)
+private fun exportPresets(ids: Collection<Long>, file: PlatformFile, db: Database, urlConfigController: UrlConfigController) {
+    val version = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
 
-        val presetString = ids.joinToString(",")
-        val presets = db.query(EditTypePresetsTable.NAME, where = "${EditTypePresetsTable.Columns.EDIT_TYPE_PRESET_ID} IN ($presetString)") { c ->
-            c.getLong(EditTypePresetsTable.Columns.EDIT_TYPE_PRESET_ID).toString() + "," +
-                c.getString(EditTypePresetsTable.Columns.EDIT_TYPE_PRESET_NAME)
-        }.map { "$it,${urlConfigController.create(it.substringBefore(',').toLong())}" }
-        val orders = db.query(QuestTypeOrderTable.NAME, where = "${QuestTypeOrderTable.Columns.EDIT_TYPE_PRESET_ID} IN ($presetString)") { c->
-            c.getLong(QuestTypeOrderTable.Columns.EDIT_TYPE_PRESET_ID).toString() + "," +
-                c.getString(QuestTypeOrderTable.Columns.BEFORE) + "," +
-                c.getString(QuestTypeOrderTable.Columns.AFTER)
-        }
-        val visibilities = db.query(VisibleEditTypeTable.NAME, where = "${VisibleEditTypeTable.Columns.EDIT_TYPE_PRESET_ID} IN ($presetString)") { c ->
-            c.getLong(VisibleEditTypeTable.Columns.EDIT_TYPE_PRESET_ID).toString() + "," +
-                c.getString(VisibleEditTypeTable.Columns.EDIT_TYPE) + "," +
-                c.getLong(VisibleEditTypeTable.Columns.VISIBILITY).toString()
-        }
-        val perPresetQuestSetting = "\\d+_qs_.+".toRegex()
-        val questSettings = Prefs.sharedPreferences.all.filterKeys { it.matches(perPresetQuestSetting) && it.substringBefore('_').toLongOrNull() in ids }
+    val presetString = ids.joinToString(",")
+    val presets = db.query(EditTypePresetsTable.NAME, where = "${EditTypePresetsTable.Columns.EDIT_TYPE_PRESET_ID} IN ($presetString)") { c ->
+        c.getLong(EditTypePresetsTable.Columns.EDIT_TYPE_PRESET_ID).toString() + "," +
+            c.getString(EditTypePresetsTable.Columns.EDIT_TYPE_PRESET_NAME)
+    }.map { "$it,${urlConfigController.create(it.substringBefore(',').toLong())}" }
+    val orders = db.query(QuestTypeOrderTable.NAME, where = "${QuestTypeOrderTable.Columns.EDIT_TYPE_PRESET_ID} IN ($presetString)") { c->
+        c.getLong(QuestTypeOrderTable.Columns.EDIT_TYPE_PRESET_ID).toString() + "," +
+            c.getString(QuestTypeOrderTable.Columns.BEFORE) + "," +
+            c.getString(QuestTypeOrderTable.Columns.AFTER)
+    }
+    val visibilities = db.query(VisibleEditTypeTable.NAME, where = "${VisibleEditTypeTable.Columns.EDIT_TYPE_PRESET_ID} IN ($presetString)") { c ->
+        c.getLong(VisibleEditTypeTable.Columns.EDIT_TYPE_PRESET_ID).toString() + "," +
+            c.getString(VisibleEditTypeTable.Columns.EDIT_TYPE) + "," +
+            c.getLong(VisibleEditTypeTable.Columns.VISIBILITY).toString()
+    }
+    val perPresetQuestSetting = "\\d+_qs_.+".toRegex()
+    val questSettings = Prefs.sharedPreferences.all.filterKeys { it.matches(perPresetQuestSetting) && it.substringBefore('_').toLongOrNull() in ids }
 
-        os.bufferedWriter().use {
-            it.appendLine(version.toString())
-            it.appendLine("\n$BACKUP_PRESETS")
-            it.appendLine(presets.joinToString("\n"))
-            it.appendLine("\n$BACKUP_PRESETS_ORDERS")
-            it.appendLine(orders.joinToString("\n"))
-            it.appendLine("\n$BACKUP_PRESETS_VISIBILITIES")
-            it.appendLine(visibilities.joinToString("\n"))
-            it.appendLine("\n$BACKUP_PRESETS_QUEST_SETTINGS")
-            settingsToJsonStream(questSettings, it)
-        }
+    runBlocking { withContext(Dispatchers.IO) { file.sink().buffered().use {
+        it.writeText(version.toString())
+        it.writeText("\n\n$BACKUP_PRESETS\n")
+        it.writeText(presets.joinToString("\n"))
+        it.writeText("\n\n$BACKUP_PRESETS_ORDERS\n")
+        it.writeText(orders.joinToString("\n"))
+        it.writeText("\n\n$BACKUP_PRESETS_VISIBILITIES\n")
+        it.writeText(visibilities.joinToString("\n"))
+        it.writeText("\n\n$BACKUP_PRESETS_QUEST_SETTINGS\n")
+        it.writeText("\n" + settingsToString(questSettings))
     } } }
 }
 
-// this will ignore settings with value null
+// this will ignore settings with value null, but should be fine
 @Suppress("UNCHECKED_CAST") // it is checked... but whatever (except string set, because not allowed to check for that)
-private fun settingsToJsonStream(settings: Map<String, Any?>, out: BufferedWriter) {
+private fun settingsToString(settings: Map<String, Any?>): String {
     val booleans = settings.filterValues { it is Boolean } as Map<String, Boolean>
     val ints = settings.filterValues { it is Int } as Map<String, Int>
     val longs = settings.filterValues { it is Long } as Map<String, Long>
@@ -515,39 +478,41 @@ private fun settingsToJsonStream(settings: Map<String, Any?>, out: BufferedWrite
     val strings = settings.filterValues { it is String } as Map<String, String>
     val stringSets = settings.filterValues { it is Set<*> } as Map<String, Set<String>>
     // now write
-    out.appendLine("boolean settings")
-    out.appendLine( Json.encodeToString(booleans))
-    out.appendLine()
-    out.appendLine("int settings")
-    out.appendLine( Json.encodeToString(ints))
-    out.appendLine()
-    out.appendLine("long settings")
-    out.appendLine( Json.encodeToString(longs))
-    out.appendLine()
-    out.appendLine("float settings")
-    out.appendLine( Json.encodeToString(floats))
-    out.appendLine()
-    out.appendLine("string settings")
-    out.appendLine( Json.encodeToString(strings))
-    out.appendLine()
-    out.appendLine("string set settings")
-    out.appendLine( Json.encodeToString(stringSets))
+    val sb = StringBuilder()
+    sb.appendLine("boolean settings")
+    sb.appendLine( Json.encodeToString(booleans))
+    sb.appendLine()
+    sb.appendLine("int settings")
+    sb.appendLine( Json.encodeToString(ints))
+    sb.appendLine()
+    sb.appendLine("long settings")
+    sb.appendLine( Json.encodeToString(longs))
+    sb.appendLine()
+    sb.appendLine("float settings")
+    sb.appendLine( Json.encodeToString(floats))
+    sb.appendLine()
+    sb.appendLine("string settings")
+    sb.appendLine( Json.encodeToString(strings))
+    sb.appendLine()
+    sb.appendLine("string set settings")
+    sb.appendLine( Json.encodeToString(stringSets))
+    return sb.toString()
 }
 
-private fun exportCustomOverlays(indices: Collection<String>, uri: Uri, activity: Activity) {
+private fun exportCustomOverlays(indices: Collection<String>, file: PlatformFile) {
     val prefs = Prefs.sharedPreferences
     val filterRegex = "custom_overlay_(?:${indices.joinToString("|")})_.*".toRegex()
     val settings = prefs.all.filterKeys { filterRegex.matches(it) }.toMutableMap()
     settings[Prefs.CUSTOM_OVERLAY_INDICES] = indices.joinToString(",")
     if (prefs.getInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, 0).toString() in indices)
         settings[Prefs.CUSTOM_OVERLAY_SELECTED_INDEX] = prefs.getInt(Prefs.CUSTOM_OVERLAY_SELECTED_INDEX, 0)
-    activity.contentResolver?.openOutputStream(uri)?.use { it.bufferedWriter().use {
-        it.appendLine("overlays")
-        settingsToJsonStream(settings, it)
-    } }
+    runBlocking { withContext(Dispatchers.IO) { file.sink().buffered().use {
+        it.writeString("overlays\n")
+        it.writeText("\n" + settingsToString(settings))
+    } } }
 }
 
-private fun exportSettings(uri: Uri, activity: Activity) {
+private fun exportSettings(file: PlatformFile) {
     val perPresetQuestSetting = "\\d+_qs_.+".toRegex()
     val settings = Prefs.sharedPreferences.all.filterKeys {
         !it.contains("TangramPinsSpriteSheet") // this is huge and gets generated if missing anyway
@@ -557,14 +522,14 @@ private fun exportSettings(uri: Uri, activity: Activity) {
             && !it.matches(perPresetQuestSetting) // per-preset quest settings should be stored with presets, because preset id is never guaranteed to match
             && !it.startsWith("custom_overlay") // custom overlays are exported separately
     }
-    activity.contentResolver?.openOutputStream(uri)?.use { it.bufferedWriter().use { settingsToJsonStream(settings, it) } }
+    runBlocking { withContext(Dispatchers.IO) { file.sink().buffered().use { it.writeText(settingsToString(settings)) } } }
 }
 
-private fun importCustomOverlays(uri: Uri, replaceExisting: Boolean, activity: Activity): Boolean {
+private fun importCustomOverlays(file: PlatformFile, replaceExisting: Boolean): Boolean {
+    if (!file.exists()) return false
     val lines = runBlocking { withContext(Dispatchers.IO) {
-        // avoid NetworkOnMainThreadException... bleh. whatever, if the user imports from file on network, the might have to wait
-        activity.contentResolver?.openInputStream(uri)?.use { it.reader().readLines() }
-    } }  ?: return false
+        file.source().buffered().use { it.readString().lines() }
+    } }
     if (lines.first() != "overlays") return false
     val prefs = Prefs.sharedPreferences
     return if (replaceExisting) {
@@ -646,9 +611,10 @@ private fun readToSettings(list: List<String>): Boolean {
     }
 }
 
-private fun importHidden(uri: Uri, activity: Activity, db: Database, visibleEditTypeController: VisibleEditTypeController) {
+private fun importHidden(file: PlatformFile, db: Database, visibleEditTypeController: VisibleEditTypeController, onError: (StringResource) -> Unit) {
     // do not delete existing hidden quests; this can be done manually anyway
-    val lines = importLinesAndCheck(uri, BACKUP_HIDDEN_OSM_QUESTS, activity, db)
+    val lines = importLinesAndCheck(file, BACKUP_HIDDEN_OSM_QUESTS, db, onError)
+    if (lines.isEmpty()) return
 
     val quests = mutableListOf<Array<Any?>>()
     val notes = mutableListOf<Array<Any?>>()
@@ -699,22 +665,29 @@ private fun importHidden(uri: Uri, activity: Activity, db: Database, visibleEdit
 }
 
 /** @returns the lines after [checkLine], which is expected to be the second or third line */
-private fun importLinesAndCheck(uri: Uri, checkLine: String, activity: Activity, db: Database): List<String> =
-    runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openInputStream(uri)?.use { it.bufferedReader().use { input ->
-        val fileVersion = input.readLine().toLongOrNull()
+private fun importLinesAndCheck(file: PlatformFile, checkLine: String, db: Database, onError: (StringResource) -> Unit): List<String> =
+    runCatching { runBlocking { withContext(Dispatchers.IO) { file.source().buffered().use { input ->
+        val fileVersion = input.readLine()?.toLongOrNull()
         if (fileVersion == null || (input.readLine() != checkLine && input.readLine() != checkLine)) {
             Log.w(TAG, "import error, file version $fileVersion, checkLine $checkLine")
-            activity.toast2(activity.getString(R.string.import_error), Toast.LENGTH_LONG)
+            onError(Res.string.import_error)
             return@withContext emptyList()
         }
         val dbVersion = db.rawQuery("PRAGMA user_version;") { c -> c.getLong("user_version") }.single()
         if (fileVersion != dbVersion && (fileVersion > LAST_KNOWN_DB_VERSION || dbVersion > LAST_KNOWN_DB_VERSION)) {
             Log.w(TAG, "import error, file version $fileVersion, dbVersion $dbVersion, last known db version $LAST_KNOWN_DB_VERSION")
-            activity.toast2(activity.getString(R.string.import_error_db_version), Toast.LENGTH_LONG)
+            onError(Res.string.import_error_db_version)
             return@withContext emptyList()
         }
-        input.readLines().renameUpdatedQuests()
-    } } } } ?: emptyList()
+
+        var line: String? = input.readLine()
+        val lines = mutableListOf<String>()
+        while (line != null) {
+            lines.add(line.renameUpdatedQuests())
+            line = input.readLine()
+        }
+        lines
+    } } } }.getOrNull() ?: emptyList()
 
 // when importing, names should be updated!
 private fun List<String>.renameUpdatedQuests() = map { it.renameUpdatedQuests() }
@@ -822,8 +795,11 @@ private fun importPresets(lines: List<String>, replaceExistingPresets: Boolean, 
     visibleEditTypeController.setVisibilities(emptyMap()) // reload stuff
 }
 
-private fun importSettings(uri: Uri, activity: Activity, osmoseDao: OsmoseDao, externalSourceQuestController: ExternalSourceQuestController): Boolean {
-    val lines = runBlocking { withContext(Dispatchers.IO) { activity.contentResolver?.openInputStream(uri)?.use { it.reader().readLines().renameUpdatedQuests() } } } ?: return false
+private fun importSettings(file: PlatformFile, osmoseDao: OsmoseDao, externalSourceQuestController: ExternalSourceQuestController): Boolean {
+    if (!file.exists()) return false
+    val lines = runBlocking { withContext(Dispatchers.IO) {
+        file.source().buffered().use { it.readString().lines().renameUpdatedQuests() }
+    } }
     val r = readToSettings(lines)
     osmoseDao.reloadIgnoredItems()
     externalSourceQuestController.invalidate()

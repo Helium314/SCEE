@@ -1,8 +1,6 @@
 package de.westnordost.streetcomplete.quests.osmose
 
-import android.content.res.Resources
-import android.database.sqlite.SQLiteException
-import android.os.LocaleList
+import androidx.compose.ui.text.intl.LocaleList
 import de.westnordost.streetcomplete.ApplicationConstants.USER_AGENT
 import de.westnordost.streetcomplete.data.ConflictAlgorithm
 import de.westnordost.streetcomplete.data.CursorPosition
@@ -93,9 +91,9 @@ class OsmoseDao(
         requestBuilder.url(url)
         requestBuilder.header("User-Agent", USER_AGENT)
         if (prefs.getBoolean(PREF_OSMOSE_APP_LANGUAGE, false)) {
-            val locale = getSelectedLocales(prefs)[0]
-            if (locale != null)
-                requestBuilder.header("Accept-Language", locale.toString())
+            val language = prefs.language ?: LocaleList.current.firstOrNull()?.language
+            if (language != null)
+                requestBuilder.header("Accept-Language", language)
         }
         Log.d(TAG, "downloading for bbox: $bbox using request $url")
         val issues = mutableListOf<OsmoseIssue>()
@@ -186,11 +184,11 @@ class OsmoseDao(
             db.query(NAME, where = "$ANSWERED = 1") {
                 Pair(it.getString(UUID), it.getInt(ANSWERED) == 1)
             }.forEach { reportChange(it.first, it.second) }
-        } catch (e: SQLiteException) {
+        } catch (e: Exception) {
             // SQLiteException: no such table: osmose_issues_v2 (code 1): , while compiling: SELECT * FROM osmose_issues_v2 WHERE answered = 1
             // user didn't even enable osmose quest -> in this case unused osmose quest should not cause a crash
             // but actually: why isn't table created? it's in database helper init!
-            Log.w(TAG, "Osmose table not found when trying to report false positives")
+            Log.w(TAG, "Osmose table not found when trying to report false positives", e)
         }
     }
 
@@ -383,25 +381,3 @@ const val OSMOSE_DEFAULT_IGNORED_ITEMS =
         "1140" + "§§" + // missing tag or role
         "1200" + "§§" + //  1-member relation
         "9007" + "§§" // various relation related issues, usually missing tags
-
-// copy so it compiles
-private fun getSelectedLocale(prefs: Preferences): Locale? {
-    val languageTag = prefs.language ?: ""
-    return if (languageTag.isEmpty()) null else Locale.forLanguageTag(languageTag)
-}
-
-private fun getSelectedLocales(prefs: Preferences): LocaleList {
-    val locale = getSelectedLocale(prefs)
-    val systemLocales = getSystemLocales()
-    return if (locale == null) systemLocales else systemLocales.addedToFront(locale)
-}
-
-private fun getSystemLocales(): LocaleList =
-    Resources.getSystem().configuration.locales
-
-private fun LocaleList.addedToFront(locale: Locale): LocaleList {
-    val currentList = toList().filterNot { it == locale }.toTypedArray()
-    return LocaleList(locale, *currentList)
-}
-
-private fun LocaleList.toList(): List<Locale> = (0 until size()).map { i -> this[i]!! }

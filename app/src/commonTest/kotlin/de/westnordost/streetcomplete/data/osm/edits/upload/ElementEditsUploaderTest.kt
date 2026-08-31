@@ -11,10 +11,8 @@ import de.westnordost.streetcomplete.data.osm.mapdata.MapDataUpdates
 import de.westnordost.streetcomplete.data.osmnotes.edits.NoteEditsController
 import de.westnordost.streetcomplete.data.upload.OnUploadedChangeListener
 import de.westnordost.streetcomplete.data.user.statistics.StatisticsController
-import dev.mokkery.matcher.any
 import de.westnordost.streetcomplete.testutils.edit
 import de.westnordost.streetcomplete.testutils.mockPrefs2
-import dev.mokkery.mock
 import de.westnordost.streetcomplete.testutils.node
 import dev.mokkery.answering.repeat
 import dev.mokkery.answering.returns
@@ -22,12 +20,14 @@ import dev.mokkery.answering.sequentially
 import dev.mokkery.answering.throws
 import dev.mokkery.every
 import dev.mokkery.everySuspend
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
 import dev.mokkery.verify
 import dev.mokkery.verifyNoMoreCalls
 import dev.mokkery.verifySuspend
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 

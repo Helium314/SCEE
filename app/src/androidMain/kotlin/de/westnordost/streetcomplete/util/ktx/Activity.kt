@@ -8,7 +8,6 @@ import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.init
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 fun <T> AppCompatActivity.observe(flow: Flow<T>, collector: FlowCollector<T>) {

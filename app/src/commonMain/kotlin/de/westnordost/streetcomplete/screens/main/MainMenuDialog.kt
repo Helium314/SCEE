@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import de.westnordost.streetcomplete.ApplicationConstants
@@ -57,10 +58,9 @@ import org.koin.compose.koinInject
 import de.westnordost.streetcomplete.ui.common.DownloadIcon
 import de.westnordost.streetcomplete.ui.common.TeamModeIcon
 import de.westnordost.streetcomplete.ui.common.UploadIcon
+import de.westnordost.streetcomplete.util.ProfileSelectionDialog
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import de.westnordost.streetcomplete.util.ProfileSelectionDialog
 
 @Composable
 fun MainMenuDialog(

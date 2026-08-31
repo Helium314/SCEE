@@ -2,8 +2,8 @@ package de.westnordost.streetcomplete.quests.accepts_cards
 
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapEntryAdd
-import de.westnordost.streetcomplete.testutils.TestMapDataWithGeometry
 import de.westnordost.streetcomplete.quests.answerApplied
+import de.westnordost.streetcomplete.testutils.TestMapDataWithGeometry
 import de.westnordost.streetcomplete.testutils.mockPrefs
 import de.westnordost.streetcomplete.testutils.mockPrefs3
 import de.westnordost.streetcomplete.testutils.node

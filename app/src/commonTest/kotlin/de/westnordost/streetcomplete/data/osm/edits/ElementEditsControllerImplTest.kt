@@ -10,15 +10,15 @@ import de.westnordost.streetcomplete.data.osm.mapdata.ElementType.WAY
 import de.westnordost.streetcomplete.data.osm.mapdata.MapDataUpdates
 import de.westnordost.streetcomplete.data.preferences.Preferences
 import de.westnordost.streetcomplete.data.quest.TestQuestTypeA
-import dev.mokkery.matcher.any
 import de.westnordost.streetcomplete.testutils.edit
 import de.westnordost.streetcomplete.testutils.mockPrefs3
-import dev.mokkery.mock
 import de.westnordost.streetcomplete.testutils.node
-import dev.mokkery.answering.returns
-import dev.mokkery.every
 import de.westnordost.streetcomplete.testutils.pGeom
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
+import dev.mokkery.answering.returns
+import dev.mokkery.every
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
 import dev.mokkery.verify
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -33,7 +33,7 @@ class ElementEditsControllerImplTest {
     private lateinit var idProvider: ElementIdProviderDao
 
     @BeforeTest fun setUp() {
-        db = mock() {
+        db = mock {
             every { delete(any()) } returns true
             every { markSynced(any()) } returns true
         }

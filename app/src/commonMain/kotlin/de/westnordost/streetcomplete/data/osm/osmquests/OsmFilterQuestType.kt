@@ -22,10 +22,10 @@ abstract class OsmFilterQuestType<T> : OsmElementQuestType<T> {
 
     abstract val elementFilter: String
 
-    override final fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
+    final override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> =
         mapData.filter(prefs.getString(getPrefixedFullElementSelectionPref(prefs), elementFilter)).asIterable()
 
-    override final fun isApplicableTo(element: Element): Boolean = filter.matches(element)
+    final override fun isApplicableTo(element: Element): Boolean = filter.matches(element)
 
     override val hasQuestSettings: Boolean = true
 

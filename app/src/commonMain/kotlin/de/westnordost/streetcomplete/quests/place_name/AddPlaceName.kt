@@ -24,9 +24,9 @@ import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
 import de.westnordost.streetcomplete.data.user.achievements.EditTypeAchievement.CITIZEN
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.localized_name.LocalizedName
-import de.westnordost.streetcomplete.osm.places.isPlaceOrDisusedPlace
 import de.westnordost.streetcomplete.osm.localized_name.applyTo
 import de.westnordost.streetcomplete.osm.localized_name.parseLocalizedNames
+import de.westnordost.streetcomplete.osm.places.isPlaceOrDisusedPlace
 import de.westnordost.streetcomplete.quests.FullElementSelectionDialog
 import de.westnordost.streetcomplete.quests.questPrefix
 import de.westnordost.streetcomplete.resources.*
@@ -100,6 +100,7 @@ class AddPlaceName(
             },
             countryInfo = countryInfo,
             initialLocalizedNames = initialLocalizedNames,
+            isResurvey = initialLocalizedNames != null,
             otherAnswers = { listOfNotNull(
                 if (!element.tags.containsKey("shop") && !element.tags.containsKey("amenity")
                     && !element.tags.containsKey("leisure") && !element.tags.containsKey("tourism")) null

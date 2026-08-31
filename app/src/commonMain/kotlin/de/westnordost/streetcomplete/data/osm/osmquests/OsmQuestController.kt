@@ -1,7 +1,6 @@
 package de.westnordost.streetcomplete.data.osm.osmquests
 
 import com.russhwolf.settings.ObservableSettings
-import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.data.elementfilter.ElementsTypeFilter
@@ -22,6 +21,7 @@ import de.westnordost.streetcomplete.data.quest.OsmQuestKey
 import de.westnordost.streetcomplete.data.quest.QuestType
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
 import de.westnordost.streetcomplete.util.Listeners
+import de.westnordost.streetcomplete.util.countryboundaries.CountryBoundaries
 import de.westnordost.streetcomplete.util.ktx.format
 import de.westnordost.streetcomplete.util.ktx.nowAsEpochMilliseconds
 import de.westnordost.streetcomplete.util.ktx.truncateTo6Decimals

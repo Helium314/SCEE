@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
@@ -43,7 +44,6 @@ import de.westnordost.streetcomplete.resources.*
 import org.koin.compose.koinInject
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 /** Single item in the quest selection list. Shows icon + title, whether it is enabled and whether
  *  it is disabled by default / disabled in the country one is in */

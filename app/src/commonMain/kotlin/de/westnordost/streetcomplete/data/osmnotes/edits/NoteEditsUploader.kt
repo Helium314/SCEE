@@ -23,8 +23,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import kotlinx.io.files.FileSystem
-import kotlinx.io.files.Path
 
 class NoteEditsUploader(
     private val noteEditsController: NoteEditsController,

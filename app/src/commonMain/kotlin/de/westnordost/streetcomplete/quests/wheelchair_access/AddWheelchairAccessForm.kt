@@ -12,9 +12,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.osmquests.Answer
 import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
+import de.westnordost.streetcomplete.quests.wheelchair_access.WheelchairAccess.*
 import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
-import de.westnordost.streetcomplete.quests.wheelchair_access.WheelchairAccess.*
 import de.westnordost.streetcomplete.ui.common.TextField2
 import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
 import de.westnordost.streetcomplete.ui.common.quest.LocalElement

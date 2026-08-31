@@ -4,7 +4,6 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.res.Configuration
 import androidx.annotation.UiThread
-import androidx.core.graphics.Insets
 import com.google.gson.JsonObject
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R

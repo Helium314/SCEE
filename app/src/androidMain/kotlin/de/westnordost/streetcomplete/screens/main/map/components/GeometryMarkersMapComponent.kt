@@ -131,7 +131,6 @@ class GeometryMarkersMapComponent(
     }
 
     private fun update() {
-
     }
 
     companion object {

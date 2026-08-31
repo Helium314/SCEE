@@ -22,8 +22,8 @@ import de.westnordost.streetcomplete.osm.address.streetHouseNumber
 import de.westnordost.streetcomplete.osm.building.BuildingType
 import de.westnordost.streetcomplete.osm.building.createBuildingType
 import de.westnordost.streetcomplete.resources.*
-import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.AreYouSureDialog
+import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
 import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
 import de.westnordost.streetcomplete.ui.common.quest.QuestForm
 import de.westnordost.streetcomplete.ui.util.rememberSerializable
@@ -97,7 +97,9 @@ fun AddHousenumberForm(
                             addressNumberAndName = addressNumberAndName.copy(number = BlockAndHouseNumber("", ""))
                         }
                 }
-            } else null
+            } else {
+                null
+            }
 
             listOfNotNull(
                 AnswerItem(stringResource(Res.string.quest_address_answer_no_housenumber)) { onNoHouseNumber() },

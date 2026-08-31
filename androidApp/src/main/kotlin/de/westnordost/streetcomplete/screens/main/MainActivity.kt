@@ -305,6 +305,7 @@ class MainActivity :
                     position.y += offset.y
                     position.toOffset()
                 },
+                lastMapClick = lastMapClick.value,
             )
 
             if (prefs.getBoolean(Prefs.SHOW_SOLVED_ANIMATION, true))

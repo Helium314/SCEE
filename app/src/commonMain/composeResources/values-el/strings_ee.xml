@@ -87,12 +87,10 @@
     <string name="quest_trail_visibility_no">Χωρίς ορατότητα</string>
     <string name="quest_destination_add_more">Προσθήκη άλλου προορισμού</string>
     <string name="quest_surface_value_metal_grid">Μεταλλικό πλέγμα</string>
-    <string name="quest_healthcare_speciality_add_more">Προσθήκη άλλης ειδικότητας</string>
     <string name="quest_cuisine_add_more">Προσθήκη άλλης κουζίνας</string>
     <string name="quest_brewery_is_not_available">Δεν πωλείται μπύρα εδώ</string>
     <string name="quest_brewery_add_more">Προσθήκη άλλου ζυθοποιείου</string>
     <string name="quest_contact_website">Ποιός είναι ο ιστότοπος αυτού του μέρους;</string>
-    <string name="quest_healthcare_speciality_title">Τι ειδικότητες υγείας έχει αυτό το μέρος;</string>
     <string name="quest_wheelchair_description_answer">Προσθήκη περιγραφής</string>
     <string name="quest_private">Είναι ιδιωτικό</string>
     <string name="quest_disused">Είναι σε αχρηστία</string>

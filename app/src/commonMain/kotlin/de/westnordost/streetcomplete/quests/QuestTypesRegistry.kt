@@ -1,11 +1,8 @@
 package de.westnordost.streetcomplete.quests
 
 import de.westnordost.osmfeatures.Feature
-import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.ApplicationConstants.EE_QUEST_OFFSET
 import de.westnordost.streetcomplete.data.meta.CountryInfo
-import de.westnordost.streetcomplete.data.meta.CountryInfos
-import de.westnordost.streetcomplete.data.meta.get
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
 import de.westnordost.streetcomplete.data.quest.QuestTypeRegistry
@@ -97,7 +94,6 @@ import de.westnordost.streetcomplete.quests.custom.CustomQuest
 import de.westnordost.streetcomplete.quests.custom.CustomQuestList
 import de.westnordost.streetcomplete.quests.cycleway.AddCycleway
 import de.westnordost.streetcomplete.quests.defibrillator.AddDefibrillatorLocation
-//import de.westnordost.streetcomplete.quests.destination.AddDestination
 import de.westnordost.streetcomplete.quests.diet_type.AddGlutenFree
 import de.westnordost.streetcomplete.quests.diet_type.AddHalal
 import de.westnordost.streetcomplete.quests.diet_type.AddKosher
@@ -128,7 +124,6 @@ import de.westnordost.streetcomplete.quests.guidepost.AddGuidepostName
 import de.westnordost.streetcomplete.quests.guidepost_sport.AddGuidepostSports
 import de.westnordost.streetcomplete.quests.hairdresser.AddHairdresserCustomers
 import de.westnordost.streetcomplete.quests.handrail.AddHandrail
-import de.westnordost.streetcomplete.quests.healthcare_speciality.AddHealthcareSpeciality
 import de.westnordost.streetcomplete.quests.handwashing.AddHandwashing
 import de.westnordost.streetcomplete.quests.incline_direction.AddBicycleIncline
 import de.westnordost.streetcomplete.quests.incline_direction.AddStepsIncline
@@ -659,7 +654,6 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 2 to AddContactWebsite(),
     EE_QUEST_OFFSET + 4 to AddCuisine(),
     EE_QUEST_OFFSET + 32 to AddBrewery(),
-    EE_QUEST_OFFSET + 5 to AddHealthcareSpeciality(),
     EE_QUEST_OFFSET + 6 to AddServiceBuildingType(),
     EE_QUEST_OFFSET + 7 to AddServiceBuildingOperator(),
     EE_QUEST_OFFSET + 29 to AddStreetCabinetType(),

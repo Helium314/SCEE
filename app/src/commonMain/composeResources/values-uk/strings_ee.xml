@@ -235,7 +235,6 @@
     <string name="general_warning">Попередження</string>
     <string name="access_manager_button_add">Додати</string>
     <string name="quest_maxspeed_conditional">Залежно від…</string>
-    <string name="quest_healthcare_speciality_title">Які медичні спеціальності є у цьому закладі\?</string>
     <string name="tag_editor_last_edited">Востаннє змінено: %1$s</string>
     <string name="quest_contact_website">Яка адреса сайту цього закладу\?</string>
     <string name="pref_show_gpx_button_title">Показувати кнопку нотаток GPX</string>
@@ -245,7 +244,6 @@
     <string name="quest_contact_phone">Який номер телефону цього закладу\?</string>
     <string name="restriction_overlay_direction_text">Стосується напрямку руху:</string>
     <string name="quest_monitor_channel_name_found">Знайдено завдання поблизу</string>
-    <string name="quest_healthcare_speciality_add_more">Додати іншу спеціальність</string>
     <string name="create_custom_quest_button">Створити своє завдання</string>
     <string name="fork_about_title_repository">Сторінка проєкту SCEE</string>
     <string name="quest_fixme_title">Виправити:</string>
@@ -253,7 +251,6 @@
     <string name="quest_wheelchair_description_answer">Додати опис</string>
     <string name="restriction_overlay_sign_stop">Стоп</string>
     <string name="quest_poi_traffic_title">POI: Дорожній рух</string>
-    <string name="quest_healthcare_speciality_switch_ui">Перемкнути інтерфейс</string>
     <string name="quest_wheelchair_description_no_language">мову не вказано</string>
     <string name="quest_seating_beach">На пляжі</string>
     <string name="quest_seating_roof">На даху</string>
@@ -509,7 +506,6 @@
     <string name="quest_guidepostName_title">Яка тут назва?</string>
     <string name="restriction_overlay_relation_unsupported">Тип зв’язку не підтримується:\n%1$s</string>
     <string name="restriction_overlay_relation_incomplete">Зв’язок з обмеженнями неповний, потрібно завантажити навколишню територію</string>
-    <string name="quest_healthcare_speciality_disabled_message">Цей квест вимагає знання тегів healthcare:specialty. Без цих знань виконати квест може бути дуже важко.</string>
     <string name="quest_tree_genus_title">Який рід або вид цього дерева?</string>
     <string name="quest_tree_error">Не розпізнано. Спробуйте ввести рід, вид або назву дерева англійською мовою. Або ж залиште нотатку.</string>
     <string name="quest_tree_disabled_msg">Цей квест за замовчуванням вимкнено, оскільки на нього нелегко відповісти. Вид/рід потрібно вибрати з пропозицій, які взяті з найбільш використовуваних значень. Ви можете надати пропозиції з власного списку видів з назвами, які можна шукати, надавши файл у меню налаштувань керування даними, що містить `&lt;вид&gt; (&lt;назва&gt;)`.</string>

@@ -194,7 +194,6 @@
     <string name="quest_service_building_type_pump">Насосная станция (НС)</string>
     <string name="quest_seating_pedestrian_zone">В пешеходной зоне</string>
     <string name="quest_cuisine_add_more">Добавить другую кухню</string>
-    <string name="quest_healthcare_speciality_disabled_message">Этот квест требет знаний о тегах healthcare:speciality. В противном случае, правильно ответить на данный квест крайне сложно.</string>
     <string name="quest_tree_genus_title">К какому роду или виду относится это дерево\?</string>
     <string name="default_disabled_msg_ee">Квесты добавленные для SCEE всегда отключены по умолчанию, поскольку на них не всегда можно ответить и они требуют знаний как тематики, так и тегов.</string>
     <string name="quest_railwayPlatformRef_title">Какой номер у этого пути\?</string>
@@ -281,7 +280,6 @@
     <string name="quest_seating_parklet">Вдоль бордюра или на месте парковки</string>
     <string name="quest_settings_level_title">Показать этот квест для:</string>
     <string name="level_filter_title">Выберите ключи для проверки</string>
-    <string name="quest_healthcare_speciality_title">Какие медицинские специальности есть в этом месте\?</string>
     <string name="level_filter_message">Введите число этажей или выражения &gt; и &lt;. Используйте * для выбора всех элементов, содержащих допустимый ключ level</string>
     <string name="quest_settings_eligible_highways">Укажите дороги, подходящие для этого квеста, через запятую</string>
     <string name="quest_traffic_stuff_raised">Это возвышенный переход</string>
@@ -295,7 +293,6 @@
     <string name="quest_osmose_settings_items">Править чёрный список</string>
     <string name="quest_osmose_use_app_language">Загружать проблемы на языке приложения</string>
     <string name="quest_settings_level_default">Магазины и подобное в торговых центрах (по умолчанию)</string>
-    <string name="quest_healthcare_speciality_add_more">Добавить еще одну специальность</string>
     <string name="quest_buildingType_cowshed">Коровник</string>
     <string name="quest_buildingType_sty">Свинарник</string>
     <string name="quest_buildingType_sports_hall">Спортивный зал</string>
@@ -317,7 +314,6 @@
     <string name="quest_roofColour_title">Какой цвет является основным для крыши этого здания\?</string>
     <string name="quest_buildingType_presbytery">Пресвитерий</string>
     <string name="quest_buildingType_stable">Конюшня</string>
-    <string name="quest_healthcare_speciality_switch_ui">Переключить интерфейс</string>
     <string name="quest_destination_title">Какие направления указаны для этой дороги\?</string>
     <string name="quest_destination_add_more">Добавить направление</string>
     <string name="quest_destination_all_lanes_button">Все

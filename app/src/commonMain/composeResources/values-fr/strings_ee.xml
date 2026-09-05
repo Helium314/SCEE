@@ -89,7 +89,6 @@
     <string name="quest_poi_camera_title">POI : Caméra de surveillance</string>
     <string name="default_disabled_msg_poi_fixme">Cette "quête" affiche les éléments avec un tag fixme avec un point rouge (en dehors des valeurs 'yes' et 'continue'). Cliquez sur le point pour afficher les détails et les réponses possibles.</string>
     <string name="quest_seating_street">Dans une zone de rue</string>
-    <string name="quest_healthcare_speciality_add_more">Ajouter une autre spécialité</string>
     <string name="quest_service_building_type_pump">Station de pompage</string>
     <string name="quest_seating_pedestrian_zone">Dans une zone piétonne</string>
     <string name="quest_seating_sidewalk">Sur le trottoir</string>
@@ -98,7 +97,6 @@
     <string name="quest_seating_balcony">Sur un balcon (pas au rez-de-chaussée)</string>
     <string name="quest_seating_roof">Sur un toit</string>
     <string name="quest_seating_beach">À la plage</string>
-    <string name="quest_healthcare_speciality_title">Quelles spécialités médicales sont offertes dans cet établissement de santé \?</string>
     <string name="quest_railwayPlatformRef_title">Quel est le numéro du quai \?</string>
     <string name="quest_railwayPlatformRef_abc">ABC/123</string>
     <string name="quest_generic_answer_show_edit_tags">Afficher/éditer les tags</string>
@@ -295,7 +293,6 @@
     <string name="pref_quest_monitor_summary">Surveille la localisation lorsque l'application est en arrière-plan, sauf si elle est mise en arrière-plan à l'aide du bouton "retour</string>
     <string name="quest_railwayPlatformRef_message">Quel tag utiliser pour indiquer les voies accessibles depuis ce quai \? D'après le wiki OSM, local_ref est préférable, mais l'usage actuel le plus répandu est surtout ref.</string>
     <string name="default_disabled_msg_ee">Les quêtes ajoutées dans SCEE sont toujours désactivées par défaut, car il n'est pas toujours possible d'y répondre facilement, et elles peuvent nécessiter une connaissance plus approfondi du sujet et des tags à utiliser.</string>
-    <string name="quest_healthcare_speciality_disabled_message">Cette quête nécessite des connaissances à propos des tags healthcare:speciality. Sans ces connaissances, il peut être très difficile de répondre à cette quête.</string>
     <string name="pref_expert_mode_message">Elle permet d'utiliser les quêtes ajoutées dans SCEE, ainsi que la possibilité
 \n<li>d'éditer les attributs au format brut</li>
 \n<li>déplacer des nœuds qui font partie de chemins ou de relations</li>
@@ -323,7 +320,6 @@
     <string name="quest_custom_quest_message">Utilisé pour vérifier des éléments ou des emplacements spécifiques prédéfinis. Vous pouvez également ajouter des nœuds en définissants des tags. Pour l'utiliser, chargez un fichier dans le menu principal des paramètres, contenant soit le type, l'id, le message (par exemple NODE,1234,check position) ou la latitude, la longitude, le message. Pour ajouter des nœuds, placez les tags dans le message après "addNode", par exemple addNode amenity=restaurant,wheelchair=no,diet:vegetarian=yes</string>
     <string name="default_disabled_msg_poi_recycling">Cette "quête" montre les points d'intérêt (POI) liés au recyclage et aux déchets avec des points verts. Cliquez sur le point pour afficher les détails et les autres réponses.</string>
     <string name="default_disabled_msg_poi_traffic">Cette "quête" montre les points d'intérêt (POI) liés à la circulation avec des points bleus. Cliquez sur le point pour afficher les détails et les autres réponses.</string>
-    <string name="quest_healthcare_speciality_switch_ui">Changer d'interface</string>
     <string name="quest_cuisine_add_more">Ajouter un autre type de nourriture</string>
     <string name="quest_cuisine_title">Quel est le type de nourriture que l'on trouve dans cet endroit \? Utilisez les balises OSM suggérées !</string>
     <string name="quest_tree_disabled_msg">Cette quête est désactivée par défaut car il n'est pas facile d'y répondre. L'espèce/le genre doit être choisi parmi les suggestions, qui sont extraites des valeurs les plus utilisées. Vous pouvez fournir plus de suggestions à partir de votre propre liste de noms d'espèces pouvant être recherchés en fournissant un fichier dans le menu des paramètres de gestion des données, contenant &lt;espèce&gt; (&lt;nom&gt;).</string>

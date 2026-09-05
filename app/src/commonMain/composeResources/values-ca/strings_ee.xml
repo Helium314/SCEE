@@ -163,8 +163,6 @@
     <string name="quest_trail_visibility_bad_description">Camí a vegades invisible, i ruta parcialment sense camí i/o sense cap marca. Es necessiten d'habilitats bàsiques d'orientació.</string>
     <string name="quest_mapType_street_description">Un mapa amb tots els carrers i vies d'una zona. La majoria dels carrers i vies en el mapa tenen nom. Els angles i distàncies són precisos i realistes. Usat, per exemple, en oficines turístiques.</string>
     <string name="quest_service_building_operator_title">Qui és l'operador d'aquest edifici de servei?</string>
-    <string name="quest_healthcare_speciality_disabled_message">Aquesta missió requereix de coneixements sobre els valors de l'etiqueta healthcare:speciality. Sense aquest coneixement, respondre a aquesta missió podria ser força complicat.</string>
-    <string name="quest_healthcare_speciality_add_more">Afegir una altra especialitat</string>
     <string name="quest_service_building_other">Edifici d'altres serveis</string>
     <string name="quest_street_cabinet_type_title">Quin tipus d'armari de carrer és aquest?</string>
     <string name="quest_street_cabinet_traffic">Trànsit</string>
@@ -208,8 +206,6 @@
     <string name="quest_mapSize_city">Una ciutat sencera</string>
     <string name="quest_mapSize_region">Una zona més àmplia, com ara diverses poblacions</string>
     <string name="quest_mapSize_landscape">Tot un paisatge, normalment usat en taules d'orientació</string>
-    <string name="quest_healthcare_speciality_title">Quines especialistes mèdiques té aquest puesto?</string>
-    <string name="quest_healthcare_speciality_switch_ui">Canviar interfície d'usuari</string>
     <string name="quest_tree_disabled_msg">Aquesta missió està desactivada per defecte, ja que no és fàcil de respondre. Les espècies/generes han d'escollir-se des de la llista de suggerències, que s'alimenta els valors més usats. Pots proporcionar més valors possibles via proporcionat un fitxer en el menú de gestió de dades a configuració, que contingui &lt;species&gt; (&lt;name&gt;).</string>
     <string name="quest_wheelchair_description_title">Omple, com a mínim, la descripció d'un idioma</string>
     <string name="quest_buildingType_barn">Graner</string>

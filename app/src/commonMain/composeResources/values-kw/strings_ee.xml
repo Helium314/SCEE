@@ -239,9 +239,6 @@
     <string name="quest_brewery_is_various">Meur a verkys a gorev yw kavadow omma</string>
     <string name="quest_brewery_is_not_available">Nyns eus korev kavadow omma</string>
     <string name="quest_service_building_operator_title">Piw yw an oberadow a'n drehevyans gonis ma?</string>
-    <string name="quest_healthcare_speciality_title">Py arbenikterow yegheswith eus an le ma?</string>
-    <string name="quest_healthcare_speciality_switch_ui">Skwychella Ynterfas</string>
-    <string name="quest_healthcare_speciality_add_more">Keworra arbenikter aral</string>
     <string name="quest_tree_genus_title">Pyth yw an genus po eghen a'n wedhen ma?</string>
     <string name="quest_railwayPlatformRef_title">Pyth yw an niver kay omma?</string>
     <string name="quest_railwayPlatformRef_abc">ABC</string>

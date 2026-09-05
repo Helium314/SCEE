@@ -3,7 +3,6 @@
     <string name="pref_manual_download_cache_title">始终重新下载数据</string>
     <string name="pref_delete_old_data_after_summary">%1$d 天</string>
     <string name="quest_monitor_active_request">主动请求位置将增加电池使用量。不主动请求位置时，仍会使用其他应用请求的位置。</string>
-    <string name="quest_healthcare_speciality_title">这里有哪些医疗专业？</string>
     <string name="quest_material_metal">金属</string>
     <string name="quest_monitor_net">主动请求网络位置？</string>
     <string name="quest_settings_resurvey_all_opening_hours_title">重新调查所有开放时间</string>
@@ -70,7 +69,6 @@
     <string name="default_disabled_msg_poi_recycling">该“任务”以绿点显示与回收/垃圾相关的兴趣点。点击圆点可显示详细信息和其他回答。</string>
     <string name="default_disabled_msg_ee">在 SCEE 中添加的任务默认情况下都是禁用的，因为这些任务不总是能被回答，而且可能需要相关主题知识和标签使用经验。</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">所有</string>
-    <string name="quest_healthcare_speciality_add_more">添加更多专业</string>
     <string name="pref_delete_old_data_after">在此之后删除旧数据</string>
     <string name="level_filter_message">输入楼层数值，或使用 &gt; 和 &lt; 进行筛选。 使用 * 可匹配包含允许楼层键值的所有元素</string>
     <string name="pref_category_mods">SCEE 设置</string>
@@ -95,7 +93,6 @@
     <string name="quest_poi_traffic_title">兴趣点：交通</string>
     <string name="quest_settings_element_selection">设置符合本任务条件的元素。<a href="https://github.com/Helium314/SCEE/blob/modified/CONTRIBUTING_A_NEW_QUEST.md#element-selection">点击此处</a>即可在浏览器中打开关于元素选择语法的信息。</string>
     <string name="pref_tree_custom_quest_summary">如需了解详情，请参阅启用任务时的消息</string>
-    <string name="quest_healthcare_speciality_switch_ui">切换用户界面</string>
     <string name="quest_osmose_remove_checked">移除</string>
     <string name="action_scee_quests">只显示 SCEE 任务</string>
     <string name="quick_switch_map_background">切换航拍/地图背景</string>
@@ -147,7 +144,6 @@
     <string name="quest_poi_vending_title">兴趣点：自动售货机</string>
     <string name="pref_volume_zoom_title">音量按钮缩放</string>
     <string name="pref_tile_source_hide_labels">隐藏标签</string>
-    <string name="quest_healthcare_speciality_disabled_message">该任务需要 healthcare:speciality 标签的相关知识。如果不了解这些知识，任务可能将难以回答。</string>
     <string name="quest_settings_level_more">多层建筑内的医生和更多节点</string>
     <string name="quest_seating_garden">花园区域</string>
     <string name="pref_get_photos_title">获取全尺寸照片</string>

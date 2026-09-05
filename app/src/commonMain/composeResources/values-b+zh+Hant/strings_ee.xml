@@ -168,7 +168,6 @@
     <string name="quest_brewery_is_not_available">這裡沒有賣啤酒</string>
     <string name="quest_contact_phone">這裡的電話號碼是幾號？</string>
     <string name="quest_contact_website">這個地點的網站是什麼？</string>
-    <string name="quest_healthcare_speciality_title">這個地方有哪些醫療專科？</string>
     <string name="quest_destination_title">這條路的路牌寫著哪些地點？</string>
     <string name="quest_destination_add_more">添加下一個目的地</string>
     <string name="pref_screen_ui">使用者介面</string>
@@ -180,7 +179,6 @@
     <string name="quest_guidepost_disabled_msg">這種任務類型預設是停用的，因為路標指示的內容因地區和營運商而異。你可能需要根據你所在的區域調整元素選擇（例如，新增或移除地圖，只選擇 hiking=yes 的元素等等）</string>
     <string name="default_disabled_msg_poi_fixme">此「任務」會將 FixMe 註記顯示為紅色點（預設排除標記為 'yes' 和 'continue' 的項目）。點擊該點即可查看詳情及其他答案。</string>
     <string name="default_disabled_msg_sacScale">這種任務類型預設是停用的，因為路徑的 SAC 分級非常主觀，需要對所使用的分級系統有專業知識。由於沒有全球通用的路徑難度分級，這裡採用的是 SAC (瑞士阿爾卑斯俱樂部) 的山區健行和高山健行分級。</string>
-    <string name="quest_healthcare_speciality_switch_ui">切換使用者介面</string>
     <string name="default_disabled_msg_poi_bike">此『任務』會將自行車相關的興趣點（POI）顯示為紫色點。點擊該點即可查看詳情及其他答案。</string>
     <string name="quest_trail_visibility_good">良好的</string>
     <string name="quest_generalRef_disabled_msg">這種任務類型預設是停用的，因為路標指示的內容因地區和營運商而異。你可能需要根據你所在的區域調整元素選擇（例如，移除路燈，新增地圖，只選擇帶有 hiking=yes 標籤的指示牌等等）</string>
@@ -420,7 +418,6 @@
     <string name="quest_buildingType_cowshed">牛棚</string>
     <string name="quest_surface_value_stepping_stones">踏腳石</string>
     <string name="quest_destination_all_lanes_button">所有的\n車道</string>
-    <string name="quest_healthcare_speciality_add_more">新增另一個專科</string>
     <string name="quest_crossing_type_signals_controlled_zebra">號誌跟枕木紋線</string>
     <string name="quest_crossing_type_zebra">枕木紋標線</string>
     <string name="quest_wheelchair_description_answer">新增描述</string>

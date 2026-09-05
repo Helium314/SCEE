@@ -375,9 +375,6 @@
     <string name="quest_brewery_add_more">További sörfőzde hozzáadása</string>
     <string name="quest_brewery_is_various">Számos sörmárkát felszolgálnak</string>
     <string name="quest_service_building_operator_title">Ki az üzemeltetője ennek a kiszolgáló épületnek?</string>
-    <string name="quest_healthcare_speciality_title">Mi a hely egészségügyi szakterülete?</string>
-    <string name="quest_healthcare_speciality_switch_ui">Felhasználói felület váltása</string>
-    <string name="quest_healthcare_speciality_add_more">További szakterület hozzáadása</string>
     <string name="quest_tree_genus_title">Milyen nemzetséghez vagy fajhoz tartozik ez a fa?</string>
     <string name="quest_tree_error">Nem ismerhető fel. Próbáld megadni a fa nemzetségét, faját vagy angol nevét. Ha nem sikerül, nyithatsz jegyzetet.</string>
     <string name="default_disabled_msg_ee">Az SCEE-ben hozzáadott kérdések alapértelmezés szerint mind ki vannak kapcsolva, mivel nem mindig lehet rájuk válaszolni, és előfordulhat, hogy a téma és a címkézés ismeretét igénylik.</string>
@@ -492,7 +489,6 @@
     <string name="quest_caravanSiteType_title">Hol található ez a lakókocsipark?</string>
     <string name="default_disabled_msg_caravanSiteType">Ez a kérdéstípus alapértelmezés szerint le van tiltva, mivel a címke osztályozása és használata nem általános.</string>
     <string name="quest_cuisine_title">Milyen konyhája van ennek a helynek? Használd a javasolt OSM címkéket!</string>
-    <string name="quest_healthcare_speciality_disabled_message">Ez a kérdés a healthcare:speciality címkék ismeretét igényli. Ezen ismeretek nélkül a kérdés megválaszolása nagyon nehéz lehet.</string>
     <string name="quest_footway_width_title">Milyen széles itt a gyalogút?</string>
     <string name="quest_tree_disabled_msg">Ez a kérdés alapértelmezés szerint ki van kapcsolva, mert nem könnyű megválaszolni. A fajokat/nemzetségeket a javaslatok közül kell kiválasztani, amelyek a leggyakrabban használt értékekből származnak. Megadhatsz saját fajlista javaslatokat kereshető névvel, ha az adatbeállítások menüben megadsz egy &lt;faj&gt; (&lt;név&gt;) formátumú fájlt.</string>
     <string name="quest_railwayPlatformRef_message">Melyik címkét használjuk a peronról elérhető vágányokhoz? Az OSM wiki szerint a local_ref a javasolt, de a gyakorlatban a ref a gyakrabban használt.</string>

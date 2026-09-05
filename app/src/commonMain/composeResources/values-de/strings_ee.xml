@@ -30,7 +30,6 @@
     <string name="quest_maxspeed_conditional">Hängt davon ab, ob…</string>
     <string name="pref_delete_old_data_after_summary">%1$d Tagen</string>
     <string name="quest_monitor_active_request">Aktives Anfordern von Standorten erhöht den Akkuverbrauch. Wenn keine aktive Standortanforderung erfolgt, werden die von anderen Apps angeforderten Standorte weiterhin verwendet.</string>
-    <string name="quest_healthcare_speciality_title">Welche medizinischen Fachrichtungen gibt es an diesem Ort\?</string>
     <string name="quest_material_metal">Metall</string>
     <string name="tag_editor_last_edited">Zuletzt bearbeitet: %1$s</string>
     <string name="quest_monitor_net">Aktiv nach Netzwerkstandorten fragen\?</string>
@@ -108,7 +107,6 @@
     <string name="default_disabled_msg_poi_recycling">Diese „Aufgabe“ zeigt POIs zum Thema Recycling und Müll als grüne Punkte an. Ein Klick auf den Punkt zeigt Details und weitere Antworten an.</string>
     <string name="default_disabled_msg_ee">In SCEE hinzugefügte Aufgaben sind standardmäßig immer deaktiviert, da sie nicht immer beantwortet werden können und möglicherweise Kenntnisse des Themas und der Kennzeichnung erfordern.</string>
     <string name="quest_settings_resurvey_all_opening_hours_yes">Alle</string>
-    <string name="quest_healthcare_speciality_add_more">Weitere Spezialität hinzufügen</string>
     <string name="pref_delete_old_data_after">Löschen von alten Daten nach</string>
     <string name="quest_crossing_type_signals_controlled_zebra">Ampel und Zebrastreifen</string>
     <string name="access_time_limit">Zeit</string>
@@ -147,7 +145,6 @@
     <string name="quest_buildingType_barn">Scheune</string>
     <string name="quest_buildingType_digester">Faulbehälter (Bioreaktor)</string>
     <string name="pref_tree_custom_quest_summary">Siehe Meldung beim Aktivieren der Aufgabe für Details</string>
-    <string name="quest_healthcare_speciality_switch_ui">Design wechseln</string>
     <string name="quest_osmose_remove_checked">Entfernen</string>
     <string name="action_scee_quests">Nur SCEE-Aufgaben anzeigen</string>
     <string name="quest_buildingType_elevator">Aufzug</string>
@@ -219,7 +216,6 @@
     <string name="pref_tile_source_hide_labels">Labels ausblenden</string>
     <string name="quest_monitor_found">%1$d Aufgaben in der Nähe, am nächsten:</string>
     <string name="quest_wheelchair_description_title">Fülle mindestens eine Sprache aus</string>
-    <string name="quest_healthcare_speciality_disabled_message">Diese Aufgabe erfordert Kenntnisse über die healthcare:speciality-Tags. Ohne dieses Wissen kann die Aufgabe sehr schwierig zu lösen sein.</string>
     <string name="quest_private">Es ist privat</string>
     <string name="outside_downloaded_area_warning">Diese Stelle befindet sich außerhalb des heruntergeladenen Bereichs. Fortfahren\?</string>
     <string name="quest_settings_level_more">Ärzte und viele weitere Knoten in mehrstöckigen Gebäuden</string>

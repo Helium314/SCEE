@@ -178,14 +178,10 @@
     <string name="quest_contact_website">¿Cuál es el sitio web de este lugar\?</string>
     <string name="quest_cuisine_title">¿Qué cocina tiene este lugar\? ¡Usa las etiquetas OSM sugeridas!</string>
     <string name="quest_cuisine_add_more">Añadir otra cocina</string>
-    <string name="quest_healthcare_speciality_title">¿Qué especialidades médicas tiene este lugar\?</string>
-    <string name="quest_healthcare_speciality_add_more">Añadir otra especialidad</string>
     <string name="quest_tree_genus_title">¿Cuál es el género o especie de este árbol\?</string>
     <string name="default_disabled_msg_ee">Las tareas agregadas en SCEE siempre están deshabilitadas de forma predeterminada, ya que es posible que no siempre se puedan responder y pueden requerir conocimiento del tema y etiquetado.</string>
     <string name="quest_railwayPlatformRef_title">¿Qué número de pista está aquí\?</string>
     <string name="quest_roofColour_title">¿Qué color general tiene el tejado de este edificio\?</string>
-    <string name="quest_healthcare_speciality_switch_ui">Cambiar interfaz de usuario</string>
-    <string name="quest_healthcare_speciality_disabled_message">Esta tarea requiere conocimiento sobre las etiquetas de healthcare:speciality. Sin este conocimiento, la tarea puede ser muy difícil de responder.</string>
     <string name="quest_buildingType_elevator">Ascensor</string>
     <string name="quest_crossing_type_zebra">Cebra</string>
     <string name="quest_destination_all_lanes_button">Todo

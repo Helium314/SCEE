@@ -213,7 +213,6 @@
     <string name="quest_brewery_add_more">Tilføj endnu et bryggeri</string>
     <string name="quest_contact_phone">Hvad er telefonnummeret til dette sted?</string>
     <string name="quest_cuisine_title">Hvilket slags køkken har dette sted? Brug de foreslåede OSM-tags!</string>
-    <string name="quest_healthcare_speciality_switch_ui">Skift brugergrænseflade</string>
     <string name="tag_editor_last_edited">Senest redigeret: %1$s</string>
     <string name="quest_guidepost_sports_title">Hvilken sport er denne vejviser beregnet til?</string>
     <string name="quest_guidepost_sports_note">Hvis der er noget, der ikke er dækket af de anførte funktioner/faciliteter, bedes du skrive en bemærkning i stedet.</string>
@@ -298,7 +297,6 @@
     <string name="quest_viaFerrataScale_five_description">Lang, vedvarende krævende og meget anstrengende. Udsat terræn må kun have kabler af sikkerhedshensyn, men de er forbeholdt steder, som ellers ville være umulige at krydse. For erfarne klatrere.</string>
     <string name="quest_viaFerrataScale_six">Grad 6/K6/F - ekstremt svær</string>
     <string name="quest_service_building_operator_title">Hvem er operatør for denne servicebygning?</string>
-    <string name="quest_healthcare_speciality_add_more">Tilføj en anden specialitet</string>
     <string name="quest_railwayPlatformRef_title">Hvilket spornummer er der her?</string>
     <string name="quest_railwayPlatformRef_abc">ABC</string>
     <string name="quest_disabled_msg_railway_platform_ref">Bemærk, at det ikke er helt klart i wikien, hvilket tag der er bedst at bruge, og at det derfor er op til brugeren. Vælg mellem 'ref' (standard) og 'local_ref' i opgaveindstillingerne.
@@ -488,7 +486,6 @@
     <string name="quest_outdoor_seating_name_title">Hvilken slags udendørs siddepladser har dette sted?</string>
     <string name="quest_shelter_type_disabled_msg">Denne opgave er deaktiveret som standard, fordi den ikke er let at besvare. Sheltertypen skal vælges ud fra forslag, som er taget fra de mest brugte værdier, og disse er ofte ikke lette at skelne fra hinanden.</string>
     <string name="quest_mapType_scheme_description">Et skitseret kort med kun vigtige veje og interessepunkter. Vinkler, afstande osv. er kun illustrative, ikke nøjagtige. Bruges f.eks. af rejsebureauer til at forklare deres ture.</string>
-    <string name="quest_healthcare_speciality_disabled_message">Denne opgave kræver viden om healthcare:speciality-tags. Uden denne viden kan opgaven være meget vanskelig at besvare.</string>
     <string name="quest_railwayPlatformRef_message">Hvilket tag skal man bruge til spor, der er tilgængelige fra denne platform? Ifølge OSM-wiki kan local_ref være at foretrække, men den faktiske brug er for det meste ref.</string>
     <string name="quest_street_cabinet_traffic_monitoring">Trafikovervågning</string>
     <string name="quest_seating_parklet">Ved kantstenen, eller hvor der plejede at være parkering</string>
@@ -497,7 +494,6 @@
     <string name="quest_tree_disabled_msg">Denne opgave er deaktiveret som standard, fordi den ikke er let at besvare. Art/slægt skal vælges fra forslag, som er taget fra de mest brugte værdier. Du kan give forslag fra din egen liste over arter med søgbare navne ved at angive en fil i menuen for datahåndteringsindstillinger, der indeholder &lt;species&gt; (&lt;name&gt;).</string>
     <string name="quest_building_entrance_parking">Indgang til parkering</string>
     <string name="quest_mapSize_landscape">Et helt landskab, mest brugt på retningsskiver</string>
-    <string name="quest_healthcare_speciality_title">Hvilke sundhedsspecialer har dette sted?</string>
     <string name="quest_tree_error">Ikke genkendt. Prøv at indtaste træets slægt, art eller engelske navn. Ellers kan du overveje at efterlade en bemærkning.</string>
     <string name="quest_piste_difficulty_advanced">Øvet</string>
     <string name="tutorial_info_fork_message"><b>SCEE</b> \n \n Dette er en modificeret version af StreetComplete. Den er beregnet til erfarne brugere med avanceret viden om OSM. Den giver dig mere kontrol, men også et større <i>ansvar</i>. \n Det gælder især muligheden for at redigere rå tags og slette punkter, men også for ændring af elementvalg til opgaver. Opgaver tilføjet i SCEE <i>kan måske ikke besvares</i> i alle tilfælde og er deaktiveret som standard. Skjul dem, hvis du ikke kan svare på dem, og <i>lav ikke en masse bemærkninger</i>. \n \n Som udgangspunkt er SCEE konfigureret til at opføre sig meget ligesom StreetComplete.</string>

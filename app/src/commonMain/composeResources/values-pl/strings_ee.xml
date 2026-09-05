@@ -119,7 +119,6 @@
     <string name="default_disabled_msg_roof">Ten typ zadania jest domyślnie wyłączony, ponieważ dachy często nie są dobrze widoczne z ulicy. Ten typ zadania jest również dość czasochłonny; w większości przypadków łatwiej i wydajniej jest go zmapować na podstawie zdjęć lotniczych w domu.</string>
     <string name="default_disabled_msg_viaFerrataScale">Ten typ zadania jest domyślnie wyłączony, ponieważ ocena tras via ferrata jest wysoce subiektywna i wymaga specjalistycznej wiedzy z zakresu stosowanego systemu ocen oraz zaawansowanej wspinaczki na via ferrata. Ponieważ nie ma ogólnoświatowej skali trudności via ferrata, w tym przypadku stosuje się niemiecką skalę Hüslera.</string>
     <string name="default_disabled_msg_caravanSiteType">Ten typ zadania jest domyślnie wyłączony, ponieważ klasyfikacja i użycie znacznika nie są powszechnie stosowane.</string>
-    <string name="quest_healthcare_speciality_disabled_message">To zadanie wymaga znajomości znaczników \"opieka zdrowotna:specjalizacja\". Bez tej wiedzy odpowiedź na postawione zadanie może być bardzo trudna.</string>
     <string name="quest_parking_capacity_hint">Dotyczy to również miejsc specjalnych, np. dla osób niepełnosprawnych, rodzin, do ładowania itp. Ukryj zadanie, jeśli miejsca parkingowe nie są oznaczone i nie można ich zliczyć</string>
     <string name="quest_parking_capacity_disabled_title">Ile jest tutaj miejsc parkingowych dla niepełnosprawnych?</string>
     <string name="quest_parking_capacity_disabled_answer_yes">Są, ale nie jest pewna ich liczba</string>

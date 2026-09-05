@@ -291,8 +291,6 @@
     <string name="quest_mapSize_site">例えば公園や動物園のような、特定の所在地や場所</string>
     <string name="quest_contact_website">この場所のウェブサイトは何ですか?</string>
     <string name="quest_cuisine_add_more">他の料理を追加</string>
-    <string name="quest_healthcare_speciality_add_more">他の専門家を追加</string>
-    <string name="quest_healthcare_speciality_title">この場所にはどのようなヘルスケアの専門家がいますか?</string>
     <string name="quest_tree_genus_title">この樹木の属または種は何ですか?</string>
     <string name="quest_tree_error">識別できません。樹木の属、種または英名の入力を試してください。不可能ならば、メモを残すことを検討してください。</string>
     <string name="default_disabled_msg_ee">SCEE内に追加されたクエストは、初期設定では常に無効になっています。これは、それらが常に回答可能であるとは限らず、トピックやタグ付けに関する知識を必要とする場合があるためです。</string>
@@ -342,7 +340,6 @@
     <string name="quest_cuisine_title">この場所にはどんな料理がありますか?　提案されたOSMタグを使用してください!</string>
     <string name="quest_guidepostEle_title">ここの標高はいくつですか?</string>
     <string name="quest_guidepostEle_hint">GPSの高さは通常、不正確すぎて正しい高度照会システムで提供されないため、使用しないでください。</string>
-    <string name="quest_healthcare_speciality_disabled_message">このクエストは healthcare:speciality タグについての知識が必要です。この知識をご存知でない場合は、クエストは酷く難題になる可能性があります。</string>
     <string name="default_disabled_msg_trail_visibility">トレイル(ハイキング道)の見つけやすさの評価は非常に主観的であり、使用される等級付け体系の専門知識を必要とするため、初期設定ではこのクエスト種別は無効化されています。</string>
     <string name="quest_guidepostName_hint">この地図または道標やガイドポストの記された(場所)の名前です。ここには参照番号を入力しないでください。</string>
     <string name="quest_tree_disabled_msg">回答が容易ではないため、初期設定ではこのクエストは無効化されています。種と属は、最もよく使用される値から取得される提案から選択する必要があります。検索可能な名前を持つ種の独自の一覧から候補を提供するには、 &lt;species&gt; (&lt;name&gt;) を含むファイルをデータ管理設定メニュー内に提供します。</string>
@@ -386,7 +383,6 @@
     <string name="quest_brewery_is_various">ここでは多種のビールのブランドが提供されます</string>
     <string name="quest_brewery_is_not_available">ここではビールは販売されていません</string>
     <string name="quest_service_building_operator_title">仕事用のこの建物の管理者は誰ですか?</string>
-    <string name="quest_healthcare_speciality_switch_ui">インターフェースを切り替え</string>
     <string name="quest_railwayPlatformRef_title">ここの線路番号は何ですか?</string>
     <string name="quest_destination_title">この道の標識はどの行き先を示していますか?</string>
     <string name="quest_destination_add_more">他の行き先を追加</string>

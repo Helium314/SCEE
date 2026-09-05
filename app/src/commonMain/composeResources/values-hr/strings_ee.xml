@@ -418,9 +418,6 @@
     <string name="quest_brewery_is_various">Ovdje se poslužuju mnoge marke piva</string>
     <string name="quest_brewery_is_not_available">Ovdje se ne prodaje pivo</string>
     <string name="quest_service_building_operator_title">Tko je operater ove servisne zgrade?</string>
-    <string name="quest_healthcare_speciality_title">Koje specijalnosti zdravstvene zaštite nudi ovo mjesto?</string>
-    <string name="quest_healthcare_speciality_add_more">Dodaj drugu specijalnost</string>
-    <string name="quest_healthcare_speciality_disabled_message">Ovaj zadatak zahtijeva znanje o oznakama zdravstvene zaštite:specijalnost. Bez tog znanja može biti vrlo teško odgovoriti na zadatak.</string>
     <string name="quest_tree_genus_title">Koji je rod ili vrsta ovog drveta?</string>
     <string name="quest_tree_error">Nije prepoznato. Pokušaj unijeti rod, vrstu ili engleski naziv stabla. U suprotnom razmisli o ostavljanju poruke.</string>
     <string name="quest_tree_disabled_msg">Ovaj zadatak je prema zadanim postavkama onemogućen jer nije lako odgovoriti. Vrsta/rob se mora izabrati iz prijedloga, koji su preuzeti iz najčešće korištenih vrijednosti. Možeš dati prijedloge s vlastitog popisa vrsta s nazivima koji se mogu pretraživati pružanjem datoteke u izborniku postavki upravljanja podacima, koja sadrži&lt;species&gt; (&lt;name&gt; ).</string>
@@ -443,7 +440,6 @@
     <string name="quest_buildingType_sty">Svinjac</string>
     <string name="quest_buildingType_sports_hall">Sportska dvorana</string>
     <string name="quest_buildingType_riding_hall">Dvorana za jahanje</string>
-    <string name="quest_healthcare_speciality_switch_ui">Promijeni UI</string>
     <string name="quest_surface_value_chipseal">Šljunčani asfalt</string>
     <string name="quest_buildingType_digester">Digester (bioreaktor)</string>
     <string name="quest_buildingType_transformer_tower">Transformatorski toranj</string>

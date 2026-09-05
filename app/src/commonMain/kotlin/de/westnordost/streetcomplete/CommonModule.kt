@@ -236,6 +236,8 @@ val commonModule = module {
 
     //region basic configuration
 
+    factory { ApplicationInitializer(get(), get(), get(), get(), get(), get(), get()) }
+
     single { HttpClient {
         defaultRequest {
             userAgent(ApplicationConstants.USER_AGENT)
@@ -610,7 +612,7 @@ val commonModule = module {
     viewModel<MainViewModel> {
         MainViewModelImpl(
             get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
-            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
 

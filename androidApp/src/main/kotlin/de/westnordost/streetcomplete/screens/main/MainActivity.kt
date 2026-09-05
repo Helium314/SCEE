@@ -44,6 +44,7 @@ import de.westnordost.streetcomplete.ApplicationConstants
 import de.westnordost.streetcomplete.Prefs
 import de.westnordost.streetcomplete.R
 import de.westnordost.streetcomplete.data.FeedsUpdater
+import de.westnordost.streetcomplete.data.PeriodicCleaner
 import de.westnordost.streetcomplete.data.download.tiles.asBoundingBoxOfEnclosingTiles
 import de.westnordost.streetcomplete.data.edithistory.EditKey
 import de.westnordost.streetcomplete.data.externalsource.ExternalSourceQuest
@@ -175,9 +176,9 @@ class MainActivity :
     private val mapDataWithEditsSource: MapDataWithEditsSource by inject()
     private val feedsUpdater: FeedsUpdater by inject()
     private val featureDictionary: Lazy<FeatureDictionary> by inject(named("FeatureDictionaryLazy"))
-    private val mapAppLauncher: MapAppLauncher by inject()
     private val locationProvider: LocationProvider by inject()
     private val systemSettingsLauncher: SystemSettingsLauncher by inject()
+    private val periodicCleaner: PeriodicCleaner by inject()
     private val countryBoundaries: Lazy<CountryBoundaries> by inject(named("CountryBoundariesLazy"))
     private val customQuestList: CustomQuestList by inject()
 
@@ -247,10 +248,17 @@ class MainActivity :
         }
 
         lifecycle.addObserver(autoSyncer)
+
         feedsUpdater.updateAtMostDaily()
+        // this must be enqueued once the UI is started, i.e. not in headless mode. This is why
+        // it is done here, rather than in AppInitializer. Reason is that
+        // AppInitializer.initialize() is also executed when a background job is run. But we don't
+        // want to enqueue the cleanup job again while running the cleanup job, but only once after
+        // the user actually opened the app!
+        periodicCleaner.enqueue()
 
         compose.setContent { AppTheme {
-            val isMapAppLaunchAvailable = remember { mapAppLauncher.isAvailable() }
+            val mapAppLauncher = rememberMapAppLauncher()
             var lastQuestSolved by remember { mutableStateOf<QuestSolvedEvent?>(null) }
 
             windowInfo = LocalWindowInfo.current
@@ -319,7 +327,7 @@ class MainActivity :
                 onDismissRequest = { showMapContextMenu.value = false },
                 onClickCreateNote = { lastLongPressPosition?.let { onClickCreateNote(it) } },
                 onClickCreateTrack = { onClickCreateTrack() },
-                isOpenLocationAvailable = isMapAppLaunchAvailable,
+                isOpenLocationAvailable = mapAppLauncher.isAvailable(),
                 onClickOpenLocation = {
                     if (lastLongPressPosition != null) {
                         mapAppLauncher.openAt(

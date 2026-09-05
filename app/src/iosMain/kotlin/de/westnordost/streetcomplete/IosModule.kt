@@ -6,12 +6,16 @@ import com.russhwolf.settings.ObservableSettings
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.streetcomplete.data.Database
 import de.westnordost.streetcomplete.data.DatabaseImpl
+import de.westnordost.streetcomplete.data.IosPeriodicCleaner
+import de.westnordost.streetcomplete.data.PeriodicCleaner
 import de.westnordost.streetcomplete.data.StreetCompleteDatabaseConfigurator
 import de.westnordost.streetcomplete.data.connection.ActiveNetworkConnection
 import de.westnordost.streetcomplete.data.connection.IosActiveNetworkConnection
 import de.westnordost.streetcomplete.data.download.DownloadController
 import de.westnordost.streetcomplete.data.download.IosDownloadController
 import de.westnordost.streetcomplete.data.initialize
+import de.westnordost.streetcomplete.data.maptiles.IosMapTilesDownloader
+import de.westnordost.streetcomplete.data.maptiles.MapTilesDownloader
 import de.westnordost.streetcomplete.data.osm.edits.upload.changesets.ChangesetAutoCloser
 import de.westnordost.streetcomplete.data.osm.edits.upload.changesets.IosChangesetAutoCloser
 import de.westnordost.streetcomplete.data.upload.IosUploadController
@@ -34,6 +38,7 @@ import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.koin.dsl.onClose
 import org.maplibre.compose.location.IosLocationProvider
 import org.maplibre.compose.location.IosSystemSettingsLauncher
 import org.maplibre.compose.location.LocationProvider
@@ -85,7 +90,7 @@ val iosModule = module {
         val databaseFilePath = databaseUrl.path!!
         val databaseConnection = BundledSQLiteDriver().open(databaseFilePath)
         DatabaseImpl(databaseConnection).apply { initialize(StreetCompleteDatabaseConfigurator) }
-    }
+    } onClose { it?.close() }
 
     // avatars cache dir
 
@@ -114,11 +119,6 @@ val iosModule = module {
     factory<LocationProvider> { IosLocationProvider() }
     factory<SystemSettingsLauncher> { IosSystemSettingsLauncher() }
 
-    // launch apps
-
-    factory<MapAppLauncher> { IosMapAppLauncher }
-    factory<EmailAppLauncher> { IosEmailAppLauncher }
-
     // settings
 
     single<ObservableSettings> { NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults) }
@@ -138,4 +138,8 @@ val iosModule = module {
     single<DownloadController> { IosDownloadController() }
 
     factory<ChangesetAutoCloser> { IosChangesetAutoCloser() }
+
+    factory<PeriodicCleaner> { IosPeriodicCleaner() }
+
+    factory<MapTilesDownloader> { IosMapTilesDownloader() }
 }

@@ -54,6 +54,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -64,7 +65,6 @@ import kotlin.reflect.KClass
 class MainViewModelImpl(
     private val crashReportHolder: CrashReportHolder,
     private val errorReportBuilder: ErrorReportBuilder,
-    private val emailAppLauncher: EmailAppLauncher,
     private val urlConfigController: UrlConfigController,
     private val editTypePresetsSource: EditTypePresetsSource,
     private val uploadController: UploadController,
@@ -107,23 +107,8 @@ class MainViewModelImpl(
         awaitClose { uploadProgressSource.removeListener(listener) }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-    override fun isSendErrorReportAvailable(): Boolean =
-        emailAppLauncher.isAvailable()
-
-    override fun sendErrorReport(error: Exception) {
-        launch {
-            val report = withContext(Dispatchers.IO) { errorReportBuilder.createErrorReport(error) }
-            sendErrorReport(report)
-        }
-    }
-
-    override fun sendErrorReport(errorReport: String) {
-        emailAppLauncher.compose(
-            email = ApplicationConstants.ERROR_REPORTS_EMAIL,
-            subject = ApplicationConstants.USER_AGENT + " " + "Error Report",
-            body = "Describe how to reproduce it here:\n\n\n\n$errorReport"
-        )
-    }
+    override suspend fun createErrorReport(error: Exception): String =
+        withContext(Dispatchers.IO) { errorReportBuilder.createErrorReport(error) }
 
     /* start parameters */
     override fun setUri(uri: String) {
@@ -327,7 +312,7 @@ class MainViewModelImpl(
     override val isUserInitiatedDownloadInProgress: Boolean
         get() = downloadProgressSource.isUserInitiatedDownloadInProgress
 
-    override var isLoggedIn: StateFlow<Boolean> = callbackFlow {
+    override val isLoggedIn: StateFlow<Boolean> = callbackFlow {
         send(userLoginSource.isLoggedIn)
         val listener = object : UserLoginSource.Listener {
             override fun onLoggedIn() { trySend(true) }
@@ -337,7 +322,12 @@ class MainViewModelImpl(
         awaitClose { userLoginSource.removeListener(listener) }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-    override val isConnected: Boolean get() = activeNetworkConnection.capabilities?.hasInternet == true
+    private val isConnectedState: StateFlow<Boolean> =
+        activeNetworkConnection.capabilities
+            .map { it?.hasInternet == true }
+            .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
+    override val isConnected: Boolean get() = isConnectedState.value
 
     override fun upload() {
         if (isLoggedIn.value || (ApplicationConstants.DEBUG && !isConnected)) {
@@ -361,7 +351,7 @@ class MainViewModelImpl(
 
     private suspend fun ensureLoggedIn() {
         if (
-            activeNetworkConnection.capabilities?.hasInternet == true &&
+            isConnected &&
             !userLoginSource.isLoggedIn &&
             prefs.autosync != Autosync.OFF &&
             // new users should not be immediately pestered to login after each change (#1446)

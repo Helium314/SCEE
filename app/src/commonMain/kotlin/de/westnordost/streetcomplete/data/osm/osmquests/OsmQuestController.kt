@@ -31,6 +31,7 @@ import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import de.westnordost.streetcomplete.util.math.enlargedBy
 import kotlinx.atomicfu.locks.ReentrantLock
 import kotlinx.atomicfu.locks.withLock
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +54,7 @@ class OsmQuestController(
 
     private val listeners = Listeners<OsmQuestSource.Listener>()
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default + CoroutineName("OsmQuestController"))
 
     private val allQuestTypes get() = questTypeRegistry.filterIsInstance<OsmElementQuestType<*>>()
         .sortedBy { getAnalyzePriority(it) }

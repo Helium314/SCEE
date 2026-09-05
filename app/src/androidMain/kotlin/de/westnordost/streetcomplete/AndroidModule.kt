@@ -6,9 +6,11 @@ import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.SharedPreferencesSettings
 import de.westnordost.osmfeatures.FeatureDictionary
 import de.westnordost.osmfeatures.create
+import de.westnordost.streetcomplete.data.AndroidPeriodicCleaner
 import de.westnordost.streetcomplete.data.CleanerWorker
 import de.westnordost.streetcomplete.data.Database
 import de.westnordost.streetcomplete.data.DatabaseImpl
+import de.westnordost.streetcomplete.data.PeriodicCleaner
 import de.westnordost.streetcomplete.data.StreetCompleteDatabaseConfigurator
 import de.westnordost.streetcomplete.data.connection.ActiveNetworkConnection
 import de.westnordost.streetcomplete.data.connection.AndroidActiveNetworkConnection
@@ -43,6 +45,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.dsl.worker
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.koin.dsl.onClose
 import org.maplibre.compose.location.AndroidLocationProvider
 import org.maplibre.compose.location.AndroidSystemSettingsLauncher
 import org.maplibre.compose.location.LocationProvider
@@ -78,7 +81,7 @@ val androidModule = module {
         val databaseFilePath = get<Context>().getDatabasePath(ApplicationConstants.DATABASE_NAME).path
         val databaseConnection = BundledSQLiteDriver().open(databaseFilePath)
         DatabaseImpl(databaseConnection).apply { initialize(StreetCompleteDatabaseConfigurator) }
-    }
+    } onClose { it?.close() }
 
     // avatars cache dir
 
@@ -98,11 +101,6 @@ val androidModule = module {
 
     factory<LocationProvider> { AndroidLocationProvider(get()) }
     factory<SystemSettingsLauncher> { AndroidSystemSettingsLauncher(get()) }
-
-    // launch apps
-
-    factory<MapAppLauncher> { AndroidMapAppLauncher(get()) }
-    factory<EmailAppLauncher> { AndroidEmailAppLauncher(get()) }
 
     // settings
 
@@ -127,6 +125,7 @@ val androidModule = module {
     factory<ChangesetAutoCloser> { AndroidChangesetAutoCloser(androidContext()) }
     worker { ChangesetAutoCloserWorker(get(), androidContext(), get()) }
 
+    factory<PeriodicCleaner> { AndroidPeriodicCleaner(androidContext()) }
     worker { CleanerWorker(get(), get(), get()) }
 
     factory<MapTilesDownloader> { MapTilesDownloaderAndroid(androidContext()) }

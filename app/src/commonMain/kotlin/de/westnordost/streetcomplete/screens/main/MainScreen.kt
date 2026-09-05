@@ -129,6 +129,8 @@ fun MainScreen(
     val shownBottomSheet by mainBottomSheetViewModel.shownBottomSheet.collectAsState()
     val geometryOffsetInWindow by mainBottomSheetViewModel.geometryOffsetInWindow.collectAsState()
 
+    val emailAppLauncher = rememberEmailAppLauncher()
+
     val showOverlaySelector by viewModel.showOverlaySelector.collectAsState()
     val nearbyQuests by viewModel.nearbyQuests.collectAsState()
     val showQuickSettings by viewModel.showQuickSettings.collectAsState()
@@ -161,19 +163,22 @@ fun MainScreen(
         }
     }
 
-    fun sendErrorReport(error: Exception) {
-        if (!viewModel.isSendErrorReportAvailable()) {
+    fun sendErrorReport(errorReport: String) {
+        if (!emailAppLauncher.isAvailable()) {
             showToast = Toast.NoEmailClient
         } else {
-            viewModel.sendErrorReport(error)
+            emailAppLauncher.compose(
+                email = ApplicationConstants.ERROR_REPORTS_EMAIL,
+                subject = ApplicationConstants.USER_AGENT + " " + "Error Report",
+                body = "Describe how to reproduce it here:\n\n\n\n$errorReport"
+            )
         }
     }
 
-    fun sendErrorReport(report: String) {
-        if (!viewModel.isSendErrorReportAvailable()) {
-            showToast = Toast.NoEmailClient
-        } else {
-            viewModel.sendErrorReport(report)
+    fun sendErrorReport(error: Exception) {
+        scope.launch {
+            val report = viewModel.createErrorReport(error)
+            sendErrorReport(report)
         }
     }
 

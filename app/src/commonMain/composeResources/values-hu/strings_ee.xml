@@ -85,7 +85,7 @@
     <string name="pref_delete_old_data_after_summary">%1$d nap</string>
     <string name="pref_custom_title">Egyéni kérdésfájl betöltése</string>
     <string name="pref_tile_source_title">Műholdkép/légi fotó csempeforrása</string>
-    <string name="pref_tile_source_message">A csempe URL-jének tartalmaznia kell az {x}, {y} és {z} behelyettesítendő kódokat</string>
+    <string name="pref_tile_source_message">A csempeforrás URL-jének tartalmaznia kell a {x}, {y} és a {z} vagy a {zoom} paramétert. A WMS-forrásnak támogatnia kell az EPSG:3857-et, és az URL-nek tartalmaznia kell a {bbox-epsg-3857}, vagy a {bbox} és a {proj} paramétereket egyaránt.</string>
     <string name="pref_tile_source_hide_labels">Címkék elrejtése</string>
     <string name="pref_update_local_statistics">Statisztikák frissítése feltöltéskor</string>
     <string name="pref_update_local_statistics_summary">A letiltás felgyorsítja a feltöltést de megszünteti a jutalomüzeneteket</string>
@@ -179,7 +179,7 @@
     <string name="pref_caps_word_name_input">Szavak nagybetűsítése nevek bevitelekor</string>
     <string name="import_presets_overlays_message">Hozzáadod az importáltakat, vagy cseréljük le a meglévőket? Ha a cserét választod, az összes meglévő el lesz távolítva.</string>
     <string name="export_warning_db_version">Figyelem: az adatbázis verziója ismeretlen, előfordulhat, hogy az importálás nem működik. Frissítsd az alkalmazást.</string>
-    <string name="pref_location_interval_title">GPS-pozíció frissítési időköz</string>
+    <string name="pref_location_interval_title">GPS-pozíció frissítési időköze</string>
     <string name="create_poi">POI hozzáadása</string>
     <string name="pref_quest_monitor_download">Töltsön le adatokat, ha szükséges? Ez jelentősen fogyaszthatja az adatforgalmat és az akkumulátort, ezért az Android megakadályozhatja akkumulátorkímélés céljából.</string>
     <string name="resurvey_intervals_even_less_often">Kérdezzen rá még ritkábban</string>
@@ -244,7 +244,7 @@
     <string name="default_disabled_msg_poi_bike">Ez a „kérdés” lila pöttyel mutatja a kerékpározáshoz kötődő POI-kat. Kattints a pöttyre a részletek és egyéb válaszok megjelenítéséhez.</string>
     <string name="quest_poi_business_title">POI: Üzlet</string>
     <string name="quest_poi_camera_title">POI: Kamera</string>
-    <string name="default_disabled_msg_poi_camera">Ez a „kérdés” rózsaszín pöttyel mutatja a térfigyelő kamera típusú POI-kat. Kattints a pöttyre a részletek és egyéb válaszok megjelenítéséhez.</string>
+    <string name="default_disabled_msg_poi_camera">Ez a kérdés rózsaszín pöttyel mutatja a térfigyelő kamera típusú elemeket. Kattints a pöttyre a részletek és egyéb válaszok megjelenítéséhez.</string>
     <string name="quest_poi_seating_title">POI: Ülőhely</string>
     <string name="quest_poi_machine_title">POI: Gép</string>
     <string name="quest_poi_has_atm_title">POI: Van ATM</string>
@@ -610,7 +610,7 @@
     <string name="quest_lampMount_ceiling">Mennyezet</string>
     <string name="quest_postOffice_postPartner_hint">A post_partner címkét még akkor is gyakran használják a postai ügyfélszolgálati pult pontos helyének megjelölésére, ha a posta már fel van véve amenity=post_office címkével.</string>
     <string name="quest_onewayBicycle_title">Ez az út egyirányú kerékpárosoknak? Melyik irányba?</string>
-    <string name="quest_toilets_disposal_title">Milyen típusú WC-szennyvízelvezetést használnak itt?</string>
+    <string name="quest_toilets_disposal_title">Milyen szennyvízelvezetése van a WC-nek?</string>
     <string name="quest_toilets_disposal_flush">Vízöblítés</string>
     <string name="quest_toilets_disposal_pit">Emésztőgödör</string>
     <string name="quest_toilets_disposal_chemical">Kémiai szennyvíztisztító tartály</string>
@@ -647,4 +647,24 @@
     <string name="quest_orchard_type_plantation">Ültetvény</string>
     <string name="quest_orchard_type_meadow_orchard_description">Nagy fák, ritkásan</string>
     <string name="quest_orchard_type_plantation_description">Oszlopos fák, sűrűn ültetve (általában kereskedelmi célból)</string>
+    <string name="no_qr_code_handler">Nem található QR-kód-olvasó. Telepíts egy kompatibilis alkalmazást, például a Binary Eye-t, majd próbáld meg újra.</string>
+    <string name="quest_evse_id_scan_more">Másik EVSE ID beolvasása</string>
+    <string name="quest_evse_id_scan_unknown_value">A QR-kód nem ismerhető fel. Nyiss egy hibajegyet, és csatold a QR-kód képét, hogy beépíthessük a támogatást.</string>
+    <string name="quest_tree_denotation_title">Mi jellemzi legjobban ezt a fát? Válaszd ki az első megfelelő választ!</string>
+    <string name="quest_tree_denotation_landmark">Tájékozódási pont</string>
+    <string name="quest_tree_denotation_landmark_description">Méretéből vagy kiemelkedő elhelyezkedéséből adódóan jelentős, messziről látható, a tájékozódást segítő jellegfa</string>
+    <string name="quest_tree_denotation_natural_monument">Természeti emlék</string>
+    <string name="quest_tree_denotation_natural_monument_description">Különösen öreg, és egyedisége miatt védett</string>
+    <string name="quest_tree_denotation_agricultural">Mezőgazdasági</string>
+    <string name="quest_tree_denotation_agricultural_description">Mezőgazdasági hasznosítású, pl. egy gyümölcsfa egy gyümölcsösben</string>
+    <string name="quest_tree_denotation_park">Park</string>
+    <string name="quest_tree_denotation_park_description">Egy parkban vagy más zöldterületen (temető, iskolaudvar, …)</string>
+    <string name="quest_tree_denotation_garden">Lakóház kertje</string>
+    <string name="quest_tree_denotation_garden_description">Egy ház vagy társasház kertjében</string>
+    <string name="quest_tree_denotation_avenue">Sugárút</string>
+    <string name="quest_tree_denotation_avenue_description">Egy sugárút vagy út mentén</string>
+    <string name="quest_tree_denotation_urban">Városi terület</string>
+    <string name="quest_tree_denotation_urban_description">Településen belül</string>
+    <string name="quest_tree_denotation_natural">Természet</string>
+    <string name="quest_tree_denotation_natural_description">Lakott területen kívül</string>
 </resources>

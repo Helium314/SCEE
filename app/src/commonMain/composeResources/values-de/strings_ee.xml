@@ -676,4 +676,7 @@
     <string name="quest_tree_denotation_urban_description">Innerhalb einer Ortschaft</string>
     <string name="quest_tree_denotation_natural">Natürlich</string>
     <string name="quest_tree_denotation_natural_description">Außerhalb einer Ortschaft</string>
+    <string name="no_qr_code_handler">Es wurde kein QR-Code-Scanner gefunden. Installiere eine kompatible App wie „Binary Eye“ und versuche es erneut.</string>
+    <string name="quest_evse_id_scan_unknown_value">Der QR-Code wurde nicht erkannt. Bitte erstelle ein Ticket und füge ein Bild des QR-Codes bei, damit wir die Unterstützung hinzufügen können.</string>
+    <string name="quest_evse_id_scan_more">Eine weitere EVSE-ID scannen</string>
 </resources>

@@ -123,7 +123,7 @@
     <string name="pref_quest_monitor_download">Downloade data, hvis det er nødvendigt\? Det kan forbruge meget data og batteri, og Android kan slå det fra af batteribesparende årsager.</string>
     <string name="pref_dynamic_quest_creation_title">Opret opgaver dynamisk</string>
     <string name="pref_dynamic_quest_creation_summary">Opgaver oprettes, når det viste område indlæses. Lidt langsomt, men anvender straks ændrede opgave-indstillinger.</string>
-    <string name="pref_location_interval_title">Interval for opdatering af GPS-placering</string>
+    <string name="pref_location_interval_title">Interval for opdatering af placering</string>
     <string name="pref_interval_summary">%1$d sekunder</string>
     <string name="resurvey_intervals_even_less_often">Spørg endnu sjældnere</string>
     <string name="quest_monitor_search_radius_text">Indstil radius for søgning efter opgaver i nærheden. Bemærk, at opgaver med lidt større afstand også kan blive fundet. Steder med dårligere nøjagtighed end denne værdi ignoreres.</string>
@@ -677,4 +677,7 @@
     <string name="quest_tree_denotation_urban_description">Inde i et boligområde</string>
     <string name="quest_tree_denotation_natural">Naturlig</string>
     <string name="quest_tree_denotation_natural_description">Uden for et boligområde</string>
+    <string name="quest_evse_id_scan_more">Scan endnu et EVSE-ID</string>
+    <string name="quest_evse_id_scan_unknown_value">QR-koden genkendes ikke. Opret en fejlmelding og vedhæft et billede af QR-koden, så vi kan tilføje understøttelse.</string>
+    <string name="no_qr_code_handler">Der blev ikke fundet nogen QR-kodescanner. Installer en kompatibel app, f.eks. Binary Eye, og prøv igen.</string>
 </resources>

@@ -43,7 +43,6 @@ Acacia
 Morus
 Magnolia
 Liquidambar
-Arecaceae
 Cercis
 Vachellia
 Crataegus
@@ -89,7 +88,6 @@ Callistemon
 Melia
 Jacaranda
 Quillaja
-Pirus
 Juniperus
 Cornus
 Prosopis
@@ -105,7 +103,6 @@ Grevillea
 Diospyros
 Roystonea
 Parrotia
-Gleditschia
 Taxodium
 Sequoiadendron
 Syagrus

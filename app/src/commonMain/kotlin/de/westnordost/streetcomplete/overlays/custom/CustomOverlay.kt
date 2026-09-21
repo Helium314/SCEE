@@ -123,7 +123,7 @@ class CustomOverlay(val prefs: Preferences) : Overlay {
                 ) {
                     if (colorTags != null) {
                         Text(
-                            text = formatCustomOverlayColorTags(colorTags),
+                            text = colorTags.entries.sortedBy { it.key }.joinToString("\n") { "${it.key} = ${it.value}" },
                             modifier = Modifier.fillMaxWidth(),
                             style = MaterialTheme.typography.titleLarge,
                         )
@@ -154,10 +154,6 @@ class CustomOverlay(val prefs: Preferences) : Overlay {
         var focusKey: String? = null
     }
 }
-
-/** Display text for matching color-key tags (pre-Compose CustomOverlayForm format). */
-internal fun formatCustomOverlayColorTags(colorTags: Map<String, String>): String =
-    colorTags.entries.sortedBy { it.key }.joinToString("\n") { "${it.key} = ${it.value}" }
 
 private fun getStyle(element: Element, colorKeySelector: Regex?, dashFilter: ElementFilterExpression?, defaultMissingColor: Color): OverlayStyle {
     val color by lazy {

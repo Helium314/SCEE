@@ -93,6 +93,10 @@ class AddCrossingMarkings : OsmElementQuestType<Set<CrossingMarkings>> {
 
     override fun applyAnswerTo(answer: Set<CrossingMarkings>, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         tags["crossing:markings"] = answer.map { it.osmValue }.sorted().joinToString(";")
+        val crossing = tags["crossing"]
+        if (answer == setOf(CrossingMarkings.NO) && (crossing == "marked" || crossing == "uncontrolled")) {
+            tags["crossing"] = "unmarked"
+        }
     }
 
     override val hasQuestSettings: Boolean = true
@@ -112,7 +116,7 @@ class AddCrossingMarkings : OsmElementQuestType<Set<CrossingMarkings>> {
     private val crossingMarkingExpression = if (prefs.getBoolean(PREF_CROSSING_MARKING_EXTENDED, false)) {
         """(
             (!crossing:markings or crossing:markings = yes)
-            and crossing != zebra and crossing_ref != zebra
+            and crossing != zebra and crossing != unmarked and crossing_ref != zebra
            )
         """.trimIndent()
     } else {

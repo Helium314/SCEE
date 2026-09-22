@@ -106,7 +106,6 @@ class CustomOverlay(val prefs: Preferences) : Overlay {
                     } else null
                 ) },
             ) {
-                // Single Column: OverlayContent uses a centered Box; siblings would overlap.
                 val colorKeyPref = prefs.getString(getCurrentCustomOverlayPref(Prefs.CUSTOM_OVERLAY_IDX_COLOR_KEY, prefs), "")
                 val colorKeySelector = try {
                     val actualColorKeyPref = if (colorKeyPref.startsWith("!"))

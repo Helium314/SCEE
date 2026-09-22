@@ -116,7 +116,7 @@ class AddCrossingMarkings : OsmElementQuestType<Set<CrossingMarkings>> {
     private val crossingMarkingExpression = if (prefs.getBoolean(PREF_CROSSING_MARKING_EXTENDED, false)) {
         """(
             (!crossing:markings or crossing:markings = yes)
-            and crossing != zebra and crossing != unmarked and crossing_ref != zebra
+            and crossing !~ zebra|unmarked and crossing_ref != zebra
            )
         """.trimIndent()
     } else {

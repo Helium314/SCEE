@@ -3,6 +3,7 @@ package de.westnordost.streetcomplete.data.osm.osmquests
 import de.westnordost.streetcomplete.quests.address.AddHousenumber
 import de.westnordost.streetcomplete.quests.cycleway.AddCycleway
 import de.westnordost.streetcomplete.quests.existence.CheckExistence
+import de.westnordost.streetcomplete.quests.is_sidepath.AddIsSidepath
 import de.westnordost.streetcomplete.quests.max_height.AddMaxHeight
 import de.westnordost.streetcomplete.quests.opening_hours.AddOpeningHours
 import de.westnordost.streetcomplete.quests.place_name.AddPlaceName
@@ -18,6 +19,7 @@ fun getAnalyzePriority(questType: OsmElementQuestType<*>): Int = when (questType
     is CheckShopExistence -> 1 // FeatureDictionary, extensive filter
     is AddHousenumber -> 1 // complex filter
     is AddMaxHeight -> 1 // complex filter
+    is AddIsSidepath -> 1 // path↔road geometry distance + alignment
     is AddCycleway -> 2 // complex filter
     is AddPlaceName -> 2 // FeatureDictionary, extensive filter
     else -> 10

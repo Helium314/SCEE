@@ -672,6 +672,17 @@
     <!-- bicycle oneway -->
     <string name="quest_onewayBicycle_title">Is this path one-way for bicycles? In which direction?</string>
 
+    <!-- is_sidepath -->
+    <string name="quest_is_sidepath_title">Does this path run along a road?</string>
+    <string name="quest_is_sidepath_hint">A sidepath runs adjacent and parallel to a road so that you would describe movement as “along &lt;road name&gt;”. If the path goes through a park, forest or otherwise independent corridor, answer “No”.</string>
+    <string name="quest_is_sidepath_answer_sidewalk">Yes, this is a sidewalk</string>
+    <string name="quest_is_sidepath_answer_parallel_path">Yes, this is a parallel path</string>
+    <string name="quest_is_sidepath_answer_is_crossing">This is a crossing.</string>
+    <string name="quest_is_sidepath_road_title">Which road does this path run along?</string>
+    <string name="quest_is_sidepath_road_cant_say">Can’t say</string>
+    <string name="quest_is_sidepath_road_loading">Looking for nearby roads…</string>
+    <string name="quest_is_sidepath_unnamed_road">Unnamed %1$s</string>
+
     <!-- toilets disposal quest -->
     <string name="quest_toilets_disposal_title">What kind of toilet disposal is used here?</string>
     <string name="quest_toilets_disposal_flush">The waste is flushed with water</string>

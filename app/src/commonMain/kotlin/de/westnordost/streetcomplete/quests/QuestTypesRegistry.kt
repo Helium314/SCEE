@@ -128,6 +128,7 @@ import de.westnordost.streetcomplete.quests.handwashing.AddHandwashing
 import de.westnordost.streetcomplete.quests.incline_direction.AddBicycleIncline
 import de.westnordost.streetcomplete.quests.incline_direction.AddStepsIncline
 import de.westnordost.streetcomplete.quests.internet_access.AddInternetAccess
+import de.westnordost.streetcomplete.quests.is_sidepath.AddIsSidepath
 import de.westnordost.streetcomplete.quests.kerb_height.AddKerbHeight
 import de.westnordost.streetcomplete.quests.kerb_type.AddKerbType
 import de.westnordost.streetcomplete.quests.lamp_type.AddLampType
@@ -700,6 +701,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 55 to AddPostOfficeType(),
     EE_QUEST_OFFSET + 57 to AddLampMount(),
     EE_QUEST_OFFSET + 58 to AddOnewayBicycle(),
+    EE_QUEST_OFFSET + 201 to AddIsSidepath(),
     EE_QUEST_OFFSET + 62 to AddToiletsDisposal(),
     EE_QUEST_OFFSET + 63 to AddEvseId(),
     EE_QUEST_OFFSET + 66 to AddServiceTimes(),

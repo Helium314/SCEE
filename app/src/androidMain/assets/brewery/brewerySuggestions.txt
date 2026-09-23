@@ -1,3 +1,5 @@
+Affligem
+Aguila
 Aktienbrauerei Kaufbeuren
 Alhambra
 Allgäuer Brauhaus
@@ -10,10 +12,12 @@ Astra
 Augustiner Bräu München
 Ayinger
 Badger
+Bakalář
 Balatoni Világos
 Beck's
 Beerlao
 Bellheimer
+Benediktiner
 Berg
 Berliner Kindl
 Bernard
@@ -31,14 +35,19 @@ Castel
 Castle Rock
 Chang
 Charles Wells
+Chouffe
+Club Colombia
 Corona
+Cruzcampo
 Csiki
+Desperados
 Dinkelacker-Schwaben Bräu
 Dreher
 Eichbaum
 Engelbräu
 Erdinger
 Erzquell
+Estrella Galicia
 Farny
 Feldschlösschen
 Finsterwalder
@@ -71,12 +80,15 @@ Jupiler
 Kaiser
 Karlsberg
 Ketterer
+Kilkenny
 Kirin
 Klosterbrauerei Reutberg
 Kozel
 Krombacher
+Kronenbourg
 Krušovice
 Kulmbacher
+Kwak
 König Ludwig
 König Pilsner
 Köstrizer
@@ -86,6 +98,7 @@ Leffe
 Leibinger
 Licher
 Löwenbräu
+Mahou
 Marton's
 Meckatzer
 Miller
@@ -133,6 +146,7 @@ Szalon
 Tegernseer
 Thurn und Taxis
 Thwaites
+Tripel Karmeliet
 Trumer
 Tucher
 Unterbaarer
@@ -150,3 +164,4 @@ Zwettler
 Zwiefalter
 Zötler
 Сыктывкарпиво
+1664

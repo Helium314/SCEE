@@ -721,6 +721,8 @@ restriction/
 
 lab_flask.svg                           from https://www.svgrepo.com/svg/353167/lab-flask (c) geakstr, License: CC-BY
 
+ic_hide_24.svg                          from https://www.svgrepo.com/svg/453947/hide (c) H2D2 Design, License: MIT
+
 mail.svg
 
 osm_anon_avatar.svg

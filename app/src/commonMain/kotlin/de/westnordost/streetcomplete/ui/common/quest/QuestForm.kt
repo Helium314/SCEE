@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
@@ -49,6 +50,7 @@ import de.westnordost.streetcomplete.util.ktx.isDeletable
 import de.westnordost.streetcomplete.util.ktx.isSplittable
 import de.westnordost.streetcomplete.util.nameAndLocationLabel
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
@@ -327,7 +329,10 @@ fun HideButton(onHide: () -> Unit, onTempHide: () -> Unit) {
             onClick = onTempHide,
             onLongClick = onHide
         ) {
-            Text(stringResource(Res.string.hide_button))
+            Icon(
+                painterResource(Res.drawable.ic_hide_24),
+                stringResource(Res.string.hide_button)
+            )
         }
 }
 

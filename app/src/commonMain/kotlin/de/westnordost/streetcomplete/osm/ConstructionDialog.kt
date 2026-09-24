@@ -1,6 +1,7 @@
 package de.westnordost.streetcomplete.osm
 
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,6 +12,8 @@ import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapChanges
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.quest_construction_completion_date_title
+import de.westnordost.streetcomplete.resources.quest_construction_hint
+import de.westnordost.streetcomplete.resources.quest_construction_unknown_end
 import de.westnordost.streetcomplete.resources.quest_construction_value
 import de.westnordost.streetcomplete.ui.common.DateSelectDialog
 import de.westnordost.streetcomplete.ui.common.dialogs.TextInputDialog
@@ -31,7 +34,12 @@ fun ConstructionDialog(
     onEdit: (StringMapChanges) -> Unit
 ) {
     val tomorrow = remember { systemTimeNow().toLocalDate().plus(1, DateTimeUnit.DAY) }
-    var constructionValueAndFinishDate by remember { mutableStateOf<Pair<String, LocalDate>?>(null) }
+    var constructionValueAndFinishDate by remember { mutableStateOf<Pair<String, LocalDate?>?>(null) }
+
+    fun proceedToConstructionValue(openingDate: LocalDate?) {
+        constructionValueAndFinishDate = element.tags["highway"]!! to openingDate
+    }
+
     DateSelectDialog(
         onDismissRequest = onDismissRequest,
         onSelect = { finishDate ->
@@ -48,24 +56,33 @@ fun ConstructionDialog(
                 onEdit(builder.create())
             } else {
                 // if we actually change the highway to construction, we let the user set a construction value
-                constructionValueAndFinishDate = element.tags["highway"]!! to finishDate
+                proceedToConstructionValue(finishDate)
             }
         },
         initialDate = tomorrow,
         years = tomorrow.year..(tomorrow.year + 30),
         title = { Text(stringResource(Res.string.quest_construction_completion_date_title)) },
-        dismissOnSelect = false
+        dismissOnSelect = false,
+        text = { Text(stringResource(Res.string.quest_construction_hint)) },
+        neutralButton = {
+            TextButton(onClick = { proceedToConstructionValue(null) }) {
+                Text(stringResource(Res.string.quest_construction_unknown_end))
+            }
+        }
     )
 
     if (constructionValueAndFinishDate != null) {
+        val (previousHighway, openingDate) = constructionValueAndFinishDate!!
         TextInputDialog(
             onDismissRequest = onDismissRequest,
             title = { Text(stringResource(Res.string.quest_construction_value)) },
-            text = constructionValueAndFinishDate!!.first,
+            text = previousHighway,
             onConfirmed = {
                 val builder = StringMapChangesBuilder(element.tags)
-                val f = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
-                builder["opening_date"] = f.format(constructionValueAndFinishDate!!.second.toJavaLocalDate())
+                if (openingDate != null) {
+                    val f = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
+                    builder["opening_date"] = f.format(openingDate.toJavaLocalDate())
+                }
                 builder["highway"] = "construction"
                 builder["construction"] = it
                 onEdit(builder.create())

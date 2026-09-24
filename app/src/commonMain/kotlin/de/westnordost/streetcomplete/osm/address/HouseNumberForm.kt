@@ -30,7 +30,6 @@ fun HouseNumberForm(
                 onValueChange = { onValueChange(HouseNumber(it, value.unit)) },
                 modifier = modifier.weight(1f).widthIn(max = 256.dp),
                 suggestion = suggestion?.houseNumber,
-                label = ""
             )
             if (prefs.expertMode)
                 HouseNumberInput(

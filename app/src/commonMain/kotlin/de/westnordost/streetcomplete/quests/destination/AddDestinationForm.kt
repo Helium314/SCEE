@@ -1,333 +1,404 @@
+@file:OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
+
 package de.westnordost.streetcomplete.quests.destination
 
-// todo: side select is compose now -> need to migrate everything to make it work
-/*
-class AddDestinationForm : AbstractOsmQuestForm<Pair<DestinationLanes?, DestinationLanes?>>() {
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FilterChip
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
+import de.westnordost.streetcomplete.data.meta.CountryInfo
+import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
+import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.Element
+import de.westnordost.streetcomplete.data.osm.mapdata.filter
+import de.westnordost.streetcomplete.data.osm.osmquests.Answer
+import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
+import de.westnordost.streetcomplete.data.preferences.Preferences
+import de.westnordost.streetcomplete.data.preferences.addLastPicked
+import de.westnordost.streetcomplete.data.preferences.getLastPicked
+import de.westnordost.streetcomplete.osm.oneway.isOneway
+import de.westnordost.streetcomplete.osm.oneway.isReversedOneway
+import de.westnordost.streetcomplete.quests.lanes.Lanes
+import de.westnordost.streetcomplete.quests.lanes.LanesSelect
+import de.westnordost.streetcomplete.quests.lanes.LineStyle
+import de.westnordost.streetcomplete.resources.*
+import de.westnordost.streetcomplete.ui.common.auto_complete_text.AutoCompleteTextField
+import de.westnordost.streetcomplete.ui.common.quest.LocalMapRotation
+import de.westnordost.streetcomplete.ui.common.quest.LocalMapTilt
+import de.westnordost.streetcomplete.ui.common.quest.QuestForm
+import de.westnordost.streetcomplete.ui.common.street_side_select.MiniCompass
+import de.westnordost.streetcomplete.ui.theme.largeInput
+import de.westnordost.streetcomplete.ui.util.rememberSerializable
+import de.westnordost.streetcomplete.util.math.enlargedBy
+import de.westnordost.streetcomplete.util.math.getOrientationOrZero
+import de.westnordost.streetcomplete.util.takeFavorites
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
-    private val mapDataSource: MapDataWithEditsSource by inject()
-//    private val questTypeRegistry: QuestTypeRegistry by inject()
+private const val LAST_PICKED_KEY = "AddDestinationForm"
 
-    override val contentLayoutResId = R.layout.quest_destination
-    private val binding by contentViewBinding(QuestDestinationBinding::bind)
+@Composable
+fun AddDestinationForm(
+    on: (QuestAction<Pair<DestinationLanes?, DestinationLanes?>>) -> Unit,
+    element: Element,
+    geometry: ElementGeometry,
+    countryInfo: CountryInfo,
+    mapDataSource: MapDataWithEditsSource = koinInject(),
+    prefs: Preferences = koinInject(),
+) {
+    val isOneway = remember(element) { isOneway(element.tags) }
+    val isReversedOneway = remember(element) { isReversedOneway(element.tags) }
+    val geometryRotation = remember(geometry) { geometry.getOrientationOrZero() }
+    val mapRotation = LocalMapRotation.current
+    val mapTilt = LocalMapTilt.current
 
-    /* // todo: add later, once more lanes are allowed
-    override val otherAnswers get() = listOf(AnswerItem(R.string.quest_lanes_title) { // todo: text
-        // show lanes quest, because just removing lanes doesn't necessarily show lanes quest!
-        (activity as? MainActivity)
-        val lanesQuestType = questTypeRegistry.getByName("AddLanes")!!
-        val key = (questKey as OsmQuestKey).copy(questTypeName = lanesQuestType.name)
-        val f = AddLanesForm()
-        f.arguments = createArguments(key, lanesQuestType, geometry, 0f, 0f) // looks like lanes form gets correct orientation anyway
-        val osmArgs = createArguments(element)
-        f.requireArguments().putAll(osmArgs)
-        parentFragmentManager.commit {
-            replace(id, f, "bottom_sheet")
-            addToBackStack("bottom_sheet")
+    val edgeLineStyle = remember {
+        when {
+            countryInfo.edgeLineStyle.contains("short dashes") -> LineStyle.SHORT_DASHES
+            countryInfo.edgeLineStyle.contains("dashes") -> LineStyle.DASHES
+            else -> LineStyle.CONTINUOUS
         }
-    })
-*//*
-    private var currentLane = 0
-    private var currentIsBackward = false
-    private var forward: DestinationLanes? = null
-    private var backward: DestinationLanes? = null
-    private val currentDestinations: MutableSet<String> get() {
-        val lanes = if (currentIsBackward) backward else forward
-        return lanes!!.get(currentLane) // should never be null, as it's set in showInput
+    }
+    val edgeLineColor = remember {
+        if (countryInfo.edgeLineStyle.contains("yellow")) Color.Yellow else Color.White
+    }
+    val centerLineColor = remember {
+        if (countryInfo.centerLineStyle.contains("yellow")) Color.Yellow else Color.White
     }
 
-    private var wayRotation: Float = 0f
+    val initialOnewayLaneCount = remember(element) { laneCountInDirection(element.tags, false) }
 
-    private val destination get() = binding.destinationInput.text?.toString().orEmpty().trim()
+    var forward by rememberSerializable(element) {
+        mutableStateOf(
+            if (isOneway) DestinationLanes(if (initialOnewayLaneCount == 1) 1 else initialOnewayLaneCount)
+            else null
+        )
+    }
+    var backward by rememberSerializable(element) { mutableStateOf<DestinationLanes?>(null) }
+    var selectedIsBackward by rememberSaveable(element) { mutableStateOf(if (isOneway) false else null) }
+    var currentLane by rememberSaveable(element) {
+        mutableIntStateOf(if (isOneway && initialOnewayLaneCount == 1) 1 else 0)
+    }
+    var useSingleLaneInput by rememberSaveable(element) {
+        mutableStateOf(isOneway && initialOnewayLaneCount == 1)
+    }
+    var currentText by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue()) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        wayRotation = (geometry as ElementPolylinesGeometry).getOrientationAtCenterLineInDegrees()
+    var nearbySuggestions by remember { mutableStateOf<List<String>>(emptyList()) }
+    LaunchedEffect(geometry) {
+        nearbySuggestions = nearbyDestinationSuggestions(mapDataSource, geometry)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    fun laneCount(isBackward: Boolean) = laneCountInDirection(element.tags, isBackward)
 
-        binding.destinationInput.setAdapter(SearchAdapter<String>(requireContext(), { getSuggestions(it) }, { it }))
-        binding.destinationInput.onItemClickListener = AdapterView.OnItemClickListener { _, t, _, _ ->
-            val destination = (t as? TextView)?.text?.toString() ?: return@OnItemClickListener
-            if (!currentDestinations.add(destination)) return@OnItemClickListener // we don't want duplicates
-            onAddedDestination()
-        }
+    fun lanesFor(isBackward: Boolean) = if (isBackward) backward else forward
 
-        binding.destinationInput.doAfterTextChanged {
-            if (it.toString().endsWith("\n"))
-                finishCurrentDestination()
-            checkIsFormComplete()
-        }
-        binding.destinationInput.doOnLayout { binding.destinationInput.dropDownWidth = binding.destinationInput.width - requireContext().resources.dpToPx(60).toInt() }
+    fun setLanes(isBackward: Boolean, lanes: DestinationLanes?) {
+        if (isBackward) backward = lanes else forward = lanes
+    }
 
-        binding.addDestination.setOnClickListener {
-            if (binding.destinationInput.text.isBlank()) return@setOnClickListener
-            onAddedDestination()
-        }
+    fun ensureLanes(isBackward: Boolean, count: Int): DestinationLanes {
+        val existing = lanesFor(isBackward)
+        if (existing != null && existing.count == count) return existing
+        val created = DestinationLanes(count)
+        setLanes(isBackward, created)
+        return created
+    }
 
-        if (isOneway(element.tags)) {
-            currentIsBackward = false
-            showInput(getLaneCountInCurrentDirection())
-        } else {
-            // show side selector
-            binding.destinationInput.isGone = true
-            binding.addDestination.isGone = true
-            binding.lanesContainer.isGone = true
-            binding.sideSelect.root.isVisible = true
+    fun addTo(isBackward: Boolean, lane: Int, raw: String, lanes: DestinationLanes?): DestinationLanes? {
+        val dest = raw.trim()
+        if (dest.isBlank() || lane == 0) return lanes
+        val count = if (useSingleLaneInput) 1 else laneCount(isBackward)
+        return (lanes ?: DestinationLanes(count)).add(lane, dest)
+    }
 
-            // and make it work, this is essentially a condensed copy of AddLanesForm.setStreetSideLayout
-            val puzzleView = binding.sideSelect.puzzleView
-            lifecycle.addObserver(puzzleView)
-            puzzleView.isShowingLaneMarkings = true
-            puzzleView.isShowingBothSides = true
-            puzzleView.isForwardTraffic = !countryInfo.isLeftHandTraffic
-            val edgeLine = countryInfo.edgeLineStyle
-            puzzleView.edgeLineColor =
-                if (edgeLine.contains("yellow")) Color.YELLOW else Color.WHITE
-            puzzleView.edgeLineStyle = when {
-                !edgeLine.contains("dashes") -> LineStyle.CONTINUOUS
-                edgeLine.contains("short") -> LineStyle.SHORT_DASHES
-                else -> LineStyle.DASHES
+    fun selectDirection(isBackward: Boolean) {
+        val previous = selectedIsBackward
+        if (previous != null && previous != isBackward) {
+            val pending = currentText.text
+            if (pending.isNotBlank() && currentLane != 0) {
+                setLanes(previous, addTo(previous, currentLane, pending, lanesFor(previous)))
             }
-            puzzleView.centerLineColor = if (countryInfo.centerLineStyle.contains("yellow")) Color.YELLOW else Color.WHITE
-            val forwardLanes = getLaneCountInCurrentDirection()
-            currentIsBackward = true
-            val backwardLanes = getLaneCountInCurrentDirection()
-            if (countryInfo.isLeftHandTraffic)
-                puzzleView.setLaneCounts(forwardLanes, backwardLanes, false)
-            else
-                puzzleView.setLaneCounts(backwardLanes, forwardLanes, false)
-            // and set the click listener
-            puzzleView.onClickListener = null
-            puzzleView.onClickSideListener = { isRight ->
-                currentIsBackward = !isRight
-                if (countryInfo.isLeftHandTraffic)
-                    currentIsBackward = !currentIsBackward
-                showInput(getLaneCountInCurrentDirection())
-                // maybe: hide side selector, and have a button to show it again?
-            }
+            currentText = TextFieldValue()
         }
-
-        // start loading the lazy thing now that everything else is done
-        viewLifecycleScope.launch(Dispatchers.IO) { suggestions }
-    }
-
-    private fun getLaneCountInCurrentDirection(): Int {
-        if (currentIsBackward)
-            element.tags["lanes:backward"]?.toIntOrNull()?.let { return it }
-        else
-            element.tags["lanes:forward"]?.toIntOrNull()?.let { return it }
-        val lanes = element.tags["lanes"]?.toIntOrNull()
-        if (isOneway(element.tags)) return lanes ?: 1
-        return ((lanes ?: 2) / 2).coerceAtLeast(1)
-    }
-
-    // todo: two lanes in one direction is not yet working properly
-    //  orientation is confusing
-    //  when selecting other side and going back the marks are missing and "all lanes" is showing again
-    //  and sometimes the current destination view stays when switching sides
-    private fun showInput(laneCount: Int) {
-        // initialize forward/backward if necessary
-        if (currentIsBackward) {
-            if (backward?.count != laneCount) backward = DestinationLanes(laneCount)
-        } else {
-            if (forward?.count != laneCount) forward = DestinationLanes(laneCount)
-        }
-
-        if (laneCount == 1) {
+        selectedIsBackward = isBackward
+        val count = laneCount(isBackward)
+        if (count == 1) {
+            useSingleLaneInput = true
             currentLane = 1
-            binding.destinationInput.isVisible = true
-            binding.addDestination.isVisible = true
-            binding.lanesContainer.isGone = true
-            binding.currentDestinations.text = currentDestinations.joinToString(", ")
-            binding.destinationInput.requestFocus()
-            viewLifecycleScope.launch {
-                delay(30)
-//                binding.destinationInput.showDropDown() // working in cuisine form, but not here?
-                binding.destinationInput.setText("") // but this works
-            }
-            return
-        }
-
-        binding.destinationInput.isGone = true
-        binding.addDestination.isGone = true
-        binding.lanesContainer.isVisible = true
-        binding.lanesContainer.removeAllViews()
-        // hide the whole container after selecting all lanes
-        binding.lanesContainer.addView(Button(requireContext()).apply {
-            layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-            setText(R.string.quest_destination_all_lanes_button)
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.button_bar_button_text))
-            setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background))
-            setOnClickListener { showInput(1) }
-            tag = 0
-        })
-
-        repeat(laneCount) { idx ->
-            val lane = idx + 1
-            val b = QuestDestinationLaneBinding.inflate(layoutInflater)
-            b.lane.setOnClickListener {
-                // remove "all lanes" button if lane tapped
-                // and show the lanes input
-                binding.lanesContainer.findViewWithTag<View>(0)?.let {
-                    binding.destinationInput.isVisible = true
-                    binding.addDestination.isVisible = true
-                    binding.lanesContainer.removeView(it)
-                }
-                if (currentLane == lane) return@setOnClickListener
-
-                b.lane.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(requireContext(), R.color.accent), PorterDuff.Mode.MULTIPLY)
-                val previousView: View? = binding.lanesContainer.findViewWithTag(currentLane)
-                previousView?.findViewById<ImageView>(R.id.lane)?.colorFilter = null
-
-                if (currentLane != 0) {
-                    finishCurrentDestination()
-                    // set remove / checkmark
-                    if (currentDestinations.isEmpty())
-                        previousView?.findViewById<ImageView>(R.id.check)?.isGone = true
-                    else
-                        previousView?.findViewById<ImageView>(R.id.check)?.isVisible = true
-                }
-
-                currentLane = lane
-
-                binding.currentDestinations.text = currentDestinations.joinToString(", ")
-                binding.destinationInput.requestFocus()
-            }
-            b.root.tag = lane
-            binding.lanesContainer.addView(b.root)
+            ensureLanes(isBackward, 1)
+        } else {
+            useSingleLaneInput = false
+            ensureLanes(isBackward, count)
+            currentLane = 0
         }
     }
 
-    @AnyThread
-    override fun onMapOrientation(rotation: Double, tilt: Double) {
-        val mapRotation = rotation.toFloat()
-        val mapTilt = tilt.toFloat()
+    val selectedSideIsBackward = selectedIsBackward
 
-        binding.sideSelect.puzzleViewRotateContainer.streetRotation = wayRotation - mapRotation
-        binding.sideSelect.littleCompass.root.rotation = -mapRotation
-        binding.sideSelect.littleCompass.root.rotationX = mapTilt
+    fun currentDestinations(): List<String> {
+        if (selectedSideIsBackward == null || currentLane == 0) return emptyList()
+        return lanesFor(selectedSideIsBackward)?.get(currentLane).orEmpty()
     }
 
-    override fun onClickOk() {
-        finishCurrentDestination()
-        // one side is complete, but the other may not be, e.g. if the user clicked the wrong side
-        if (forward?.isComplete == false) forward = null
-        if (backward?.isComplete == false) backward = null
-        if (forward == null && backward == null) return // should never happen
-        applyAnswer(forward to backward)
-
-        prefs.addLastPicked(javaClass.simpleName, getAllCurrentDestinations().toList())
+    fun sideComplete(lanes: DestinationLanes?, isSelectedSide: Boolean): Boolean {
+        if (lanes?.isComplete == true) return true
+        if (!isSelectedSide || currentLane == 0) return false
+        return currentText.text.isNotBlank() && lanes?.isCompleteExcept(currentLane) == true
     }
 
-    override fun isFormComplete(): Boolean {
-        val forwardComplete = forward?.isComplete ?: false
-        val backwardComplete = backward?.isComplete ?: false
-        val forwardEmpty = forward?.isEmpty ?: true
-        val backwardEmpty = backward?.isEmpty ?: true
-
-        if ((forwardComplete && backwardComplete)
-            || (forwardComplete && backwardEmpty)
-            || (forwardEmpty && backwardComplete)
-        ) return true
-
-        if (binding.destinationInput.text.isNullOrBlank()) return false
-        return if (currentIsBackward)
-            backward?.isCompleteExcept(currentLane) == true && (forwardComplete || forwardEmpty)
-        else
-            forward?.isCompleteExcept(currentLane) == true && (backwardComplete || backwardEmpty)
+    fun sideHasContent(lanes: DestinationLanes?, isSelectedSide: Boolean): Boolean {
+        if (lanes != null && !lanes.isEmpty) return true
+        return isSelectedSide && (currentText.text.isNotBlank() || currentDestinations().isNotEmpty())
     }
 
-    override fun isRejectingClose() = isFormComplete() || binding.destinationInput.text.isNotBlank() || backward?.isEmpty == false || forward?.isEmpty == false
+    val forwardComplete = sideComplete(forward, selectedSideIsBackward == false)
+    val backwardComplete = sideComplete(backward, selectedSideIsBackward == true)
+    val forwardEmpty = !sideHasContent(forward, selectedSideIsBackward == false)
+    val backwardEmpty = !sideHasContent(backward, selectedSideIsBackward == true)
 
-    private fun finishCurrentDestination() {
-        currentDestinations.removeAll { it.isBlank() }
-        if (destination.isNotBlank()) currentDestinations.add(destination)
-        binding.destinationInput.text.clear()
-        setCurrentDestinationsView()
-        checkIsFormComplete()
+    val pendingTooLong = selectedSideIsBackward?.let { isBackward ->
+        if (currentLane == 0) false
+        else (lanesFor(isBackward) ?: DestinationLanes(if (useSingleLaneInput) 1 else laneCount(isBackward)))
+            .add(currentLane, currentText.text)
+            .isTooLong()
+    } == true
+
+    val isComplete = ((forwardComplete && backwardComplete)
+        || (forwardComplete && backwardEmpty)
+        || (forwardEmpty && backwardComplete))
+        && !pendingTooLong
+        && listOfNotNull(forward, backward).none { it.isTooLong() }
+
+    val hasChanges = isComplete
+        || currentText.text.isNotBlank()
+        || forward?.isEmpty == false
+        || backward?.isEmpty == false
+
+    val lastPicked = remember {
+        prefs.getLastPicked<String>(LAST_PICKED_KEY).takeFavorites(20, 50, 1)
+    }
+    val suggestions = remember(currentText, nearbySuggestions, forward, backward, currentLane, selectedIsBackward) {
+        val current = currentDestinations().toSet()
+        (forward?.getDestinations().orEmpty() + backward?.getDestinations().orEmpty() + lastPicked + nearbySuggestions)
+            .filter { it.startsWith(currentText.text, ignoreCase = true) && it !in current }
+            .distinct()
     }
 
-    private fun onAddedDestination() {
-        finishCurrentDestination()
-        if (binding.lanesContainer.isGone)
-            viewLifecycleScope.launch {
-                delay(30)
-                binding.destinationInput.showDropDown()
+    QuestForm(
+        on = on,
+        isComplete = isComplete,
+        hasChanges = hasChanges,
+        onClickOk = {
+            var answerForward = forward
+            var answerBackward = backward
+            val pending = currentText.text
+            if (selectedSideIsBackward != null && currentLane != 0 && pending.isNotBlank()) {
+                val updated = addTo(selectedSideIsBackward, currentLane, pending, lanesFor(selectedSideIsBackward))
+                if (selectedSideIsBackward) answerBackward = updated else answerForward = updated
             }
-    }
-
-    private fun setCurrentDestinationsView() {
-        binding.currentDestinations.text = currentDestinations.joinToString(", ")
-    }
-
-    private fun getAllCurrentDestinations(): Set<String> {
-        val destinations = hashSetOf<String>()
-        forward?.let { destinations.addAll(it.getDestinations()) }
-        backward?.let { destinations.addAll(it.getDestinations()) }
-        return destinations
-    }
-
-    private fun getSuggestions(search: String) = (getAllCurrentDestinations() + suggestions)
-        .filter { it.startsWith(search, true) && it !in currentDestinations }
-
-    private val suggestions by lazy {
-        val data = mapDataSource.getMapDataWithGeometry(geometry.bounds.enlargedBy(100.0))
-        val suggestions = hashSetOf<String>()
-        data.filter("ways, relations with destination or destination:forward or destination:backward or destination:lanes")
-            .forEach {
-                it.tags["destination"]?.let { suggestions.addAll(it.split(";")) }
-                it.tags["destination:forward"]?.let { suggestions.addAll(it.split(";")) }
-                it.tags["destination:backward"]?.let { suggestions.addAll(it.split(";")) }
-                it.tags["destination:lanes"]?.let { suggestions.addAll(it.split(";", "|")) }
+            answerForward = answerForward?.takeIf { it.isComplete }
+            answerBackward = answerBackward?.takeIf { it.isComplete }
+            if (answerForward == null && answerBackward == null) return@QuestForm
+            (answerForward?.getDestinations().orEmpty() + answerBackward?.getDestinations().orEmpty())
+                .distinct()
+                .forEach { prefs.addLastPicked(LAST_PICKED_KEY, it) }
+            on(Answer(answerForward to answerBackward))
+        },
+        hintText = if (!isOneway) stringResource(Res.string.quest_street_side_puzzle_tutorial) else null,
+        contentPadding = PaddingValues.Zero,
+    ) {
+        Column(Modifier.fillMaxWidth()) {
+            if (!isOneway) {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(160.dp)
+                ) {
+                    LanesSelect(
+                        value = Lanes(
+                            forward = laneCount(false),
+                            backward = laneCount(true)
+                        ),
+                        onClickForwardSide = { selectDirection(false) },
+                        onClickBackwardSide = { selectDirection(true) },
+                        modifier = Modifier.align(Alignment.Center),
+                        rotation = geometryRotation - mapRotation,
+                        centerLineColor = centerLineColor,
+                        edgeLineColor = edgeLineColor,
+                        edgeLineStyle = edgeLineStyle,
+                        isLeftHandTraffic = countryInfo.isLeftHandTraffic,
+                        isOneway = false,
+                        isReversedOneway = isReversedOneway,
+                    )
+                    MiniCompass(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp),
+                        rotation = -mapRotation,
+                        tilt = mapTilt
+                    )
+                }
             }
-        (suggestions + lastPickedAnswers).distinct()
-    }
 
-    private val lastPickedAnswers by lazy {
-        prefs.getLastPicked<String>(javaClass.simpleName).takeFavorites(20, 50, 1)
+            if (selectedSideIsBackward != null) {
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    val actualLaneCount = laneCount(selectedSideIsBackward)
+                    if (actualLaneCount > 1 && !useSingleLaneInput) {
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            FilterChip(
+                                selected = false,
+                                onClick = {
+                                    val pending = currentText.text
+                                    useSingleLaneInput = true
+                                    var lanes = DestinationLanes(1)
+                                    if (pending.isNotBlank()) lanes = lanes.add(1, pending)
+                                    setLanes(selectedSideIsBackward, lanes)
+                                    currentLane = 1
+                                    currentText = TextFieldValue()
+                                }
+                            ) {
+                                Text(stringResource(Res.string.quest_destination_all_lanes_button))
+                            }
+                            repeat(actualLaneCount) { idx ->
+                                val lane = idx + 1
+                                val filled = lanesFor(selectedSideIsBackward)?.get(lane).orEmpty().isNotEmpty()
+                                FilterChip(
+                                    selected = currentLane == lane,
+                                    onClick = {
+                                        val pending = currentText.text
+                                        if (pending.isNotBlank() && currentLane != 0) {
+                                            setLanes(
+                                                selectedSideIsBackward,
+                                                addTo(selectedSideIsBackward, currentLane, pending, lanesFor(selectedSideIsBackward))
+                                            )
+                                            currentText = TextFieldValue()
+                                        }
+                                        ensureLanes(selectedSideIsBackward, actualLaneCount)
+                                        currentLane = lane
+                                    }
+                                ) {
+                                    Text(if (filled) "$lane ✓" else lane.toString())
+                                }
+                            }
+                        }
+                    }
+
+                    if (currentLane != 0) {
+                        DestinationValuesInput(
+                            values = currentDestinations(),
+                            currentValue = currentText,
+                            onCurrentValueChange = { currentText = it },
+                            onAdd = { raw ->
+                                val dest = raw.trim()
+                                if (dest.isBlank()) return@DestinationValuesInput
+                                setLanes(
+                                    selectedSideIsBackward,
+                                    addTo(selectedSideIsBackward, currentLane, dest, lanesFor(selectedSideIsBackward))
+                                )
+                                currentText = TextFieldValue()
+                            },
+                            onSelectExisting = { value ->
+                                val lanes = lanesFor(selectedSideIsBackward) ?: return@DestinationValuesInput
+                                currentText = TextFieldValue(value)
+                                setLanes(selectedSideIsBackward, lanes.set(currentLane, lanes.get(currentLane) - value))
+                            },
+                            suggestions = suggestions,
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
-class DestinationLanes(val count: Int) {
-    init { require(count > 0) { "count $count must be positive" } }
-    private val destinationsByLane = hashMapOf<Int, MutableSet<String>>()
-    fun set(lane: Int, destinations: MutableSet<String>) {
-        checkLane(lane)
-        destinationsByLane[lane] = destinations
-    }
-    fun get(lane: Int): MutableSet<String> {
-        checkLane(lane)
-        return destinationsByLane.getOrPut(lane) { mutableSetOf() }
-    }
-    fun getDestinations() = destinationsByLane.values.flatten()
-
-    val isEmpty get() = (1..count).all { destinationsByLane[it].isNullOrEmpty() }
-    val isComplete get() = (1..count).none { destinationsByLane[it].isNullOrEmpty() }
-    fun isCompleteExcept(lane: Int) = (1..count).filterNot { it == lane }.none { destinationsByLane[it].isNullOrEmpty() }
-
-    private fun laneString(): String? {
-        if (!isComplete) return null
-        return destinationsByLane.entries.sortedBy { it.key }
-            .map { it.value }.joinToString("|") { it.joinToString(";") }
-    }
-
-    private fun checkLane(lane: Int) = require(lane in 1..count) {"tried to access lane $lane outside laneCount $count" }
-
-    // todo: for lane count also cycleways need to be considered
-    //  but careful about sides!
-    // anyway, currently such cases are simply ignored by the filter
-    fun applyTo(tags: Tags, isBackward: Boolean) {
-        if (!isComplete) throw (IllegalStateException("cannot apply an incomplete destination answer"))
-        val tag = if (count > 1) "destination:lanes" else "destination"
-        if (isOneway(tags)) {
-            tags[tag] = laneString()!!
-            return
+@Composable
+private fun DestinationValuesInput(
+    values: List<String>,
+    currentValue: TextFieldValue,
+    onCurrentValueChange: (TextFieldValue) -> Unit,
+    onAdd: (String) -> Unit,
+    onSelectExisting: (String) -> Unit,
+    suggestions: List<String>,
+) {
+    val latestText = remember { mutableStateOf(currentValue.text) }
+    Column(Modifier.fillMaxWidth()) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            values.forEach { value ->
+                Button({ onSelectExisting(value) }) { Text(value) }
+            }
         }
-        val forwardBackward = if (isBackward) ":backward" else ":forward"
-        tags[tag + forwardBackward] = laneString()!!
+        AutoCompleteTextField(
+            value = currentValue,
+            onValueChange = {
+                latestText.value = it.text
+                if (it.text.contains('\n')) {
+                    onAdd(it.text)
+                } else {
+                    onCurrentValueChange(it)
+                }
+            },
+            suggestions = suggestions,
+            textStyle = MaterialTheme.typography.largeInput,
+            startExpanded = true,
+            startExpandedWithoutFocus = true,
+            onSelectedSuggestion = { onAdd(latestText.value) },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextButton(
+            onClick = { onAdd(currentValue.text) },
+            enabled = currentValue.text.isNotBlank() && currentValue.text.trim() !in values
+        ) {
+            Text(stringResource(Res.string.quest_destination_add_more))
+        }
     }
 }
-*/*/
+
+private fun nearbyDestinationSuggestions(
+    mapDataSource: MapDataWithEditsSource,
+    geometry: ElementGeometry
+): List<String> {
+    val data = mapDataSource.getMapDataWithGeometry(geometry.bounds.enlargedBy(100.0))
+    val suggestions = linkedSetOf<String>()
+    data.filter("ways, relations with destination or destination:forward or destination:backward or destination:lanes")
+        .forEach {
+            it.tags["destination"]?.let { value -> suggestions.addAll(value.split(";")) }
+            it.tags["destination:forward"]?.let { value -> suggestions.addAll(value.split(";")) }
+            it.tags["destination:backward"]?.let { value -> suggestions.addAll(value.split(";")) }
+            it.tags["destination:lanes"]?.let { value -> suggestions.addAll(value.split(";", "|")) }
+        }
+    return suggestions.map { it.trim() }.filter { it.isNotEmpty() }
+}

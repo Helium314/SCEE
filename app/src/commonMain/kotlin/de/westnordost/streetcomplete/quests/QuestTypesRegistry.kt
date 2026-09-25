@@ -92,6 +92,7 @@ import de.westnordost.streetcomplete.quests.crossing_signals.AddCrossingSignals
 import de.westnordost.streetcomplete.quests.cuisine.AddCuisine
 import de.westnordost.streetcomplete.quests.custom.CustomQuest
 import de.westnordost.streetcomplete.quests.custom.CustomQuestList
+import de.westnordost.streetcomplete.quests.destination.AddDestination
 import de.westnordost.streetcomplete.quests.cycleway.AddCycleway
 import de.westnordost.streetcomplete.quests.defibrillator.AddDefibrillatorLocation
 import de.westnordost.streetcomplete.quests.diet_type.AddGlutenFree
@@ -667,7 +668,7 @@ fun getQuestTypeList(
     EE_QUEST_OFFSET + 29 to AddStreetCabinetType(),
     EE_QUEST_OFFSET + 8 to AddOutdoorSeatingType(),
     EE_QUEST_OFFSET + 51 to AddValves(),
-//    EE_QUEST_OFFSET + 25 to AddDestination(),
+    EE_QUEST_OFFSET + 25 to AddDestination(),
     EE_QUEST_OFFSET + 23 to AddRailwayPlatformRef(),
     EE_QUEST_OFFSET + 33 to AddTrailVisibility(),
     EE_QUEST_OFFSET + 48 to AddSacScale(),

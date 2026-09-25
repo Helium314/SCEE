@@ -71,7 +71,7 @@ SCEE asks for two more permissions than StreetComplete: `ACCESS_BACKGROUND_LOCAT
   * Whether a barrier is locked
   * Height of barriers
   * Whether pharmacy is dispensing prescription drugs
-  * ~Destination of some road types after intersections~ currently not working
+  * Destination of some road types after intersections
   * Which beers are sold in restaurants
   * Elevation, ref, sports and name of guideposts
   * Width of footways

@@ -1,7 +1,8 @@
 package de.westnordost.streetcomplete.quests.destination
 
-import de.westnordost.streetcomplete.R
+import androidx.compose.runtime.Composable
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
+import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.ElementType
@@ -9,20 +10,21 @@ import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Relation
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.osmquests.OsmElementQuestType
+import de.westnordost.streetcomplete.data.osm.osmquests.QuestAction
 import de.westnordost.streetcomplete.osm.Tags
 import de.westnordost.streetcomplete.osm.groupByNodeIds
 import de.westnordost.streetcomplete.osm.oneway.isForwardOneway
 import de.westnordost.streetcomplete.osm.oneway.isReversedOneway
+import de.westnordost.streetcomplete.quests.SingleTypeElementSelectionDialog
 import de.westnordost.streetcomplete.quests.questPrefix
+import de.westnordost.streetcomplete.resources.*
 import de.westnordost.streetcomplete.util.ktx.allExceptFirstAndLast
 import de.westnordost.streetcomplete.util.math.finalBearingTo
 import de.westnordost.streetcomplete.util.math.initialBearingTo
 import de.westnordost.streetcomplete.util.math.isCompletelyInside
 import de.westnordost.streetcomplete.util.math.normalizeDegrees
 import kotlin.math.abs
-import de.westnordost.streetcomplete.resources.Res
-import de.westnordost.streetcomplete.resources.default_disabled_msg_ee
-/*
+
 class AddDestination : OsmElementQuestType<Pair<DestinationLanes?, DestinationLanes?>> {
 
     // need to filter elements with not-counting lanes
@@ -48,10 +50,9 @@ class AddDestination : OsmElementQuestType<Pair<DestinationLanes?, DestinationLa
 
     override val changesetComment = "Add destination"
     override val wikiLink = "Key:destination"
-    override val icon = Res.drawable.ic_quest_destination // not nice, but ok for now
+    override val icon = Res.drawable.quest_destination
+    override val title = Res.string.quest_destination_title
     override val defaultDisabledMessage = Res.string.default_disabled_msg_ee
-
-    override fun getTitle(tags: Map<String, String>) = R.string.quest_destination_title
 
     override fun getApplicableElements(mapData: MapDataWithGeometry): Iterable<Element> {
         // we need the bbox because we only want ways fully in bbox (less strict in overlay...)
@@ -163,7 +164,15 @@ class AddDestination : OsmElementQuestType<Pair<DestinationLanes?, DestinationLa
         if (roadsFilter.matches(element)) null
         else false
 
-    override fun createForm() = AddDestinationForm()
+    @Composable
+    override fun Form(
+        on: (QuestAction<Pair<DestinationLanes?, DestinationLanes?>>) -> Unit,
+        element: Element,
+        geometry: ElementGeometry,
+        countryInfo: CountryInfo
+    ) {
+        AddDestinationForm(on, element, geometry, countryInfo)
+    }
 
     override fun applyAnswerTo(answer: Pair<DestinationLanes?, DestinationLanes?>, tags: Tags, geometry: ElementGeometry, timestampEdited: Long) {
         answer.first?.applyTo(tags, false)
@@ -172,12 +181,13 @@ class AddDestination : OsmElementQuestType<Pair<DestinationLanes?, DestinationLa
 
     override val hasQuestSettings = true
 
-    override fun QuestSettingDialog(context: Context, onDismissRequest: () -> Unit) {
+    @Composable
+    override fun QuestSettings(onDismissRequest: () -> Unit) {
         SingleTypeElementSelectionDialog(
             prefs,
             questPrefix(prefs) + PREF_DESTINATION_ROADS,
             ROADS_FOR_DESTINATION.joinToString("|"),
-            R.string.quest_settings_eligible_highways,
+            Res.string.quest_settings_eligible_highways,
             onDismissRequest
         )
     }
@@ -258,4 +268,3 @@ private fun Way.allowsToAnyNeighboringNodeFrom(nodeId: Long): Boolean {
         else -> true
     }
 }
-*/

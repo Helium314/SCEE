@@ -40,6 +40,7 @@ import de.westnordost.streetcomplete.ui.common.quest.LocalMapMarkersCallback
 import de.westnordost.streetcomplete.ui.common.quest.LocalMapMetersPerDp
 import de.westnordost.streetcomplete.ui.common.quest.LocalMapRotation
 import de.westnordost.streetcomplete.ui.common.quest.LocalMapTilt
+import de.westnordost.streetcomplete.ui.common.quest.LocalSetOverlayVisibleCallback
 import de.westnordost.streetcomplete.ui.common.quest.MapClick
 import de.westnordost.streetcomplete.ui.common.quest.Marker
 import de.westnordost.streetcomplete.ui.util.ReplaceBottomSheetTransitionSpec
@@ -72,6 +73,7 @@ fun OverlayFormContainer(
     mapPosition: LatLon,
     mapMetersPerDp: Double,
     onSetMapMarkers: (Iterable<Marker>) -> Unit,
+    onSetOverlayVisible: (Boolean) -> Unit = {},
     getOffset: (position: LatLon) -> Offset?,
     lastMapClick: MapClick?,
     modifier: Modifier = Modifier,
@@ -84,8 +86,11 @@ fun OverlayFormContainer(
     var showAccessManager by remember { mutableStateOf(false) }
     var showConstructionDialog by remember { mutableStateOf(false) }
 
-    // markers shown are per-form
-    LaunchedEffect(state) { onSetMapMarkers(emptyList()) }
+    // markers / overlay visibility are per-form
+    LaunchedEffect(state) {
+        onSetMapMarkers(emptyList())
+        onSetOverlayVisible(true)
+    }
 
     fun onAction(action: OverlayAction) {
         when (action) {
@@ -106,6 +111,7 @@ fun OverlayFormContainer(
         LocalMapTilt provides mapTilt,
         LocalMapMetersPerDp provides mapMetersPerDp,
         LocalMapMarkersCallback provides onSetMapMarkers,
+        LocalSetOverlayVisibleCallback provides onSetOverlayVisible,
         LocalGetOffsetCallback provides getOffset,
         LocalLastMapClick provides lastMapClick,
     ) {

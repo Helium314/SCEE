@@ -1,688 +1,1021 @@
 package de.westnordost.streetcomplete.overlays.restriction
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material.Checkbox
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.RadioButton
+import androidx.compose.material.Switch
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.unit.dp
+import com.cheonjaeung.compose.grid.SimpleGridCells
+import de.westnordost.streetcomplete.data.meta.CountryInfo
+import de.westnordost.streetcomplete.data.meta.WeightMeasurementUnit
+import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
+import de.westnordost.streetcomplete.data.osm.edits.create.CreateRelationAction
+import de.westnordost.streetcomplete.data.osm.edits.delete.DeleteRelationAction
+import de.westnordost.streetcomplete.data.osm.edits.update_tags.UpdateElementTagsAction
+import de.westnordost.streetcomplete.data.osm.edits.update_tags.createChanges
+import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.Element
+import de.westnordost.streetcomplete.data.osm.mapdata.ElementType
+import de.westnordost.streetcomplete.data.osm.mapdata.Relation
+import de.westnordost.streetcomplete.data.osm.mapdata.Way
+import de.westnordost.streetcomplete.data.overlays.Action
+import de.westnordost.streetcomplete.data.overlays.Edit
+import de.westnordost.streetcomplete.data.overlays.OverlayAction
+import de.westnordost.streetcomplete.osm.AddConditionalDialog
+import de.westnordost.streetcomplete.quests.max_weight.MaxWeightSignForm
+import de.westnordost.streetcomplete.quests.max_weight.MaxWeightType
+import de.westnordost.streetcomplete.quests.max_weight.Weight
+import de.westnordost.streetcomplete.quests.max_weight.getIcon
+import de.westnordost.streetcomplete.quests.max_weight.osmKey
 import de.westnordost.streetcomplete.resources.Res
-import de.westnordost.streetcomplete.resources.*
-
-// todo: is weight form now compose?
-/*
-// todo
-//  save instance state
-//   save selection mode, selected restriction, current restriction
-//  show anything if there is no restriction? looks awfully empty
-//  more restriction types like oneway, length, height
-//  don't allow adding turn restriction if none can be added (much work for little gain)
-//  allow setting via ways, and allow choosing via node if from and to are the same
-//   often needed for no_u_turn, but might be much work
-//  allow adding conditional-only restriction for weight (works for turn only)
-//  form grows too high with many restrictions (maybe scrollview?)
-class RestrictionOverlayWayForm : AbstractOverlayForm() {
-
-    private val mapDataSource: MapDataWithEditsSource by inject()
-    private val mapFragment by lazy {
-        (activity as? MainActivity)?.supportFragmentManager?.fragments?.filterIsInstance<MainMapFragment>()?.singleOrNull()
-    }
-    override val contentLayoutResId = R.layout.fragment_overlay_restriction_way
-    private val binding by contentViewBinding(FragmentOverlayRestrictionWayBinding::bind)
-    private val maxWeightInput: EditText? get() = binding.maxWeightContainer.findViewById(R.id.maxWeightInput)
-    private val weightUnitSelect: Spinner? get() = binding.maxWeightContainer.findViewById(R.id.weightUnitSelect)
-
-    private val originalRestrictions by lazy {
-        val turnRestrictions = mapDataSource.getRelationsForWay(element!!.id).filter { it.tags["type"] == "restriction" }
-            .map { TurnRestriction(it) }
-        val weightRestrictions = getWeightRestrictions(element as Way)
-        turnRestrictions + weightRestrictions
-    }
-
-    // unchanged restriction from originalRestrictions
-    private var selectedRestriction: Restriction? = null
-        set(value) {
-            field = value
-            showOtherRestrictionsList()
-            if (value != null)
-                currentRestriction = value
-        }
-
-    // (currently) can't be set to null
-    private var currentRestriction: Restriction? = null
-        set(value) {
-            if (field == value) return
-            val oldValue = field
-            field = value
-            checkIsFormComplete()
-            // can't add restriction if sth is changed
-            if (field != selectedRestriction)
-                binding.addRestriction.isGone = true
-            when (value) {
-                is WeightRestriction -> {
-                    if (oldValue is WeightRestriction && oldValue.way == value.way && oldValue.sign == value.sign)
-                        // no need to change form if only weight changed
-                        // especially reloading the input while typing is annoying!
-                        return
-                    showWeightRestrictionUi(value)
-                    via = null
-                    mapFragment?.highlightGeometry(geometry)
-                }
-                is TurnRestriction -> {
-                    if (value.relation.isSupportedTurnRestriction()) {
-                        showFullTurnRestrictionUi(value)
-                        showTurnRestrictionOnMap(value)
-                    } else {
-                        showUnsupportedTurnRestriction(value)
-                    }
-                    getGeometry(value.relation)?.let { mapFragment?.highlightGeometry(it) }
-                }
-                null -> { } // should not happen
-            }
-            binding.conditionalButton.isVisible = true
-            if (value is TurnRestriction && value.relation.id == 0L)
-                binding.removeRestriction.isInvisible = true
-            else binding.removeRestriction.isVisible = true
-        }
-
-    // only used for turn restriction
-    private var via: Pair<LatLon, Double>? = null
-        set(value) {
-            field?.first?.let { mapFragment?.deleteMarkerForCurrentHighlighting(ElementPointGeometry(it)) }
-            field = value
-            val tags = (currentRestriction as? TurnRestriction)?.relation?.tags ?: emptyMap()
-            val icon = getIconForTurnRestriction(tags.getShortRestrictionValue() ?: "")
-            value?.let { mapFragment?.putMarkersForCurrentHighlighting(listOf(Marker(ElementPointGeometry(it.first), icon, null, null, it.second))) }
-        }
-
-    // enabled when adding turn restriction, cannot be disabled
-    private var turnRestrictionSelectionMode: Boolean = false
-        set(value) {
-            field = value
-            if (value) {
-                mapFragment?.hideOverlay()
-                mapFragment?.highlightGeometry(geometry) // highlight initially selected way only
-                binding.turnRestrictionContainer.isVisible = true
-                binding.maxWeightContainer.isGone = true
-                binding.exceptions.text = getString(R.string.restriction_overlay_exceptions, getString(R.string.overlay_none))
-                binding.infoText.setText(R.string.restriction_overlay_select_way)
-                binding.infoText.isVisible = true
-                binding.addRestriction.isGone = true
-            }
-        }
-
-    override val otherAnswers get() = listOfNotNull(
-        relationDetailsAnswer(),
-    )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        lifecycleScope.launch { originalRestrictions } // load restrictions in background, so ui thread needs to wait less
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        if (originalRestrictions.isNotEmpty() && selectedRestriction == null) {
-            selectedRestriction = getInitialRestriction()
-        }
-        binding.addRestriction.setOnClickListener { onClickAddRestriction() }
-
-        binding.turnRestrictionTypeSpinner.adapter = ArrayImageAdapter(requireContext(), turnRestrictionTypeList.map { getIconForTurnRestriction(it) }, 80)
-        binding.turnRestrictionTypeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val oldRestriction = currentRestriction as? TurnRestriction ?: return
-                val newTags = oldRestriction.relation.tags.toMutableMap()
-                val conditionalKey = if (newTags.containsKey("restriction:conditional")) "restriction:conditional"
-                    else newTags.keys.firstOrNull { it.startsWith("restriction:") && it.endsWith(":conditional") }
-                if (conditionalKey != null && !newTags.containsKey(conditionalKey.substringBefore(":conditional"))) {
-                    val old = newTags[conditionalKey]!!.substringBefore("@").trim()
-                    newTags[conditionalKey] = newTags[conditionalKey]!!.replace(old, turnRestrictionTypeList[p2])
-                } else {
-                    if (newTags.containsKey("restriction"))
-                        newTags["restriction"] = turnRestrictionTypeList[p2]
-                    else {
-                        val k = newTags.keys.firstOrNull { key -> key.startsWith("restriction:") && onlyTurnRestriction.any { key.endsWith(it) } }
-                            ?: "restriction"
-                        newTags[k] = turnRestrictionTypeList[p2]
-                    }
-                }
-                if (newTags != oldRestriction.relation.tags)
-                    currentRestriction = TurnRestriction(oldRestriction.relation.copy(tags = newTags))
-            }
-            override fun onNothingSelected(p0: AdapterView<*>?) { }
-        }
-        binding.implicitSwitch.isChecked = true
-        binding.removeRestriction.setOnClickListener { onClickedDelete() }
-    }
-
-    private fun getInitialRestriction(): Restriction? {
-        // prefer supported and complete turn restrictions
-        originalRestrictions
-            .firstOrNull { it is TurnRestriction && it.relation.isSupportedTurnRestriction() && it.relation.isRelationComplete() }
-            ?.let { return it }
-
-        // then weight restriction
-        originalRestrictions.firstOrNull { it is WeightRestriction }?.let { return it }
-
-        // just take the first one
-        return originalRestrictions.firstOrNull()
-    }
-
-    private fun showOtherRestrictionsList() {
-        val restrictions = originalRestrictions.filterNot { it == selectedRestriction }
-        if (restrictions.isEmpty()) return // if we show it once, no need to hide again
-        binding.otherRestrictions.isVisible = true
-        binding.otherRestrictions.removeAllViews()
-        binding.otherRestrictions.addView(TextView(requireContext()).apply {
-            setText(R.string.restriction_overlay_other_restrictions)
-        })
-        for (restriction in restrictions) {
-            binding.otherRestrictions.addView(Button(requireContext()).apply {
-                text = when (restriction) {
-                    is TurnRestriction -> restriction.relation.members.filter { it.type == ElementType.WAY && it.ref == element!!.id }
-                        .joinToString(", ") { it.role }
-                    is WeightRestriction -> restriction.weight
-                }
-                val drawable = restriction.getDrawable(layoutInflater, countryInfo)
-                val height = context.resources.dpToPx(56).toInt()
-                val resizedDrawable = drawable
-                    ?.createBitmap(height, drawable.intrinsicWidth * height / drawable.intrinsicHeight)
-                    ?.toDrawable(context.resources)
-
-                setCompoundDrawablesWithIntrinsicBounds(resizedDrawable, null, null, null)
-                setOnClickListener { selectedRestriction = restriction }
-            })
-        }
-    }
-
-    override fun hasChanges(): Boolean =
-        currentRestriction != null && currentRestriction != selectedRestriction
-
-    override fun isFormComplete(): Boolean {
-        val restriction = currentRestriction ?: return false
-        if (!hasChanges()) return false
-        if (restriction is WeightRestriction && restriction.weight.replace(',', '.').toDoubleOrNull() == null) return false
-        return true
-    }
-
-    override fun onClickOk() {
-        val restriction = currentRestriction ?: return
-        when (restriction) {
-            is WeightRestriction -> {
-                val input = restriction.weight.replace(',', '.').toDouble()
-                val weight = when (countryInfo.weightLimitUnits[weightUnitSelect?.selectedItemPosition ?: 0]) {
-                    WeightMeasurementUnit.SHORT_TON  -> ShortTons(input)
-                    WeightMeasurementUnit.POUND      -> ImperialPounds(input.toInt())
-                    WeightMeasurementUnit.METRIC_TON -> MetricTons(input)
-                }
-                val changes = restriction.way.tags.createChanges(element!!.tags)
-                changes[restriction.sign.osmKey] = weight.toString()
-                applyEdit(UpdateElementTagsAction(restriction.way, changes.create()))
-            }
-            is TurnRestriction -> {
-                val rel = restriction.relation
-                val geometry = getGeometry(rel) ?: geometry
-                if (rel.id == 0L) {
-                    applyEdit(CreateRelationAction(rel.tags, rel.members), geometry)
-                } else {
-                    val oldRelation = (selectedRestriction as? TurnRestriction)?.relation ?: return
-                    applyEdit(UpdateElementTagsAction(oldRelation, rel.tags.createChanges(oldRelation.tags).create()), geometry)
-                }
-            }
-        }
-    }
-
-    override fun onClickMapAt(position: LatLon, clickAreaSizeInMeters: Double): Boolean {
-        if (!turnRestrictionSelectionMode) return false
-        val bbox = position.enclosingBoundingBox(clickAreaSizeInMeters.coerceAtLeast(10.0))
-        val data = mapDataSource.getMapDataWithGeometry(bbox)
-        val initialWay = element as Way // this must be correct
-
-        // first and last nodes, but only if they are shared by at least 3 roads (otherwise a restriction doesn't make sense)
-        val firstAndLastNodes = initialWay.nodeIds.firstAndLast().sorted().filter { mapDataSource.getWaysForNode(it).count { it.tags["highway"] in ALL_ROADS } > 2 }
-        if (firstAndLastNodes.isEmpty()) return true
-        val eligibleWays = data.ways.mapNotNull {
-            if (it.id == initialWay.id || it.isClosed) return@mapNotNull null
-            if (it.tags["highway"] !in ALL_ROADS) return@mapNotNull null
-            val fl = it.nodeIds.firstAndLast() // exactly one of first and last nodes need to be shared
-            if (!fl.containsAny(firstAndLastNodes)) return@mapNotNull null
-            val geometry = data.getWayGeometry(it.id) as? ElementPolylinesGeometry ?: return@mapNotNull null
-            it to geometry
-        }
-
-        val otherWay = eligibleWays.minByOrNull { position.distanceToArcs(it.second.polylines.single()) }?.first ?: return true
-        val initialWayAsMember = RelationMember(initialWay.type, initialWay.id, "from")
-        val otherWayAsMember = RelationMember(otherWay.type, otherWay.id, "to")
-        // ignore ways that have same start and end points
-        val viaNode = otherWay.nodeIds.firstAndLast().singleOrNull { it in firstAndLastNodes }?.let { mapDataSource.getNode(it) } ?: return true
-        val viaNodeAsMember = RelationMember(viaNode.type, viaNode.id, "via")
-        val newTags = (currentRestriction as? TurnRestriction)?.relation?.tags?.toMutableMap() ?: mutableMapOf()
-        newTags["type"] = "restriction"
-        if (!binding.implicitSwitch.isChecked)
-            newTags["explicit"] = "yes"
-        newTags["restriction"] = turnRestrictionTypeList[binding.turnRestrictionTypeSpinner.selectedItemPosition]
-        val newRelation = Relation(0L, listOf(initialWayAsMember, otherWayAsMember, viaNodeAsMember), newTags)
-        binding.swapFromToRoles.isVisible = true
-        currentRestriction = TurnRestriction(newRelation)
-        return true
-    }
-
-    private fun onClickAddRestriction() {
-        val res = listOf(
-            Item2(RestrictionType.TURN, ResImage(R.drawable.ic_overlay_restriction)),
-            Item2(RestrictionType.WEIGHT, ResImage(R.drawable.ic_quest_max_weight)),
-        )
-        ImageListPickerDialog(requireContext(), res) {
-            when (it.value) {
-                RestrictionType.TURN -> turnRestrictionSelectionMode = true
-                RestrictionType.WEIGHT -> {
-                    val items = MaxWeightSign.entries.mapNotNull { sign ->
-                        if (originalRestrictions.any { it is WeightRestriction && it.sign == sign })
-                                null
-                            else sign.asItem(layoutInflater, countryInfo.countryCode)
-                    }
-                    ImageListPickerDialog(requireContext(), items) { sign ->
-                        currentRestriction = WeightRestriction(element as Way, sign.value!!, "")
-                        val units = countryInfo.weightLimitUnits.map { it.displayString }
-                        weightUnitSelect?.adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_centered, units)
-                        weightUnitSelect?.setSelection(0)
-
-                        viewLifecycleScope.launch {
-                            delay(20)
-                            maxWeightInput?.requestFocus()
-                            maxWeightInput?.showKeyboard()
-                        }
-                    }.show()
-                }
-                null -> { }
-            }
-        }.show()
-    }
-
-    private fun displayConditionalRestrictions(text: String) {
-        if (text.isNotBlank()) {
-            binding.infoText.text = text
-            binding.infoText.isVisible = true
-            binding.conditionalButton.setText(R.string.restriction_overlay_remove_conditional_restrictions)
-            binding.conditionalButton.setOnClickListener { onClickRemoveConditional() }
-        } else {
-            binding.infoText.isGone = true
-            binding.conditionalButton.setOnClickListener { onClickAddConditional() }
-            binding.conditionalButton.setText(R.string.access_manager_button_add_conditional)
-        }
-    }
-
-    private fun onClickRemoveConditional() {
-        val restriction = currentRestriction ?: return
-        when (restriction) {
-            is TurnRestriction -> {
-                val newTags = restriction.relation.tags.toMutableMap()
-                val oldConditionalKey = if (newTags.containsKey("restriction:conditional")) "restriction:conditional"
-                    else newTags.keys.firstOrNull { it.startsWith("restriction:") && it.endsWith(":conditional") } ?: "restriction:conditional"
-                if (!newTags.containsKey(oldConditionalKey.substringBefore(":conditional")))
-                    newTags[oldConditionalKey.substringBefore(":conditional")] = newTags.getShortRestrictionValue()!!
-                newTags.remove(oldConditionalKey)
-                currentRestriction = TurnRestriction(restriction.relation.copy(tags = newTags))
-            }
-            is WeightRestriction -> {
-                val newTags = restriction.way.tags.toMutableMap()
-                val weightKey = restriction.sign.osmKey
-                newTags.remove("$weightKey:conditional")
-                currentRestriction = WeightRestriction(restriction.way.copy(tags = newTags), restriction.sign, restriction.weight)
-            }
-        }
-    }
-
-    private fun onClickAddConditional() {
-        val restriction = currentRestriction ?: return
-        when (restriction) {
-            is TurnRestriction -> {
-                val newTags = restriction.relation.tags.toMutableMap()
-                // either it's only conditional, then value is same as restriction, or it's an exception then it's "none"
-                val restrictionKey = if (newTags.containsKey("restriction")) "restriction"
-                    else newTags.keys.firstOrNull { key -> onlyTurnRestriction.any { key =="restriction:$it" } } ?: "restriction"
-                val values = newTags[restrictionKey]?.let { listOf(it, "none") }
-                    ?: listOf(turnRestrictionTypeList[binding.turnRestrictionTypeSpinner.selectedItemPosition])
-                showAddConditionalDialog(requireContext(), listOf("$restrictionKey:conditional"), values, null) { _, v ->
-                    newTags["$restrictionKey:conditional"] = v
-                    if (!v.startsWith("none")) newTags.remove(restrictionKey)
-                    currentRestriction = TurnRestriction(restriction.relation.copy(tags = newTags))
-                }
-            }
-            is WeightRestriction -> {
-                val weightKey = restriction.sign.osmKey
-                val newTags = restriction.way.tags.toMutableMap()
-                // no values because it needs to be free-form (enter weight, maybe unit for some country, also none
-                // -> can't set number-only input type
-                showOtherConditionalDialog(requireContext(), listOf("$weightKey:conditional"), null, null) { _, v ->
-                    newTags["$weightKey:conditional"] = v
-                    if (!v.startsWith("none")) newTags.remove(weightKey)
-                    currentRestriction = WeightRestriction(restriction.way.copy(tags = newTags), restriction.sign, restriction.weight)
-                }
-            }
-        }
-    }
-
-    private fun onClickedDelete() {
-        val restriction = currentRestriction ?: return
-        when (restriction) {
-            is TurnRestriction -> {
-                if (restriction.relation.id == 0L) return
-                AlertDialog.Builder(requireContext())
-                    .setMessage(R.string.quest_generic_confirmation_title)
-                    .setPositiveButton(R.string.osm_element_gone_confirmation) { _, _ ->
-                        applyEdit(DeleteRelationAction(restriction.relation), getGeometry(restriction.relation) ?: geometry)
-                    }
-                    .setNeutralButton(R.string.leave_note) { _, _ -> composeNote(restriction.relation) }
-                    .show()
-            }
-            is WeightRestriction -> {
-                // delete this and conditional tags, but only apply if there are actually changes
-                val changes = restriction.way.tags.createChanges(element!!.tags)
-                changes.remove(restriction.sign.osmKey)
-                changes.keys.filter { it.startsWith("${restriction.sign.osmKey}:") }.forEach {
-                    changes.remove(it)
-                }
-                if (!changes.hasChanges) return
-
-                AlertDialog.Builder(requireContext())
-                    .setMessage(R.string.quest_generic_confirmation_title)
-                    .setPositiveButton(R.string.quest_generic_confirmation_yes) { _, _ ->
-                        applyEdit(UpdateElementTagsAction(restriction.way, changes.create()))
-                    }
-                    .setNeutralButton(R.string.leave_note) { _, _ -> composeNote(restriction.way) }
-                    .show()
-            }
-        }
-    }
-
-    // ---------------- weight restriction ----------------------
-
-    private fun showWeightRestrictionUi(restriction: WeightRestriction) {
-        binding.turnRestrictionContainer.isGone = true
-        binding.maxWeightContainer.isVisible = true
-        binding.maxWeightContainer.removeAllViews()
-        val item = restriction.sign.asItem(layoutInflater, countryInfo.countryCode)
-        layoutInflater.inflate(item.value!!.getLayoutResourceId(countryInfo.countryCode), binding.maxWeightContainer)
-        val units = countryInfo.weightLimitUnits
-        weightUnitSelect?.adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_centered, units.map { it.displayString })
-        weightUnitSelect?.setSelection(0)
-        if (restriction.weight.toDoubleOrNull() == null) {
-            when {
-                restriction.weight.replace(',', '.').toDoubleOrNull() != null ->
-                    maxWeightInput?.setText(restriction.weight.replace(',', '.'))
-                restriction.weight.endsWith("lbs") -> {
-                    val w = restriction.weight.substringBefore("lbs").trim()
-                    if (w.toDoubleOrNull() != null) {
-                        maxWeightInput?.setText(w)
-                        val idx = units.indexOfFirst { it == WeightMeasurementUnit.POUND }
-                        if (idx != -1)
-                            weightUnitSelect?.setSelection(idx)
-                    }
-                }
-                restriction.weight.endsWith("st") -> {
-                    val w = restriction.weight.substringBefore("st").trim()
-                    if (w.toDoubleOrNull() != null) {
-                        maxWeightInput?.setText(w)
-                        val idx = units.indexOfFirst { it == WeightMeasurementUnit.SHORT_TON }
-                        if (idx != -1)
-                            weightUnitSelect?.setSelection(idx)
-                    }
-                }
-                restriction.weight.endsWith("t") -> {
-                    val w = restriction.weight.substringBefore("t").trim()
-                    if (w.toDoubleOrNull() != null)
-                        maxWeightInput?.setText(w)
-                }
-                else -> { } // don't fill unrecognized values
-            }
-        } else maxWeightInput?.setText(restriction.weight)
-        maxWeightInput?.filters = arrayOf(acceptDecimalDigits(6, 2))
-        binding.maxWeightContainer.setOnClickListener {
-            maxWeightInput?.requestFocus()
-            maxWeightInput?.showKeyboard()
-        }
-        maxWeightInput?.doAfterTextChanged {
-            currentRestriction = WeightRestriction(restriction.way, restriction.sign, it.toString())
-        }
-
-        // show other restrictions based on this maxweight key
-        val restrictionInfo = restriction.way.tags
-            .filterKeys { it.startsWith("${restriction.sign.osmKey}:") }
-            .map { "${it.key} = ${it.value}" }
-            .joinToString("\n")
-        displayConditionalRestrictions(restrictionInfo)
-
-        // todo: only-button for maxweight:hgv and stuff
-        //  but needs to work a bit different than for turn because of the maxweight keys
-    }
-
-    // ---------------- turn restriction ----------------------
-
-    private fun showFullTurnRestrictionUi(restriction: TurnRestriction) {
-        binding.turnRestrictionContainer.isVisible = true
-        binding.maxWeightContainer.isGone = true
-
-        // set up switch
-        binding.implicitSwitch.isChecked = restriction.relation.tags["implicit"] != "yes"
-        binding.implicitSwitch.setOnCheckedChangeListener { _, b ->
-            val oldRestriction = currentRestriction as? TurnRestriction ?: return@setOnCheckedChangeListener
-            val newTags = oldRestriction.relation.tags.toMutableMap()
-            if (b)
-                newTags.remove("implicit")
-            else newTags["implicit"] = "yes"
-            currentRestriction = TurnRestriction(oldRestriction.relation.copy(tags = newTags))
-        }
-
-        // set spinner value
-        val idx = turnRestrictionTypeList.indexOf(restriction.relation.tags.getShortRestrictionValue())
-        if (idx != binding.turnRestrictionTypeSpinner.selectedItemPosition) {
-            // if -1 selected (unknown restriction), view gets very small... not nice, but not worth the work
-            // without the post it doesn't work... though it used to work in a previous version of the form, wtf?
-            binding.turnRestrictionTypeSpinner.post { binding.turnRestrictionTypeSpinner.setSelection(idx) }
-        }
-
-        // todo: switching roles for an existing relation requires another new action...
-        //  maybe do that later, but currently this is only allowed when adding a new relation
-        binding.swapFromToRoles.setOnClickListener {
-            val rel = (currentRestriction as? TurnRestriction)?.relation ?: return@setOnClickListener
-            val newMembers = rel.members.map { when (it.role) {
-                "from" -> it.copy(role = "to")
-                "to" -> it.copy(role = "from")
-                else -> it
-            } }
-            currentRestriction = TurnRestriction(rel.copy(members = newMembers))
-        }
-        binding.exceptions.setOnClickListener { showTurnRestrictionExceptionsDialog() }
-
-        // set exceptions
-        val args = restriction.relation.tags["except"]?.replace(";", ", ") ?: getString(R.string.overlay_none)
-        binding.exceptions.text = getString(R.string.restriction_overlay_exceptions, args)
-
-        // show other restriction parts like conditional or unknown values
-        val restrictionInfo = restriction.relation.tags
-            .filterKeys { key -> key.startsWith("restriction:") && onlyTurnRestriction.none { key.endsWith(it) } }
-            .map { "${it.key} = ${it.value}" }
-            .joinToString("\n")
-        displayConditionalRestrictions(restrictionInfo)
-
-        // show only-restriction (restriction:hgv and similar)
-        binding.onlyButton.isVisible = true
-        val onlyFor = restriction.relation.tags.keys
-            .firstOrNull { it.startsWith("restriction") && it.substringAfter("restriction:").substringBefore(":conditional") in onlyTurnRestriction }
-        val onlyForText = onlyFor?.substringAfter("restriction:")?.substringBefore(":conditional") ?: "-"
-        binding.onlyButton.text = getString(R.string.restriction_overlay_only_for, onlyForText)
-        binding.onlyButton.setOnClickListener {
-            // move restriction and restriction:conditional
-            val d = AlertDialog.Builder(requireContext())
-                .setSingleChoiceItems(onlyTurnRestriction.toTypedArray(), onlyTurnRestriction.indexOf(onlyFor)) { d, i ->
-                    // using tags may not have been the best decision here... but whatever
-                    val newOnly = onlyTurnRestriction[i]
-                    val switchFrom = onlyFor?.let { ":$it" } ?: ""
-                    val newTags = restriction.relation.tags.toMutableMap()
-                    newTags.remove("restriction$switchFrom")?.let { newTags["restriction:$newOnly"] = it }
-                    newTags.remove("restriction$switchFrom:conditional")?.let { newTags["restriction:$newOnly:conditional"] = it }
-                    d.dismiss()
-                    currentRestriction = TurnRestriction(restriction.relation.copy(tags = newTags))
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-            if (onlyFor != null)
-                d.setNeutralButton(R.string.delete_confirmation) { _, _ ->
-                    val newTags = restriction.relation.tags.toMutableMap()
-                    newTags.remove("restriction:$onlyFor")?.let { newTags["restriction"] = it }
-                    newTags.remove("restriction:$onlyFor:conditional")?.let { newTags["restriction:conditional"] = it }
-                    currentRestriction = TurnRestriction(restriction.relation.copy(tags = newTags))
-                }
-            d.show()
-        }
-    }
-
-    // get bearing of last segment of "from" member for via icon
-    private fun showTurnRestrictionOnMap(restriction: TurnRestriction) {
-        val members = restriction.relation.members.map { it.role to (mapDataSource.get(it.type, it.ref) ?: return) }
-        val viaMembers = members.filter { it.first == "via" }.map { it.second }
-        val from = members.singleOrNull { it.first == "from" }?.second as? Way ?: return // only one from member supported
-        val isFirst = viaMembers.any { it is Node && it.id == from.nodeIds.first() || it is Way && it.nodeIds.firstAndLast().contains(from.nodeIds.first()) }
-        val isLast = viaMembers.any { it is Node && it.id == from.nodeIds.last() || it is Way && it.nodeIds.firstAndLast().contains(from.nodeIds.last()) }
-        if (isFirst == isLast) return // should not happen
-        val nodeIdsForBearing = if (isFirst) from.nodeIds.take(2).reversed() else from.nodeIds.takeLast(2)
-        val nodesForBearing = nodeIdsForBearing.map { mapDataSource.getNode(it)!! }
-        val bearing = nodesForBearing.first().position.finalBearingTo(nodesForBearing.last().position)
-        via = nodesForBearing.last().position to bearing
-    }
-
-    private fun showUnsupportedTurnRestriction(restriction: TurnRestriction) {
-        val rel = restriction.relation
-        binding.turnRestrictionContainer.isVisible = true
-        binding.maxWeightContainer.isGone = true
-        binding.infoText.isVisible = true
-
-        if (rel.isRelationComplete()) {
-            binding.infoText.text = getString(R.string.restriction_overlay_relation_unsupported, rel.getDetailsText())
-        } else {
-            binding.infoText.setText(R.string.restriction_overlay_relation_incomplete)
-        }
-    }
-
-    private fun showTurnRestrictionExceptionsDialog() {
-        val restriction = currentRestriction as? TurnRestriction ?: return
-        val selectedExceptions = restriction.relation.tags["except"]?.split(";").orEmpty()
-        val selected = exceptions.map { it in selectedExceptions }
-        val newSelected = selected.toMutableList()
-        AlertDialog.Builder(requireContext())
-            .setMultiChoiceItems(exceptions.toTypedArray(), selected.toBooleanArray()) { _, i, s ->
-                newSelected[i] = s
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                if (selected == newSelected) return@setPositiveButton
-                val newTags = restriction.relation.tags.toMutableMap()
-                newTags["except"] = newSelected.zip(exceptions).mapNotNull { if (it.first) it.second else null }.joinToString(";")
-                currentRestriction = TurnRestriction(restriction.relation.copy(tags = newTags))
-            }
-            .show()
-    }
-
-    // ---------------- other answers ----------------------
-
-    private fun relationDetailsAnswer(): AnswerItem? {
-        val restriction = currentRestriction as? TurnRestriction ?: return null
-        return if (restriction.relation.id == 0L) null
-        else AnswerItem(R.string.restriction_overlay_show_details) {
-            AlertDialog.Builder(requireContext())
-                .setMessage(restriction.relation.getDetailsText())
-                .setPositiveButton(android.R.string.ok, null)
-                .setNeutralButton(R.string.quest_generic_answer_show_edit_tags) { _, _ ->
-                    editTags(restriction.relation, elementGeometry = getGeometry(restriction.relation), editTypeName = overlay.name)
-                }
-                .show()
-        }
-    }
-
-    // ---------------- relation stuff used for turn restriction ----------------------
-
-    private fun getGeometry(rel: Relation): ElementGeometry? {
-        if (rel.id != 0L)
-            return mapDataSource.getGeometry(rel.type, rel.id)
-        val ways = rel.members.mapNotNull { if (it.type == ElementType.WAY) it.key else null }
-        return ElementGeometryCreator().create(rel, mapDataSource.getGeometries(ways).associate { it.elementId to (it.geometry as ElementPolylinesGeometry).polylines.single() })
-    }
-
-    private fun Relation.isRelationComplete(): Boolean =
-        members.all { mapDataSource.get(it.type, it.ref) != null }
-
-    private fun Relation.getDetailsText(): String {
-        val tagsText = tags.entries.sortedBy { it.key }.joinToString("\n") { "${it.key} = ${it.value}" }
-        val membersText = members.joinToString("\n") { member ->
-            val element = mapDataSource.get(member.type, member.ref)!!
-            val memberDetails = getNameAndLocationSpanned(element, resources, featureDictionary, false)
-                ?.let { "${element.key}: $it" } ?: element.key.toString()
-            "${member.role}: $memberDetails"
-        }
-        return "$tagsText\n\n$membersText"
-    }
-}
-
-// accessing restrictionTypes by index is absurdly complicated... the set is ordered, so wtf?
-private val turnRestrictionTypeList = turnRestrictionTypes.toList()
-
-// most used according to taginfo
-private val exceptions = listOf(
-    "bicycle", "psv", "bus", "emergency", "agricultural", "hgv", "moped", "destination", "motorcar"
-)
-*/
-// restriction:* list from wiki
-private val onlyTurnRestriction = listOf(
-    "hgv", "caravan", "motorcar", "bus", "agricultural", "motorcycle", "bicycle", "hazmat"
-)
-
-val onlyTurnRestrictionSet = onlyTurnRestriction.toHashSet()
-
-// actually this may be country specific!
-private fun getIconForTurnRestriction(type: String?) = when(type) {
-    "no_right_turn" -> Res.drawable.ic_restriction_no_right_turn
-    "no_left_turn" -> Res.drawable.ic_restriction_no_left_turn
-    "no_u_turn" -> Res.drawable.ic_restriction_no_u_turn
-    "no_straight_on" -> Res.drawable.ic_restriction_no_straight_on
-    "only_right_turn" -> Res.drawable.ic_restriction_only_right_turn
-    "only_left_turn" -> Res.drawable.ic_restriction_only_left_turn
-    "only_straight_on" -> Res.drawable.ic_restriction_only_straight_on
-    else -> Res.drawable.ic_restriction_unknown // currently the note icon, but half size
-}
-
-fun Map<String, String>.getShortRestrictionValue(): String? {
-    get("restriction")?.let { return it }
-    get("restriction:conditional")?.let { return it.substringBefore("@").trim() }
-    entries.firstOrNull { it.key.startsWith("restriction:") }?.let { return it.value.substringBefore("@").trim() } // restriction:hgv and similar, may be conditional
-    return null
-}
-/*
-// todo: switch form changing tags to sth else, this is getting way too complicated to handle
-private sealed interface Restriction {
-    val type: RestrictionType
-    val element: Element
-    fun getDrawable(inflater: LayoutInflater, countryInfo: CountryInfo): Drawable?
-}
-
-private data class TurnRestriction(val relation: Relation) : Restriction {
-    override val type = RestrictionType.TURN
-    override val element get () = relation
-    override fun getDrawable(inflater: LayoutInflater, countryInfo: CountryInfo) =
-        ContextCompat.getDrawable(inflater.context, getIconForTurnRestriction(relation.tags.getShortRestrictionValue()))
-}
-
-private data class WeightRestriction(val way: Way, val sign: MaxWeightSign, val weight: String) : Restriction {
-    override val type = RestrictionType.WEIGHT
-    override val element get () = way
-    override fun getDrawable(inflater: LayoutInflater, countryInfo: CountryInfo) =
-        (sign.asItem(inflater, countryInfo.countryCode).image as? DrawableImage)?.drawable
-}
+import de.westnordost.streetcomplete.resources.access_manager_button_add_conditional
+import de.westnordost.streetcomplete.resources.add
+import de.westnordost.streetcomplete.resources.cancel
+import de.westnordost.streetcomplete.resources.delete_confirmation
+import de.westnordost.streetcomplete.resources.ic_overlay_restriction
+import de.westnordost.streetcomplete.resources.leave_note
+import de.westnordost.streetcomplete.resources.ok
+import de.westnordost.streetcomplete.resources.osm_element_gone_confirmation
+import de.westnordost.streetcomplete.resources.overlay_none
+import de.westnordost.streetcomplete.resources.quest_generic_confirmation_title
+import de.westnordost.streetcomplete.resources.quest_generic_confirmation_yes
+import de.westnordost.streetcomplete.resources.quest_max_weight
+import de.westnordost.streetcomplete.resources.restriction_overlay_exceptions
+import de.westnordost.streetcomplete.resources.restriction_overlay_only_for
+import de.westnordost.streetcomplete.resources.restriction_overlay_other_restrictions
+import de.westnordost.streetcomplete.resources.restriction_overlay_relation_incomplete
+import de.westnordost.streetcomplete.resources.restriction_overlay_relation_unsupported
+import de.westnordost.streetcomplete.resources.restriction_overlay_remove_conditional_restrictions
+import de.westnordost.streetcomplete.resources.restriction_overlay_select_way
+import de.westnordost.streetcomplete.resources.restriction_overlay_show_details
+import de.westnordost.streetcomplete.resources.restriction_overlay_signed_switch
+import de.westnordost.streetcomplete.ui.common.Button2
+import de.westnordost.streetcomplete.ui.common.ButtonStyle
+import de.westnordost.streetcomplete.ui.common.DropdownButton
+import de.westnordost.streetcomplete.ui.common.dialogs.AlertDialog
+import de.westnordost.streetcomplete.ui.common.dialogs.InfoDialog
+import de.westnordost.streetcomplete.ui.common.dialogs.ScrollableAlertDialog
+import de.westnordost.streetcomplete.ui.common.dialogs.SimpleItemSelectDialog
+import de.westnordost.streetcomplete.ui.common.item_select.ImageWithLabel
+import de.westnordost.streetcomplete.ui.common.overlay.OverlayForm
+import de.westnordost.streetcomplete.ui.common.quest.AnswerItem
+import de.westnordost.streetcomplete.ui.common.quest.LocalLastMapClick
+import de.westnordost.streetcomplete.ui.common.quest.LocalMapMarkersCallback
+import de.westnordost.streetcomplete.ui.common.quest.LocalSetOverlayVisibleCallback
+import de.westnordost.streetcomplete.ui.common.quest.Marker
+import de.westnordost.streetcomplete.ui.util.rememberSerializable
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
 private enum class RestrictionType { TURN, WEIGHT }
 
-private fun getWeightRestrictions(way: Way): List<WeightRestriction> {
-    val restrictions = mutableListOf<WeightRestriction>()
-    for (sign in MaxWeightSign.entries) {
-        val key = if (way.tags.containsKey(sign.osmKey)) sign.osmKey
-            else way.tags.keys.firstOrNull { it == "${sign.osmKey}:conditional" } ?: continue
-        val weight = way.tags[key]!!
-        restrictions.add(WeightRestriction(way, sign, weight))
+@Composable
+fun RestrictionOverlayWayForm(
+    on: (OverlayAction) -> Unit,
+    element: Element, // Way
+    geometry: ElementGeometry,
+    countryInfo: CountryInfo,
+    mapDataWithEditsSource: MapDataWithEditsSource = koinInject(),
+) {
+    // Selected way geometry; used as map highlight fallback when no relation geometry exists.
+    val wayGeometry = geometry
+    val way = element as Way
+    val locale = countryInfo.languageTag?.let { Locale(it) } ?: Locale.current
+    val units = countryInfo.weightLimitUnits
+
+    val originalRestrictions = remember(way.id) {
+        getOriginalRestrictions(way, mapDataWithEditsSource)
     }
-    return restrictions
+
+    var selectedRestriction by rememberSerializable {
+        mutableStateOf(
+            getInitialRestrictionPreferComplete(originalRestrictions) {
+                isRelationComplete(it, mapDataWithEditsSource)
+            }
+        )
+    }
+    var currentRestriction by rememberSerializable {
+        mutableStateOf(selectedRestriction)
+    }
+
+    var turnRestrictionSelectionMode by rememberSaveable { mutableStateOf(false) }
+    var draftSigned by rememberSaveable {
+        mutableStateOf(
+            (selectedRestriction as? TurnRestriction)?.relation?.tags?.get("implicit") != "yes"
+        )
+    }
+    var draftTurnType by rememberSaveable {
+        mutableStateOf(
+            (selectedRestriction as? TurnRestriction)?.relation?.tags?.getShortRestrictionValue()
+                ?.takeIf { it in turnRestrictionTypeList }
+                ?: turnRestrictionTypeList.first()
+        )
+    }
+
+    // Weight input including unit (weight string on WeightRestriction stays numeric for isComplete)
+    var editedWeight by rememberSerializable {
+        mutableStateOf(
+            (selectedRestriction as? WeightRestriction)?.let { parseWeight(it.weight, units) }
+        )
+    }
+
+    var showAddRestrictionDialog by remember { mutableStateOf(false) }
+    var showWeightTypeDialog by remember { mutableStateOf(false) }
+    var showExceptionsDialog by remember { mutableStateOf(false) }
+    var showOnlyForDialog by remember { mutableStateOf(false) }
+    var showAddConditionalDialog by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showRelationDetails by remember { mutableStateOf(false) }
+
+    val setOverlayVisible = LocalSetOverlayVisibleCallback.current
+    val mapClick = LocalLastMapClick.current
+    val mapMarkersCallback = LocalMapMarkersCallback.current
+
+    val hasChanges = currentRestriction != null && currentRestriction != selectedRestriction
+    val isComplete = when (val restriction = currentRestriction) {
+        is WeightRestriction -> hasChanges && editedWeight != null
+        is TurnRestriction -> hasChanges
+        null -> false
+    }
+
+    val showAddButton =
+        !turnRestrictionSelectionMode && currentRestriction == selectedRestriction
+
+    fun selectRestriction(restriction: RestrictionOverlayRestriction) {
+        selectedRestriction = restriction
+        currentRestriction = restriction
+        turnRestrictionSelectionMode = false
+        if (restriction is WeightRestriction) {
+            editedWeight = parseWeight(restriction.weight, units)
+        } else {
+            editedWeight = null
+        }
+        if (restriction is TurnRestriction) {
+            restriction.relation.tags.getShortRestrictionValue()
+                ?.takeIf { it in turnRestrictionTypeList }
+                ?.let { draftTurnType = it }
+            draftSigned = restriction.relation.tags["implicit"] != "yes"
+        }
+    }
+
+    LaunchedEffect(turnRestrictionSelectionMode) {
+        setOverlayVisible?.invoke(!turnRestrictionSelectionMode)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            setOverlayVisible?.invoke(true)
+            mapMarkersCallback?.invoke(emptyList())
+        }
+    }
+
+    LaunchedEffect(mapClick?.timestamp) {
+        val click = mapClick ?: return@LaunchedEffect
+        if (!turnRestrictionSelectionMode) return@LaunchedEffect
+        val (toWay, viaNode) = findEligibleToWay(
+            position = click.position,
+            clickAreaSizeInMeters = click.clickAreaSizeInMeters,
+            fromWay = way,
+            mapDataSource = mapDataWithEditsSource,
+        ) ?: return@LaunchedEffect
+
+        val baseTags = (currentRestriction as? TurnRestriction)?.relation?.tags.orEmpty()
+        val relation = createTurnRestrictionRelation(
+            fromWay = way,
+            toWay = toWay,
+            viaNode = viaNode,
+            restrictionType = draftTurnType,
+            signed = draftSigned,
+            baseTags = baseTags,
+        )
+        currentRestriction = TurnRestriction(relation)
+        turnRestrictionSelectionMode = false
+    }
+
+    // Include member roles so from<->to swap refreshes via bearing / highlights.
+    val turnMemberRoles = (currentRestriction as? TurnRestriction)
+        ?.relation?.members?.joinToString { "${it.role}:${it.type}:${it.ref}" }
+    LaunchedEffect(currentRestriction, turnMemberRoles, draftTurnType, wayGeometry, turnRestrictionSelectionMode) {
+        if (turnRestrictionSelectionMode) {
+            mapMarkersCallback?.invoke(listOf(Marker(wayGeometry)))
+            return@LaunchedEffect
+        }
+        when (val restriction = currentRestriction) {
+            is TurnRestriction -> {
+                val markers = mutableListOf<Marker>()
+                (relationGeometry(restriction.relation, mapDataWithEditsSource) ?: wayGeometry)
+                    .let { markers += Marker(it) }
+                viaBearingForTurnRestriction(restriction.relation, mapDataWithEditsSource)
+                    ?.let { (position, bearing) ->
+                        val type = restriction.relation.tags.getShortRestrictionValue() ?: draftTurnType
+                        markers += Marker(
+                            geometry = pointGeometry(position),
+                            icon = getIconForTurnRestriction(type),
+                            rotation = bearing,
+                        )
+                    }
+                mapMarkersCallback?.invoke(markers)
+            }
+            is WeightRestriction -> mapMarkersCallback?.invoke(listOf(Marker(wayGeometry)))
+            null -> mapMarkersCallback?.invoke(emptyList())
+        }
+    }
+
+    OverlayForm(
+        on = on,
+        isComplete = isComplete,
+        hasChanges = hasChanges,
+        onClickOk = {
+            when (val restriction = currentRestriction) {
+                is WeightRestriction -> {
+                    val weight = editedWeight
+                        ?: parseWeight(restriction.weight, units)
+                        ?: return@OverlayForm
+                    val changes = restriction.way.tags.createChanges(way.tags)
+                    changes[restriction.type.osmKey] = weight.toOsmString()
+                    on(Edit(UpdateElementTagsAction(restriction.way, changes.create())))
+                }
+                is TurnRestriction -> {
+                    val rel = restriction.relation
+                    if (rel.id == 0L) {
+                        on(Edit(CreateRelationAction(rel.tags, rel.members)))
+                    } else {
+                        val oldRelation = (selectedRestriction as? TurnRestriction)?.relation
+                            ?: return@OverlayForm
+                        on(
+                            Edit(
+                                UpdateElementTagsAction(
+                                    oldRelation,
+                                    rel.tags.createChanges(oldRelation.tags).create()
+                                )
+                            )
+                        )
+                    }
+                }
+                null -> Unit
+            }
+        },
+        otherAnswers = {
+            listOfNotNull(
+                (currentRestriction as? TurnRestriction)
+                    ?.takeIf { it.relation.id != 0L }
+                    ?.let {
+                        AnswerItem(stringResource(Res.string.restriction_overlay_show_details)) {
+                            showRelationDetails = true
+                        }
+                    }
+            )
+        },
+    ) {
+        // BottomSheetFormScaffold (via OverlayForm) already owns verticalScroll;
+        // nested verticalScroll here receives infinite max height and crashes.
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            OtherRestrictionsList(
+                originalRestrictions = originalRestrictions,
+                selectedRestriction = selectedRestriction,
+                wayId = way.id,
+                countryCode = countryInfo.countryCode.orEmpty(),
+                onSelect = ::selectRestriction,
+            )
+
+            when {
+                turnRestrictionSelectionMode -> {
+                    TurnRestrictionEditor(
+                        relation = (currentRestriction as? TurnRestriction)?.relation,
+                        wayId = way.id,
+                        draftTurnType = draftTurnType,
+                        draftSigned = draftSigned,
+                        selectionMode = true,
+                        onTurnTypeChange = { draftTurnType = it },
+                        onSignedChange = { draftSigned = it },
+                        onSwap = {},
+                        onExceptionsClick = {},
+                        onOnlyForClick = {},
+                        onConditionalClick = {},
+                        conditionalLabel = stringResource(Res.string.access_manager_button_add_conditional),
+                        infoText = stringResource(Res.string.restriction_overlay_select_way),
+                        showOnlyFor = false,
+                    )
+                }
+                currentRestriction is TurnRestriction -> {
+                    val turn = currentRestriction as TurnRestriction
+                    if (turn.relation.isSupportedTurnRestriction()) {
+                        val infoText = turn.relation.tags
+                            .filterKeys { key ->
+                                key.startsWith("restriction:") &&
+                                    onlyTurnRestriction.none { key.endsWith(it) }
+                            }
+                            .map { "${it.key} = ${it.value}" }
+                            .joinToString("\n")
+                        TurnRestrictionEditor(
+                            relation = turn.relation,
+                            wayId = way.id,
+                            draftTurnType = draftTurnType,
+                            draftSigned = draftSigned,
+                            selectionMode = false,
+                            onTurnTypeChange = { type ->
+                                draftTurnType = type
+                                val latest = (currentRestriction as? TurnRestriction)?.relation
+                                    ?: turn.relation
+                                currentRestriction = TurnRestriction(
+                                    withTurnRestrictionType(latest, type)
+                                )
+                            },
+                            onSignedChange = { signed ->
+                                draftSigned = signed
+                                val latest = (currentRestriction as? TurnRestriction)?.relation
+                                    ?: turn.relation
+                                currentRestriction = TurnRestriction(
+                                    withImplicitSigned(latest, signed)
+                                )
+                            },
+                            onSwap = {
+                                val latest = (currentRestriction as? TurnRestriction)?.relation
+                                    ?: return@TurnRestrictionEditor
+                                if (!isTurnRestrictionFromToSwapAllowed(latest)) return@TurnRestrictionEditor
+                                currentRestriction = TurnRestriction(withSwappedFromTo(latest))
+                            },
+                            onExceptionsClick = { showExceptionsDialog = true },
+                            onOnlyForClick = { showOnlyForDialog = true },
+                            onConditionalClick = {
+                                val latestTurn = currentRestriction as? TurnRestriction ?: turn
+                                if (infoText.isNotBlank()) {
+                                    currentRestriction = removeConditional(latestTurn)
+                                } else {
+                                    showAddConditionalDialog = true
+                                }
+                            },
+                            conditionalLabel = if (infoText.isNotBlank()) {
+                                stringResource(Res.string.restriction_overlay_remove_conditional_restrictions)
+                            } else {
+                                stringResource(Res.string.access_manager_button_add_conditional)
+                            },
+                            infoText = infoText.ifBlank { null },
+                            showOnlyFor = true,
+                        )
+                    } else {
+                        UnsupportedTurnRestrictionInfo(
+                            relation = turn.relation,
+                            mapDataWithEditsSource = mapDataWithEditsSource,
+                        )
+                    }
+                }
+                currentRestriction is WeightRestriction -> {
+                    val weightRestriction = currentRestriction as WeightRestriction
+                    val restrictionInfo = weightRestriction.way.tags
+                        .filterKeys { it.startsWith("${weightRestriction.type.osmKey}:") }
+                        .map { "${it.key} = ${it.value}" }
+                        .joinToString("\n")
+
+                    MaxWeightSignForm(
+                        type = weightRestriction.type,
+                        weight = editedWeight,
+                        onWeightChange = { newWeight ->
+                            editedWeight = newWeight
+                            currentRestriction = WeightRestriction(
+                                way = weightRestriction.way,
+                                type = weightRestriction.type,
+                                weight = newWeight?.toOsmString().orEmpty(),
+                            )
+                        },
+                        locale = locale,
+                        selectableUnits = units,
+                    )
+
+                    Button2(
+                        onClick = {
+                            if (restrictionInfo.isNotBlank()) {
+                                currentRestriction = removeConditional(weightRestriction)
+                            } else {
+                                showAddConditionalDialog = true
+                            }
+                        },
+                        style = ButtonStyle.Text,
+                    ) {
+                        Text(
+                            if (restrictionInfo.isNotBlank()) {
+                                stringResource(Res.string.restriction_overlay_remove_conditional_restrictions)
+                            } else {
+                                stringResource(Res.string.access_manager_button_add_conditional)
+                            }
+                        )
+                    }
+                    if (restrictionInfo.isNotBlank()) {
+                        Text(restrictionInfo, style = MaterialTheme.typography.body2)
+                    }
+                }
+            }
+
+            if (showAddButton) {
+                Button2(onClick = { showAddRestrictionDialog = true }) {
+                    Text(stringResource(Res.string.add))
+                }
+            }
+
+            val showRemove = when (val restriction = currentRestriction) {
+                is TurnRestriction -> restriction.relation.id != 0L
+                is WeightRestriction -> true
+                null -> false
+            }
+            if (showRemove && !turnRestrictionSelectionMode) {
+                Button2(
+                    onClick = { showDeleteDialog = true },
+                    style = ButtonStyle.Outlined,
+                ) {
+                    Text(stringResource(Res.string.delete_confirmation))
+                }
+            }
+        }
+    }
+
+    if (showAddRestrictionDialog) {
+        SimpleItemSelectDialog(
+            onDismissRequest = { showAddRestrictionDialog = false },
+            columns = SimpleGridCells.Fixed(2),
+            items = RestrictionType.entries,
+            onSelected = { type ->
+                when (type) {
+                    RestrictionType.TURN -> {
+                        turnRestrictionSelectionMode = true
+                        draftSigned = true
+                        draftTurnType = turnRestrictionTypeList.first()
+                    }
+                    RestrictionType.WEIGHT -> showWeightTypeDialog = true
+                }
+            },
+            itemContent = { type ->
+                val icon = when (type) {
+                    RestrictionType.TURN -> Res.drawable.ic_overlay_restriction
+                    RestrictionType.WEIGHT -> Res.drawable.quest_max_weight
+                }
+                Image(painterResource(icon), contentDescription = type.name)
+            },
+        )
+    }
+
+    if (showWeightTypeDialog) {
+        val availableTypes = MaxWeightType.entries.filter { type ->
+            originalRestrictions.none { it is WeightRestriction && it.type == type } &&
+                type.getIcon(countryInfo.countryCode.orEmpty()) != null
+        }
+        SimpleItemSelectDialog(
+            onDismissRequest = { showWeightTypeDialog = false },
+            columns = SimpleGridCells.Fixed(2),
+            items = availableTypes,
+            onSelected = { type ->
+                editedWeight = null
+                currentRestriction = WeightRestriction(way, type, "")
+            },
+            itemContent = { type ->
+                val icon = type.getIcon(countryInfo.countryCode.orEmpty())
+                if (icon != null) Image(painterResource(icon), contentDescription = type.name)
+            },
+        )
+    }
+
+    if (showExceptionsDialog) {
+        val turn = currentRestriction as? TurnRestriction
+        if (turn != null) {
+            ExceptionsMultiChoiceDialog(
+                selected = turn.relation.tags["except"]
+                    ?.split(";")
+                    ?.map { it.trim() }
+                    ?.filter { it.isNotEmpty() }
+                    .orEmpty()
+                    .toSet(),
+                onDismissRequest = { showExceptionsDialog = false },
+                onConfirm = { exceptions ->
+                    currentRestriction = TurnRestriction(
+                        withExceptions(
+                            turn.relation,
+                            turnRestrictionExceptions.filter { it in exceptions }
+                        )
+                    )
+                    showExceptionsDialog = false
+                },
+            )
+        } else {
+            showExceptionsDialog = false
+        }
+    }
+
+    if (showOnlyForDialog) {
+        val turn = currentRestriction as? TurnRestriction
+        if (turn != null) {
+            OnlyForDialog(
+                currentOnly = currentOnlyFor(turn.relation),
+                onDismissRequest = { showOnlyForDialog = false },
+                onSelected = { onlyFor ->
+                    currentRestriction = TurnRestriction(withOnlyFor(turn.relation, onlyFor))
+                    showOnlyForDialog = false
+                },
+                onClear = {
+                    currentRestriction = TurnRestriction(withOnlyFor(turn.relation, null))
+                    showOnlyForDialog = false
+                },
+            )
+        } else {
+            showOnlyForDialog = false
+        }
+    }
+
+    if (showAddConditionalDialog) {
+        when (val restriction = currentRestriction) {
+            is TurnRestriction -> {
+                val tags = restriction.relation.tags
+                val restrictionKey = when {
+                    tags.containsKey("restriction") -> "restriction"
+                    else -> tags.keys.firstOrNull { key ->
+                        onlyTurnRestriction.any { key == "restriction:$it" }
+                    } ?: "restriction"
+                }
+                val values = tags[restrictionKey]?.let { listOf(it, "none") }
+                    ?: listOf(draftTurnType)
+                AddConditionalDialog(
+                    onDismissRequest = { showAddConditionalDialog = false },
+                    keys = listOf("$restrictionKey:conditional"),
+                    values = values,
+                    numberOnly = false,
+                    countryInfo = countryInfo,
+                ) { key, value ->
+                    val newTags = tags.toMutableMap()
+                    newTags[key] = value
+                    if (!value.startsWith("none")) newTags.remove(restrictionKey)
+                    currentRestriction = TurnRestriction(restriction.relation.copy(tags = newTags))
+                    showAddConditionalDialog = false
+                }
+            }
+            is WeightRestriction -> {
+                val weightKey = restriction.type.osmKey
+                AddConditionalDialog(
+                    onDismissRequest = { showAddConditionalDialog = false },
+                    keys = listOf("$weightKey:conditional"),
+                    values = null,
+                    numberOnly = false,
+                    countryInfo = countryInfo,
+                ) { key, value ->
+                    val newTags = restriction.way.tags.toMutableMap()
+                    newTags[key] = value
+                    if (!value.startsWith("none")) newTags.remove(weightKey)
+                    currentRestriction = WeightRestriction(
+                        way = restriction.way.copy(tags = newTags),
+                        type = restriction.type,
+                        weight = restriction.weight,
+                    )
+                    showAddConditionalDialog = false
+                }
+            }
+            null -> showAddConditionalDialog = false
+        }
+    }
+
+    if (showDeleteDialog) {
+        when (val restriction = currentRestriction) {
+            is TurnRestriction -> {
+                if (restriction.relation.id == 0L) {
+                    showDeleteDialog = false
+                } else {
+                    AlertDialog(
+                        onDismissRequest = { showDeleteDialog = false },
+                        text = { Text(stringResource(Res.string.quest_generic_confirmation_title)) },
+                        buttonRow = {
+                            TextButton(onClick = { showDeleteDialog = false }) {
+                                Text(stringResource(Res.string.cancel))
+                            }
+                            TextButton(onClick = {
+                                showDeleteDialog = false
+                                on(Action.LeaveNote)
+                            }) {
+                                Text(stringResource(Res.string.leave_note))
+                            }
+                            TextButton(onClick = {
+                                showDeleteDialog = false
+                                on(Edit(DeleteRelationAction(restriction.relation)))
+                            }) {
+                                Text(stringResource(Res.string.osm_element_gone_confirmation))
+                            }
+                        },
+                    )
+                }
+            }
+            is WeightRestriction -> {
+                AlertDialog(
+                    onDismissRequest = { showDeleteDialog = false },
+                    text = { Text(stringResource(Res.string.quest_generic_confirmation_title)) },
+                    buttonRow = {
+                        TextButton(onClick = { showDeleteDialog = false }) {
+                            Text(stringResource(Res.string.cancel))
+                        }
+                        TextButton(onClick = {
+                            showDeleteDialog = false
+                            on(Action.LeaveNote)
+                        }) {
+                            Text(stringResource(Res.string.leave_note))
+                        }
+                        TextButton(onClick = {
+                            val changes = restriction.way.tags.createChanges(way.tags)
+                            changes.remove(restriction.type.osmKey)
+                            changes.keys
+                                .filter { it.startsWith("${restriction.type.osmKey}:") }
+                                .toList()
+                                .forEach { changes.remove(it) }
+                            showDeleteDialog = false
+                            if (changes.hasChanges) {
+                                on(Edit(UpdateElementTagsAction(restriction.way, changes.create())))
+                            }
+                        }) {
+                            Text(stringResource(Res.string.quest_generic_confirmation_yes))
+                        }
+                    },
+                )
+            }
+            null -> showDeleteDialog = false
+        }
+    }
+
+    if (showRelationDetails) {
+        val turn = currentRestriction as? TurnRestriction
+        if (turn != null && turn.relation.id != 0L) {
+            InfoDialog(
+                onDismissRequest = { showRelationDetails = false },
+                title = { Text(stringResource(Res.string.restriction_overlay_show_details)) },
+                text = {
+                    Text(relationDetailsText(turn.relation, mapDataWithEditsSource))
+                },
+            )
+        } else {
+            showRelationDetails = false
+        }
+    }
 }
-*/
+
+@Composable
+private fun OtherRestrictionsList(
+    originalRestrictions: List<RestrictionOverlayRestriction>,
+    selectedRestriction: RestrictionOverlayRestriction?,
+    wayId: Long,
+    countryCode: String,
+    onSelect: (RestrictionOverlayRestriction) -> Unit,
+) {
+    val others = originalRestrictions.filterNot { it == selectedRestriction }
+    if (others.isEmpty()) return
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        Text(stringResource(Res.string.restriction_overlay_other_restrictions))
+        for (restriction in others) {
+            val label = when (restriction) {
+                is TurnRestriction -> restriction.relation.members
+                    .filter { it.type == ElementType.WAY && it.ref == wayId }
+                    .joinToString(", ") { it.role }
+                is WeightRestriction -> restriction.weight
+            }
+            val icon = when (restriction) {
+                is TurnRestriction ->
+                    getIconForTurnRestriction(restriction.relation.tags.getShortRestrictionValue())
+                is WeightRestriction ->
+                    restriction.type.getIcon(countryCode) ?: Res.drawable.quest_max_weight
+            }
+            Button2(onClick = { onSelect(restriction) }, style = ButtonStyle.Outlined) {
+                ImageWithLabel(
+                    painter = painterResource(icon),
+                    label = label,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun TurnRestrictionEditor(
+    relation: Relation?,
+    wayId: Long,
+    draftTurnType: String,
+    draftSigned: Boolean,
+    selectionMode: Boolean,
+    onTurnTypeChange: (String) -> Unit,
+    onSignedChange: (Boolean) -> Unit,
+    onSwap: () -> Unit,
+    onExceptionsClick: () -> Unit,
+    onOnlyForClick: () -> Unit,
+    onConditionalClick: () -> Unit,
+    conditionalLabel: String,
+    infoText: String?,
+    showOnlyFor: Boolean,
+) {
+    val selectedType = relation?.tags?.getShortRestrictionValue()
+        ?.takeIf { it in turnRestrictionTypeList }
+        ?: draftTurnType
+    val canSwap = relation != null && isTurnRestrictionFromToSwapAllowed(relation)
+    val wayRole = relation?.let { wayRoleInTurnRestriction(it, wayId) }
+
+    DropdownButton(
+        items = turnRestrictionTypeList,
+        selectedItem = selectedType,
+        onSelectedItem = onTurnTypeChange,
+        itemContent = { type ->
+            ImageWithLabel(
+                painter = painterResource(getIconForTurnRestriction(type)),
+                label = type,
+            )
+        },
+    )
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .toggleable(
+                value = draftSigned,
+                onValueChange = onSignedChange,
+                role = Role.Switch,
+            )
+            .padding(horizontal = 8.dp),
+    ) {
+        Text(
+            text = stringResource(Res.string.restriction_overlay_signed_switch),
+            modifier = Modifier.weight(1f),
+        )
+        Switch(checked = draftSigned, onCheckedChange = onSignedChange)
+    }
+
+    if (!selectionMode && relation != null) {
+        if (wayRole != null) {
+            Text(
+                text = wayRole,
+                style = MaterialTheme.typography.subtitle1,
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
+
+        val exceptionsArgs = relation.tags["except"]?.replace(";", ", ")
+            ?: stringResource(Res.string.overlay_none)
+        Button2(onClick = onExceptionsClick, style = ButtonStyle.Outlined) {
+            Text(stringResource(Res.string.restriction_overlay_exceptions, exceptionsArgs))
+        }
+
+        if (showOnlyFor) {
+            val onlyForText = currentOnlyFor(relation) ?: "-"
+            Button2(onClick = onOnlyForClick, style = ButtonStyle.Outlined) {
+                Text(stringResource(Res.string.restriction_overlay_only_for, onlyForText))
+            }
+        }
+
+        // Historical: swap control only for new draft relations (id == 0), not existing ones
+        if (canSwap) {
+            Button2(onClick = onSwap, style = ButtonStyle.Outlined) {
+                Text("from <-> to")
+            }
+        }
+
+        Button2(onClick = onConditionalClick, style = ButtonStyle.Text) {
+            Text(conditionalLabel)
+        }
+    }
+
+    if (!infoText.isNullOrBlank()) {
+        Text(
+            text = infoText,
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.padding(top = 4.dp),
+        )
+    }
+}
+
+@Composable
+private fun UnsupportedTurnRestrictionInfo(
+    relation: Relation,
+    mapDataWithEditsSource: MapDataWithEditsSource,
+) {
+    val text = if (isRelationComplete(relation, mapDataWithEditsSource)) {
+        stringResource(
+            Res.string.restriction_overlay_relation_unsupported,
+            relationDetailsText(relation, mapDataWithEditsSource),
+        )
+    } else {
+        stringResource(Res.string.restriction_overlay_relation_incomplete)
+    }
+    Text(text)
+}
+
+@Composable
+private fun ExceptionsMultiChoiceDialog(
+    selected: Set<String>,
+    onDismissRequest: () -> Unit,
+    onConfirm: (Set<String>) -> Unit,
+) {
+    val selectedStates = remember(selected) {
+        mutableStateMapOf<String, Boolean>().apply {
+            turnRestrictionExceptions.forEach { put(it, it in selected) }
+        }
+    }
+
+    ScrollableAlertDialog(
+        onDismissRequest = onDismissRequest,
+        title = {
+            Text(
+                text = stringResource(Res.string.restriction_overlay_exceptions, ""),
+                style = MaterialTheme.typography.subtitle1,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        content = {
+            Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
+                turnRestrictionExceptions.forEach { value ->
+                    val checked = selectedStates[value] == true
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .toggleable(
+                                value = checked,
+                                onValueChange = { selectedStates[value] = it },
+                            ),
+                    ) {
+                        Checkbox(
+                            checked = checked,
+                            onCheckedChange = { selectedStates[value] = it },
+                        )
+                        Text(value, modifier = Modifier.padding(start = 6.dp))
+                    }
+                }
+            }
+        },
+        buttonRow = {
+            TextButton(onClick = onDismissRequest) {
+                Text(stringResource(Res.string.cancel))
+            }
+            TextButton(
+                onClick = { onConfirm(selectedStates.filterValues { it }.keys) }
+            ) {
+                Text(stringResource(Res.string.ok))
+            }
+        },
+    )
+}
+
+@Composable
+private fun OnlyForDialog(
+    currentOnly: String?,
+    onDismissRequest: () -> Unit,
+    onSelected: (String) -> Unit,
+    onClear: () -> Unit,
+) {
+    var selected by remember(currentOnly) { mutableStateOf(currentOnly) }
+
+    ScrollableAlertDialog(
+        onDismissRequest = onDismissRequest,
+        title = {
+            Text(
+                text = stringResource(Res.string.restriction_overlay_only_for, currentOnly ?: "-"),
+                style = MaterialTheme.typography.subtitle1,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        content = {
+            Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
+                onlyTurnRestriction.forEach { value ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .toggleable(
+                                value = selected == value,
+                                onValueChange = {
+                                    selected = value
+                                    onSelected(value)
+                                },
+                            ),
+                    ) {
+                        RadioButton(
+                            selected = selected == value,
+                            onClick = {
+                                selected = value
+                                onSelected(value)
+                            },
+                        )
+                        Text(value, modifier = Modifier.padding(start = 6.dp))
+                    }
+                }
+            }
+        },
+        buttonRow = {
+            TextButton(onClick = onDismissRequest) {
+                Text(stringResource(Res.string.cancel))
+            }
+            if (currentOnly != null) {
+                TextButton(onClick = onClear) {
+                    Text(stringResource(Res.string.delete_confirmation))
+                }
+            }
+        },
+    )
+}
+
+private fun removeConditional(
+    restriction: RestrictionOverlayRestriction,
+): RestrictionOverlayRestriction = when (restriction) {
+    is TurnRestriction -> {
+        val newTags = restriction.relation.tags.toMutableMap()
+        val oldConditionalKey = when {
+            newTags.containsKey("restriction:conditional") -> "restriction:conditional"
+            else -> newTags.keys.firstOrNull {
+                it.startsWith("restriction:") && it.endsWith(":conditional")
+            } ?: "restriction:conditional"
+        }
+        val baseKey = oldConditionalKey.substringBefore(":conditional")
+        if (!newTags.containsKey(baseKey)) {
+            newTags.getShortRestrictionValue()?.let { newTags[baseKey] = it }
+        }
+        newTags.remove(oldConditionalKey)
+        TurnRestriction(restriction.relation.copy(tags = newTags))
+    }
+    is WeightRestriction -> {
+        val newTags = restriction.way.tags.toMutableMap()
+        newTags.remove("${restriction.type.osmKey}:conditional")
+        WeightRestriction(
+            way = restriction.way.copy(tags = newTags),
+            type = restriction.type,
+            weight = restriction.weight,
+        )
+    }
+}
+
+private fun parseWeight(
+    weightString: String,
+    units: List<WeightMeasurementUnit>,
+): Weight? {
+    if (weightString.isBlank()) return null
+    val normalized = weightString.replace(',', '.')
+    normalized.toDoubleOrNull()?.let {
+        return Weight(it, units.firstOrNull() ?: WeightMeasurementUnit.METRIC_TON)
+    }
+    when {
+        weightString.endsWith("lbs") -> {
+            val w = weightString.substringBefore("lbs").trim().replace(',', '.').toDoubleOrNull()
+                ?: return null
+            val unit = units.firstOrNull { it == WeightMeasurementUnit.POUND }
+                ?: WeightMeasurementUnit.POUND
+            return Weight(w, unit)
+        }
+        weightString.endsWith("st") -> {
+            val w = weightString.substringBefore("st").trim().replace(',', '.').toDoubleOrNull()
+                ?: return null
+            val unit = units.firstOrNull { it == WeightMeasurementUnit.SHORT_TON }
+                ?: WeightMeasurementUnit.SHORT_TON
+            return Weight(w, unit)
+        }
+        weightString.endsWith("t") -> {
+            val w = weightString.substringBefore("t").trim().replace(',', '.').toDoubleOrNull()
+                ?: return null
+            return Weight(w, units.firstOrNull() ?: WeightMeasurementUnit.METRIC_TON)
+        }
+        else -> return null
+    }
+}
+
+private fun relationDetailsText(
+    relation: Relation,
+    mapDataSource: MapDataWithEditsSource,
+): String {
+    val tagsText = relation.tags.entries
+        .sortedBy { it.key }
+        .joinToString("\n") { "${it.key} = ${it.value}" }
+    val membersText = relation.members.joinToString("\n") { member ->
+        val element = mapDataSource.get(member.type, member.ref)
+        val details = element?.key?.toString() ?: "${member.type}/${member.ref}"
+        "${member.role}: $details"
+    }
+    return "$tagsText\n\n$membersText"
+}

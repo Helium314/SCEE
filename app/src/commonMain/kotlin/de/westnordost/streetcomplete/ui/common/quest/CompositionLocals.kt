@@ -22,6 +22,9 @@ val LocalLastMapClick = compositionLocalOf<MapClick?> { null }
 
 val LocalMapMarkersCallback = compositionLocalOf<((Iterable<Marker>) -> Unit)?> { null }
 
+/** Temporarily show/hide the styleable overlay layer (e.g. during map-selection modes). */
+val LocalSetOverlayVisibleCallback = compositionLocalOf<((Boolean) -> Unit)?> { null }
+
 val LocalGetOffsetCallback = compositionLocalOf<((LatLon) -> Offset?)?> { null }
 
 val LocalIsTagEditor = compositionLocalOf<Boolean> { false }

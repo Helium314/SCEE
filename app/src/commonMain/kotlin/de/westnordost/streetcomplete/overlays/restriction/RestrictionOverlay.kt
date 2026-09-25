@@ -49,11 +49,13 @@ class RestrictionOverlay : Overlay {
 
     @Composable
     override fun Form(on: (OverlayAction) -> Unit, element: Element?, geometry: ElementGeometry, countryInfo: CountryInfo) {
-        TODO("Not yet implemented")
+        when {
+            element == null || element is Node ->
+                RestrictionOverlayNodeForm(on, element, geometry, countryInfo)
+            element is Way ->
+                RestrictionOverlayWayForm(on, element, geometry, countryInfo)
+        }
     }
-//    override fun createForm(element: Element?): AbstractOverlayForm = RestrictionOverlayNodeForm()
-//        if (element is Way) RestrictionOverlayWayForm()
-//        else RestrictionOverlayNodeForm() // node or null when inserting
 
     override val changesetComment: String = "Specify traffic restrictions"
     override val icon = Res.drawable.ic_overlay_restriction
@@ -111,9 +113,11 @@ private fun Relation.getColor(wayId: Long): Color {
 
 private fun getColor(role: String, restriction: String): Color = when {
     restriction.startsWith("no_") && role == "from" -> OverlayColor.Orange
-    restriction.startsWith("no_") && role == "to" -> darkerOrange
+    restriction.startsWith("no_") && role == "to" ->
+        Color(ColorUtils.blendARGB(OverlayColor.Orange.toArgb(), OverlayColor.Black.toArgb(), 0.75f))
     restriction.startsWith("only_") && role == "from" -> OverlayColor.Gold
-    restriction.startsWith("only_") && role == "to" -> darkerGold
+    restriction.startsWith("only_") && role == "to" ->
+        Color(ColorUtils.blendARGB(OverlayColor.Gold.toArgb(), OverlayColor.Black.toArgb(), 0.75f))
     role == "via" -> OverlayColor.Lime
     else -> OverlayColor.Black
 }
@@ -147,6 +151,3 @@ val turnRestrictionTypes = linkedSetOf(
 )
 
 private val maxWeightKeys = MaxWeightType.entries.map { it.osmKey }.toTypedArray()
-
-private val darkerGold = Color(ColorUtils.blendARGB(OverlayColor.Gold.toArgb(), OverlayColor.Black.toArgb(), 0.75f))
-private val darkerOrange = Color(ColorUtils.blendARGB(OverlayColor.Orange.toArgb(), OverlayColor.Black.toArgb(), 0.75f))

@@ -450,6 +450,9 @@ tasks.register<CopyIconsTask>("copyIconsToAndroid") {
         it.startsWith("quest_") ||
         it.startsWith("ic_quest_") ||
         it == "ic_custom_overlay.xml" ||
+        // RestrictionOverlay map pins + overlay icon (StyleableOverlayMapComponent needs Android IDs)
+        it.startsWith("ic_restriction_") ||
+        it == "ic_overlay_restriction.xml" ||
         it == "ic_add_poi.xml" ||
         it == "ic_edit_tags.xml" ||
         it.startsWith("crossing_markings") ||

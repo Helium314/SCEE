@@ -285,6 +285,9 @@ class MainActivity :
                 onSetMapMarkers = { markers ->
                     mapFragment?.setMarkersForCurrentHighlighting(markers)
                 },
+                onSetOverlayVisible = { visible ->
+                    mapFragment?.setOverlayVisible(visible)
+                },
                 onSolvedQuest = { icon, position ->
                     val offset = root.getLocationInWindow()
                     val startPos = mapFragment?.getPointOf(position)!!

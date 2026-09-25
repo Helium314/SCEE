@@ -76,6 +76,7 @@ fun MainScreen(
     onClickProfile: () -> Unit,
     onClickLogin: () -> Unit,
     onSetMapMarkers: (Iterable<Marker>) -> Unit,
+    onSetOverlayVisible: (Boolean) -> Unit = {},
     onSolvedQuest: (icon: DrawableResource, position: LatLon) -> Unit,
     getOffset: (position: LatLon) -> Offset?,
     lastMapClick: MapClick?,
@@ -311,6 +312,7 @@ fun MainScreen(
                         mapPosition = mapCamera.position,
                         mapMetersPerDp = metersPerDp,
                         onSetMapMarkers = onSetMapMarkers,
+                        onSetOverlayVisible = onSetOverlayVisible,
                         getOffset = getOffset,
                         lastMapClick = lastMapClick,
                     )

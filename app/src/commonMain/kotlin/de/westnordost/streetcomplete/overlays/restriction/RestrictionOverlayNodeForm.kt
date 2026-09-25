@@ -1,378 +1,316 @@
 package de.westnordost.streetcomplete.overlays.restriction
-/*
-import android.content.res.Configuration
-import android.os.Bundle
-import android.view.View
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.core.view.doOnLayout
-import de.westnordost.streetcomplete.R
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.dp
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
+import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.edits.MapDataWithEditsSource
 import de.westnordost.streetcomplete.data.osm.edits.create.createNodeAction
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.StringMapChangesBuilder
 import de.westnordost.streetcomplete.data.osm.edits.update_tags.UpdateElementTagsAction
+import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
+import de.westnordost.streetcomplete.data.osm.mapdata.BoundingBox
+import de.westnordost.streetcomplete.data.osm.mapdata.Element
 import de.westnordost.streetcomplete.data.osm.mapdata.LatLon
-import de.westnordost.streetcomplete.data.osm.mapdata.MapDataWithGeometry
 import de.westnordost.streetcomplete.data.osm.mapdata.Node
 import de.westnordost.streetcomplete.data.osm.mapdata.Way
 import de.westnordost.streetcomplete.data.osm.mapdata.filter
-import de.westnordost.streetcomplete.databinding.ComposeViewBinding
+import de.westnordost.streetcomplete.data.overlays.Edit
+import de.westnordost.streetcomplete.data.overlays.OverlayAction
 import de.westnordost.streetcomplete.osm.ALL_ROADS
-import de.westnordost.streetcomplete.osm.oneway.isNotOnewayForCyclists
-import de.westnordost.streetcomplete.osm.oneway.isOneway
-import de.westnordost.streetcomplete.overlays.AbstractOverlayForm
 import de.westnordost.streetcomplete.resources.Res
 import de.westnordost.streetcomplete.resources.oneway_yes
 import de.westnordost.streetcomplete.resources.oneway_yes_reverse
-import de.westnordost.streetcomplete.screens.main.bottom_sheet.IsMapOrientationAware
-import de.westnordost.streetcomplete.screens.main.bottom_sheet.IsMapPositionAware
+import de.westnordost.streetcomplete.resources.restriction_overlay_direction_text
 import de.westnordost.streetcomplete.ui.common.DropdownButton
+import de.westnordost.streetcomplete.ui.common.Pin
 import de.westnordost.streetcomplete.ui.common.item_select.ImageWithLabel
+import de.westnordost.streetcomplete.ui.common.overlay.OverlayForm
+import de.westnordost.streetcomplete.ui.common.quest.LocalGetOffsetCallback
+import de.westnordost.streetcomplete.ui.common.quest.LocalMapMetersPerDp
+import de.westnordost.streetcomplete.ui.common.quest.LocalMapRotation
+import de.westnordost.streetcomplete.ui.ktx.pxToDp
 import de.westnordost.streetcomplete.ui.ktx.selectionFrame
+import de.westnordost.streetcomplete.ui.ktx.toPx
 import de.westnordost.streetcomplete.ui.util.ClipCirclePainter
-import de.westnordost.streetcomplete.ui.util.content
-import de.westnordost.streetcomplete.util.ktx.dpToPx
-import de.westnordost.streetcomplete.util.ktx.firstAndLast
 import de.westnordost.streetcomplete.util.math.PositionOnWay
 import de.westnordost.streetcomplete.util.math.PositionOnWaySegment
 import de.westnordost.streetcomplete.util.math.VertexOfWay
 import de.westnordost.streetcomplete.util.math.enclosingBoundingBox
 import de.westnordost.streetcomplete.util.math.getPositionOnWays
 import de.westnordost.streetcomplete.util.math.initialBearingTo
-import org.koin.android.ext.android.inject
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
-class RestrictionOverlayNodeForm : AbstractOverlayForm(), IsMapPositionAware, IsMapOrientationAware {
+private val selectableRestrictionNodeTypes = listOf(
+    RestrictionNodeType.GIVE_WAY,
+    RestrictionNodeType.STOP,
+)
 
-    private val mapDataWithEditsSource: MapDataWithEditsSource by inject()
-    override val contentLayoutResId = R.layout.compose_view
-    private val binding by contentViewBinding(ComposeViewBinding::bind)
-    private val items = Type.entries
-    private val selectableItems = listOf(Type.GIVE_WAY, Type.STOP)
+@Composable
+fun RestrictionOverlayNodeForm(
+    on: (OverlayAction) -> Unit,
+    element: Element?,
+    geometry: ElementGeometry,
+    countryInfo: CountryInfo,
+    mapDataWithEditsSource: MapDataWithEditsSource = koinInject(),
+) {
+    val (originalType, originalDirection) = remember(element) {
+        element?.tags?.let { parseRestrictionNode(it) } ?: (null to null)
+    }
+    var selectedType by rememberSaveable(originalType) {
+        mutableStateOf(originalType)
+    }
+    var direction by rememberSaveable(originalDirection) {
+        mutableStateOf(originalDirection)
+    }
 
-    // state is separate for historic reasons
-    private val positionOnWayState: MutableState<PositionOnWay?> = mutableStateOf(null)
-    private var positionOnWay: PositionOnWay? = null
-        set(value) {
-            field = value
-            if (value != null) {
-                setMarkerPosition(value.position)
-                setMarkerVisibility(true)
-            } else {
-                setMarkerVisibility(false)
-                setMarkerPosition(null)
-            }
-            positionOnWayState.value = value
+    val position = if (element == null) geometry.center else null
+    val roads = remember<Collection<Pair<Way, List<LatLon>>>?>(position != null) {
+        position?.let {
+            mapDataWithEditsSource.getRestrictionNodeWays(it.enclosingBoundingBox(100.0))
         }
-    private var roads: Collection<Pair<Way, List<LatLon>>>? = null
-    private val waysFilter = """
-        ways with
-          area != yes
-          and (
-            highway ~ ${ALL_ROADS.joinToString("|")}|cycleway
-            or (
-              highway ~ path|footpath|bridleway
-              and bicycle ~ yes|designated
-            )
-          )
-    """.toElementFilterExpression()
+    }
+    val metersPerDp = LocalMapMetersPerDp.current
+    val maxDistanceToCrosshair = (metersPerDp * 24).dp.toPx().toDouble()
+    val snapToVertexDistance = (metersPerDp * 12).dp.toPx().toDouble()
 
-    private var data: MapDataWithGeometry? = null
-    private var direction: MutableState<Direction?> = mutableStateOf(null)
+    val rawPositionOnWay = remember(position, roads, metersPerDp) {
+        if (position == null || roads == null) return@remember null
+        position.getPositionOnWays(
+            ways = roads,
+            maxDistance = maxDistanceToCrosshair,
+            snapToVertexDistance = snapToVertexDistance,
+        )
+    }
+    val wayCountOnVertex = remember(rawPositionOnWay, roads) {
+        val vertex = rawPositionOnWay as? VertexOfWay ?: return@remember null
+        val roads = roads ?: return@remember null
+        wayCountOnVertex(vertex.nodeId, roads)
+    }
+    val vertexTags = remember(rawPositionOnWay) {
+        val vertex = rawPositionOnWay as? VertexOfWay ?: return@remember null
+        mapDataWithEditsSource.getNode(vertex.nodeId)?.tags
+    }
 
-    // state is separate for historic reasons
-    private var typeState: MutableState<Type?> = mutableStateOf(null)
-    private var type: Type? = null
-        set(value) {
-            if (field == value) return
-            field = value
-            checkCurrentCursorPosition()
-            if (element == null) {
-                if (type == Type.GIVE_WAY) setMarkerIcon(R.drawable.ic_restriction_give_way)
-                    else setMarkerIcon(R.drawable.ic_restriction_stop)
+    val type = if (element == null) {
+        resolveRestrictionNodeType(selectedType, wayCountOnVertex)
+    } else {
+        selectedType
+    }
+    val positionOnWay = if (element == null) {
+        positionOnWayForRestrictionNode(type, rawPositionOnWay, wayCountOnVertex, vertexTags)
+    } else {
+        null
+    }
+
+    val wayForDirection = remember(element, positionOnWay) {
+        mapDataWithEditsSource.wayForRestrictionNode(element, positionOnWay)
+    }
+    val isMultiWayVertex = (rawPositionOnWay as? VertexOfWay)?.wayIds?.size?.let { it > 1 } == true
+        && element == null
+    val showWayDirection = type != RestrictionNodeType.ALL_WAY_STOP &&
+        shouldShowRestrictionNodeDirection(
+            wayTags = wayForDirection?.tags,
+            isLeftHandTraffic = countryInfo.isLeftHandTraffic,
+            isMultiWayVertex = isMultiWayVertex,
+        )
+    val wayRotation = remember(element, positionOnWay, wayForDirection) {
+        mapDataWithEditsSource.wayRotationForRestrictionNode(element, positionOnWay, wayForDirection)
+    }
+    val mapRotation = LocalMapRotation.current
+    val imageRotation = wayRotation.toFloat() - mapRotation
+
+    val hasChanges = type != originalType || direction != originalDirection
+    val isComplete = type != null && (element != null || positionOnWay != null)
+
+    Box(Modifier.fillMaxSize()) {
+        if (positionOnWay != null) {
+            val offset = LocalGetOffsetCallback.current?.invoke(positionOnWay.position)
+            if (offset != null) {
+                Pin(
+                    iconPainter = painterResource(type?.icon ?: RestrictionNodeType.STOP.icon),
+                    modifier = Modifier
+                        .align(AbsoluteAlignment.TopLeft)
+                        .size(71.dp, 142.dp)
+                        .absoluteOffset(
+                            x = offset.x.pxToDp() - 36.dp,
+                            y = offset.y.pxToDp() - 71.dp
+                        )
+                )
             }
-            checkIsFormComplete()
-            typeState.value = field
         }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.composeViewBase.content { Surface {
-            var shouldShowWayDirection by remember { mutableStateOf(shouldShowWayDirection()) }
-            LaunchedEffect(positionOnWayState.value) {
-                shouldShowWayDirection = shouldShowWayDirection()
-            }
+        OverlayForm(
+            on = on,
+            isComplete = isComplete,
+            hasChanges = hasChanges,
+            onClickOk = {
+                val type = type ?: return@OverlayForm
+                if (element != null) {
+                    val tagChanges = StringMapChangesBuilder(element.tags)
+                    type.applyTo(tagChanges, direction)
+                    if (!tagChanges.hasChanges) return@OverlayForm
+                    on(Edit(UpdateElementTagsAction(element, tagChanges.create())))
+                } else if (positionOnWay != null) {
+                    val action = createNodeAction(positionOnWay, mapDataWithEditsSource) {
+                        type.applyTo(it, direction)
+                    }
+                    if (action != null) {
+                        on(Edit(action))
+                    }
+                }
+            },
+        ) {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                // Sign selection
                 DropdownButton(
-                    items = selectableItems,
-                    onSelectedItem = { type = it },
-                    selectedItem = typeState.value,
+                    items = selectableRestrictionNodeTypes,
+                    onSelectedItem = { selectedType = it },
+                    selectedItem = type,
                     itemContent = {
                         ImageWithLabel(
-                            painter = painterResource(it.image),
-                            label = stringResource(it.text)
+                            painter = painterResource(it.icon),
+                            label = stringResource(it.title)
                         )
                     }
                 )
 
-                if (typeState.value != Type.ALL_WAY_STOP && shouldShowWayDirection) {
-                    // direction chooser
-                    Text(stringResource(R.string.restriction_overlay_direction_text))
+                if (showWayDirection) {
+                    Text(stringResource(Res.string.restriction_overlay_direction_text))
                     Row {
-                        val yes = org.jetbrains.compose.resources.painterResource(Res.drawable.oneway_yes)
-                        val reverse = org.jetbrains.compose.resources.painterResource(Res.drawable.oneway_yes_reverse)
-                        Box(
-                            modifier = Modifier
-                                .selectionFrame(direction.value == Direction.FORWARD)
-                                .selectable(direction.value == Direction.FORWARD) {
-                                    direction.value = Direction.FORWARD
-                                    checkIsFormComplete()
-                                },
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            ImageWithLabel(
-                                painter = remember(yes) { ClipCirclePainter(yes) },
-                                label = null,
-                                imageRotation = getWayRotation().toFloat() - mapRotation.floatValue,
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .selectionFrame(direction.value == Direction.BACKWARD)
-                                .selectable(direction.value == Direction.BACKWARD) {
-                                    direction.value = Direction.BACKWARD
-                                    checkIsFormComplete()
-                                },
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            ImageWithLabel(
-                                painter = remember(reverse) { ClipCirclePainter(reverse) },
-                                label = null,
-                                imageRotation = getWayRotation().toFloat() - mapRotation.floatValue
-                            )
-                        }
+                        val forwardPainter = painterResource(Res.drawable.oneway_yes)
+                        val backwardPainter = painterResource(Res.drawable.oneway_yes_reverse)
+                        DirectionChoice(
+                            selected = direction == RestrictionNodeDirection.FORWARD,
+                            painter = remember(forwardPainter) { ClipCirclePainter(forwardPainter) },
+                            imageRotation = imageRotation,
+                            onSelect = { direction = RestrictionNodeDirection.FORWARD },
+                        )
+                        DirectionChoice(
+                            selected = direction == RestrictionNodeDirection.BACKWARD,
+                            painter = remember(backwardPainter) { ClipCirclePainter(backwardPainter) },
+                            imageRotation = imageRotation,
+                            onSelect = { direction = RestrictionNodeDirection.BACKWARD },
+                        )
                     }
                 }
             }
-        } }
-
-        checkIsFormComplete()
-
-        if (savedInstanceState != null) onLoadInstanceState(savedInstanceState)
-
-        if (element == null) {
-            view.doOnLayout {
-                initCreatingPointOnWay()
-                checkCurrentCursorPosition()
-            }
-            setMarkerIcon(R.drawable.ic_restriction_stop)
-            setMarkerVisibility(false)
-        } else {
-            val td = getTypeAndDirection(element!!.tags)
-            type = td.first
-            direction.value = td.second
         }
-    }
-
-    private fun initCreatingPointOnWay() {
-        data = mapDataWithEditsSource.getMapDataWithGeometry(geometry.center.enclosingBoundingBox(100.0))
-        val data = data ?: return
-        roads = data
-            .filter(waysFilter)
-            .filterIsInstance<Way>()
-            .map { way ->
-                val positions = way.nodeIds.map { data.getNode(it)!!.position }
-                way to positions
-            }.toList()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        checkCurrentCursorPosition()
-    }
-
-    override fun onMapMoved(position: LatLon) {
-        if (element != null) return
-        checkCurrentCursorPosition()
-    }
-
-    private fun shouldShowWayDirection(): Boolean {
-        val element = element
-        val pow = positionOnWay
-        if (pow is VertexOfWay && pow.wayIds.size > 1) return false
-        val way = when {
-            element != null -> mapDataWithEditsSource.getWaysForNode(element.id).firstOrNull { waysFilter.matches(it) }
-            pow is VertexOfWay -> mapDataWithEditsSource.getWay(pow.wayIds.first())
-            pow is PositionOnWaySegment -> mapDataWithEditsSource.getWay(pow.wayId)
-            else -> null
-        }
-        if (way == null) return false
-        return if (way.tags["highway"] in ALL_ROADS)
-            !isOneway(way.tags) || isNotOnewayForCyclists(way.tags, countryInfo.isLeftHandTraffic)
-        else // cycleways, though doesn't catch oneway = yes and oneway:bicycle = no
-            !isOneway(way.tags) && way.tags["oneway:bicycle"] !in listOf("yes", "-1")
-    }
-
-    private fun checkCurrentCursorPosition() {
-        val roads = roads ?: return
-        val metersPerPixel = metersPerPixel ?: return
-        val maxDistance = metersPerPixel * requireContext().resources.dpToPx(24)
-        val snapToVertexDistance = metersPerPixel * requireContext().resources.dpToPx(12)
-        val pos = geometry.center.getPositionOnWays(roads, maxDistance, snapToVertexDistance)
-        if (pos is VertexOfWay) {
-            val node = mapDataWithEditsSource.getNode(pos.nodeId)!!
-            if (node.tags.containsKey("highway") || node.tags.containsKey("crossing"))
-                return
-        }
-        // get number of roads on this vertex
-        // but count only 1 road if count is 2 and it's an end node of both
-        val wayCountOnVertex = if (pos !is VertexOfWay) null
-        else {
-            val r = roads.filter { it.first.nodeIds.contains(pos.nodeId) }
-            if (r.size == 2 && r.all { it.first.nodeIds.firstAndLast().contains(pos.nodeId) }) 1
-            else r.size
-        }
-        positionOnWay = when (type) {
-            Type.GIVE_WAY -> {
-                if (wayCountOnVertex != null && wayCountOnVertex > 1)
-                    null // don't allow on more than a single way
-                else pos
-            }
-            Type.STOP -> {
-                if (wayCountOnVertex != null && wayCountOnVertex > 1)
-                    type = Type.ALL_WAY_STOP // no normal stop if there is more than one way
-                pos
-            }
-            Type.ALL_WAY_STOP -> {
-                if (wayCountOnVertex == null || wayCountOnVertex == 1)
-                    type = Type.STOP // normal stop if there is only one way
-                pos
-            }
-            else -> pos
-        }
-        checkIsFormComplete()
-    }
-
-    override fun hasChanges(): Boolean {
-        val td = element?.let { getTypeAndDirection(it.tags) }
-        return td?.first != type || td?.second != direction.value
-    }
-
-    override fun isFormComplete(): Boolean = type != null && hasChanges() && (element != null || positionOnWay != null)
-
-    override fun onClickOk() {
-        val element = element
-        val positionOnWay = positionOnWay
-        val direction = direction
-        val type = type ?: return
-        val editAction = if (element != null) {
-            val tagChanges = StringMapChangesBuilder(element.tags)
-            applyTo(tagChanges, type, direction.value)
-            UpdateElementTagsAction(element, tagChanges.create())
-        } else if (positionOnWay != null) {
-            createNodeAction(positionOnWay, mapDataWithEditsSource) { applyTo(it, type, direction.value) }
-        } else null
-        if (editAction != null)
-            applyEdit(editAction)
-    }
-
-    private fun onLoadInstanceState(inState: Bundle) {
-        val selectedIndex = inState.getInt(SELECTED_INDEX)
-        type = if (selectedIndex != -1) items[selectedIndex] else null
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(SELECTED_INDEX, items.indexOfFirst { it == type })
-    }
-
-    private fun getWayRotation(): Double {
-        val element = element as? Node
-        if (element != null) {
-            val way = mapDataWithEditsSource.getWaysForNode(element.id).firstOrNull { waysFilter.matches(it) } ?: return 0.0
-            val index = way.nodeIds.indexOf(element.id)
-            return if (index != way.nodeIds.lastIndex)
-                element.position.initialBearingTo(mapDataWithEditsSource.getNode(way.nodeIds[index + 1])!!.position)
-            else
-                mapDataWithEditsSource.getNode(way.nodeIds[index - 1])!!.position.initialBearingTo(element.position)
-        } else {
-            val pow = positionOnWay ?: return 0.0
-            if (pow is PositionOnWaySegment) return pow.segment.first.initialBearingTo(pow.segment.second)
-            else if (pow is VertexOfWay) {
-                val way = mapDataWithEditsSource.getWay(pow.wayIds.first())!!
-                val index = way.nodeIds.indexOf(pow.nodeId)
-                return if (index != way.nodeIds.lastIndex)
-                    pow.position.initialBearingTo(mapDataWithEditsSource.getNode(way.nodeIds[index + 1])!!.position)
-                else
-                    mapDataWithEditsSource.getNode(way.nodeIds[index - 1])!!.position.initialBearingTo(pow.position)
-            }
-        }
-        return 0.0
-    }
-
-    companion object {
-        private const val SELECTED_INDEX = "selected_index"
     }
 }
 
-private fun applyTo(tagChanges: StringMapChangesBuilder, type: Type, direction: Direction?) {
-    val newDirection = direction?.takeIf { type != Type.ALL_WAY_STOP }?.osmValue
-    if (tagChanges["direction"] != newDirection) {
-        if (newDirection == null)
-            tagChanges.remove("direction")
-        else tagChanges["direction"] = newDirection
+@Composable
+private fun DirectionChoice(
+    selected: Boolean,
+    painter: Painter,
+    imageRotation: Float,
+    onSelect: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .selectionFrame(selected)
+            .selectable(selected) { onSelect() },
+        contentAlignment = Alignment.Center,
+    ) {
+        ImageWithLabel(
+            painter = painter,
+            label = null,
+            imageRotation = imageRotation,
+        )
     }
-    val newHighway = if (type == Type.GIVE_WAY) "give_way"
-        else "stop"
-    if (tagChanges["highway"] != newHighway)
-        tagChanges["highway"] = newHighway
-    if (type == Type.ALL_WAY_STOP) tagChanges["stop"] = "all" // according to wiki, also minor is possible, but it seems that it's not used on intersection nodes
-    else if (type == Type.GIVE_WAY) tagChanges.remove("stop")
 }
 
-private fun getTypeAndDirection(tags: Map<String, String>): Pair<Type?, Direction?> {
-    val type = when {
-        tags["highway"] == "give_way" -> Type.GIVE_WAY
-        // direction = both seems to be used like stop = all
-        tags["highway"] == "stop" && (tags["stop"] == "all" || tags["direction"] == "both") -> Type.ALL_WAY_STOP
-        tags["highway"] == "stop" -> Type.STOP
-        else -> null
-    }
-    val direction = when (type) {
-        Type.GIVE_WAY, Type.STOP -> tags["direction"]?.let { dir -> Direction.entries.firstOrNull { it.osmValue == dir } }
-        else -> null
-    }
-    return type to direction
+private val restrictionNodeWaysFilter by lazy { """
+    ways with
+      area != yes
+      and (
+        highway ~ ${ALL_ROADS.joinToString("|")}|cycleway
+        or (
+          highway ~ path|footpath|bridleway
+          and bicycle ~ yes|designated
+        )
+      )
+""".toElementFilterExpression()
 }
 
-private enum class Type { GIVE_WAY, STOP, ALL_WAY_STOP }
-private val Type.text get() = when (this) {
-    Type.GIVE_WAY -> R.string.restriction_overlay_sign_give_way
-    Type.STOP -> R.string.restriction_overlay_sign_stop
-    Type.ALL_WAY_STOP -> R.string.restriction_overlay_sign_stop_all_way
-}
-private val Type.image get() = when (this) {
-    Type.GIVE_WAY -> R.drawable.ic_restriction_give_way
-    Type.STOP -> R.drawable.ic_restriction_stop
-    Type.ALL_WAY_STOP -> R.drawable.ic_restriction_stop
+private fun MapDataWithEditsSource.getRestrictionNodeWays(
+    bbox: BoundingBox,
+): Collection<Pair<Way, List<LatLon>>> {
+    val data = getMapDataWithGeometry(bbox)
+    return data
+        .filter(restrictionNodeWaysFilter)
+        .filterIsInstance<Way>()
+        .map { way ->
+            val positions = way.nodeIds.map { data.getNode(it)!!.position }
+            way to positions
+        }.toList()
 }
 
-private enum class Direction(val osmValue: String) { FORWARD("forward"), BACKWARD("backward") }
-*/
+private fun MapDataWithEditsSource.wayForRestrictionNode(
+    element: Element?,
+    positionOnWay: PositionOnWay?,
+): Way? = when {
+    element != null -> getWaysForNode(element.id).firstOrNull { restrictionNodeWaysFilter.matches(it) }
+    positionOnWay is VertexOfWay -> getWay(positionOnWay.wayIds.first())
+    positionOnWay is PositionOnWaySegment -> getWay(positionOnWay.wayId)
+    else -> null
+}
+
+private fun MapDataWithEditsSource.wayRotationForRestrictionNode(
+    element: Element?,
+    positionOnWay: PositionOnWay?,
+    way: Way?,
+): Double {
+    val node = element as? Node
+    if (node != null) {
+        val way = way ?: return 0.0
+        val index = way.nodeIds.indexOf(node.id)
+        if (index < 0) return 0.0
+        return bearingAlongWayAtIndex(node.position, index, way.nodeIds) { getNode(it)?.position }
+    }
+    return when (positionOnWay) {
+        is PositionOnWaySegment -> positionOnWay.segment.first.initialBearingTo(positionOnWay.segment.second)
+        is VertexOfWay -> {
+            val way = way ?: getWay(positionOnWay.wayIds.first()) ?: return 0.0
+            val index = way.nodeIds.indexOf(positionOnWay.nodeId)
+            if (index < 0) return 0.0
+            bearingAlongWayAtIndex(positionOnWay.position, index, way.nodeIds) { getNode(it)?.position }
+        }
+        else -> 0.0
+    }
+}
+
+internal fun bearingAlongWayAtIndex(
+    position: LatLon,
+    index: Int,
+    nodeIds: List<Long>,
+    positionOf: (Long) -> LatLon?,
+): Double {
+    if (nodeIds.size < 2 || index !in nodeIds.indices) return 0.0
+    return if (index != nodeIds.lastIndex) {
+        val next = positionOf(nodeIds[index + 1]) ?: return 0.0
+        position.initialBearingTo(next)
+    } else {
+        val previous = positionOf(nodeIds[index - 1]) ?: return 0.0
+        previous.initialBearingTo(position)
+    }
+}

@@ -17,6 +17,7 @@ import de.westnordost.streetcomplete.overlays.sidewalk.SidewalkOverlay
 import de.westnordost.streetcomplete.overlays.street_parking.StreetParkingOverlay
 import de.westnordost.streetcomplete.overlays.surface.SurfaceOverlay
 import de.westnordost.streetcomplete.overlays.things.ThingsOverlay
+import de.westnordost.streetcomplete.overlays.restriction.RestrictionOverlay
 import de.westnordost.streetcomplete.overlays.way_lit.WayLitOverlay
 
 fun overlaysRegistry(
@@ -38,6 +39,6 @@ fun overlaysRegistry(
     8 to ThingsOverlay(getFeature),
     7 to BuildingsOverlay(),
     9 to MtbScaleOverlay(),
-//    (EE_QUEST_OFFSET + 1) to RestrictionOverlay(),
+    (EE_QUEST_OFFSET + 1) to RestrictionOverlay(),
     (EE_QUEST_OFFSET + 0) to CustomOverlay(prefs),
 ))

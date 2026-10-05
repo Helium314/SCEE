@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.core.net.toUri
+import de.westnordost.streetcomplete.data.ConnectionException
 import de.westnordost.streetcomplete.data.elementfilter.toElementFilterExpression
 import de.westnordost.streetcomplete.data.meta.CountryInfo
 import de.westnordost.streetcomplete.data.osm.geometry.ElementGeometry
@@ -33,6 +34,7 @@ import io.ktor.client.request.request
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
@@ -95,6 +97,7 @@ class AddEvseId : OsmElementQuestType<String> {
     @Composable
     override fun Form(on: (QuestAction<String>) -> Unit, element: Element, geometry: ElementGeometry, countryInfo: CountryInfo) {
         var showScanUnknownValueToast by remember { mutableStateOf(false) }
+        var showOfflineToast by remember { mutableStateOf(false) }
         val composableScope = rememberCoroutineScope()
 
         MultiValueQuestQrScanForm(
@@ -105,10 +108,14 @@ class AddEvseId : OsmElementQuestType<String> {
             isOk = { EVSE_REGEX.matches(it) },
             onQrCodeParsed = { value: String, addValue: (String?) -> Unit ->
                 composableScope.launch {
-                    val result = parseQrCodeValue(value)
+                    try {
+                        val result = parseQrCodeValue(value)
 
-                    if (result != null) addValue(result)
-                    else showScanUnknownValueToast = true
+                        if (result != null) addValue(result)
+                        else showScanUnknownValueToast = true
+                    } catch (_: ConnectionException) {
+                        showOfflineToast = true
+                    }
                 }
             },
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters),
@@ -119,6 +126,13 @@ class AddEvseId : OsmElementQuestType<String> {
             ToastPopup(
                 onDismissRequest = { showScanUnknownValueToast = false },
                 text = stringResource(Res.string.quest_evse_id_scan_unknown_value),
+            )
+        }
+
+        if (showOfflineToast) {
+            ToastPopup(
+                onDismissRequest = { showOfflineToast = false },
+                text = stringResource(Res.string.offline),
             )
         }
     }
@@ -165,10 +179,18 @@ private val urlPrefixesWithEvseIdAsPath = arrayOf(
 
 private suspend fun followRedirect(url: String): String? {
     val client = HttpClient { followRedirects = false }
-    val response: HttpResponse = client.request(url) {
-        method = HttpMethod.Head
+    try {
+        val response: HttpResponse = client.request(url) {
+            method = HttpMethod.Head
+        }
+        return response.headers[HttpHeaders.Location]
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        throw ConnectionException(e.message, e)
+    } finally {
+        client.close()
     }
-    return response.headers[HttpHeaders.Location]
 }
 
 // Some of the QR codes contain a URL that is missing the protocol.

@@ -24,7 +24,7 @@ import kotlin.reflect.KClass
 class Preferences(val prefs: ObservableSettings) {
     // application settings
     var locale: Locale?
-        set(value) { prefs.putStringOrNull(LANGUAGE_SELECT, locale?.toLanguageTag()) }
+        set(value) { prefs.putStringOrNull(LANGUAGE_SELECT, value?.toLanguageTag()) }
         get() = prefs.getStringOrNull(LANGUAGE_SELECT)?.let { Locale(it) }
 
     var theme: Theme

@@ -89,7 +89,7 @@ class AddRailwayPlatformRef : OsmElementQuestType<String> {
     override val icon = Res.drawable.ic_quest_railway_platform_ref
     override val title = Res.string.quest_railwayPlatformRef_title
     override val achievements = listOf(EditTypeAchievement.CITIZEN)
-    override val enabledInCountries = NoCountriesExcept("DE", "FR", "CH", "AT")
+    override val enabledInCountries = NoCountriesExcept("DE", "FR", "CH", "AT", "HU")
     override val defaultDisabledMessage = Res.string.quest_disabled_msg_railway_platform_ref
 
     @Composable
